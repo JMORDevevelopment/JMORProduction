@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://jmor.com/Generator/pages/mods/sitemap.xsl"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"
+      xsi:schemaLocation="
+            http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Standalone Sitemap Generator www.xml-sitemaps.com (593) -->
+
+  <url>
+       <loc>https://jmor.com/</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>1.0000</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/VZ3gZACXylc/2.jpg</video:thumbnail_loc> 
+         <video:title>Computer Technology &amp; Networking Company in NJ from JMOR Connection</video:title>
+         <video:description>NJ Computer technology company for IT business consulting, computer and network support. We listen to our clients, understand their challenges and provide solutions that make business more efficient.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/embed/VZ3gZACXylc</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-tech-talk-show-april-16-2021-a-i-and-robotics-with-a-us-marine-veteran-paul-claxton</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/YbSpvwIoLhk/2.jpg</video:thumbnail_loc> 
+         <video:title>Artificial Intelligence with our Guest Paul Claxton and Where is it all going with Robotics</video:title>
+         <video:description>Learn where Robotics is going in manufacturing and how it is starting to rely heavily on Artificial Intelligence.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/v/YbSpvwIoLhk</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-tech-talk-show-april-09-2021-the-robotics-of-healing-and-understanding-the-vaccine</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/PEOQ_kMj02c/2.jpg</video:thumbnail_loc> 
+         <video:title>JMOR Tech Talk wiht Dr. Granger and The Inside Story of COVID</video:title>
+         <video:description>Learn from Dr. James Granger the inside story about the real COVID Truth and our current pandemic.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/v/PEOQ_kMj02c</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-tech-talk-show-april-02-2021-learning-the-power-of-awareness-and-apple-vs-telsa</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/gYE7V2C6waI/2.jpg</video:thumbnail_loc> 
+         <video:title>Apple and Tesla at War Again and Joel Holc</video:title>
+         <video:description>Learn about the latest between Apple and Tesla and meet Joel Holc  the author of an amazing book The Egg Shell Effect</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/v/gYE7V2C6waI</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-tech-talk-show-march-26-2021-the-first-man-to-ever-talk-on-a-cell-phone</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/H-XS6gIgLog/2.jpg</video:thumbnail_loc> 
+         <video:title>JMOR Tech Talk Show</video:title>
+         <video:description>Meet the First Person to ever talk on a cell phone Mr. Martin Cooper.  Who did he make that first call to.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/v/H-XS6gIgLog</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-tech-talk-show-march-19-2021-exploring-china-sales-management-and-technology</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/NLchrMG6lmE/2.jpg</video:thumbnail_loc> 
+         <video:title>JMOR Tech Talk Show Talks with Francis Kremer</video:title>
+         <video:description>Where is China going with their business world and their technology.  Did you know they will pay about ten times more for someone to come  from outside of China to do the same job someone would inside China fromanother Country.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/v/NLchrMG6lmE</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-tech-talk-show-march-12-2021-tech-news-turning-waste-into-something-useful</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/dtKPXbrNXqI/2.jpg</video:thumbnail_loc> 
+         <video:title>Turning Waste into something useful</video:title>
+         <video:description>Will talk about devices that gain energy from your body&apos;s sweat and more.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/v/dtKPXbrNXqI</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-tech-talk-show-march-5-2021-why-you-don-t-own-social-media</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/96340GpXg_U/2.jpg</video:thumbnail_loc> 
+         <video:title>You don&apos;t own social media</video:title>
+         <video:description>One does not own social media, learn before its too late and will talk to someone who helps those with disabilities be able to water ski.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/v/96340GpXg_U</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-tech-talk-show-feb-26-2021-why-the-my-pillow-guy-is-being-sued</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/SXxeVrpJ0-s/2.jpg</video:thumbnail_loc> 
+         <video:title>Why is Pillow Guys getting sued?</video:title>
+         <video:description>What happened with the pillow guy and catch my great guest John Hart the author of The Unwilling.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/v/SXxeVrpJ0-s</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-tech-talk-show-feb-5-2021-will-you-wear-the-nike-handsfree-shoe</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/bmqGViy4LE0/2.jpg</video:thumbnail_loc> 
+         <video:title>How to Networking and will you want the Nike Hands Free Shoe</video:title>
+         <video:description>In this episode will talk about the new Nike Hands Free Show and much more including a great interview from Robin J. Elliot on how to network.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/v/bmqGViy4LE0</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-tech-talk-show-jan-29-2021-will-everyone-own-apple-vr-headsets</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/PRa_qD4RecE/2.jpg</video:thumbnail_loc> 
+         <video:title>Will Everyone Own Apple VR Headsets and priceless fish</video:title>
+         <video:description>In this episode we take a look at the proposed apple virtual headset and fish that have a nice price tag.  Also we talk about coivd and innovations that are affecting humans.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/v/PRa_qD4RecE</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-tech-talk-show-jan-22-2021-how-virtual-reality-and-haptic-technology-will-change-us</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/k4HMX0gepds/2.jpg</video:thumbnail_loc> 
+         <video:title>How Virtual Reality and Haptic Technology will Change Us</video:title>
+         <video:description>Haptic technology is going to change the way we interact and get feedback thus creating a real life like experience  when we are in virtual worlds.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/v/k4HMX0gepds</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-tech-talk-show-jan-15-2021-how-using-a-secure-app-will-keep-you-off-the-radar</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/vxxfSaDS9NY/2.jpg</video:thumbnail_loc> 
+         <video:title>Using a secure app to stay off the Radar and Tino Go from Baru Furniture</video:title>
+         <video:description>Learn how to text securely and about how Tino Go took a frustration and turned it into a business that helps many local businesses around the world.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/v/vxxfSaDS9NY</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-tech-talk-show-jan-8-2021-happy-new-year-and-boat-and-karl-j-weaver</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/trDrCsYL6MU/2.jpg</video:thumbnail_loc> 
+         <video:title>JMOR Tech Talk Show BoAT (Blockchain of AI Things) Interview Karl J. Weaver</video:title>
+         <video:description>Find out what BoAT means int the Block Chain of AI Things and what this all mean for everyone.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/v/trDrCsYL6MU</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-review-channel-bosch-shp88pz55n01</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/I9i1CJXDs5U/2.jpg</video:thumbnail_loc> 
+         <video:title>BOSCI SHP88PZ55N01 Dish Washer Review</video:title>
+         <video:description>Introducing a dishwasher that is so quiet and efficient the only regret you will have is why you didn&apos;t buy it sooner.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/v/I9i1CJXDs5U</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-unboxing-channel-bosch-shp88pz55n01</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/HSpV8IT1Jh8/2.jpg</video:thumbnail_loc> 
+         <video:title>BOSCI SHP88PZ55N01 Dish Washer</video:title>
+         <video:description>Let&apos;s take a look at the BOSCHSHP88PZ55N01 Dish Washer truly a revolutionary piece of equipment for your kitchen.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/v/HSpV8IT1Jh8</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-tech-talk-show-2020e13-joe-bidden-s-app-exposes-access-to-millions-of-voter-records</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/Czt_-PvuzLs/2.jpg</video:thumbnail_loc> 
+         <video:title>Joe Bidden App allows access to millons, Google mistakenly says adults can be monitored without their notice</video:title>
+         <video:description>Technology is great but some think they can develop for less and get  more trouble then they bargained for.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/v/Czt_-PvuzLs</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-tech-talk-show-2020-e12-fb-going-to-pay-people-for-deactivacting-their-account-during-the-election-walmart-amazon-uber-and-more</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/8x87bkwJufo/2.jpg</video:thumbnail_loc> 
+         <video:title>JMOR Tech Talk Show FB Say they will pay people to deactive their account during the eletion</video:title>
+         <video:description>We will talk about what FB is promising to do and businesses are starting to pull out because of their behavior.  Apple retaliates by counter suing Fortnite.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/v/8x87bkwJufo</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-tech-talk-show-2020e11-amazon-and-drone-deliverys-schools-reopening-tesla-self-driving-cars-and-more</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/5Iq5cZ7jQ6w/2.jpg</video:thumbnail_loc> 
+         <video:title>JMOR Tech Talk Show 2020E11:  Amazon and Drone Deliverys, Schools Reopening, Tesla Self Driving Cars and More...</video:title>
+         <video:description>In this episode we talk about some great things to name a few  1)  Franklin Lakes Indian Hill District setting the balls in motion for reopening  2)  Tesla Self Driving Cars  3)  Amazon getting OK for Drone Delivery testing to businesses only  4)  What is a Jerk according to Merriam-webster  5)  New Galaxy Flip Phone  6)  COVID    Much More.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/v/5Iq5cZ7jQ6w</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-tech-talk-show-2020e10-zoom-crashes-tesla-fights</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/MHPy9qUFgfc/2.jpg</video:thumbnail_loc> 
+         <video:title>JMOR Tech Talk Show</video:title>
+         <video:description>Most consumers fight back here is a manufacturer Tesla fighting back.  Districts still don&apos;t have a handle on schools and how to open properly.  Apple&apos;s new iPhone design is leaks along with Air-power that was supposedly going   to be discontinued.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/v/MHPy9qUFgfc</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-tech-talk-show-2020-e9-visas-given-out-to-those-wanting-to-work-on-islands-fb-uber-lyft-possible-law-suit-and-more</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/wdTnqqNmUlo/2.jpg</video:thumbnail_loc> 
+         <video:title>JMOR Tech Talk Show E9,  FB, Uber, Lyft, Visas and more</video:title>
+         <video:description>Working overseas, are they giving out visas?  Uber and Lyft may be in for much more than hot water than just CA  Panasonic Work from home areas.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/v/wdTnqqNmUlo</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-tech-talk-show-2020-e8-schools-use-tech-to-track-covid</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/SrWQoIRvL_o/2.jpg</video:thumbnail_loc> 
+         <video:title>Schools use Tech to Track COVID with a bracelet that monitors their temperature</video:title>
+         <video:description>Learn how schools are relying on new technology to track students attending school as they partially open for a few days a week  Fortnite sues Apple and Google.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/watch?v=SrWQoIRvL_o</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-tech-talk-show-2020-e7-flying-cars-approved-low-cost-fitness-watch-tiktok-losing-us-users</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/D-3fF4xm3BI/2.jpg</video:thumbnail_loc> 
+         <video:title>JMOR Tech Talk Show Gadgets News Trends</video:title>
+         <video:description>The power outage we had showed that many were not prepared for this and much more on this episode.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/watch?v=D-3fF4xm3BI</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-tech-talk-show-2020-e6-flying-cars-are-coming-hbo-max-protecting-identity</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/roIONleTuCY/2.jpg</video:thumbnail_loc> 
+         <video:title>Flying Cars, HBO, Identity, Shredding,Youtube Changes</video:title>
+         <video:description>In this episode we will learn how to protect your identity, talk about the new resolution allowing a flying car and much more.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/watch?v=roIONleTuCY</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-review-bonsaii-3s30-shredder</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/k3dW8ydtjiM/2.jpg</video:thumbnail_loc> 
+         <video:title>JMOR Bonsaii S330 Shredder Unboxing</video:title>
+         <video:description>In this video I will give you my review of the Bonsaii 3S30 Shredder.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/watch?v=k3dW8ydtjiM</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-unboxing-of-lenovo-thinkcentre-m070q</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/IJkQvgA5SRE/2.jpg</video:thumbnail_loc> 
+         <video:title>JMOR Lenovo Thinkcentre M070Q Unboxing</video:title>
+         <video:description>In this video I will unbox the Lenovo Thinkcentre M070Q</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/watch?v=IJkQvgA5SRE</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-unboxing-lenovo-p330</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/C1DFn9pe78E/2.jpg</video:thumbnail_loc> 
+         <video:title>JMOR Lenovo P330 Unboxing</video:title>
+         <video:description>Yes, powerful workstations can come in size slightly bigger than hand and support for several monitors to operate simultaneously.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/v/C1DFn9pe78E</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-tech-talk-show-2020-e5-covid-technology-that-is-helping-people-get-by-during-this-pandemic</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/HR6ffPHZPdA/2.jpg</video:thumbnail_loc> 
+         <video:title>COVID 19 Technology being used to help peopl get by during the pandemic</video:title>
+         <video:description>On this episode will talk about different technology that is being deployed to allow people to get by during this pandemic.  Ranging from Contact-less-payment, robot-deliver, schools and much more</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/v/HR6ffPHZPdA</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-unboxing-bonsaii-cross-cut-shredder-3s30-18-pgs-min</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/43mswcyM0lg/2.jpg</video:thumbnail_loc> 
+         <video:title>Unboxing of Bonsaii CS30 Cross Cut Shredder</video:title>
+         <video:description>Everyone needs a shredder to ensure that their personal information on document don&apos;t wind up in the wrong hands.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/v/43mswcyM0lg</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-tech-talk-show-2020-e4-digital-dating-space-launch-robot-jobs-does-ipod-return</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/RhU30-gd_M0/2.jpg</video:thumbnail_loc> 
+         <video:title>JMOR Tech Talk Show: Digital Dating, Space Launch, Robot Jobs, iPod Returns</video:title>
+         <video:description>In this episode will dive deep into Digital and Virtual Dating.  Will also talk about the current space project scheduled to launch before the end of July 2020.  Many are concerned are Robots really taking jobs away from people and which ones if so.  A favorite gadget of the past may be returning to the world we all know the iPod.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/v/RhU30-gd_M0</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-review-of-dyson-v7-motor-head</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/Xs4MNKb2QZo/2.jpg</video:thumbnail_loc> 
+         <video:title>JMOR Review of Dyson V7 Motor Head</video:title>
+         <video:description>After using the Dyson V7 Motor Head for a few days</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/watch?v=Xs4MNKb2QZo</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-unboxing-dyson-v7-motor-head</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/7_mkBiglgdk/2.jpg</video:thumbnail_loc> 
+         <video:title>JMOR Unboxing of Dyson v7 Motor Head</video:title>
+         <video:description>Let&apos;s look at the Dyson V7 and what comes in the box.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/watch?v=7_mkBiglgdk</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-tech-talk-show-2020-e3-roblox-disney-world-technology-parents-credit-cards-fraud</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/TMWJY1JOjq4/2.jpg</video:thumbnail_loc> 
+         <video:title>JMOR Tech Talk Show 2020 E3</video:title>
+         <video:description>What is Roblox doing and how is Disney going to balance a safe COVID19 Free Park and parent&apos;s confidence.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/watch?v=TMWJY1JOjq4</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-tech-talk-show-2020-e2-tik-tock-copying-user-data-microsoft-stores-are-closing</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/bKC4JP2gEtI/2.jpg</video:thumbnail_loc> 
+         <video:title>JMOR Tech Talk Show 2020 E2</video:title>
+         <video:description>On this episode we will talk about Tik Tock copying user data and why Microsoft Stores are closing.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/watch?v=bKC4JP2gEtI</video:player_loc>
+       </video:video>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows/jmor-tech-talk-show-2020-e1-what-are-show-is-about</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.6400</priority>
+       <video:video>
+         <video:thumbnail_loc>https://i.ytimg.com/vi/LQOCGz9BvkU/2.jpg</video:thumbnail_loc> 
+         <video:title>JMOR Tech Talk Show 2020 E1</video:title>
+         <video:description>This the show where we talk about all types of gadgets and technology from things you can fit in your pocket, things you need to carry, things you have installed to things you drive.</video:description>
+         <video:player_loc allow_embed="yes" autoplay="ap=1">https://www.youtube.com/watch?v=LQOCGz9BvkU</video:player_loc>
+       </video:video>
+  </url>
+</urlset>

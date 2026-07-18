@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://jmor.com/Generator/pages/mods/sitemap.xsl"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+      xsi:schemaLocation="
+            http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Standalone Sitemap Generator www.xml-sitemaps.com (593) -->
+
+  <url>
+       <loc>https://jmor.com/</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>1.0000</priority>
+       <image:image>
+         <image:loc>https://jmor.com/assets/images/insta.png</image:loc>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/assets/images/facebook.png</image:loc>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/assets/images/twitter.png</image:loc>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/assets/images/youtube.png</image:loc>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/assets/images/linkedin.png</image:loc>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/assets/images/social.png</image:loc>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/assets/images/banner.png</image:loc>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/nj-it-tech-support-services.jpg</image:loc>
+         <image:caption>NJ IT Tech Support</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/Cyber%20Security.jpg</image:loc>
+         <image:caption>Network Cyber Security and Internet Safety</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/nj-custom-built-solutions.jpg</image:loc>
+         <image:caption>Custom Built Solutions</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/technical-relocation-service.jpg</image:loc>
+         <image:caption>Technical Relocation Services</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/Firewall.jpg</image:loc>
+         <image:caption>Hardware Firewalls and UTM Devices</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/Man%20in%20Warehouse%20with%20Mask.jpg</image:loc>
+         <image:caption>COVID19 (Safe, Friendly Support Services)</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/Custom_IT_Solutions.svg</image:loc>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/Tech_Relocation.svg</image:loc>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/IT_Tech%20Support.svg</image:loc>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/Cloud_storage.svg</image:loc>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/assets/images/check.jpg</image:loc>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/assets/images/motherboard.jpeg</image:loc>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/assets/images/foo_logo.png</image:loc>
+       </image:image>
+  </url>
+  <url>
+       <loc>https://jmor.com/remote-employee-engagement-solutions</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.8000</priority>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/pages/2019466739covid%20work%20from%20home.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+  </url>
+  <url>
+       <loc>https://jmor.com/hardware-firewalls-and-utm-devices</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.8000</priority>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/pages/1860828277Firewall.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+  </url>
+  <url>
+       <loc>https://jmor.com/network-cyber-security-internet-safety</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.8000</priority>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/pages/819382798networksecurity.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+  </url>
+  <url>
+       <loc>https://jmor.com/covid19-remote-friendly-support-service</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.8000</priority>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/pages/1401821031Man%20in%20Warehouse%20with%20Mask.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+  </url>
+  <url>
+       <loc>https://jmor.com/technical-relocation-services</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.8000</priority>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/pages/1065250716technical-relocation-service.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+  </url>
+  <url>
+       <loc>https://jmor.com/blog</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.8000</priority>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/blog/1618196069jmore-no-image.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/blog/1780725984jmore-no-image.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/blog/1058932426sE-480x290.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/blog/521825577placeholder-image.png</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/blog/700335981images.jpeg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/blog/2092149316backup.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/blog/1327626270Mr.-George-Rochette.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/blog/233930775television-is-dead.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/blog/1873984468GoogleYouTube.png</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/blog/1115101249antivirus.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/blog/1525708065website.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/blog/96237531WhenPowerGoesOutPCwithPapers.png</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/blog/2098561933Cyber%20Security.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/blog/1809568202Business%20Augmented%20Reality.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/blog/807794902DNS%20Hostnames%20Graphic.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/blog/1023110411ING_33594_271367.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+  </url>
+  <url>
+       <loc>https://jmor.com/case-studies</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.8000</priority>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/case_studies/13390server-security-consultant.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-shows</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.8000</priority>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/1011622467Radio%20Studio%20Image.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/2130272552Radio%20Studio%20Image.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/34400814Radio%20Studio%20Image.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/1409903206Radio%20Studio%20Image.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/1208327524JMOR%20Tech%20Talk%20Show.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/22788132The%20JMOR%20Tech%20Talk%20Show.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/900714674The%20JMOR%20Tech%20Talk%20Show.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/1131617818The%20JMOR%20Tech%20Talk%20Show.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/1854126592The%20JMOR%20Tech%20Talk%20Show.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/195256372The%20JMOR%20Tech%20Talk%20Show.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/756198618Radio%20Studio%20Image.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/2029722652Radio%20Studio%20Image.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/542025248The%20JMOR%20Tech%20Talk%20Show.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/1541958606The%20JMOR%20Tech%20Talk%20Show.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/1691743675The%20JMOR%20Tech%20Talk%20Show.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/1013569724Radio%20Studio%20Image.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/1624951738World%20of%20Ability%20Logo.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/288943087The%20JMOR%20Tech%20Talk%20Show.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/2010686250BOSCH%20Dishwasher%20Review%20Thumbnail_.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/535275537BOSCH%20Dish%20Washer%20Thumbnail.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/1310838481The%20JMOR%20Tech%20Talk%20Show.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/1551694221The%20JMOR%20Tech%20Talk%20Show.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/209696825The%20JMOR%20Tech%20Talk%20Show.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/1768336508JMOR%20Tech%20Talk%20%20Show.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/400164203JMOR%20Tech%20Talk%20%20Show.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/1830253956JMOR%20Tech%20Talk%20%20Show.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/161720481JMOR%20Tech%20Talk%20%20Show.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/197354352JMOR%20Tech%20Talk%20Show%202020%20E6.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/954877388Bonsaii%203S30%20Bonsaii%20Shredder%20Review.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/1549483557Lenovo%20Thinkcentre%20M070Q%20Unboxing.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/688915398Lenovo%20P330%20Unboxing.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/810137849JMOR%20Tech%20Talk%201%20Show%20Thumbnail_1.1.1.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/699506210Bonsaii%203S30.JPG</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/2016246145FBAd1.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/335330747Dyson%20V7%20Review%20Thumbnail_1.1.1.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/1959027793JMOR%20Tech%20Talk%20Unboxing%20Dyson%20V7%20Motor%20Head%20Thumbnail_1.1.1.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/957517278FBAd1.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/1984458008FBAd1.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/radio_show/1427886113FBAd1.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+  </url>
+  <url>
+       <loc>https://jmor.com/recommended</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.8000</priority>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/recommended/962803450Dyson%20V7%20Motor%20Head.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+  </url>
+  <url>
+       <loc>https://jmor.com/random-acts-of-kindness</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.8000</priority>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/random_acts_of_kindness/8745Balloon-bouquet-1.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+  </url>
+  <url>
+       <loc>https://jmor.com/jmor-tech-talk-show</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.8000</priority>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/pages/980966767JMOR%20Tech%20Talk%20Show%20Icon.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+  </url>
+  <url>
+       <loc>https://jmor.com/media-resources</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.8000</priority>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/media_resouces/14766tv-camera.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+  </url>
+  <url>
+       <loc>https://jmor.com/press-releases</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.8000</priority>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/press_releases/2108662782JMOR%20Tech%20Talk%20Unboxing%20Dyson%20V7%20Motor%20Head%20Thumbnail_1.1.1.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+  </url>
+  <url>
+       <loc>https://jmor.com/brand-guidelines</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.8000</priority>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/brand_guidelines/1728414540jmorbrochure-frontcover.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+  </url>
+  <url>
+       <loc>https://jmor.com/custom-built-solutions</loc>
+       <lastmod>2021-04-19T12:12:43+00:00</lastmod>
+       <changefreq>daily</changefreq>
+       <priority>0.8000</priority>
+       <image:image>
+         <image:loc>https://jmor.com/uploads/pages/1715462809nj-custom-built-solutions.jpg</image:loc>
+         <image:caption>card image</image:caption>
+       </image:image>
+  </url>
+</urlset>
