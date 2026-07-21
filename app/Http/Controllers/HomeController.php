@@ -9,6 +9,8 @@ use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use net\authorize\api\contract\v1 as AnetAPI;
+use net\authorize\api\controller as AnetController;
 
 class HomeController extends Controller
 {
@@ -715,4 +717,270 @@ class HomeController extends Controller
         return redirect('/forgot-password');
     }
 
+    // =================================================================
+    // NEW: Charge Credit Card (Authorize.Net) - Exact port from CI
+    // =================================================================
+    public function chargeCreditCard(Request $request)
+    {
+        // Get order data from session
+        $order_id = session()->get('order_id');
+        if (!$order_id) {
+            return redirect('/checkout-confirm?failed=true');
+        }
+
+        $post = $request->all();
+
+        // Validate required fields
+        if (empty($post['number']) || empty($post['expiry']) || empty($post['cvc'])) {
+            return redirect('/checkout-confirm?failed=true');
+        }
+
+        // Update order with user_id if not already set
+        $user_id = session()->get('user_id');
+        if ($user_id) {
+            DB::table('orders')->where('id', $order_id)->update(['user_id' => $user_id]);
+        }
+
+        // Get order details
+        $order = DB::table('orders')->where('id', $order_id)->first();
+        if (!$order) {
+            return redirect('/checkout-confirm?failed=true');
+        }
+
+        $sub_total = $order->sub_total;
+        $discount = $order->discount;
+        $amount = $order->grand_total;
+
+        // Get customer info
+        $customer = DB::table('user')->where('user_id', $order->user_id)->first();
+        if (!$customer) {
+            return redirect('/checkout-confirm?failed=true');
+        }
+
+        // Get order items to determine type and gift card info
+        $order_details = DB::table('order_details')->where('order_id', $order_id)->get();
+        $gift_card_data = null;
+        if ($order_details->isNotEmpty() && $order_details[0]->type == 'Gift Card') {
+            $gift_card_data = DB::table('gift_card')->where('name', $order_details[0]->item)->first();
+        }
+
+        $checkout_type = session()->get('checkout_type', 'Monthly');
+
+        // Prepare card details
+        $cardNumber = str_replace(' ', '', $post['number']);
+        $expiry = str_replace(' ', '', str_replace('/', '-', $post['expiry']));
+        $cvc = $post['cvc'];
+
+        // Authorize.Net SDK – exact CI logic
+        $merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
+        $merchantAuthentication->setName(config('services.authorize_net.login_id'));
+        $merchantAuthentication->setTransactionKey(config('services.authorize_net.transaction_key'));
+
+        $refId = 'ref' . time();
+
+        $creditCard = new AnetAPI\CreditCardType();
+        $creditCard->setCardNumber($cardNumber);
+        $creditCard->setExpirationDate($expiry);
+        $creditCard->setCardCode($cvc);
+
+        $paymentOne = new AnetAPI\PaymentType();
+        $paymentOne->setCreditCard($creditCard);
+
+        $orderInfo = new AnetAPI\OrderType();
+        $orderInfo->setInvoiceNumber($order_id);
+        $orderInfo->setDescription('Order #' . $order_id);
+
+        $customerAddress = new AnetAPI\CustomerAddressType();
+        $customerAddress->setFirstName($customer->firstname);
+        $customerAddress->setLastName($customer->lastname);
+        $customerAddress->setCompany($customer->company ?? '');
+        $customerAddress->setAddress($customer->address);
+        $customerAddress->setCity($customer->city);
+        $customerAddress->setState($customer->state);
+        $customerAddress->setZip($customer->zip);
+        $customerAddress->setCountry('USA');
+
+        $customerData = new AnetAPI\CustomerDataType();
+        $customerData->setType('individual');
+        $customerData->setId($order_id);
+        $customerData->setEmail($customer->email);
+
+        $duplicateWindowSetting = new AnetAPI\SettingType();
+        $duplicateWindowSetting->setSettingName('duplicateWindow');
+        $duplicateWindowSetting->setSettingValue('60');
+
+        $transactionRequestType = new AnetAPI\TransactionRequestType();
+        $transactionRequestType->setTransactionType('authCaptureTransaction');
+        $transactionRequestType->setAmount($amount);
+        $transactionRequestType->setOrder($orderInfo);
+        $transactionRequestType->setPayment($paymentOne);
+        $transactionRequestType->setBillTo($customerAddress);
+        $transactionRequestType->setCustomer($customerData);
+        $transactionRequestType->addToTransactionSettings($duplicateWindowSetting);
+
+        $requestObj = new AnetAPI\CreateTransactionRequest();
+        $requestObj->setMerchantAuthentication($merchantAuthentication);
+        $requestObj->setRefId($refId);
+        $requestObj->setTransactionRequest($transactionRequestType);
+
+        $controller = new AnetController\CreateTransactionController($requestObj);
+        $environment = config('services.authorize_net.environment') === 'production'
+            ? \net\authorize\api\constants\ANetEnvironment::PRODUCTION
+            : \net\authorize\api\constants\ANetEnvironment::SANDBOX;
+        $response = $controller->executeWithApiResponse($environment);
+
+        if ($response != null) {
+            if ($response->getMessages()->getResultCode() == 'Ok') {
+                $tresponse = $response->getTransactionResponse();
+                if ($tresponse != null && $tresponse->getMessages() != null) {
+                    // Transaction successful – insert into transaction table
+                    $transaction_id = $tresponse->getTransId();
+                    $auth_code = $tresponse->getAuthCode();
+
+                    DB::table('transaction')->insert([
+                        'order_id' => $order_id,
+                        'order_type' => $order_details[0]->type ?? '',
+                        'checkout_type' => $checkout_type,
+                        'transaction_id' => $transaction_id,
+                        'user_id' => $order->user_id,
+                        'amount' => $amount,
+                        'auth_code' => $auth_code,
+                    ]);
+
+                    // Update order status
+                    DB::table('orders')->where('id', $order_id)->update(['status' => 1]);
+
+                    // Update coupon status if applied
+                    if (session()->has('coupon_code')) {
+                        $coupon_code = session()->get('coupon_code');
+                        DB::table('coupon_checkout')
+                            ->where('coupon_number', $coupon_code)
+                            ->update(['status' => 1]);
+                    }
+
+                    // Generate coupon code for gift card orders
+                    if (session()->has('gift_cards') && $gift_card_data) {
+                        $length = 7;
+                        $coupon_num = strtoupper(substr(md5(time()), 0, $length));
+                        $coupon_id = DB::table('coupon_checkout')->insertGetId([
+                            'gift_card_id' => $gift_card_data->id,
+                            'order_id' => $order_id,
+                            'coupon_number' => $coupon_num,
+                        ]);
+                        // Generate image with watermark (if needed) – we'll skip this for now or implement using Intervention
+                    }
+
+                    // Send invoice email to customer and admin
+                    $this->sendInvoices($order_id, $transaction_id, $order, $customer, $order_details, $sub_total, $discount, $amount);
+
+                    // Clear cart and session
+                    session()->forget(['cart', 'order_id', 'coupon_code', 'discount_value', 'gift_cards', 'checkout_type']);
+
+                    return redirect('/checkout-success');
+                } else {
+                    // Transaction failed
+                    return redirect('/checkout-confirm?failed=true');
+                }
+            } else {
+                // API request failed
+                return redirect('/checkout-confirm?failed=true');
+            }
+        } else {
+            return redirect('/checkout-confirm?failed=true');
+        }
+    }
+
+    // Helper method to send invoices (exact port of CI email logic)
+    private function sendInvoices($order_id, $transaction_id, $order, $customer, $order_details, $sub_total, $discount, $amount)
+    {
+        // Build email HTML (exact CI invoice template)
+        $pro_det = '';
+        $sr_no = 0;
+        foreach ($order_details as $detail) {
+            $sr_no++;
+            $pro_det .= '<tr>';
+            $pro_det .= '<td style="color:black;">' . $sr_no . '</td>';
+            $pro_det .= '<td style="color:black;">' . $detail->item . '</td>';
+            $pro_det .= '<td style="color:black;">' . $detail->type . '</td>';
+            $pro_det .= '<td style="color:black;">' . $detail->qty . '</td>';
+            $pro_det .= '<td style="color:black;">$' . number_format($detail->price, 2) . '</td>';
+            $pro_det .= '<td style="color:black;">$' . number_format($detail->sub_total, 2) . '</td>';
+            $pro_det .= '</tr>';
+        }
+
+        $message = '<!DOCTYPE html>
+        <html lang="en">
+        <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Invoice</title>
+        <style>
+            /* All inline styles from CI */
+            body { font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif; margin: 0; }
+            .container { padding: 20px 40px; }
+            .inv-title { padding: 10px; border: 1px solid silver; text-align: center; margin-bottom: 20px; }
+            .inv-header table { width: 100%; border-collapse: collapse; border: 1px solid silver; }
+            .inv-header table th, .inv-header table td { text-align: right; padding: 8px; border: 1px solid silver; }
+            .inv-body table { width: 100%; border: 1px solid silver; border-collapse: collapse; }
+            .inv-body table th, .inv-body table td { padding: 10px; border: 1px solid silver; }
+            .inv-footer table { width: 30%; float: right; border: 1px solid silver; border-collapse: collapse; }
+            .inv-footer table th, .inv-footer table td { padding: 8px; text-align: right; border: 1px solid silver; }
+        </style>
+        </head>
+        <body>
+        <div class="container">
+            <div class="inv-title">
+                <h1 class="no-margin" style="color:black;">Invoice # ' . $order_id . '</h1>
+            </div>
+            <div class="inv-header">
+                <table>
+                    <tr><th style="text-align:left;color:black;">Date</th><td style="color:black;">' . $order->create_date . '</td></tr>
+                    <tr><th style="text-align:left;color:black;">Transaction #</th><td style="color:black;">' . $transaction_id . '</td></tr>
+                    <tr><th style="text-align:left;color:black;">Customer Name</th><td style="color:black;">' . $customer->firstname . ' ' . $customer->lastname . '</td></tr>
+                    <tr><th style="text-align:left;color:black;">Address</th><td style="color:black;">' . $customer->address . '</td></tr>
+                </table>
+            </div>
+            <div class="inv-body">
+                <table>
+                    <thead>
+                        <th style="color:black;">Sr #</th>
+                        <th style="color:black;">Item</th>
+                        <th style="color:black;">Type</th>
+                        <th style="color:black;">Quantity</th>
+                        <th style="color:black;">Price</th>
+                        <th style="color:black;">Sub total</th>
+                    </thead>
+                    <tbody>
+                        ' . $pro_det . '
+                    </tbody>
+                </table>
+            </div>
+            <div class="inv-footer">
+                <table>
+                    <tr><th style="color:black;">Sub total</th><td style="color:black;">$' . number_format($sub_total, 2) . '</td></tr>
+                    <tr><th style="color:black;">Discount</th><td style="color:black;">$' . number_format($discount, 2) . '</td></tr>
+                    <tr><th style="color:black;">Grand total</th><td style="color:black;">$' . number_format($amount, 2) . '</td></tr>
+                </table>
+            </div>
+        </div>
+        </body>
+        </html>';
+
+        // Send to customer
+        $to = $customer->email;
+        $subject = 'Order Invoice';
+        $from = 'Info@jmor.com';
+        Mail::html($message, function ($mail) use ($to, $subject, $from) {
+            $mail->to($to)->subject($subject)->from($from);
+        });
+
+        // Send to admin
+        $admin_email = DB::table('settings')->where('option', 'email')->value('value');
+        if ($admin_email) {
+            Mail::html($message, function ($mail) use ($admin_email, $subject) {
+                $mail->to($admin_email)->subject($subject)->from('noreply@jmor.com');
+            });
+        }
+    }
 }
