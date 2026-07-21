@@ -1,0 +1,158 @@
+@media(max-width: 1366px)  {
+.tabs_bar ul li a {
+    font: 600 24px "Open Sans", sans-serif;
+    padding: 10px 16px;
+}
+.about_jmor .about_desc .white_box {
+	min-height: auto;
+}
+}
+
+@media(max-width: 1280px) {
+.tabs_bar ul li a {
+    font: 600 22px "Open Sans", sans-serif;
+    padding: 11px 20.1px;
+}
+}
+
+@media(max-width: 1248px)  {
+.tabs_bar ul li a {
+    padding: 11px 16.1px;
+}
+}
+
+@media(max-width: 1080px)  {
+.tabs_bar ul li a {
+    padding: 11px 13.9px;
+    font: 600 19px "Open Sans", sans-serif;
+}
+}
+
+@media(max-width: 992px)  {
+footer ul li a img {
+    max-width: 45px !important;
+}
+.about_jmor .about_desc .white_box p {
+    font: 500 13px "Open Sans", sans-serif;
+}
+}
+
+@media(max-width: 980px)  {
+.top_bar ul li img {
+    max-width: 32px;
+    max-height: 32px;
+}
+.our_services .services_box img {
+    width: 162px;
+}
+.our_services .services_box h3 {
+    font: 700 15px "Open Sans", sans-serif;
+}
+.tabs_bar ul li a {
+    font: 600 17px "Open Sans", sans-serif;
+}
+}
+
+@media(max-width: 900px)  {
+	.slide_sec .slide_desc {
+    padding: 9px 30px;
+    height: auto;
+}
+.tabs_bar ul li a {
+    font: 600 16px "Open Sans", sans-serif;
+    padding: 11px 10.5px;
+}
+}
+
+@media(max-width: 800px) {
+.slide_sec .slide_desc p {
+    font: 400 15px "Open Sans", sans-serif;
+}
+.tabs_bar ul li a {
+    font: 600 15px "Open Sans", sans-serif;
+    padding: 11px 4.1px;
+}
+footer .foo_logo img {
+    max-width: 100%;
+}
+footer ul li a img {
+    max-width: 32px !important;
+}
+footer .phone {
+    font: 700 25px "Open Sans", sans-serif;
+}
+footer p {
+    font: 400 13px "Open Sans", sans-serif;
+}
+}
+
+@media(max-width: 767px) {
+.top_bar {
+    text-align: center;
+}
+.slide_sec .container-fluid .row .col-md-8 {
+    padding: 0;
+    max-width: 100%;
+}
+.slide_sec .container-fluid .row .col-md-4 {
+    max-width: 100%;
+    flex: 100%;
+    padding: 0;
+    text-align: center;
+}
+.tabs_bar ul li a {
+    font: 600 14px "Open Sans", sans-serif;
+    padding: 11px 6.4px;
+}
+.about_jmor .row .col-md-6:first-child {
+    padding-left: 15px;
+}
+footer {
+    padding: 20px 0;
+    text-align: center;
+}
+footer ul {
+	margin: 20px 0;
+}
+footer .foo_logo img {
+    max-width: 37%;
+}
+}
+
+@media(max-width: 600px)  {
+.tabs_bar ul li a {
+    font: 600 11px "Open Sans", sans-serif;
+    padding: 11px 4.4px;
+}
+.blue_banner h3 {
+    font: 700 24px "Open Sans", sans-serif;
+}
+}
+
+@media(max-width: 480px)  {
+.slide_sec .slick-next::before {
+    right: 0;
+    width: 80px;
+}
+.slide_sec .slick-prev::before {
+    left: 30px;
+    width: 80px;
+}
+.tabs_bar ul li {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.slide_sec .container-fluid .row .col-md-8 .slide_box img {
+    height: auto;
+}
+}
+
+@media(max-width: 414px)  {
+
+.slide_sec .slick-next::before,
+.slide_sec .slick-prev::before {
+    top: -50px;
+}
+}

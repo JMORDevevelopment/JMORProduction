@@ -1,0 +1,536 @@
+@import "https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800";
+@font-face {
+  font-family: 'myriad-font';
+  src: url("../../assets/plugins/bootstrap/fonts/myriad-font.otf");
+}
+/* line 2, ../sass/app.scss */
+body {
+  margin: 0px;
+  padding: 0px;
+  background-color: #f5f5f5;
+}
+
+/* line 7, ../sass/app.scss */
+a {
+  outline: none;
+  text-decoration: none;
+}
+
+/* line 11, ../sass/app.scss */
+.no-margin {
+  margin: 0px !important;
+}
+
+/* line 14, ../sass/app.scss */
+.no-padding {
+  padding: 0px !important;
+}
+
+/* line 17, ../sass/app.scss */
+.no-border {
+  border: 0px !important;
+}
+
+/* line 20, ../sass/app.scss */
+.no-bg {
+  background-color: transparent !important;
+}
+
+/* line 24, ../sass/app.scss */
+.top_bar {
+  padding: 20px 0;
+}
+/* line 29, ../sass/app.scss */
+.top_bar ul li img {
+  max-width: 40px;
+  max-height: 40px;
+}
+/* line 36, ../sass/app.scss */
+.top_bar .contact_btn a {
+  background-color: #0053a0;
+  color: #fff;
+  padding: 12px 20px;
+  font: 600 16px "Open Sans", sans-serif;
+  border-radius: 8px;
+}
+/* line 44, ../sass/app.scss */
+.top_bar .seatch {
+  position: relative;
+}
+/* line 47, ../sass/app.scss */
+.top_bar .seatch input {
+  border: 2px solid #000000;
+  background-color: #fff;
+  border-radius: 0;
+}
+/* line 52, ../sass/app.scss */
+.top_bar .seatch button {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+}
+
+/* line 63, ../sass/app.scss */
+.nav_site .navbar {
+  background-color: #0053a0;
+}
+/* line 68, ../sass/app.scss */
+.nav_site .navbar .navbar-collapse ul li a {
+  color: #ffff !important;
+  font: 500 16px "Open Sans", sans-serif;
+}
+
+/* line 78, ../sass/app.scss */
+.slide_sec {
+  background-color: #0053a0;
+  padding: 30px 0;
+}
+/* line 82, ../sass/app.scss */
+.slide_sec .container-fluid {
+  padding: 0;
+}
+/* line 84, ../sass/app.scss */
+.slide_sec .container-fluid .row {
+  margin: 0;
+}
+/* line 86, ../sass/app.scss */
+.slide_sec .container-fluid .row .col-md-8 {
+  padding: 0;
+  max-width: 60%;
+}
+/* line 90, ../sass/app.scss */
+.slide_sec .container-fluid .row .col-md-8 .slide_box img {
+  height: 450px;
+  width: 100%;
+  object-fit: cover;
+}
+/* line 97, ../sass/app.scss */
+.slide_sec .container-fluid .row .col-md-4 {
+  max-width: 40%;
+  flex: 40%;
+  padding: 0;
+}
+/* line 104, ../sass/app.scss */
+.slide_sec .slick-next {
+  right: 0;
+  top: 151px;
+}
+/* line 107, ../sass/app.scss */
+.slide_sec .slick-next:before {
+  background: url(../images/righ.png);
+  font-size: 50px;
+  background-repeat: no-repeat;
+  background-size: 60%;
+  font-family: fontAwesome;
+  content: "";
+  position: absolute;
+  right: 29px;
+  width: 149px;
+  height: 132px;
+}
+/* line 121, ../sass/app.scss */
+.slide_sec .slick-prev {
+  left: 0;
+  z-index: 2;
+  top: 151px;
+}
+/* line 125, ../sass/app.scss */
+.slide_sec .slick-prev:before {
+  background: url(../images/left.png);
+  font-size: 50px;
+  background-repeat: no-repeat;
+  background-size: 60%;
+  font-family: fontAwesome;
+  content: "";
+  position: absolute;
+  left: 29px;
+  width: 149px;
+  height: 132px;
+}
+/* line 138, ../sass/app.scss */
+.slide_sec .slide_desc {
+  background-color: #f5f5f5;
+  padding: 50px 30px;
+  height: 450px;
+}
+/* line 142, ../sass/app.scss */
+.slide_sec .slide_desc h3 {
+  font: 600 30px "Open Sans", sans-serif;
+  color: #0053a0;
+}
+/* line 146, ../sass/app.scss */
+.slide_sec .slide_desc p {
+  color: #444;
+  font: 400 16px "Open Sans", sans-serif;
+}
+
+/* line 153, ../sass/app.scss */
+.our_services {
+  padding: 20px 0;
+}
+/* line 155, ../sass/app.scss */
+.our_services h3 {
+  text-align: center;
+  font: 700 36px "Open Sans", sans-serif;
+}
+/* line 159, ../sass/app.scss */
+.our_services .services_box {
+  text-align: center;
+  position: relative;
+}
+/* line 162, ../sass/app.scss */
+.our_services .services_box h3 {
+  font: 700 22px "Open Sans", sans-serif;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+/* line 172, ../sass/app.scss */
+.blue_banner {
+  background-color: #0053a0;
+  padding: 20px 0;
+}
+/* line 175, ../sass/app.scss */
+.blue_banner h3 {
+  text-align: center;
+  margin: 0;
+  font: 700 40px "Open Sans", sans-serif;
+  color: #fff;
+}
+
+/* line 186, ../sass/app.scss */
+.tabs_bar ul li a {
+  background-color: #003f80;
+  font: 600 24px "Open Sans", sans-serif;
+  color: #fff;
+  border: none !important;
+  border-left: 1px solid #fff !important;
+  border-right: 1px solid #fff !important;
+  border-radius: 0 !important;
+  padding: 10px 60px;
+}
+/* line 195, ../sass/app.scss */
+.tabs_bar ul li a:hover {
+  border: none;
+}
+/* line 198, ../sass/app.scss */
+.tabs_bar ul li a.active {
+  background-color: #c1272d !important;
+  color: #fff !important;
+}
+/* line 205, ../sass/app.scss */
+.tabs_bar .tab-content {
+  background-color: #c5cce6;
+  padding: 30px 0;
+}
+/* line 208, ../sass/app.scss */
+.tabs_bar .tab-content p {
+  margin: 0;
+}
+/* line 211, ../sass/app.scss */
+.tabs_bar .tab-content .media {
+  margin-top: 40px;
+}
+/* line 213, ../sass/app.scss */
+.tabs_bar .tab-content .media img {
+  width: 40px;
+}
+/* line 217, ../sass/app.scss */
+.tabs_bar .tab-content .media .media-body h5 {
+  font: 400 15px "Open Sans", sans-serif;
+}
+
+/* line 225, ../sass/app.scss */
+.about_jmor {
+  background-color: #c1272d;
+  padding: 25px 0;
+}
+/* line 229, ../sass/app.scss */
+.about_jmor .about_desc h3 {
+  font: 700 32px "Open Sans", sans-serif;
+  text-align: center;
+  color: #fff;
+}
+/* line 234, ../sass/app.scss */
+.about_jmor .about_desc .white_box {
+  background-color: #f5f5f5;
+  padding: 18px 42px;
+  min-height: 562px;
+}
+/* line 239, ../sass/app.scss */
+.about_jmor .about_desc .white_box h4 {
+  color: #0053a0;
+  text-align: center;
+  font: 700 20px "Open Sans", sans-serif;
+}
+/* line 246, ../sass/app.scss */
+.about_jmor .about_desc .white_box p {
+  color: #000;
+  font: 500 16px "Open Sans", sans-serif;
+}
+/* line 256, ../sass/app.scss */
+.about_jmor .row .col-md-6:first-child {
+  padding-left: 0;
+}
+
+/* line 263, ../sass/app.scss */
+.headlines {
+  background-color: #0053a0;
+  padding: 20px 0;
+}
+/* line 266, ../sass/app.scss */
+.headlines h3 {
+  text-align: center;
+  color: #fff;
+  font: 700 34px "Open Sans", sans-serif;
+}
+/* line 272, ../sass/app.scss */
+.headlines .video p {
+  color: #fff;
+  font: 400 15px "Open Sans", sans-serif;
+}
+/* line 277, ../sass/app.scss */
+.headlines .tweet {
+  height: 530px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+/* line 284, ../sass/app.scss */
+footer {
+  padding: 20px 0;
+}
+/* line 287, ../sass/app.scss */
+footer .foo_logo img {
+  max-width: 280px;
+}
+/* line 292, ../sass/app.scss */
+footer ul {
+  text-align: center;
+}
+/* line 296, ../sass/app.scss */
+footer ul li a img {
+  max-width: 54px !important;
+}
+/* line 303, ../sass/app.scss */
+footer .phone {
+  font: 700 40px "Open Sans", sans-serif;
+  color: #000;
+  text-align: right;
+}
+/* line 308, ../sass/app.scss */
+footer p {
+  font: 400 17px "Open Sans", sans-serif;
+  text-align: center;
+  margin: 17px 0 0 0;
+}
+
+@media (max-width: 1366px) {
+  /* line 2, ../sass/_screen.scss */
+  .tabs_bar ul li a {
+    font: 600 24px "Open Sans", sans-serif;
+    padding: 10px 16px;
+  }
+
+  /* line 6, ../sass/_screen.scss */
+  .about_jmor .about_desc .white_box {
+    min-height: auto;
+  }
+}
+@media (max-width: 1280px) {
+  /* line 12, ../sass/_screen.scss */
+  .tabs_bar ul li a {
+    font: 600 22px "Open Sans", sans-serif;
+    padding: 11px 20.1px;
+  }
+}
+@media (max-width: 1248px) {
+  /* line 19, ../sass/_screen.scss */
+  .tabs_bar ul li a {
+    padding: 11px 16.1px;
+  }
+}
+@media (max-width: 1080px) {
+  /* line 25, ../sass/_screen.scss */
+  .tabs_bar ul li a {
+    padding: 11px 13.9px;
+    font: 600 19px "Open Sans", sans-serif;
+  }
+}
+@media (max-width: 992px) {
+  /* line 32, ../sass/_screen.scss */
+  footer ul li a img {
+    max-width: 45px !important;
+  }
+
+  /* line 35, ../sass/_screen.scss */
+  .about_jmor .about_desc .white_box p {
+    font: 500 13px "Open Sans", sans-serif;
+  }
+}
+@media (max-width: 980px) {
+  /* line 41, ../sass/_screen.scss */
+  .top_bar ul li img {
+    max-width: 32px;
+    max-height: 32px;
+  }
+
+  /* line 45, ../sass/_screen.scss */
+  .our_services .services_box img {
+    width: 162px;
+  }
+
+  /* line 48, ../sass/_screen.scss */
+  .our_services .services_box h3 {
+    font: 700 15px "Open Sans", sans-serif;
+  }
+
+  /* line 51, ../sass/_screen.scss */
+  .tabs_bar ul li a {
+    font: 600 17px "Open Sans", sans-serif;
+  }
+}
+@media (max-width: 900px) {
+  /* line 57, ../sass/_screen.scss */
+  .slide_sec .slide_desc {
+    padding: 9px 30px;
+    height: auto;
+  }
+
+  /* line 61, ../sass/_screen.scss */
+  .tabs_bar ul li a {
+    font: 600 16px "Open Sans", sans-serif;
+    padding: 11px 10.5px;
+  }
+}
+@media (max-width: 800px) {
+  /* line 68, ../sass/_screen.scss */
+  .slide_sec .slide_desc p {
+    font: 400 15px "Open Sans", sans-serif;
+  }
+
+  /* line 71, ../sass/_screen.scss */
+  .tabs_bar ul li a {
+    font: 600 15px "Open Sans", sans-serif;
+    padding: 11px 4.1px;
+  }
+
+  /* line 75, ../sass/_screen.scss */
+  footer .foo_logo img {
+    max-width: 100%;
+  }
+
+  /* line 78, ../sass/_screen.scss */
+  footer ul li a img {
+    max-width: 32px !important;
+  }
+
+  /* line 81, ../sass/_screen.scss */
+  footer .phone {
+    font: 700 25px "Open Sans", sans-serif;
+  }
+
+  /* line 84, ../sass/_screen.scss */
+  footer p {
+    font: 400 13px "Open Sans", sans-serif;
+  }
+}
+@media (max-width: 767px) {
+  /* line 90, ../sass/_screen.scss */
+  .top_bar {
+    text-align: center;
+  }
+
+  /* line 93, ../sass/_screen.scss */
+  .slide_sec .container-fluid .row .col-md-8 {
+    padding: 0;
+    max-width: 100%;
+  }
+
+  /* line 97, ../sass/_screen.scss */
+  .slide_sec .container-fluid .row .col-md-4 {
+    max-width: 100%;
+    flex: 100%;
+    padding: 0;
+    text-align: center;
+  }
+
+  /* line 103, ../sass/_screen.scss */
+  .tabs_bar ul li a {
+    font: 600 14px "Open Sans", sans-serif;
+    padding: 11px 6.4px;
+  }
+
+  /* line 107, ../sass/_screen.scss */
+  .about_jmor .row .col-md-6:first-child {
+    padding-left: 15px;
+  }
+
+  /* line 110, ../sass/_screen.scss */
+  footer {
+    padding: 20px 0;
+    text-align: center;
+  }
+
+  /* line 114, ../sass/_screen.scss */
+  footer ul {
+    margin: 20px 0;
+  }
+
+  /* line 117, ../sass/_screen.scss */
+  footer .foo_logo img {
+    max-width: 37%;
+  }
+}
+@media (max-width: 600px) {
+  /* line 123, ../sass/_screen.scss */
+  .tabs_bar ul li a {
+    font: 600 11px "Open Sans", sans-serif;
+    padding: 11px 4.4px;
+  }
+
+  /* line 127, ../sass/_screen.scss */
+  .blue_banner h3 {
+    font: 700 24px "Open Sans", sans-serif;
+  }
+}
+@media (max-width: 480px) {
+  /* line 133, ../sass/_screen.scss */
+  .slide_sec .slick-next::before {
+    right: 0;
+    width: 80px;
+  }
+
+  /* line 137, ../sass/_screen.scss */
+  .slide_sec .slick-prev::before {
+    left: 30px;
+    width: 80px;
+  }
+
+  /* line 141, ../sass/_screen.scss */
+  .tabs_bar ul li {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* line 147, ../sass/_screen.scss */
+  .slide_sec .container-fluid .row .col-md-8 .slide_box img {
+    height: auto;
+  }
+}
+@media (max-width: 414px) {
+  /* line 154, ../sass/_screen.scss */
+  .slide_sec .slick-next::before,
+  .slide_sec .slick-prev::before {
+    top: -50px;
+  }
+}
+.tabs_bar ul li a:hover {
+    background-color: #c1272d !important;
+    color: #fff !important;
+}
