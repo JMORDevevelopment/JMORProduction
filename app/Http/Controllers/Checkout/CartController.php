@@ -1,6 +1,5 @@
 <?php
 
-<<<<<<< HEAD
 namespace App\Http\Controllers\Checkout;
 
 use App\Http\Controllers\Controller;
@@ -17,14 +16,15 @@ class CartController extends Controller
     ) {}
 
     public function index()
-{
-    if ($this->cart->isEmpty()) {
-        return view('frontend.cart')->with('message', 'Your cart is empty.');
+    {
+        if ($this->cart->isEmpty()) {
+            return view('frontend.cart')->with('message', 'Your cart is empty.');
+        }
+
+        $cartItems = $this->cart->items();
+
+        return view('frontend.cart', compact('cartItems'));
     }
-    
-    $cartItems = $this->cart->items();
-    return view('frontend.cart', compact('cartItems'));
-}
 
     public function addPackages(Request $request)
     {
@@ -59,8 +59,9 @@ class CartController extends Controller
         }
 
         $this->cart->markGiftCard($giftId);
+
         $this->cart->replace([[
-            'id' => $gift->id.'gc',
+            'id' => $gift->id . 'gc',
             'qty' => 1,
             'type' => 'Gift Card',
             'price' => $gift->price,
@@ -71,67 +72,3 @@ class CartController extends Controller
         return redirect('/cart');
     }
 }
-=======
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
-
-class CartController extends Controller
-{
-    public function index()
-    {
-        $cartItems = session()->get('cart', []);
-        $data['title'] = 'Cart';
-        $data['description'] = '';
-        $data['keywords'] = '';
-        $data['cartItems'] = $cartItems;
-        return view('frontend.cart', $data);
-    }
-
-    // AJAX – update quantity
-    public function updateItemQty($rowid, $qty)
-    {
-        $cart = session()->get('cart', []);
-        $update = 0;
-        if (isset($cart[$rowid])) {
-            $cart[$rowid]['qty'] = (int)$qty;
-            session()->put('cart', $cart);
-            $update = 1;
-        }
-        return response($update ? 'ok' : 'err');
-    }
-
-    // AJAX – apply coupon
-    public function couponCode($code)
-    {
-        $coupon = DB::table('coupon_checkout')
-            ->where('coupon_number', $code)
-            ->where('status', 0)
-            ->first();
-
-        if ($coupon) {
-            $gift = DB::table('gift_card')->where('id', $coupon->gift_card_id)->first();
-            if ($gift) {
-                session()->put('coupon_code', $coupon->coupon_number);
-                session()->put('discount_value', $gift->price);
-                return 'ok';
-            }
-        }
-        return 'err';
-    }
-
-    // Remove item
-    public function removeItem($rowid)
-    {
-        $cart = session()->get('cart', []);
-        if (isset($cart[$rowid])) {
-            unset($cart[$rowid]);
-            $cart = array_values($cart); // re-index
-            session()->put('cart', $cart);
-        }
-        return redirect('/cart');
-    }
-}
->>>>>>> 99227ce (added authorize and changecard method)
