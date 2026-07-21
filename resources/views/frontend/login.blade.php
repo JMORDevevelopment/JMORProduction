@@ -3,7 +3,6 @@
 @section('title', 'Login')
 
 @section('content')
-    {{-- Include style_file as in the original --}}
     @include('partials.style_file')
 
     <section class="wt-section bg-gray text-center inner-page-header">
@@ -26,15 +25,12 @@
                     <div class="col-md-4 col-md-offset-4">
                         <div class="panel panel-default">
                             <div class="panel-body">
-
-                                {{-- Check for error_email query param (exactly like CI) --}}
                                 @if(request()->has('error_email'))
                                     <div class="alert alert-warning alert-dismissible">
                                         <h4><i class="icon fa fa-warning"></i></h4>Your email is not validate
                                     </div>
                                 @endif
 
-                                {{-- Check for reset_pass query param (exactly like CI) --}}
                                 @if(request()->has('reset_pass'))
                                     <div class="alert alert-success alert-dismissible">
                                         <h4><i class="icon fa fa-success"></i></h4>Your new password is reset please check your email
@@ -44,8 +40,6 @@
                                 <div class="text-center">
                                     <p>You can Login to this page.</p>
                                     <div class="panel-body">
-
-                                        {{-- Check for error_login session variable (from controller) --}}
                                         @if(session('error_login'))
                                             <div class="alert alert-warning alert-dismissible">
                                                 <h4></h4>{{ session('error_login')['global_error'] }}
@@ -64,7 +58,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <div class="input-group">
-                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
+                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock color-blue"></i></span>
                                                     <input id="password" name="password" placeholder="Password"
                                                            value="{{ old('password') ?? $password ?? '' }}"
                                                            class="form-control" type="password">
@@ -72,27 +66,22 @@
                                             </div>
                                             <div class="form-group">
                                                 <button type="submit" class="btn btn-lg btn-primary btn-block">Login</button>
-                                        </div>
+                                            </div>
                                             <div class="form-group text-left">
                                                 <span><a href="{{ route('sign-up') }}">Sign up</a></span>
                                                 <span><a href="{{ route('forgot-password') }}" class="pull-right">Forgot password</a></span>
                                             </div>
                                         </form>
-
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
-        {{-- Include before_footer as in the original --}}
-        @include('partials.before_footer')
     </main>
 
-    {{-- Include script_file as in the original --}}
+    @include('partials.before_footer')
     @include('partials.script_file')
 @endsection

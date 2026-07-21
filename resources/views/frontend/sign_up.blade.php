@@ -1,4 +1,3 @@
-{{-- This is the sign_up view from CI --}}
 @extends('layouts.app')
 
 @section('title', 'Sign Up')
@@ -22,18 +21,20 @@
         <section class="wt-section">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-6 col-md-offset-3">
+                    <div class="col-md-4 col-md-offset-4"></div>
+                    <div class="col-md-4 col-md-offset-4">
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div class="text-center">
                                     <p>{{ $text_form ?? 'You can create an account here.' }}</p>
                                 </div>
 
-                                {{-- Display validation errors --}}
-                                @if ($errors->any())
-                                    <div class="alert alert-danger alert-dismissible">
+                                {{-- Display validation errors (same style as CI) --}}
+                                @if($errors->any())
+                                    <div class="alert alert-warning alert-dismissible">
+                                        <h4><i class="icon fa fa-warning"></i></h4>
                                         <ul>
-                                            @foreach ($errors->all() as $error)
+                                            @foreach($errors->all() as $error)
                                                 <li>{{ $error }}</li>
                                             @endforeach
                                         </ul>
@@ -42,57 +43,78 @@
 
                                 <form action="{{ route('sign-up') }}/validate" autocomplete="off" class="form" method="post">
                                     @csrf
+
                                     <div class="form-group">
-                                        <label for="firstname">{{ $text_firstname ?? 'First Name' }}</label>
-                                        <input type="text" name="firstname" id="firstname" class="form-control"
-                                               value="{{ old('firstname', $firstname ?? '') }}" required>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-user color-blue"></i></span>
+                                            <input type="text" name="firstname" id="firstname" placeholder="{{ $text_firstname ?? 'First Name' }}"
+                                                   value="{{ old('firstname', $firstname ?? '') }}" class="form-control" required>
+                                        </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="lastname">{{ $text_lastname ?? 'Last Name' }}</label>
-                                        <input type="text" name="lastname" id="lastname" class="form-control"
-                                               value="{{ old('lastname', $lastname ?? '') }}" required>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-user color-blue"></i></span>
+                                            <input type="text" name="lastname" id="lastname" placeholder="{{ $text_lastname ?? 'Last Name' }}"
+                                                   value="{{ old('lastname', $lastname ?? '') }}" class="form-control" required>
+                                        </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="email">{{ $text_email ?? 'Email' }}</label>
-                                        <input type="email" name="email" id="email" class="form-control"
-                                               value="{{ old('email', $email ?? '') }}" required>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
+                                            <input type="email" name="email" id="email" placeholder="{{ $text_email ?? 'Email' }}"
+                                                   value="{{ old('email', $email ?? '') }}" class="form-control" required>
+                                        </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="password">{{ $text_password ?? 'Password' }}</label>
-                                        <input type="password" name="password" id="password" class="form-control" required>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock color-blue"></i></span>
+                                            <input type="password" name="password" id="password" placeholder="{{ $text_password ?? 'Password' }}"
+                                                   class="form-control" required>
+                                        </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="address">{{ $text_address ?? 'Address' }}</label>
-                                        <input type="text" name="address" id="address" class="form-control"
-                                               value="{{ old('address', $address ?? '') }}" required>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-home color-blue"></i></span>
+                                            <input type="text" name="address" id="address" placeholder="{{ $text_address ?? 'Address' }}"
+                                                   value="{{ old('address', $address ?? '') }}" class="form-control" required>
+                                        </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="city">{{ $text_city ?? 'City' }}</label>
-                                        <input type="text" name="city" id="city" class="form-control"
-                                               value="{{ old('city', $city ?? '') }}" required>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker color-blue"></i></span>
+                                            <input type="text" name="city" id="city" placeholder="{{ $text_city ?? 'City' }}"
+                                                   value="{{ old('city', $city ?? '') }}" class="form-control" required>
+                                        </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="state">{{ $text_state ?? 'State' }}</label>
-                                        <input type="text" name="state" id="state" class="form-control"
-                                               value="{{ old('state', $state ?? '') }}" required>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker color-blue"></i></span>
+                                            <input type="text" name="state" id="state" placeholder="{{ $text_state ?? 'State' }}"
+                                                   value="{{ old('state', $state ?? '') }}" class="form-control" required>
+                                        </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="zip">{{ $text_zip ?? 'Zip Code' }}</label>
-                                        <input type="text" name="zip" id="zip" class="form-control"
-                                               value="{{ old('zip', $zip ?? '') }}" required>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk color-blue"></i></span>
+                                            <input type="text" name="zip" id="zip" placeholder="{{ $text_zip ?? 'Zip Code' }}"
+                                                   value="{{ old('zip', $zip ?? '') }}" class="form-control" required>
+                                        </div>
                                     </div>
-                                    {{-- Region and Nation are optional; add if needed --}}
+
                                     <div class="form-group">
-    <label for="region_id">{{ $text_region ?? 'Region' }}</label>
-    <select name="region_id" id="region_id" class="form-control">
-        <option value="">{{ $text_select_region ?? 'Select region' }}</option>
-        @foreach($regions ?? [] as $region)
-            <option value="{{ $region->region_id ?? $region->id }}">
-                {{ $region->region_name ?? $region->name }}
-            </option>
-        @endforeach
-    </select>
-</div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-globe color-blue"></i></span>
+                                            <select name="region_id" id="region_id" class="form-control">
+                                                <option value="">{{ $text_select_region ?? 'Select region' }}</option>
+                                                @foreach($regions ?? [] as $region)
+                                                    <option value="{{ $region->region_id ?? $region->id }}">
+                                                        {{ $region->region_name ?? $region->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-lg btn-primary btn-block">
                                             {{ $text_sign_up ?? 'Sign Up' }}
