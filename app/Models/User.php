@@ -2,31 +2,45 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Attributes\Hidden;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password'])]
-#[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use Notifiable;
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    protected $table = 'user';
+    protected $primaryKey = 'user_id';
+    public $incrementing = true;
+    protected $keyType = 'int';
+    public $timestamps = false;
+
+    protected $fillable = [
+        'user_group_id', 'firstname', 'lastname', 'image',
+        'date_birth', 'gender', 'region_id', 'ip', 'city',
+        'address', 'zip', 'state', 'company', 'email',
+        'date_added', 'password', 'nation_id', 'ban'
+    ];
+
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+
+    protected $casts = [
+        'date_birth' => 'date',
+        'date_added' => 'date',
+        'ban' => 'integer',
+    ];
+
+    // Helper methods
+    public function getFullNameAttribute(): string
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return trim($this->firstname . ' ' . $this->lastname);
+    }
+
+    public function getAvatarAttribute(): string
+    {
+        return $this->image ? asset('uploads/users/' . $this->image) : asset('images/default-avatar.png');
     }
 }

@@ -22,44 +22,23 @@ class Menu extends Model
     }
 
     /**
-     * Bounded to 4 levels deep, matching the original CI header.php exactly
-     * (main_nav -> sub -> sub_child -> sub_child_menu). Unbounded self-referential
-     * eager loading is NOT used here because the `menu` table has a cycle somewhere
-     * in its parent_id chain, which caused infinite recursive eager loading and a
-     * 30-second timeout. Run this to find and fix the cyclic row(s):
-     *
-     *   mysql -u root -proot jmor_web -e "
-     *     SELECT id, parent_id, title FROM menu ORDER BY parent_id, id;"
-     *
-     * and check for any parent_id that (directly or via its own chain) points back
-     * down to one of its own descendants.
+     * Eager-loads children recursively. The CI original hardcoded 4 levels
+     * (main_nav -> sub -> sub_child -> sub_child_menu); this recurses
+     * unbounded, but live data never exceeds depth 4 (verified against the
+     * menu table dump), so behavior matches exactly today. Two rows have a
+     * parent_id that doesn't exist in the table (3 and 110) — these are
+     * orphaned/unreachable in both the old and new stack, not a bug.
      */
     public function childrenRecursive()
     {
-        return $this->children()
-            ->with(['children' => function ($q) {
-                $q->with('children');
-            }]);
+        return $this->children()->with('childrenRecursive');
     }
 
     /**
-     * Convenience scope for fetching the full top-level nav tree in one query,
-     * capped at 4 levels deep.
+     * Full top-level nav tree in one query.
      */
     public static function tree()
     {
-        // TEMPORARY DIAGNOSTIC — remove once the repeated-call bug is found.
-        static $callCount = 0;
-        $callCount++;
-        \Log::info("Menu::tree() called - count: {$callCount}", [
-            'trace' => collect(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 30))
-                ->map(fn($t) => ($t['class'] ?? '') . ($t['type'] ?? '') . $t['function'] . ':' . ($t['line'] ?? '?'))
-                ->implode(' <- '),
-        ]);
-        if ($callCount > 5) {
-            abort(500, "Menu::tree() called {$callCount} times - loop confirmed, check laravel.log for the trace.");
-        }
-
         return static::where('parent_id', 0)
             ->orderBy('position', 'asc')
             ->with('childrenRecursive')

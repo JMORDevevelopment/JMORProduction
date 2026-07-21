@@ -21,7 +21,9 @@
         class="{{ $depth === 0
             ? ($hasChildren ? 'nav-link dropdown-toggle' : 'nav-link')
             : ($hasChildren ? 'dropdown-item dropdown-toggle' : '') }}"
-        style="color:#fff!important;"
+        @if ($depth === 0)
+            style="color:#fff!important;"
+        @endif
         @if ($hasChildren)
             id="navbarDropdownMenuLink-{{ $item->id }}"
             data-bs-toggle="dropdown"
@@ -31,7 +33,7 @@
     >
         {{ $item->title }}
     </a>
-
+ 
     @if ($hasChildren)
         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink-{{ $item->id }}">
             @foreach ($item->childrenRecursive as $child)
