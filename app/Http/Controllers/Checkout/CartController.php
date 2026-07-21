@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Checkout;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -14,7 +14,7 @@ class CartController extends Controller
         $data['title'] = 'Cart';
         $data['description'] = '';
         $data['keywords'] = '';
-        $data['cartItems'] = $cartItems;
+    $data['cartItems'] = $cartItems;
         return view('frontend.cart', $data);
     }
 

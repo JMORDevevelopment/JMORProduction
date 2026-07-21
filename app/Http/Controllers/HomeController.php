@@ -9,6 +9,7 @@ use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use net\authorize\api\constants\ANetEnvironment;
 use net\authorize\api\contract\v1 as AnetAPI;
 use net\authorize\api\controller as AnetController;
 
@@ -41,17 +42,21 @@ class HomeController extends Controller
         $data['title'] = 'Blog';
         $data['description'] = '';
         $data['keywords'] = '';
+
         return view('frontend.blog', $data);
     }
 
     public function blog_detail($blog_link)
     {
         $blog = DB::table('blog')->where('link', $blog_link)->first();
-        if (!$blog) abort(404);
+        if (! $blog) {
+            abort(404);
+        }
         $data['blog_datas'] = (array) $blog;
         $data['title'] = $blog->meta_title ?: $blog->name;
         $data['description'] = strip_tags($blog->meta_description ?? '');
         $data['keywords'] = $blog->meta_keywords ?? '';
+
         return view('frontend.blog_detail', $data);
     }
 
@@ -61,6 +66,7 @@ class HomeController extends Controller
         $data['title'] = 'Testimonials';
         $data['description'] = '';
         $data['keywords'] = '';
+
         return view('frontend.testimonials', $data);
     }
 
@@ -72,11 +78,12 @@ class HomeController extends Controller
         $data['description'] = '';
         $data['keywords'] = '';
         $data['main_blogs'] = [];
-        if (!empty($search_key)) {
-            $blogs = DB::table('blog')->where('name', 'like', '%' . $search_key . '%')->limit(10)->get()->toArray();
-            $pages = DB::table('pages')->where('name', 'like', '%' . $search_key . '%')->limit(10)->get()->toArray();
+        if (! empty($search_key)) {
+            $blogs = DB::table('blog')->where('name', 'like', '%'.$search_key.'%')->limit(10)->get()->toArray();
+            $pages = DB::table('pages')->where('name', 'like', '%'.$search_key.'%')->limit(10)->get()->toArray();
             $data['main_blogs'] = array_merge($blogs, $pages);
         }
+
         return view('frontend.search', $data);
     }
 
@@ -88,14 +95,15 @@ class HomeController extends Controller
         $data['description'] = '';
         $data['keywords'] = '';
         $query = DB::table('radio_show');
-        if (!empty($date_key)) {
+        if (! empty($date_key)) {
             $show_date = date('Y-m-d', strtotime($date_key));
             $query->where('show_date', $show_date);
         }
-        if (!empty($search_key)) {
-            $query->where('name', 'like', '%' . $search_key . '%');
+        if (! empty($search_key)) {
+            $query->where('name', 'like', '%'.$search_key.'%');
         }
         $data['main_blogs'] = $query->get()->toArray();
+
         return view('frontend.search_radio', $data);
     }
 
@@ -105,17 +113,21 @@ class HomeController extends Controller
         $data['title'] = 'Case Studies';
         $data['description'] = '';
         $data['keywords'] = '';
+
         return view('frontend.case_studies', $data);
     }
 
     public function case_studies_detail($link)
     {
         $case = DB::table('case_studies')->where('link', $link)->first();
-        if (!$case) abort(404);
+        if (! $case) {
+            abort(404);
+        }
         $data['case_studies_datas'] = (array) $case;
         $data['title'] = $case->meta_title ?: $case->name;
         $data['description'] = strip_tags($case->meta_description ?? '');
         $data['keywords'] = $case->meta_keywords ?? '';
+
         return view('frontend.case_studies_detail', $data);
     }
 
@@ -125,24 +137,30 @@ class HomeController extends Controller
         $data['title'] = 'Jmor Shows';
         $data['description'] = '';
         $data['keywords'] = '';
+
         return view('frontend.jmor_radio', $data);
     }
 
     public function jmor_radio_detail($link)
     {
         $show = DB::table('radio_show')->where('link', $link)->first();
-        if (!$show) abort(404);
+        if (! $show) {
+            abort(404);
+        }
         $data['jmor_radio_datas'] = (array) $show;
         $data['title'] = $show->meta_title ?: $show->name;
         $data['description'] = strip_tags($show->meta_description ?? '');
         $data['keywords'] = $show->meta_keywords ?? '';
+
         return view('frontend.jmor_radio_detail', $data);
     }
 
     public function category_radio_show($cat_link, $cYear = null)
     {
         $category = DB::table('category_radio_show')->where('link', $cat_link)->first();
-        if (!$category) abort(404);
+        if (! $category) {
+            abort(404);
+        }
         $data['category_radio_show'] = [(array) $category];
         $data['top_title'] = $category->title;
         $data['category_id'] = $category->id;
@@ -157,7 +175,7 @@ class HomeController extends Controller
         if ($category->parent_id == 0) {
             $record1 = DB::table('radio_show')->where('category_id', $category->id)->orderBy('id', 'desc')->get()->toArray();
             $record2 = [];
-            if (!empty($children)) {
+            if (! empty($children)) {
                 $childIds = array_column($children, 'id');
                 $record2 = DB::table('radio_show')->whereIn('category_id', $childIds)->orderBy('id', 'desc')->get()->toArray();
             }
@@ -166,6 +184,7 @@ class HomeController extends Controller
             $shows = DB::table('radio_show')->where('category_id', $category->id)->orderBy('id', 'desc')->get()->toArray();
         }
         $data['show_datas'] = $shows;
+
         return view('frontend.category_radio_show', $data);
     }
 
@@ -175,17 +194,21 @@ class HomeController extends Controller
         $data['title'] = 'Recommended';
         $data['description'] = '';
         $data['keywords'] = '';
+
         return view('frontend.recommended', $data);
     }
 
     public function recommended_detail($link)
     {
         $rec = DB::table('recommended')->where('link', $link)->first();
-        if (!$rec) abort(404);
+        if (! $rec) {
+            abort(404);
+        }
         $data['recommended_datas'] = (array) $rec;
         $data['title'] = $rec->meta_title ?: $rec->name;
         $data['description'] = strip_tags($rec->meta_description ?? '');
         $data['keywords'] = $rec->meta_keywords ?? '';
+
         return view('frontend.recommended_detail', $data);
     }
 
@@ -195,17 +218,21 @@ class HomeController extends Controller
         $data['title'] = 'Random Acts of Kindness';
         $data['description'] = '';
         $data['keywords'] = '';
+
         return view('frontend.random_acts_of_kindness', $data);
     }
 
     public function random_acts_of_kindness_detail($link)
     {
         $row = DB::table('random_acts_of_kindness')->where('link', $link)->first();
-        if (!$row) abort(404);
+        if (! $row) {
+            abort(404);
+        }
         $data['random_acts_of_kindness_datas'] = (array) $row;
         $data['title'] = $row->meta_title ?: $row->name;
         $data['description'] = strip_tags($row->meta_description ?? '');
         $data['keywords'] = $row->meta_keywords ?? '';
+
         return view('frontend.random_acts_of_kindness_detail', $data);
     }
 
@@ -215,17 +242,21 @@ class HomeController extends Controller
         $data['title'] = 'Events';
         $data['description'] = '';
         $data['keywords'] = '';
+
         return view('frontend.events', $data);
     }
 
     public function events_detail($link)
     {
         $row = DB::table('events')->where('link', $link)->first();
-        if (!$row) abort(404);
+        if (! $row) {
+            abort(404);
+        }
         $data['events_datas'] = (array) $row;
         $data['title'] = $row->meta_title ?: $row->name;
         $data['description'] = strip_tags($row->meta_description ?? '');
         $data['keywords'] = $row->meta_keywords ?? '';
+
         return view('frontend.events_detail', $data);
     }
 
@@ -235,17 +266,21 @@ class HomeController extends Controller
         $data['title'] = 'Media Resources';
         $data['description'] = '';
         $data['keywords'] = '';
+
         return view('frontend.media_resources', $data);
     }
 
     public function media_resources_detail($link)
     {
         $row = DB::table('media_resouces')->where('link', $link)->first();
-        if (!$row) abort(404);
+        if (! $row) {
+            abort(404);
+        }
         $data['media_resouces_datas'] = (array) $row;
         $data['title'] = $row->meta_title ?: $row->name;
         $data['description'] = strip_tags($row->meta_description ?? '');
         $data['keywords'] = $row->meta_keywords ?? '';
+
         return view('frontend.media_resources_detail', $data);
     }
 
@@ -255,17 +290,21 @@ class HomeController extends Controller
         $data['title'] = 'Press Releases';
         $data['description'] = '';
         $data['keywords'] = '';
+
         return view('frontend.press_releases', $data);
     }
 
     public function press_releases_detail($link)
     {
         $row = DB::table('press_releases')->where('link', $link)->first();
-        if (!$row) abort(404);
+        if (! $row) {
+            abort(404);
+        }
         $data['press_releases_datas'] = (array) $row;
         $data['title'] = $row->meta_title ?: $row->name;
         $data['description'] = strip_tags($row->meta_description ?? '');
         $data['keywords'] = $row->meta_keywords ?? '';
+
         return view('frontend.press_releases_detail', $data);
     }
 
@@ -275,17 +314,21 @@ class HomeController extends Controller
         $data['title'] = 'Media Video';
         $data['description'] = '';
         $data['keywords'] = '';
+
         return view('frontend.media_video', $data);
     }
 
     public function media_video_detail($link)
     {
         $row = DB::table('media_video')->where('link', $link)->first();
-        if (!$row) abort(404);
+        if (! $row) {
+            abort(404);
+        }
         $data['media_video_datas'] = (array) $row;
         $data['title'] = $row->meta_title ?: $row->name;
         $data['description'] = strip_tags($row->meta_description ?? '');
         $data['keywords'] = $row->meta_keywords ?? '';
+
         return view('frontend.media_video_detail', $data);
     }
 
@@ -295,17 +338,21 @@ class HomeController extends Controller
         $data['title'] = 'Brand Guidelines';
         $data['description'] = '';
         $data['keywords'] = '';
+
         return view('frontend.brand_guidelines', $data);
     }
 
     public function brand_guidelines_detail($link)
     {
         $row = DB::table('brand_guidelines')->where('link', $link)->first();
-        if (!$row) abort(404);
+        if (! $row) {
+            abort(404);
+        }
         $data['brand_guidelines_datas'] = (array) $row;
         $data['title'] = $row->meta_title ?: $row->name;
         $data['description'] = strip_tags($row->meta_description ?? '');
         $data['keywords'] = $row->meta_keywords ?? '';
+
         return view('frontend.brand_guidelines_detail', $data);
     }
 
@@ -315,17 +362,21 @@ class HomeController extends Controller
         $data['title'] = 'Services';
         $data['description'] = '';
         $data['keywords'] = '';
+
         return view('frontend.service', $data);
     }
 
     public function service_detail($link)
     {
         $row = DB::table('service')->where('link', $link)->first();
-        if (!$row) abort(404);
+        if (! $row) {
+            abort(404);
+        }
         $data['service_datas'] = (array) $row;
         $data['title'] = $row->meta_title ?: $row->name;
         $data['description'] = strip_tags($row->meta_description ?? '');
         $data['keywords'] = $row->meta_keywords ?? '';
+
         return view('frontend.service_detail', $data);
     }
 
@@ -335,24 +386,30 @@ class HomeController extends Controller
         $limit = 5;
         $total = DB::table('news')->count();
         $news = DB::table('news')->offset($start)->limit($limit)->get()->toArray();
-        $data['news'] = array_map(function ($n) { return (array) $n; }, $news);
+        $data['news'] = array_map(function ($n) {
+            return (array) $n;
+        }, $news);
         $to = min($start + $limit, $total);
         $data['text_showing'] = ($total > 0) ? sprintf('Showing %d to %d of %d', $start + 1, $to, $total) : 'No results';
         $data['pagination'] = ''; // You can add Laravel pagination if needed
         $data['title'] = 'News';
         $data['description'] = '';
         $data['keywords'] = '';
+
         return view('frontend.news', $data);
     }
 
     public function news_detail($link)
     {
         $row = DB::table('news')->where('link', $link)->first();
-        if (!$row) abort(404);
+        if (! $row) {
+            abort(404);
+        }
         $data['news_datas'] = (array) $row;
         $data['title'] = $row->meta_title ?: $row->name;
         $data['description'] = strip_tags($row->meta_description ?? '');
         $data['keywords'] = $row->meta_keywords ?? '';
+
         return view('frontend.news_detail', $data);
     }
 
@@ -360,20 +417,25 @@ class HomeController extends Controller
     public function pages($page_link)
     {
         $page = DB::table('pages')->where('link', $page_link)->first();
-        if (!$page) abort(404);
+        if (! $page) {
+            abort(404);
+        }
         $data['page_datas'] = (array) $page;
         $data['title'] = $page->meta_title ?: $page->name;
         $data['description'] = strip_tags($page->meta_description ?? '');
         $data['keywords'] = $page->meta_keywords ?? '';
+
         return view('frontend.pages', $data);
     }
 
     // ---- Packages ----
     public function packages_list()
     {
+        $data['package_data'] = DB::table('packages')->orderBy('priority', 'asc')->get()->toArray();
         $data['title'] = 'Packages';
         $data['description'] = '';
         $data['keywords'] = '';
+
         return view('frontend.packages', $data);
     }
 
@@ -384,15 +446,26 @@ class HomeController extends Controller
         $data['title'] = 'Jmor Services';
         $data['description'] = '';
         $data['keywords'] = '';
+
         return view('frontend.packages_detail', $data);
     }
 
     public function single_package($package_id)
     {
-        $data['package_data'] = DB::table('packages')->where('id', $package_id)->orderBy('priority', 'asc')->get()->toArray();
+        $packages = DB::table('packages')
+            ->where('id', $package_id)
+            ->orderBy('priority', 'asc')
+            ->get()
+            ->map(function ($item) {
+                return (array) $item;
+            })
+            ->toArray();
+
+        $data['package_data'] = $packages;
         $data['title'] = 'Jmor Services';
         $data['description'] = '';
         $data['keywords'] = '';
+
         return view('frontend.single_package', $data);
     }
 
@@ -402,6 +475,7 @@ class HomeController extends Controller
         $data['title'] = 'Gift Card';
         $data['description'] = '';
         $data['keywords'] = '';
+
         return view('frontend.gift_card', $data);
     }
 
@@ -411,7 +485,8 @@ class HomeController extends Controller
         $data['title'] = 'Contact Us';
         $data['description'] = '';
         $data['keywords'] = '';
-        $min = 1; $max = 15;
+        $min = 1;
+        $max = 15;
         $data['random_number1'] = mt_rand($min, $max);
         $data['random_number2'] = mt_rand($min, $max);
         $data['random_number1_show'] = $data['random_number1'];
@@ -422,6 +497,7 @@ class HomeController extends Controller
         $data['reason'] = old('reason', '');
         $data['message'] = old('message', '');
         $data['error'] = session('errors') ? session('errors')->getBag('default')->getMessages() : [];
+
         return view('frontend.contact_us', $data);
     }
 
@@ -430,11 +506,21 @@ class HomeController extends Controller
         $post = $request->all();
         $error = [];
 
-        if (empty($post['name'])) $error['error_name'] = 'Enter Name';
-        if (empty($post['email'])) $error['error_email'] = 'Enter Email';
-        if (empty($post['phone'])) $error['error_phone'] = 'Enter Phone';
-        if (empty($post['reason'])) $error['error_reason'] = 'Enter Reason';
-        if (empty($post['message'])) $error['error_message'] = 'Enter Message';
+        if (empty($post['name'])) {
+            $error['error_name'] = 'Enter Name';
+        }
+        if (empty($post['email'])) {
+            $error['error_email'] = 'Enter Email';
+        }
+        if (empty($post['phone'])) {
+            $error['error_phone'] = 'Enter Phone';
+        }
+        if (empty($post['reason'])) {
+            $error['error_reason'] = 'Enter Reason';
+        }
+        if (empty($post['message'])) {
+            $error['error_message'] = 'Enter Message';
+        }
 
         $rand1 = $request->input('firstNumber');
         $rand2 = $request->input('secondNumber');
@@ -443,7 +529,7 @@ class HomeController extends Controller
             $error['error_protection_question'] = 'Your answer is wrong!';
         }
 
-        if (!empty($error)) {
+        if (! empty($error)) {
             return redirect()->back()->withInput()->withErrors($error);
         }
 
@@ -463,11 +549,11 @@ class HomeController extends Controller
         $to = DB::table('settings')->where('option', 'email')->value('value');
         $subject = 'Contact Us';
         $from = $post['email'];
-        $message = "<p style='color:black;'><strong>Name: </strong>" . $post['name'] . "</p>";
-        $message .= "<br><strong style='color:black;'>Email: </strong>" . $post['email'];
-        $message .= "<br><strong style='color:black;'>Phone: </strong>" . $post['phone'];
-        $message .= "<br><strong style='color:black;'>Reason: </strong>" . $post['reason'];
-        $message .= "<br><strong style='color:black;'>Message: </strong>" . $post['message'];
+        $message = "<p style='color:black;'><strong>Name: </strong>".$post['name'].'</p>';
+        $message .= "<br><strong style='color:black;'>Email: </strong>".$post['email'];
+        $message .= "<br><strong style='color:black;'>Phone: </strong>".$post['phone'];
+        $message .= "<br><strong style='color:black;'>Reason: </strong>".$post['reason'];
+        $message .= "<br><strong style='color:black;'>Message: </strong>".$post['message'];
 
         try {
             Mail::html($message, function ($mail) use ($to, $subject, $from) {
@@ -483,7 +569,7 @@ class HomeController extends Controller
     // ---- Checkout / Cart ----
     public function check_out()
     {
-        if (!session()->has('user_id')) {
+        if (! session()->has('user_id')) {
             return redirect('/login');
         }
         $cartItems = session()->get('cart', []);
@@ -494,12 +580,13 @@ class HomeController extends Controller
         $data['title'] = 'Check Out';
         $data['description'] = '';
         $data['keywords'] = '';
+
         return view('frontend.checkout', $data);
     }
 
     public function checkout_confirm()
     {
-        if (!session()->has('user_id')) {
+        if (! session()->has('user_id')) {
             return redirect('/login');
         }
         $cartItems = session()->get('cart', []);
@@ -510,6 +597,7 @@ class HomeController extends Controller
         $data['title'] = 'Checkout Confirm';
         $data['description'] = '';
         $data['keywords'] = '';
+
         return view('frontend.checkout_confirm', $data);
     }
 
@@ -533,6 +621,7 @@ class HomeController extends Controller
             'grand_total' => $grand_total,
             'create_date' => date('Y-m-d'),
             'status' => 0,
+            'checkout_data' => '', // <-- add this
         ];
         $order_id = DB::table('orders')->insertGetId($orderData);
         session()->put('order_id', $order_id);
@@ -559,7 +648,9 @@ class HomeController extends Controller
     public function placeOrderGiftcard()
     {
         $cart = session()->get('cart', []);
-        if (empty($cart)) return redirect('/');
+        if (empty($cart)) {
+            return redirect('/');
+        }
 
         $sub_total = 0;
         foreach ($cart as $item) {
@@ -575,6 +666,7 @@ class HomeController extends Controller
             'grand_total' => $grand_total,
             'create_date' => date('Y-m-d'),
             'status' => 0,
+            'checkout_data' => '', // <-- add this
         ];
         $order_id = DB::table('orders')->insertGetId($orderData);
         session()->put('order_id', $order_id);
@@ -603,6 +695,7 @@ class HomeController extends Controller
         $order_id = session()->get('order_id');
         $post = $request->all();
         DB::table('orders')->where('id', $order_id)->update(['checkout_data' => json_encode($post)]);
+
         return redirect('/checkout-confirm');
     }
 
@@ -618,7 +711,9 @@ class HomeController extends Controller
         $package_type = $request->input('package_type');
 
         $package = DB::table('packages')->where('id', $package_id)->first();
-        if (!$package) return redirect('/cart');
+        if (! $package) {
+            return redirect('/cart');
+        }
 
         $server_price = DB::table('package_price')
             ->where('package_id', $package_id)
@@ -656,9 +751,9 @@ class HomeController extends Controller
         }
 
         $cart = session()->get('cart', []);
-        if (!empty($server_qty) && $new_pricess > 0) {
+        if (! empty($server_qty) && $new_pricess > 0) {
             $cart[] = [
-                'id' => $package->id . 'p',
+                'id' => $package->id.'p',
                 'qty' => $server_qty,
                 'type' => 'Server',
                 'price' => $new_pricess,
@@ -666,9 +761,9 @@ class HomeController extends Controller
                 'description' => $package->description,
             ];
         }
-        if (!empty($system_qty) && $new_system_pricess > 0) {
+        if (! empty($system_qty) && $new_system_pricess > 0) {
             $cart[] = [
-                'id' => $package->id . 's',
+                'id' => $package->id.'s',
                 'qty' => $system_qty,
                 'type' => 'Workstation',
                 'price' => $new_system_pricess,
@@ -677,6 +772,7 @@ class HomeController extends Controller
             ];
         }
         session()->put('cart', $cart);
+
         return redirect('/cart');
     }
 
@@ -687,11 +783,13 @@ class HomeController extends Controller
 
         $gift_id = $request->input('gift_id');
         $gift = DB::table('gift_card')->where('id', $gift_id)->first();
-        if (!$gift) return redirect('/cart');
+        if (! $gift) {
+            return redirect('/cart');
+        }
 
-        session()->put('gift_cards', $gift_id . '-gd');
+        session()->put('gift_cards', $gift_id.'-gd');
         $cart = [
-            'id' => $gift->id . 'gc',
+            'id' => $gift->id.'gc',
             'qty' => 1,
             'type' => 'Gift Card',
             'price' => $gift->price,
@@ -699,6 +797,7 @@ class HomeController extends Controller
             'description' => $gift->description,
         ];
         session()->put('cart', [$cart]);
+
         return redirect('/cart');
     }
 
@@ -708,6 +807,7 @@ class HomeController extends Controller
         $data['title'] = 'Order Confirmed';
         $data['description'] = '';
         $data['keywords'] = '';
+
         return view('frontend.checkout-sucess', $data);
     }
 
@@ -724,7 +824,7 @@ class HomeController extends Controller
     {
         // Get order data from session
         $order_id = session()->get('order_id');
-        if (!$order_id) {
+        if (! $order_id) {
             return redirect('/checkout-confirm?failed=true');
         }
 
@@ -743,7 +843,7 @@ class HomeController extends Controller
 
         // Get order details
         $order = DB::table('orders')->where('id', $order_id)->first();
-        if (!$order) {
+        if (! $order) {
             return redirect('/checkout-confirm?failed=true');
         }
 
@@ -753,7 +853,7 @@ class HomeController extends Controller
 
         // Get customer info
         $customer = DB::table('user')->where('user_id', $order->user_id)->first();
-        if (!$customer) {
+        if (! $customer) {
             return redirect('/checkout-confirm?failed=true');
         }
 
@@ -772,25 +872,25 @@ class HomeController extends Controller
         $cvc = $post['cvc'];
 
         // Authorize.Net SDK – exact CI logic
-        $merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
+        $merchantAuthentication = new AnetAPI\MerchantAuthenticationType;
         $merchantAuthentication->setName(config('services.authorize_net.login_id'));
         $merchantAuthentication->setTransactionKey(config('services.authorize_net.transaction_key'));
 
-        $refId = 'ref' . time();
+        $refId = 'ref'.time();
 
-        $creditCard = new AnetAPI\CreditCardType();
+        $creditCard = new AnetAPI\CreditCardType;
         $creditCard->setCardNumber($cardNumber);
         $creditCard->setExpirationDate($expiry);
         $creditCard->setCardCode($cvc);
 
-        $paymentOne = new AnetAPI\PaymentType();
+        $paymentOne = new AnetAPI\PaymentType;
         $paymentOne->setCreditCard($creditCard);
 
-        $orderInfo = new AnetAPI\OrderType();
+        $orderInfo = new AnetAPI\OrderType;
         $orderInfo->setInvoiceNumber($order_id);
-        $orderInfo->setDescription('Order #' . $order_id);
+        $orderInfo->setDescription('Order #'.$order_id);
 
-        $customerAddress = new AnetAPI\CustomerAddressType();
+        $customerAddress = new AnetAPI\CustomerAddressType;
         $customerAddress->setFirstName($customer->firstname);
         $customerAddress->setLastName($customer->lastname);
         $customerAddress->setCompany($customer->company ?? '');
@@ -800,16 +900,16 @@ class HomeController extends Controller
         $customerAddress->setZip($customer->zip);
         $customerAddress->setCountry('USA');
 
-        $customerData = new AnetAPI\CustomerDataType();
+        $customerData = new AnetAPI\CustomerDataType;
         $customerData->setType('individual');
         $customerData->setId($order_id);
         $customerData->setEmail($customer->email);
 
-        $duplicateWindowSetting = new AnetAPI\SettingType();
+        $duplicateWindowSetting = new AnetAPI\SettingType;
         $duplicateWindowSetting->setSettingName('duplicateWindow');
         $duplicateWindowSetting->setSettingValue('60');
 
-        $transactionRequestType = new AnetAPI\TransactionRequestType();
+        $transactionRequestType = new AnetAPI\TransactionRequestType;
         $transactionRequestType->setTransactionType('authCaptureTransaction');
         $transactionRequestType->setAmount($amount);
         $transactionRequestType->setOrder($orderInfo);
@@ -818,15 +918,15 @@ class HomeController extends Controller
         $transactionRequestType->setCustomer($customerData);
         $transactionRequestType->addToTransactionSettings($duplicateWindowSetting);
 
-        $requestObj = new AnetAPI\CreateTransactionRequest();
+        $requestObj = new AnetAPI\CreateTransactionRequest;
         $requestObj->setMerchantAuthentication($merchantAuthentication);
         $requestObj->setRefId($refId);
         $requestObj->setTransactionRequest($transactionRequestType);
 
         $controller = new AnetController\CreateTransactionController($requestObj);
         $environment = config('services.authorize_net.environment') === 'production'
-            ? \net\authorize\api\constants\ANetEnvironment::PRODUCTION
-            : \net\authorize\api\constants\ANetEnvironment::SANDBOX;
+            ? ANetEnvironment::PRODUCTION
+            : ANetEnvironment::SANDBOX;
         $response = $controller->executeWithApiResponse($environment);
 
         if ($response != null) {
@@ -899,12 +999,12 @@ class HomeController extends Controller
         foreach ($order_details as $detail) {
             $sr_no++;
             $pro_det .= '<tr>';
-            $pro_det .= '<td style="color:black;">' . $sr_no . '</td>';
-            $pro_det .= '<td style="color:black;">' . $detail->item . '</td>';
-            $pro_det .= '<td style="color:black;">' . $detail->type . '</td>';
-            $pro_det .= '<td style="color:black;">' . $detail->qty . '</td>';
-            $pro_det .= '<td style="color:black;">$' . number_format($detail->price, 2) . '</td>';
-            $pro_det .= '<td style="color:black;">$' . number_format($detail->sub_total, 2) . '</td>';
+            $pro_det .= '<td style="color:black;">'.$sr_no.'</td>';
+            $pro_det .= '<td style="color:black;">'.$detail->item.'</td>';
+            $pro_det .= '<td style="color:black;">'.$detail->type.'</td>';
+            $pro_det .= '<td style="color:black;">'.$detail->qty.'</td>';
+            $pro_det .= '<td style="color:black;">$'.number_format($detail->price, 2).'</td>';
+            $pro_det .= '<td style="color:black;">$'.number_format($detail->sub_total, 2).'</td>';
             $pro_det .= '</tr>';
         }
 
@@ -931,14 +1031,14 @@ class HomeController extends Controller
         <body>
         <div class="container">
             <div class="inv-title">
-                <h1 class="no-margin" style="color:black;">Invoice # ' . $order_id . '</h1>
+                <h1 class="no-margin" style="color:black;">Invoice # '.$order_id.'</h1>
             </div>
             <div class="inv-header">
                 <table>
-                    <tr><th style="text-align:left;color:black;">Date</th><td style="color:black;">' . $order->create_date . '</td></tr>
-                    <tr><th style="text-align:left;color:black;">Transaction #</th><td style="color:black;">' . $transaction_id . '</td></tr>
-                    <tr><th style="text-align:left;color:black;">Customer Name</th><td style="color:black;">' . $customer->firstname . ' ' . $customer->lastname . '</td></tr>
-                    <tr><th style="text-align:left;color:black;">Address</th><td style="color:black;">' . $customer->address . '</td></tr>
+                    <tr><th style="text-align:left;color:black;">Date</th><td style="color:black;">'.$order->create_date.'</td></tr>
+                    <tr><th style="text-align:left;color:black;">Transaction #</th><td style="color:black;">'.$transaction_id.'</td></tr>
+                    <tr><th style="text-align:left;color:black;">Customer Name</th><td style="color:black;">'.$customer->firstname.' '.$customer->lastname.'</td></tr>
+                    <tr><th style="text-align:left;color:black;">Address</th><td style="color:black;">'.$customer->address.'</td></tr>
                 </table>
             </div>
             <div class="inv-body">
@@ -952,15 +1052,15 @@ class HomeController extends Controller
                         <th style="color:black;">Sub total</th>
                     </thead>
                     <tbody>
-                        ' . $pro_det . '
+                        '.$pro_det.'
                     </tbody>
                 </table>
             </div>
             <div class="inv-footer">
                 <table>
-                    <tr><th style="color:black;">Sub total</th><td style="color:black;">$' . number_format($sub_total, 2) . '</td></tr>
-                    <tr><th style="color:black;">Discount</th><td style="color:black;">$' . number_format($discount, 2) . '</td></tr>
-                    <tr><th style="color:black;">Grand total</th><td style="color:black;">$' . number_format($amount, 2) . '</td></tr>
+                    <tr><th style="color:black;">Sub total</th><td style="color:black;">$'.number_format($sub_total, 2).'</td></tr>
+                    <tr><th style="color:black;">Discount</th><td style="color:black;">$'.number_format($discount, 2).'</td></tr>
+                    <tr><th style="color:black;">Grand total</th><td style="color:black;">$'.number_format($amount, 2).'</td></tr>
                 </table>
             </div>
         </div>
