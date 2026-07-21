@@ -3,6 +3,7 @@
 @section('title', 'Sign Up')
 
 @section('content')
+    {{-- 1. Include style_file (as in CI: <?php echo $style_file; ?>) --}}
     @include('partials.style_file')
 
     <section class="wt-section bg-gray text-center inner-page-header">
@@ -10,7 +11,7 @@
             <div class="row justify-content-md-center align-items-center text-white py-4 py-lg-5">
                 <div class="col-md-7">
                     <div class="text-center">
-                        <h1 class="display-sm-4 display-lg-3">{{ $text_sign_up ?? 'Sign Up' }}</h1>
+                        <h1 class="display-sm-4 display-lg-3">Sign Up</h1>
                     </div>
                 </div>
             </div>
@@ -26,104 +27,148 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div class="text-center">
-                                    <p>{{ $text_form ?? 'You can create an account here.' }}</p>
+                                    <p>You can sign up this page.</p>
+                                    <div class="panel-body">
+                                        {{-- Display errors (matches CI) --}}
+                                        @if(session('error_exists'))
+                                            <div class="alert alert-danger alert-dismissible">
+                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">X</button>
+                                                {{ session('error_exists') }}
+                                            </div>
+                                        @endif
+                                        @if ($errors->any())
+                                            <div class="alert alert-danger alert-dismissible">
+                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">X</button>
+                                                <ul>
+                                                    @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        @endif
+
+                                        <form class="well" action="{{ url('sign-up/validate') }}" method="post">
+                                            @csrf
+
+                                            {{-- First Name --}}
+                                            <div class="control-group {{ $errors->has('firstname') ? 'has-error' : '' }}">
+                                                <div class="form-group mb-4">
+                                                    <input type="text" name="firstname" class="form-control form-control-lg"
+                                                           placeholder="First Name" id="firstname"
+                                                           value="{{ old('firstname', $firstname ?? '') }}">
+                                                    @if($errors->has('firstname'))
+                                                        <p class="help-block text-danger">{{ $errors->first('firstname') }}</p>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            {{-- Last Name --}}
+                                            <div class="control-group {{ $errors->has('lastname') ? 'has-error' : '' }}">
+                                                <div class="form-group mb-4">
+                                                    <input type="text" name="lastname" class="form-control form-control-lg"
+                                                           placeholder="Lasts Name" id="lastname"
+                                                           value="{{ old('lastname', $lastname ?? '') }}">
+                                                    @if($errors->has('lastname'))
+                                                        <p class="help-block text-danger">{{ $errors->first('lastname') }}</p>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            {{-- Email --}}
+                                            <div class="control-group {{ $errors->has('email') ? 'has-error' : '' }}">
+                                                <div class="form-group mb-4">
+                                                    <input type="text" name="email" class="form-control form-control-lg"
+                                                           placeholder="Email" id="email"
+                                                           value="{{ old('email', $email ?? '') }}">
+                                                    @if($errors->has('email'))
+                                                        <p class="help-block text-danger">{{ $errors->first('email') }}</p>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            {{-- Password --}}
+                                            <div class="control-group {{ $errors->has('password') ? 'has-error' : '' }}">
+                                                <div class="form-group mb-4">
+                                                    <input type="password" name="password" class="form-control form-control-lg"
+                                                           placeholder="Password" id="password">
+                                                    @if($errors->has('password'))
+                                                        <p class="help-block text-danger">{{ $errors->first('password') }}</p>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            {{-- City --}}
+                                            <div class="control-group {{ $errors->has('city') ? 'has-error' : '' }}">
+                                                <div class="form-group mb-4">
+                                                    <input type="text" name="city" class="form-control form-control-lg"
+                                                           placeholder="City" id="city"
+                                                           value="{{ old('city', $city ?? '') }}">
+                                                    @if($errors->has('city'))
+                                                        <p class="help-block text-danger">{{ $errors->first('city') }}</p>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            {{-- Address --}}
+                                            <div class="control-group {{ $errors->has('address') ? 'has-error' : '' }}">
+                                                <div class="form-group mb-4">
+                                                    <input type="text" name="address" class="form-control form-control-lg"
+                                                           placeholder="Address" id="address"
+                                                           value="{{ old('address', $address ?? '') }}">
+                                                    @if($errors->has('address'))
+                                                        <p class="help-block text-danger">{{ $errors->first('address') }}</p>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            {{-- State --}}
+                                            <div class="control-group {{ $errors->has('state') ? 'has-error' : '' }}">
+                                                <div class="form-group mb-4">
+                                                    <input type="text" name="state" class="form-control form-control-lg"
+                                                           placeholder="State" id="state"
+                                                           value="{{ old('state', $state ?? '') }}">
+                                                    @if($errors->has('state'))
+                                                        <p class="help-block text-danger">{{ $errors->first('state') }}</p>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            {{-- Zip --}}
+                                            <div class="control-group {{ $errors->has('zip') ? 'has-error' : '' }}">
+                                                <div class="form-group mb-4">
+                                                    <input type="text" name="zip" class="form-control form-control-lg"
+                                                           placeholder="Zip" id="zip"
+                                                           value="{{ old('zip', $zip ?? '') }}">
+                                                    @if($errors->has('zip'))
+                                                        <p class="help-block text-danger">{{ $errors->first('zip') }}</p>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            {{-- Slider Captcha (Drag To Verify) --}}
+                                            <div class="form-group">
+                                                <div class="slidercaptcha card">
+                                                    <div class="card-header">
+                                                        <span>Drag To Verify</span>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div id="captcha"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {{-- Submit button (hidden initially) --}}
+                                            <div id="qasubmitBtn" class="form-group" style="display: none;">
+                                                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+                                            </div>
+
+                                            {{-- CSRF (handled by @csrf above) --}}
+                                        </form>
+                                    </div>
                                 </div>
-
-                                {{-- Display validation errors (same style as CI) --}}
-                                @if($errors->any())
-                                    <div class="alert alert-warning alert-dismissible">
-                                        <h4><i class="icon fa fa-warning"></i></h4>
-                                        <ul>
-                                            @foreach($errors->all() as $error)
-                                                <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                @endif
-
-                                <form action="{{ route('sign-up') }}/validate" autocomplete="off" class="form" method="post">
-                                    @csrf
-
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-user color-blue"></i></span>
-                                            <input type="text" name="firstname" id="firstname" placeholder="{{ $text_firstname ?? 'First Name' }}"
-                                                   value="{{ old('firstname', $firstname ?? '') }}" class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-user color-blue"></i></span>
-                                            <input type="text" name="lastname" id="lastname" placeholder="{{ $text_lastname ?? 'Last Name' }}"
-                                                   value="{{ old('lastname', $lastname ?? '') }}" class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                                            <input type="email" name="email" id="email" placeholder="{{ $text_email ?? 'Email' }}"
-                                                   value="{{ old('email', $email ?? '') }}" class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock color-blue"></i></span>
-                                            <input type="password" name="password" id="password" placeholder="{{ $text_password ?? 'Password' }}"
-                                                   class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-home color-blue"></i></span>
-                                            <input type="text" name="address" id="address" placeholder="{{ $text_address ?? 'Address' }}"
-                                                   value="{{ old('address', $address ?? '') }}" class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker color-blue"></i></span>
-                                            <input type="text" name="city" id="city" placeholder="{{ $text_city ?? 'City' }}"
-                                                   value="{{ old('city', $city ?? '') }}" class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker color-blue"></i></span>
-                                            <input type="text" name="state" id="state" placeholder="{{ $text_state ?? 'State' }}"
-                                                   value="{{ old('state', $state ?? '') }}" class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk color-blue"></i></span>
-                                            <input type="text" name="zip" id="zip" placeholder="{{ $text_zip ?? 'Zip Code' }}"
-                                                   value="{{ old('zip', $zip ?? '') }}" class="form-control" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-globe color-blue"></i></span>
-                                            <select name="region_id" id="region_id" class="form-control">
-                                                <option value="">{{ $text_select_region ?? 'Select region' }}</option>
-                                                @foreach($regions ?? [] as $region)
-                                                    <option value="{{ $region->region_id ?? $region->id }}">
-                                                        {{ $region->region_name ?? $region->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-lg btn-primary btn-block">
-                                            {{ $text_sign_up ?? 'Sign Up' }}
-                                        </button>
-                                    </div>
-                                    <div class="form-group text-left">
-                                        <span>{{ $text_sign_in ?? 'Already have an account?' }} <a href="{{ route('login') }}">Sign in</a></span>
-                                    </div>
-                                </form>
+                                <div class="form-group text-left">
+                                    <span><a href="{{ route('login') }}" class="pull-right">Already have a account login now</a></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -132,6 +177,7 @@
         </section>
     </main>
 
+    
     @include('partials.before_footer')
     @include('partials.script_file')
 @endsection

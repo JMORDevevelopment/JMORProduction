@@ -3,8 +3,7 @@
         @auth
     <a href="{{ url('dashboard') }}" style="color:#fff;">My Account</a>
     <span style="color:#fff;">|</span>
-    <a href="{{ url('logout') }}" style="color:#fff;"
-       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log out</a>
+    <a href="{{ route('logout') }}" style="color:#fff;">Log out</a>
     <form id="logout-form" action="{{ url('logout') }}" method="POST" class="d-none">@csrf</form>
 @else
     <a href="{{ url('login') }}" style="color:#fff;">Login</a>
