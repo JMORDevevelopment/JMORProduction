@@ -10,6 +10,8 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PackageController;
 
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
 // Authentication Routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
