@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Sign Up')
+@section('title', $text_sign_up ?? 'Sign Up')
 
 @section('content')
     {{-- 1. Include style_file (as in CI: <?php echo $style_file; ?>) --}}
@@ -11,7 +11,7 @@
             <div class="row justify-content-md-center align-items-center text-white py-4 py-lg-5">
                 <div class="col-md-7">
                     <div class="text-center">
-                        <h1 class="display-sm-4 display-lg-3">Sign Up</h1>
+                        <h1 class="display-sm-4 display-lg-3">{{ $text_sign_up ?? 'Sign Up' }}</h1>
                     </div>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div class="text-center">
-                                    <p>You can sign up this page.</p>
+                                    <p>{{ $text_form ?? 'You can create an account here.' }}</p>
                                     <div class="panel-body">
                                         {{-- Display errors (matches CI) --}}
                                         @if(session('error_exists'))
@@ -54,7 +54,7 @@
                                             <div class="control-group {{ $errors->has('firstname') ? 'has-error' : '' }}">
                                                 <div class="form-group mb-4">
                                                     <input type="text" name="firstname" class="form-control form-control-lg"
-                                                           placeholder="First Name" id="firstname"
+                                                           placeholder="{{ $text_firstname ?? 'First Name' }}" id="firstname"
                                                            value="{{ old('firstname', $firstname ?? '') }}">
                                                     @if($errors->has('firstname'))
                                                         <p class="help-block text-danger">{{ $errors->first('firstname') }}</p>
@@ -66,7 +66,7 @@
                                             <div class="control-group {{ $errors->has('lastname') ? 'has-error' : '' }}">
                                                 <div class="form-group mb-4">
                                                     <input type="text" name="lastname" class="form-control form-control-lg"
-                                                           placeholder="Lasts Name" id="lastname"
+                                                           placeholder="{{ $text_lastname ?? 'Last Name' }}" id="lastname"
                                                            value="{{ old('lastname', $lastname ?? '') }}">
                                                     @if($errors->has('lastname'))
                                                         <p class="help-block text-danger">{{ $errors->first('lastname') }}</p>
@@ -78,7 +78,7 @@
                                             <div class="control-group {{ $errors->has('email') ? 'has-error' : '' }}">
                                                 <div class="form-group mb-4">
                                                     <input type="text" name="email" class="form-control form-control-lg"
-                                                           placeholder="Email" id="email"
+                                                           placeholder="{{ $text_email ?? 'Email' }}" id="email"
                                                            value="{{ old('email', $email ?? '') }}">
                                                     @if($errors->has('email'))
                                                         <p class="help-block text-danger">{{ $errors->first('email') }}</p>
@@ -90,7 +90,7 @@
                                             <div class="control-group {{ $errors->has('password') ? 'has-error' : '' }}">
                                                 <div class="form-group mb-4">
                                                     <input type="password" name="password" class="form-control form-control-lg"
-                                                           placeholder="Password" id="password">
+                                                           placeholder="{{ $text_password ?? 'Password' }}" id="password">
                                                     @if($errors->has('password'))
                                                         <p class="help-block text-danger">{{ $errors->first('password') }}</p>
                                                     @endif
@@ -101,7 +101,7 @@
                                             <div class="control-group {{ $errors->has('city') ? 'has-error' : '' }}">
                                                 <div class="form-group mb-4">
                                                     <input type="text" name="city" class="form-control form-control-lg"
-                                                           placeholder="City" id="city"
+                                                           placeholder="{{ $text_city ?? 'City' }}" id="city"
                                                            value="{{ old('city', $city ?? '') }}">
                                                     @if($errors->has('city'))
                                                         <p class="help-block text-danger">{{ $errors->first('city') }}</p>
@@ -113,7 +113,7 @@
                                             <div class="control-group {{ $errors->has('address') ? 'has-error' : '' }}">
                                                 <div class="form-group mb-4">
                                                     <input type="text" name="address" class="form-control form-control-lg"
-                                                           placeholder="Address" id="address"
+                                                           placeholder="{{ $text_address ?? 'Address' }}" id="address"
                                                            value="{{ old('address', $address ?? '') }}">
                                                     @if($errors->has('address'))
                                                         <p class="help-block text-danger">{{ $errors->first('address') }}</p>
@@ -125,7 +125,7 @@
                                             <div class="control-group {{ $errors->has('state') ? 'has-error' : '' }}">
                                                 <div class="form-group mb-4">
                                                     <input type="text" name="state" class="form-control form-control-lg"
-                                                           placeholder="State" id="state"
+                                                           placeholder="{{ $text_state ?? 'State' }}" id="state"
                                                            value="{{ old('state', $state ?? '') }}">
                                                     @if($errors->has('state'))
                                                         <p class="help-block text-danger">{{ $errors->first('state') }}</p>
@@ -137,7 +137,7 @@
                                             <div class="control-group {{ $errors->has('zip') ? 'has-error' : '' }}">
                                                 <div class="form-group mb-4">
                                                     <input type="text" name="zip" class="form-control form-control-lg"
-                                                           placeholder="Zip" id="zip"
+                                                           placeholder="{{ $text_zip ?? 'Zip Code' }}" id="zip"
                                                            value="{{ old('zip', $zip ?? '') }}">
                                                     @if($errors->has('zip'))
                                                         <p class="help-block text-danger">{{ $errors->first('zip') }}</p>
@@ -159,7 +159,7 @@
 
                                             {{-- Submit button (hidden initially) --}}
                                             <div id="qasubmitBtn" class="form-group" style="display: none;">
-                                                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+                                                <button class="btn btn-lg btn-primary btn-block" type="submit">{{ $text_sign_up ?? 'Sign Up' }}</button>
                                             </div>
 
                                             {{-- CSRF (handled by @csrf above) --}}
@@ -167,7 +167,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group text-left">
-                                    <span><a href="{{ route('login') }}" class="pull-right">Already have a account login now</a></span>
+                                    <span><a href="{{ route('login') }}" class="pull-right">{{ $text_sign_in ?? 'Already have an account?' }} login now</a></span>
                                 </div>
                             </div>
                         </div>
@@ -177,7 +177,7 @@
         </section>
     </main>
 
-    
+
     @include('partials.before_footer')
     @include('partials.script_file')
 @endsection
