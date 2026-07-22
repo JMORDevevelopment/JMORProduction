@@ -11,3 +11,14 @@
 <!-- Plugin Initialize -->
 <script src="{{ asset('assets_2/js/global.js') }}"></script>
 <script src="{{ asset('assets_2/vendors/carousel.js') }}"></script>
+
+<!-- Slider Captcha -->
+<script src="{{ asset('assets/plugins/image-puzzle-slider-captcha/disk/longbow.slidercaptcha.min.js') }}"></script>
+<script>
+    var captcha = sliderCaptcha({
+        id: 'captcha',
+        onSuccess: function() {
+            $('#qasubmitBtn').show();
+        }
+    });
+</script>

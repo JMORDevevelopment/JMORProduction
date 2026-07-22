@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'authorize_net' => [
+        'login_id' => env('AUTHORIZE_NET_LOGIN_ID'),
+        'transaction_key' => env('AUTHORIZE_NET_TRANSACTION_KEY'),
+        'environment' => env('AUTHORIZE_NET_ENVIRONMENT', 'sandbox'),
+    ],
+
 ];
