@@ -6,6 +6,9 @@ use App\Models\HomeTab;
 use App\Models\Service;
 use App\Models\Setting;
 use App\Models\Slider;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
@@ -16,9 +19,7 @@ class HomeController extends Controller
         $keywords = Setting::get('meta_keyword', '');
 
         $mainServices = Service::all()->toArray();
-
         $homeTabs = HomeTab::orderBy('tab_id', 'asc')->get()->toArray();
-
         $mainSliders = Slider::orderBy('priority', 'asc')->get()->toArray();
 
         return view('home', compact(
@@ -27,7 +28,7 @@ class HomeController extends Controller
             'keywords',
             'mainServices',
             'homeTabs',
-            'mainSliders',
+            'mainSliders'
         ));
     }
 }
