@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\DB;
+use App\Models\News;
 
 class NewsService
 {
@@ -10,12 +10,12 @@ class NewsService
 
     public function paginatedList(int $start = 0): array
     {
-        $total = DB::table('news')->count();
-        $news = DB::table('news')->offset($start)->limit(self::PER_PAGE)->get()->toArray();
+        $total = News::query()->count();
+        $news = News::query()->offset($start)->limit(self::PER_PAGE)->get();
         $to = min($start + self::PER_PAGE, $total);
 
         return [
-            'news' => array_map(fn ($n) => (array) $n, $news),
+            'news' => $news->map(fn ($n) => $n->toArray())->toArray(),
             'text_showing' => $total > 0
                 ? sprintf('Showing %d to %d of %d', $start + 1, $to, $total)
                 : 'No results',

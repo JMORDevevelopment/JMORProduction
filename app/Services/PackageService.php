@@ -2,31 +2,33 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\DB;
+use App\Models\Package;
+use App\Models\PackagePrice;
+use App\Models\SystemPrice;
 
 class PackageService
 {
     public function listAll(): array
     {
-        return DB::table('packages')->orderBy('priority', 'asc')->get()->toArray();
+        return Package::query()->orderBy('priority', 'asc')->get()->all();
     }
 
     public function byCategory(string $categoryName): array
     {
-        return DB::table('packages')
+        return Package::query()
             ->where('category_name', $categoryName)
             ->orderBy('priority', 'asc')
             ->get()
-            ->toArray();
+            ->all();
     }
 
     public function findById(int $packageId): array
     {
-        return DB::table('packages')
+        return Package::query()
             ->where('id', $packageId)
             ->orderBy('priority', 'asc')
             ->get()
-            ->map(fn ($item) => (array) $item)
+            ->map(fn ($item) => $item->toArray())
             ->toArray();
     }
 
@@ -38,19 +40,19 @@ class PackageService
      */
     public function buildCartLines(int $packageId, ?int $serverQty, ?int $systemQty, string $packageType): array
     {
-        $package = DB::table('packages')->where('id', $packageId)->first();
+        $package = Package::query()->where('id', $packageId)->first();
 
         if (! $package) {
             return ['lines' => [], 'checkoutType' => 'Monthly'];
         }
 
-        $serverPrice = DB::table('package_price')
+        $serverPrice = PackagePrice::query()
             ->where('package_id', $packageId)
             ->where('from_qty', '<=', $serverQty)
             ->where('to_qty', '>=', $serverQty)
             ->first();
 
-        $systemPrice = DB::table('system_price')
+        $systemPrice = SystemPrice::query()
             ->where('package_id', $packageId)
             ->where('from_qty', '<=', $systemQty)
             ->where('to_qty', '>=', $systemQty)

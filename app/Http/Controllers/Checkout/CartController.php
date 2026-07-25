@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Checkout;
 
 use App\Http\Controllers\Controller;
+use App\Models\GiftCard;
 use App\Services\CartService;
 use App\Services\PackageService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
@@ -51,7 +51,7 @@ class CartController extends Controller
         $this->cart->resetForGiftCardPurchase();
 
         $giftId = $request->input('gift_id');
-        $gift = DB::table('gift_card')->where('id', $giftId)->first();
+        $gift = GiftCard::query()->where('id', $giftId)->first();
 
         if (! $gift) {
             return redirect('/cart');

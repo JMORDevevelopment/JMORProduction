@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RadioShow;
 use App\Services\ContentPageService;
 use App\Services\RadioShowService;
 
@@ -22,7 +23,7 @@ class RadioShowController extends Controller
     {
         return view(
             'frontend.jmor_radio_detail',
-            $this->contentPages->detailViewData('radio_show', $link, 'jmor_radio_datas')
+            $this->contentPages->detailViewData(RadioShow::class, $link, 'jmor_radio_datas')
         );
     }
 

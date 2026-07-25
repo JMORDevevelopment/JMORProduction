@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\DB;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Mail;
 
 class InvoiceService
@@ -34,7 +34,7 @@ class InvoiceService
             $mail->to($customer->email)->subject($subject)->from('Info@jmor.com');
         });
 
-        $adminEmail = DB::table('settings')->where('option', 'email')->value('value');
+        $adminEmail = Setting::get('email');
 
         if ($adminEmail) {
             Mail::send('mails.order-invoice', $data, function ($mail) use ($adminEmail, $subject) {

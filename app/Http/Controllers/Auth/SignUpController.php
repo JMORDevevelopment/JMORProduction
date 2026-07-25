@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
+use App\Models\Region;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class SignUpController extends Controller
@@ -21,7 +23,7 @@ class SignUpController extends Controller
             'state'     => old('state', ''),
             'zip'       => old('zip', ''),
             'error'     => session('errors') ? session('errors')->getBag('default')->getMessages() : [],
-            'regions'   => DB::table('region')->get(),
+            'regions'   => Region::query()->get(),
             'text_sign_up' => 'Sign Up',
             'text_form' => 'You can create an account here.',
             'text_firstname' => 'First Name',
@@ -56,7 +58,7 @@ class SignUpController extends Controller
         if (empty($post['zip']))       $error['error_zip']       = 'Enter zip code';
 
         // Check existing email
-        $user_exists = DB::table('user')->where('email', $post['email'])->first();
+        $user_exists = User::query()->where('email', $post['email'])->first();
         if ($user_exists) {
             $error['error_exists'] = 'Email already exists';
         }
@@ -78,15 +80,15 @@ class SignUpController extends Controller
             'date_added'   => date('Y-m-d'),
             'user_group_id'=> config('app.c_default_group', 1),
         ];
-        $user_id = DB::table('user')->insertGetId($insertData);
+        $user = User::query()->create($insertData);
 
         // Log the user in
-        Auth::loginUsingId($user_id);
-        session()->put('user_id', $user_id);
+        Auth::loginUsingId($user->user_id);
+        session()->put('user_id', $user->user_id);
 
         // Link guest order if exists
         if ($order_id = session()->get('order_id')) {
-            DB::table('orders')->where('id', $order_id)->update(['user_id' => $user_id]);
+            Order::query()->where('id', $order_id)->update(['user_id' => $user->user_id]);
         }
 
         return redirect('/checkout');

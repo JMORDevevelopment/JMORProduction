@@ -7,7 +7,6 @@ use App\Models\Service;
 use App\Models\Setting;
 use App\Models\Slider;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller

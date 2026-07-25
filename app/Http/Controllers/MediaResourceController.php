@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MediaResource;
 use App\Services\ContentPageService;
 
 class MediaResourceController extends Controller
@@ -19,7 +20,7 @@ class MediaResourceController extends Controller
     {
         return view(
             'frontend.media_resources_detail',
-            $this->contentPages->detailViewData('media_resouces', $link, 'media_resouces_datas')
+            $this->contentPages->detailViewData(MediaResource::class, $link, 'media_resouces_datas')
         );
     }
 }

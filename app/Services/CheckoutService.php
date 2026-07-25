@@ -2,7 +2,8 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\DB;
+use App\Models\Order;
+use App\Models\OrderDetail;
 
 class CheckoutService
 {
@@ -20,7 +21,7 @@ class CheckoutService
         $discount = session()->get('discount_value', 0);
         $grandTotal = $subTotal - $discount;
 
-        $orderId = DB::table('orders')->insertGetId([
+        $order = Order::query()->create([
             'user_id' => session()->get('user_id'),
             'sub_total' => $subTotal,
             'discount' => $discount,
@@ -31,23 +32,23 @@ class CheckoutService
         ]);
 
         foreach ($cart as $item) {
-            DB::table('order_details')->insert([
+            OrderDetail::query()->create([
                 'item' => $item['name'],
                 'type' => $item['type'],
                 'qty' => $item['qty'],
                 'price' => $item['price'],
                 'sub_total' => $item['price'] * $item['qty'],
-                'order_id' => $orderId,
+                'order_id' => $order->id,
                 'date_added' => date('Y-m-d'),
             ]);
         }
 
-        return $orderId;
+        return $order->id;
     }
 
     public function saveFormData(int $orderId, array $formData): void
     {
-        DB::table('orders')->where('id', $orderId)->update([
+        Order::query()->where('id', $orderId)->update([
             'checkout_data' => json_encode($formData),
         ]);
     }

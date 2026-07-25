@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class ForgotPasswordController extends Controller
@@ -17,7 +17,7 @@ class ForgotPasswordController extends Controller
     public function sendResetLink(Request $request)
     {
         $email = $request->input('email');
-        $user = DB::table('user')->where('email', $email)->first();
+        $user = User::query()->where('email', $email)->first();
 
         if (! $user) {
             return redirect('/forgot-password?error_email=nomatch');
@@ -27,7 +27,7 @@ class ForgotPasswordController extends Controller
         $newPassword = substr(md5(mt_rand()), 0, 8);
         $newHash = md5($newPassword);
 
-        DB::table('user')->where('email', $email)->update(['password' => $newHash]);
+        User::query()->where('email', $email)->update(['password' => $newHash]);
 
         try {
             Mail::send('mails.forgot-password', [
