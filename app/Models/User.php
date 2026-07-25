@@ -43,4 +43,17 @@ class User extends Authenticatable
     {
         return $this->image ? asset('uploads/users/' . $this->image) : asset('images/default-avatar.png');
     }
+
+    /**
+     * The live `user` table has no `remember_token` column, so "remember me"
+     * support is disabled here. Returning an empty name tells the auth
+     * guard not to read/write a remember token for this model — without
+     * this override, checking "remember me" on login would try to
+     * UPDATE `user` SET remember_token = ... and fail with an
+     * "Unknown column" error, same as the log_history/orders timestamp bug.
+     */
+    public function getRememberTokenName()
+    {
+        return '';
+    }
 }
