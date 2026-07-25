@@ -25,7 +25,7 @@ class HomeController extends Controller
         $homeTabs = HomeTab::orderBy('tab_id', 'asc')->get()->toArray();
         $mainSliders = Slider::orderBy('priority', 'asc')->get()->toArray();
 
-        return view('home', compact(
+        return view('frontend.home', compact(
             'title',
             'description',
             'keywords',
