@@ -9,8 +9,18 @@ use App\Http\Controllers\Checkout\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PackageController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Middleware\CheckUserLogin;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// ==============================
+// USER DASHBOARD ROUTES
+// ==============================
+Route::middleware(CheckUserLogin::class)->prefix('dashboard')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/orders', [DashboardController::class, 'orders'])->name('dashboard.orders');
+});
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 // Authentication Routes
