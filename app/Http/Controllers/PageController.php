@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Page;
 use App\Services\ContentPageService;
 
 class PageController extends Controller
@@ -14,7 +15,7 @@ class PageController extends Controller
     {
         return view(
             'frontend.pages',
-            $this->contentPages->detailViewData('pages', $pageLink, 'page_datas')
+            $this->contentPages->detailViewData(Page::class, $pageLink, 'page_datas')
         );
     }
 }

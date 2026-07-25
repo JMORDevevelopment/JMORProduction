@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\DB;
 
 class UserService
 {
@@ -38,7 +38,7 @@ class UserService
 
     public function generate($user_id)
     {
-        $user = DB::table('user')->where('user_id', $user_id)->first();
+        $user = User::query()->where('user_id', $user_id)->first();
         if (!$user) {
             Session::forget('user_id');
             return;

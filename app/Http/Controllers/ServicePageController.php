@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Service;
 use App\Services\ContentPageService;
 
 class ServicePageController extends Controller
@@ -19,7 +20,7 @@ class ServicePageController extends Controller
     {
         return view(
             'frontend.service_detail',
-            $this->contentPages->detailViewData('service', $link, 'service_datas')
+            $this->contentPages->detailViewData(Service::class, $link, 'service_datas')
         );
     }
 }

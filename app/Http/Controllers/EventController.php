@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Services\ContentPageService;
 
 class EventController extends Controller
@@ -19,7 +20,7 @@ class EventController extends Controller
     {
         return view(
             'frontend.events_detail',
-            $this->contentPages->detailViewData('events', $link, 'events_datas')
+            $this->contentPages->detailViewData(Event::class, $link, 'events_datas')
         );
     }
 }

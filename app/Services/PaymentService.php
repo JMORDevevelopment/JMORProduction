@@ -2,7 +2,12 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\DB;
+use App\Models\CouponCheckout;
+use App\Models\GiftCard;
+use App\Models\Order;
+use App\Models\OrderDetail;
+use App\Models\Transaction;
+use App\Models\User;
 use net\authorize\api\constants\ANetEnvironment;
 use net\authorize\api\contract\v1 as AnetAPI;
 use net\authorize\api\controller as AnetController;
@@ -20,22 +25,22 @@ class PaymentService
      */
     public function chargeOrder(int $orderId, array $cardInput): bool
     {
-        $order = DB::table('orders')->where('id', $orderId)->first();
+        $order = Order::query()->where('id', $orderId)->first();
         if (! $order) {
             return false;
         }
 
         if (session()->get('user_id')) {
-            DB::table('orders')->where('id', $orderId)->update(['user_id' => session()->get('user_id')]);
-            $order = DB::table('orders')->where('id', $orderId)->first();
+            Order::query()->where('id', $orderId)->update(['user_id' => session()->get('user_id')]);
+            $order = Order::query()->where('id', $orderId)->first();
         }
 
-        $customer = DB::table('user')->where('user_id', $order->user_id)->first();
+        $customer = User::query()->where('user_id', $order->user_id)->first();
         if (! $customer) {
             return false;
         }
 
-        $orderDetails = DB::table('order_details')->where('order_id', $orderId)->get();
+        $orderDetails = OrderDetail::query()->where('order_id', $orderId)->get();
 
         $response = $this->submitToGateway($orderId, $order->grand_total, $customer, $cardInput);
 
@@ -48,7 +53,7 @@ class PaymentService
         $authCode = $transactionResponse->getAuthCode();
 
         $this->recordTransaction($orderId, $order, $orderDetails, $transactionId, $authCode);
-        DB::table('orders')->where('id', $orderId)->update(['status' => 1]);
+        Order::query()->where('id', $orderId)->update(['status' => 1]);
 
         $this->redeemCouponIfApplied();
         $this->generateGiftCardCouponIfNeeded($orderId, $orderDetails);
@@ -141,7 +146,7 @@ class PaymentService
     {
         $firstDetail = collect($orderDetails)->first();
 
-        DB::table('transaction')->insert([
+        Transaction::query()->create([
             'order_id' => $orderId,
             'order_type' => $firstDetail->type ?? '',
             'checkout_type' => session()->get('checkout_type', 'Monthly'),
@@ -158,7 +163,7 @@ class PaymentService
             return;
         }
 
-        DB::table('coupon_checkout')
+        CouponCheckout::query()
             ->where('coupon_number', session()->get('coupon_code'))
             ->update(['status' => 1]);
     }
@@ -174,14 +179,14 @@ class PaymentService
             return;
         }
 
-        $giftCard = DB::table('gift_card')->where('name', $firstDetail->item)->first();
+        $giftCard = GiftCard::query()->where('name', $firstDetail->item)->first();
         if (! $giftCard) {
             return;
         }
 
         $couponNumber = strtoupper(substr(md5(time()), 0, 7));
 
-        DB::table('coupon_checkout')->insertGetId([
+        CouponCheckout::query()->create([
             'gift_card_id' => $giftCard->id,
             'order_id' => $orderId,
             'coupon_number' => $couponNumber,

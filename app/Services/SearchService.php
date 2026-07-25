@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\DB;
+use App\Models\Blog;
+use App\Models\Page;
+use App\Models\RadioShow;
 
 class SearchService
 {
@@ -15,8 +17,8 @@ class SearchService
             return [];
         }
 
-        $blogs = DB::table('blog')->where('name', 'like', '%'.$searchKey.'%')->limit(10)->get()->toArray();
-        $pages = DB::table('pages')->where('name', 'like', '%'.$searchKey.'%')->limit(10)->get()->toArray();
+        $blogs = Blog::query()->where('name', 'like', '%'.$searchKey.'%')->limit(10)->get()->all();
+        $pages = Page::query()->where('name', 'like', '%'.$searchKey.'%')->limit(10)->get()->all();
 
         return array_merge($blogs, $pages);
     }
@@ -26,7 +28,7 @@ class SearchService
      */
     public function searchRadioShows(?string $searchKey, ?string $dateKey): array
     {
-        $query = DB::table('radio_show');
+        $query = RadioShow::query();
 
         if (! empty($dateKey)) {
             $showDate = date('Y-m-d', strtotime($dateKey));
@@ -37,6 +39,6 @@ class SearchService
             $query->where('name', 'like', '%'.$searchKey.'%');
         }
 
-        return $query->get()->toArray();
+        return $query->get()->all();
     }
 }

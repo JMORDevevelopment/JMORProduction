@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\LogHistory;
+use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
@@ -23,7 +25,7 @@ class LoginController extends Controller
         ]);
 
         // Manual MD5 authentication (legacy)
-        $user = DB::table('user')
+        $user = User::query()
             ->where('email', $request->email)
             ->where('password', md5($request->password))
             ->first();
@@ -46,11 +48,11 @@ class LoginController extends Controller
 
         // Link guest order (if any)
         if ($order_id = session()->get('order_id')) {
-            DB::table('orders')->where('id', $order_id)->update(['user_id' => $user->user_id]);
+            Order::query()->where('id', $order_id)->update(['user_id' => $user->user_id]);
         }
 
         // Log IP history
-        DB::table('log_history')->insert([
+        LogHistory::query()->create([
             'user_id' => $user->user_id,
             'ip' => $request->ip(),
         ]);

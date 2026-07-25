@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ContactUs;
+use App\Models\Setting;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
@@ -48,7 +49,7 @@ class ContactController extends Controller
             return redirect()->back()->withInput()->withErrors($error);
         }
 
-        DB::table('contact_us')->insert([
+        ContactUs::query()->create([
             'name' => htmlspecialchars($post['name']),
             'email' => htmlspecialchars($post['email']),
             'phone' => htmlspecialchars($post['phone']),
@@ -88,7 +89,7 @@ class ContactController extends Controller
 
     private function sendNotification(array $post): void
     {
-        $to = DB::table('settings')->where('option', 'email')->value('value');
+        $to = Setting::get('email');
 
         try {
             Mail::send('mails.contact-us', [

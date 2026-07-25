@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\News;
 use App\Services\ContentPageService;
 use App\Services\NewsService;
 
@@ -28,7 +29,7 @@ class NewsController extends Controller
     {
         return view(
             'frontend.news_detail',
-            $this->contentPages->detailViewData('news', $link, 'news_datas')
+            $this->contentPages->detailViewData(News::class, $link, 'news_datas')
         );
     }
 }

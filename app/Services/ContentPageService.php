@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Shared logic for the "listing page + detail-by-link page" pattern used
@@ -13,10 +13,12 @@ class ContentPageService
 {
     /**
      * Fetch a single row by its `link` slug, or abort with a 404.
+     *
+     * @param class-string<Model> $modelClass
      */
-    public function findByLink(string $table, string $link): object
+    public function findByLink(string $modelClass, string $link): Model
     {
-        $row = DB::table($table)->where('link', $link)->first();
+        $row = $modelClass::query()->where('link', $link)->first();
 
         if (! $row) {
             abort(404);
@@ -28,7 +30,7 @@ class ContentPageService
     /**
      * Build the standard meta fields (title/description/keywords) from a row.
      */
-    public function metaFor(object $row): array
+    public function metaFor(Model $row): array
     {
         return [
             'title' => $row->meta_title ?: $row->name,
@@ -39,13 +41,15 @@ class ContentPageService
 
     /**
      * Full view payload for a detail page: the row (under $dataKey) plus meta fields.
+     *
+     * @param class-string<Model> $modelClass
      */
-    public function detailViewData(string $table, string $link, string $dataKey): array
+    public function detailViewData(string $modelClass, string $link, string $dataKey): array
     {
-        $row = $this->findByLink($table, $link);
+        $row = $this->findByLink($modelClass, $link);
 
         return array_merge(
-            [$dataKey => (array) $row],
+            [$dataKey => $row->toArray()],
             $this->metaFor($row)
         );
     }

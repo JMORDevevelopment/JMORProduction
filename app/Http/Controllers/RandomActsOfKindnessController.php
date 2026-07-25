@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RandomActsOfKindness;
 use App\Services\ContentPageService;
 
 class RandomActsOfKindnessController extends Controller
@@ -19,7 +20,7 @@ class RandomActsOfKindnessController extends Controller
     {
         return view(
             'frontend.random_acts_of_kindness_detail',
-            $this->contentPages->detailViewData('random_acts_of_kindness', $link, 'random_acts_of_kindness_datas')
+            $this->contentPages->detailViewData(RandomActsOfKindness::class, $link, 'random_acts_of_kindness_datas')
         );
     }
 }
