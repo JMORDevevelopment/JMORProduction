@@ -1,92 +1,123 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Checkout;
 
+use App\Http\Controllers\Controller;
 use App\Services\CartService;
-use App\Services\CheckoutService;
+use App\Services\PackageService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
-class CheckoutController extends Controller
+class CartController extends Controller
 {
     public function __construct(
         private CartService $cart,
-        private CheckoutService $checkout
+        private PackageService $packages
     ) {
     }
 
     public function index()
     {
-        if (! session()->has('user_id')) {
-            return redirect('/login');
-        }
+        $cartItems = session()->get('cart', []);
+        $data['title'] = 'Cart';
+        $data['description'] = '';
+        $data['keywords'] = '';
+        $data['cartItems'] = $cartItems;
 
-        if ($this->cart->isEmpty()) {
-            return redirect('/');
-        }
-
-        return view('frontend.checkout', [
-            'cartItems' => $this->cart->items(),
-            'title' => 'Check Out',
-            'description' => '',
-            'keywords' => '',
-        ]);
+        return view('frontend.cart', $data);
     }
 
-    public function confirm()
+    // AJAX – update quantity
+    public function updateItemQty($rowid, $qty)
     {
-        if (! session()->has('user_id')) {
-            return redirect('/login');
+        $cart = session()->get('cart', []);
+        $update = 0;
+        if (isset($cart[$rowid])) {
+            $cart[$rowid]['qty'] = (int) $qty;
+            session()->put('cart', $cart);
+            $update = 1;
         }
 
-        if ($this->cart->isEmpty()) {
-            return redirect('/');
+        return response($update ? 'ok' : 'err');
+    }
+
+    // AJAX – apply coupon
+    public function couponCode($code)
+    {
+        $coupon = DB::table('coupon_checkout')
+            ->where('coupon_number', $code)
+            ->where('status', 0)
+            ->first();
+
+        if ($coupon) {
+            $gift = DB::table('gift_card')->where('id', $coupon->gift_card_id)->first();
+            if ($gift) {
+                session()->put('coupon_code', $coupon->coupon_number);
+                session()->put('discount_value', $gift->price);
+
+                return 'ok';
+            }
         }
 
-        return view('frontend.checkout_confirm', [
-            'cartItems' => $this->cart->items(),
-            'title' => 'Checkout Confirm',
-            'description' => '',
-            'keywords' => '',
-        ]);
+        return 'err';
     }
 
-    public function placeOrder()
+    // Remove item
+    public function removeItem($rowid)
     {
-        if ($this->cart->isEmpty()) {
-            return redirect('/');
+        $cart = session()->get('cart', []);
+        if (isset($cart[$rowid])) {
+            unset($cart[$rowid]);
+            $cart = array_values($cart); // re-index
+            session()->put('cart', $cart);
         }
 
-        $orderId = $this->checkout->createOrder($this->cart->items());
-        session()->put('order_id', $orderId);
-
-        return session()->has('user_id') ? redirect('/checkout') : redirect('/login');
+        return redirect('/cart');
     }
 
-    public function placeOrderGiftCard()
+    public function addPackages(Request $request)
     {
-        if ($this->cart->isEmpty()) {
-            return redirect('/');
+        $this->cart->resetForPackagePurchase();
+
+        $result = $this->packages->buildCartLines(
+            (int) $request->input('package_id'),
+            $request->input('server_qty'),
+            $request->input('system_qty'),
+            $request->input('package_type')
+        );
+
+        if (empty($result['lines'])) {
+            return redirect('/cart');
         }
 
-        $orderId = $this->checkout->createOrder($this->cart->items());
-        session()->put('order_id', $orderId);
+        $this->cart->addLines($result['lines']);
+        $this->cart->setCheckoutType($result['checkoutType']);
 
-        return session()->has('user_id') ? redirect('/checkout-confirm') : redirect('/login');
+        return redirect('/cart');
     }
 
-    public function saveFormData(Request $request)
+    public function addGiftCard(Request $request)
     {
-        $this->checkout->saveFormData(session()->get('order_id'), $request->all());
+        $this->cart->resetForGiftCardPurchase();
 
-        return redirect('/checkout-confirm');
-    }
+        $giftId = $request->input('gift_id');
+        $gift = DB::table('gift_card')->where('id', $giftId)->first();
 
-    public function success()
-    {
-        return view('frontend.checkout-sucess', [
-            'title' => 'Order Confirmed',
-            'description' => '',
-            'keywords' => '',
-        ]);
+        if (! $gift) {
+            return redirect('/cart');
+        }
+
+        $this->cart->markGiftCard($giftId);
+        $this->cart->replace([[
+            'id' => $gift->id.'gc',
+            'qty' => 1,
+            'type' => 'Gift Card',
+            'price' => $gift->price,
+            'name' => $gift->name,
+            'description' => $gift->description,
+        ]]);
+
+        return redirect('/cart');
     }
 }

@@ -14,7 +14,7 @@ use net\authorize\api\contract\v1 as AnetAPI;
 use net\authorize\api\controller as AnetController;
 
 class HomeController extends Controller
-{
+{   
     public function index()
     {
         $title = Setting::get('meta_title', '');
