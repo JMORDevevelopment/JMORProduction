@@ -6,9 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
-    // NOTE: schema assumed from ContentPageService usage (link, meta_title,
-    // meta_description, meta_keywords, name). Confirm real columns/PK with
-    // `DESCRIBE events;` before relying on this elsewhere.
+   
     protected $table = 'events';
 
     public $timestamps = false;

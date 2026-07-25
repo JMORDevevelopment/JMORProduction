@@ -6,9 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Package extends Model
 {
-    // NOTE: schema assumed from PackageService usage (name, description,
-    // category_name, priority, discount). Confirm real columns/PK with
-    // `DESCRIBE packages;`.
+
     protected $table = 'packages';
 
     public $timestamps = false;
