@@ -7,11 +7,29 @@ use App\Http\Controllers\Auth\SignUpController;
 use App\Http\Controllers\Checkout\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Middleware\CheckUserLogin;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// ==============================
+// USER DASHBOARD ROUTES
+// ==============================
+Route::middleware(CheckUserLogin::class)->prefix('dashboard')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/orders', [DashboardController::class, 'orders'])->name('dashboard.orders');
+    Route::get('/order_invoice/{order_id}', [DashboardController::class, 'orderInvoice'])->name('dashboard.order_invoice');
+    Route::get('/user_settings', [DashboardController::class, 'userSettings'])->name('dashboard.user_settings');
+    Route::get('/user_settings_update/{user_id}', [DashboardController::class, 'userSettingsUpdate'])->name('dashboard.user_settings_update');
+    Route::post('/user_settings_validate/{user_id}', [DashboardController::class, 'userSettingsValidate'])->name('dashboard.user_settings_validate');
+
+    // Placeholder stubs until the Gift Card / Testimonial dashboard sections are ported
+    Route::get('/giftcard', fn () => view('frontend.coming-soon'))->name('dashboard.giftcard');
+    Route::get('/testimonial', fn () => view('frontend.coming-soon'))->name('dashboard.testimonial');
+});
 
 // ==============================
 // AUTHENTICATION ROUTES
@@ -25,7 +43,7 @@ Route::post('/sign-up/validate', [SignUpController::class, 'validate'])->name('s
 Route::get('/forgot-password', [ForgotPasswordController::class, 'showForm'])->name('forgot-password');
 Route::post('/forgot-pass', [ForgotPasswordController::class, 'sendResetLink'])->name('forgot-pass');
 
-Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
+Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 // ==============================
 // CONTACT ROUTES
@@ -108,7 +126,6 @@ Route::get('/manufacturers', fn () => view('frontend.coming-soon'))->name('manuf
 Route::get('/office-managers', fn () => view('frontend.coming-soon'))->name('office-managers');
 
 Route::get('/gift-card', fn () => view('frontend.coming-soon'))->name('gift-card');
-Route::get('/dashboard', fn () => view('frontend.coming-soon'))->name('dashboard');
 Route::get('/search', fn () => view('frontend.coming-soon'))->name('search');
 Route::post('/search', fn () => view('frontend.coming-soon'))->name('search.submit');
 
