@@ -6,6 +6,11 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Checkout\CartController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PackageController;
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 // Authentication Routes
@@ -28,24 +33,24 @@ Route::post('/cart/couponCode/{code}', [CartController::class, 'couponCode'])->n
 Route::get('/cart/removeItem/{rowid}', [CartController::class, 'removeItem'])->name('cart.remove');
 
 // ==============================
-// CHECKOUT & ORDER ROUTES (HomeController)
+// CHECKOUT & ORDER ROUTES
 // ==============================
-Route::get('/checkout', [App\Http\Controllers\HomeController::class, 'check_out'])->name('checkout');
-Route::get('/checkout-confirm', [App\Http\Controllers\HomeController::class, 'checkout_confirm'])->name('checkout.confirm');
-Route::get('/home/placeOrder', [App\Http\Controllers\HomeController::class, 'placeOrder'])->name('place.order');
-Route::get('/home/placeOrderGiftcard', [App\Http\Controllers\HomeController::class, 'placeOrderGiftcard'])->name('place.gift');
-Route::post('/home/checkout_from_data', [App\Http\Controllers\HomeController::class, 'checkout_from_data'])->name('checkout.data');
-Route::post('/home/chargeCreditCard', [App\Http\Controllers\HomeController::class, 'chargeCreditCard'])->name('charge.card');
-Route::get('/checkout-success', [App\Http\Controllers\HomeController::class, 'checkout_success'])->name('checkout.success');
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+Route::get('/checkout-confirm', [CheckoutController::class, 'confirm'])->name('checkout.confirm');
+Route::get('/home/placeOrder', [CheckoutController::class, 'placeOrder'])->name('place.order');
+Route::get('/home/placeOrderGiftcard', [CheckoutController::class, 'placeOrderGiftCard'])->name('place.gift');
+Route::post('/home/checkout_from_data', [CheckoutController::class, 'saveFormData'])->name('checkout.data');
+Route::post('/home/chargeCreditCard', [PaymentController::class, 'chargeCreditCard'])->name('charge.card');
+Route::get('/checkout-success', [CheckoutController::class, 'success'])->name('checkout.success');
 
 // ==============================
-// ADD TO CART (HomeController)
+// ADD TO CART
 // ==============================
-Route::post('/home/addToCartPackages', [App\Http\Controllers\HomeController::class, 'addToCartPackages'])->name('add.cart.packages');
-Route::post('/home/addToCartGift', [App\Http\Controllers\HomeController::class, 'addToCartGift'])->name('add.cart.gift');
-Route::get('/home/single_package/{id}', [App\Http\Controllers\HomeController::class, 'single_package'])->name('single.package');
+Route::post('/home/addToCartPackages', [CartController::class, 'addPackages'])->name('add.cart.packages');
+Route::post('/home/addToCartGift', [CartController::class, 'addGiftCard'])->name('add.cart.gift');
+Route::get('/home/single_package/{id}', [PackageController::class, 'single'])->name('single.package');
 // ==============================
 // PACKAGES
 // ==============================
-Route::get('/packages', [App\Http\Controllers\HomeController::class, 'packages_list'])->name('packages');
-Route::get('/packages/{category}', [App\Http\Controllers\HomeController::class, 'packages_detail'])->name('packages.detail');
+Route::get('/packages', [PackageController::class, 'list'])->name('packages');
+Route::get('/packages/{category}', [PackageController::class, 'detail'])->name('packages.detail');
