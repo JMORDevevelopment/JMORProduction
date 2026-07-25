@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -64,6 +66,65 @@ class DashboardController extends Controller
         return view('dashboard.orders', [
             'title' => 'Orders',
             'transactions' => $transactions,
+        ]);
+    }
+
+    /**
+     * Ports CI Dashboard::order_invoice($order_id).
+     *
+     * CI logic:
+     *   $trans_datass = transaction WHERE order_id = ? AND user_id = ? AND order_type != 'Gift Card'
+     *                   -> row_array()
+     *   The view then pulls in: user (name + billing address), orders.checkout_data (JSON,
+     *   split into "Other Info" scalar fields and "System Information" array fields),
+     *   orders.status, order_details rows, and orders.sub_total/discount/grand_total
+     *   (falling back to a computed subtotal from order_details when those are empty).
+     *
+     * NOTE: In CI, if no matching transaction row exists, the view silently continues
+     * with undefined array keys (PHP notices, broken output) rather than failing cleanly.
+     * That's not meaningful behavior to reproduce, so this port 404s instead when the
+     * order isn't found or doesn't belong to the current user.
+     */
+    public function orderInvoice($order_id)
+    {
+        $user_id = Auth::id();
+
+        $transaction = Transaction::where('order_id', $order_id)
+            ->where('user_id', $user_id)
+            ->where('order_type', '!=', 'Gift Card')
+            ->first();
+
+        if (!$transaction) {
+            abort(404);
+        }
+
+        $order = Order::find($order_id);
+        $customer = User::find($transaction->user_id);
+        $orderDetails = OrderDetail::where('order_id', $order_id)->get();
+
+        $checkoutData = [];
+        if ($order && $order->checkout_data) {
+            $checkoutData = json_decode($order->checkout_data, true) ?: [];
+        }
+
+        // "Other Info" box: scalar (non-array) checkout_data values.
+        $otherInfo = array_filter($checkoutData, fn ($value) => !is_array($value));
+
+        // "System Information" table: array-valued checkout_data entries.
+        $systemInfo = array_filter($checkoutData, fn ($value) => is_array($value));
+
+        // Fallback subtotal from order_details, used when orders.sub_total/discount/grand_total are empty.
+        $computedSubtotal = $orderDetails->sum('sub_total');
+
+        return view('dashboard.invoice', [
+            'title' => 'Invoice',
+            'transaction' => $transaction,
+            'order' => $order,
+            'customer' => $customer,
+            'orderDetails' => $orderDetails,
+            'otherInfo' => $otherInfo,
+            'systemInfo' => $systemInfo,
+            'computedSubtotal' => $computedSubtotal,
         ]);
     }
 }
