@@ -21,14 +21,7 @@ class Menu extends Model
             ->orderBy('position', 'asc');
     }
 
-    /**
-     * Eager-loads children recursively. The CI original hardcoded 4 levels
-     * (main_nav -> sub -> sub_child -> sub_child_menu); this recurses
-     * unbounded, but live data never exceeds depth 4 (verified against the
-     * menu table dump), so behavior matches exactly today. Two rows have a
-     * parent_id that doesn't exist in the table (3 and 110) — these are
-     * orphaned/unreachable in both the old and new stack, not a bug.
-     */
+
     public function childrenRecursive()
     {
         return $this->children()->with('childrenRecursive');

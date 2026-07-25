@@ -6,9 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class CategoryRadioShow extends Model
 {
-    // NOTE: schema assumed from RadioShowService usage (link, parent_id,
-    // title, meta_title, meta_description, meta_keywords). Confirm real
-    // columns/PK with `DESCRIBE category_radio_show;`.
+
     protected $table = 'category_radio_show';
 
     public $timestamps = false;
