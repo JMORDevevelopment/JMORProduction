@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
 use App\Models\LogHistory;
 use App\Models\Order;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
@@ -17,13 +17,8 @@ class LoginController extends Controller
         return view('frontend.login');
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
         // Manual MD5 authentication (legacy)
         $user = User::where('email', $request->email)
             ->where('password', md5($request->password))
@@ -58,9 +53,9 @@ class LoginController extends Controller
 
         // Redirect based on gift_cards session
         if (session()->has('gift_cards')) {
-            return redirect('/checkout-confirm');
+            return redirect()->route('checkout.confirm');
         }
 
-        return redirect('/checkout');
+        return redirect()->route('checkout');
     }
 }

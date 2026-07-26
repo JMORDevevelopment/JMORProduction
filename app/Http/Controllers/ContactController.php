@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ContactRequest;
 use App\Models\ContactUs;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
@@ -33,21 +35,9 @@ class ContactController extends Controller
         ]);
     }
 
-    public function submit(Request $request)
+    public function submit(ContactRequest $request)
     {
-        $post = $request->all();
-        $error = $this->validatePost($post);
-
-        $rand1 = $request->input('firstNumber');
-        $rand2 = $request->input('secondNumber');
-        $total = $request->input('protection_question');
-        if ($rand1 + $rand2 != $total) {
-            $error['error_protection_question'] = 'Your answer is wrong!';
-        }
-
-        if (! empty($error)) {
-            return redirect()->back()->withInput()->withErrors($error);
-        }
+        $post = $request->validated();
 
         ContactUs::create([
             'name' => htmlspecialchars($post['name']),
@@ -61,30 +51,7 @@ class ContactController extends Controller
 
         $this->sendNotification($post);
 
-        return redirect('/contact?form=submit');
-    }
-
-    private function validatePost(array $post): array
-    {
-        $error = [];
-
-        if (empty($post['name'])) {
-            $error['error_name'] = 'Enter Name';
-        }
-        if (empty($post['email'])) {
-            $error['error_email'] = 'Enter Email';
-        }
-        if (empty($post['phone'])) {
-            $error['error_phone'] = 'Enter Phone';
-        }
-        if (empty($post['reason'])) {
-            $error['error_reason'] = 'Enter Reason';
-        }
-        if (empty($post['message'])) {
-            $error['error_message'] = 'Enter Message';
-        }
-
-        return $error;
+        return redirect()->route('contact', ['form' => 'submit']);
     }
 
     private function sendNotification(array $post): void
@@ -103,7 +70,6 @@ class ContactController extends Controller
             });
         } catch (\Exception $e) {
             Log::error('Failed to send contact us email: ' . $e->getMessage());
-            
         }
     }
 }
