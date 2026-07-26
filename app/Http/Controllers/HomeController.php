@@ -8,6 +8,8 @@ use App\Models\Setting;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use net\authorize\api\contract\v1 as AnetAPI;
+use net\authorize\api\controller as AnetController;
 
 class HomeController extends Controller
 {
