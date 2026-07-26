@@ -13,13 +13,13 @@ class RadioShowService
      */
     public function categoryViewData(string $categoryLink, ?string $currentYear = null): array
     {
-        $category = CategoryRadioShow::query()->where('link', $categoryLink)->first();
+        $category = CategoryRadioShow::where('link', $categoryLink)->first();
 
         if (! $category) {
             abort(404);
         }
 
-        $children = CategoryRadioShow::query()->where('parent_id', $category->id)->get()->all();
+        $children = CategoryRadioShow::where('parent_id', $category->id)->get()->all();
 
         return [
             'category_radio_show' => [$category->toArray()],
@@ -41,15 +41,13 @@ class RadioShowService
     private function showsForCategory(CategoryRadioShow $category, array $children): array
     {
         if ($category->parent_id != 0) {
-            return RadioShow::query()
-                ->where('category_id', $category->id)
+            return RadioShow::where('category_id', $category->id)
                 ->orderBy('id', 'desc')
                 ->get()
                 ->all();
         }
 
-        $ownShows = RadioShow::query()
-            ->where('category_id', $category->id)
+        $ownShows = RadioShow::where('category_id', $category->id)
             ->orderBy('id', 'desc')
             ->get()
             ->all();
@@ -59,8 +57,7 @@ class RadioShowService
         }
 
         $childIds = array_column($children, 'id');
-        $childShows = RadioShow::query()
-            ->whereIn('category_id', $childIds)
+        $childShows = RadioShow::whereIn('category_id', $childIds)
             ->orderBy('id', 'desc')
             ->get()
             ->all();

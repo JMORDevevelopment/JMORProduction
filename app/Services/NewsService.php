@@ -10,8 +10,8 @@ class NewsService
 
     public function paginatedList(int $start = 0): array
     {
-        $total = News::query()->count();
-        $news = News::query()->offset($start)->limit(self::PER_PAGE)->get();
+        $total = News::count();
+        $news = News::offset($start)->limit(self::PER_PAGE)->get();
         $to = min($start + self::PER_PAGE, $total);
 
         return [

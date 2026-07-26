@@ -51,7 +51,7 @@ class CartController extends Controller
         $this->cart->resetForGiftCardPurchase();
 
         $giftId = $request->input('gift_id');
-        $gift = GiftCard::query()->where('id', $giftId)->first();
+        $gift = GiftCard::where('id', $giftId)->first();
 
         if (! $gift) {
             return redirect('/cart');

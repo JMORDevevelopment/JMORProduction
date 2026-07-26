@@ -25,8 +25,7 @@ class LoginController extends Controller
         ]);
 
         // Manual MD5 authentication (legacy)
-        $user = User::query()
-            ->where('email', $request->email)
+        $user = User::where('email', $request->email)
             ->where('password', md5($request->password))
             ->first();
 
@@ -48,11 +47,11 @@ class LoginController extends Controller
 
         // Link guest order (if any)
         if ($order_id = session()->get('order_id')) {
-            Order::query()->where('id', $order_id)->update(['user_id' => $user->user_id]);
+            Order::where('id', $order_id)->update(['user_id' => $user->user_id]);
         }
 
         // Log IP history
-        LogHistory::query()->create([
+        LogHistory::create([
             'user_id' => $user->user_id,
             'ip' => $request->ip(),
         ]);

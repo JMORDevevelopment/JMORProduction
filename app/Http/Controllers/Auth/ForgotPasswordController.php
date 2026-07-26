@@ -17,7 +17,7 @@ class ForgotPasswordController extends Controller
     public function sendResetLink(Request $request)
     {
         $email = $request->input('email');
-        $user = User::query()->where('email', $email)->first();
+        $user = User::where('email', $email)->first();
 
         if (! $user) {
             return redirect('/forgot-password?error_email=nomatch');
@@ -27,7 +27,7 @@ class ForgotPasswordController extends Controller
         $newPassword = substr(md5(mt_rand()), 0, 8);
         $newHash = md5($newPassword);
 
-        User::query()->where('email', $email)->update(['password' => $newHash]);
+        User::where('email', $email)->update(['password' => $newHash]);
 
         try {
             Mail::send('mails.forgot-password', [

@@ -18,7 +18,7 @@ class ContentPageService
      */
     public function findByLink(string $modelClass, string $link): Model
     {
-        $row = $modelClass::query()->where('link', $link)->first();
+        $row = $modelClass::where('link', $link)->first();
 
         if (! $row) {
             abort(404);
