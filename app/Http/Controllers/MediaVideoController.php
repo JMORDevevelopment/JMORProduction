@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+<<<<<<< HEAD
 use App\Models\MediaVideo;
+=======
+>>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
 use App\Services\ContentPageService;
 
 class MediaVideoController extends Controller
@@ -20,7 +23,11 @@ class MediaVideoController extends Controller
     {
         return view(
             'frontend.media_video_detail',
+<<<<<<< HEAD
             $this->contentPages->detailViewData(MediaVideo::class, $link, 'media_video_datas')
+=======
+            $this->contentPages->detailViewData('media_video', $link, 'media_video_datas')
+>>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
         );
     }
 }
