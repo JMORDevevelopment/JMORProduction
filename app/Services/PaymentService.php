@@ -2,16 +2,12 @@
 
 namespace App\Services;
 
-<<<<<<< HEAD
 use App\Models\CouponCheckout;
 use App\Models\GiftCard;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Transaction;
 use App\Models\User;
-=======
-use Illuminate\Support\Facades\DB;
->>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
 use net\authorize\api\constants\ANetEnvironment;
 use net\authorize\api\contract\v1 as AnetAPI;
 use net\authorize\api\controller as AnetController;
@@ -29,38 +25,22 @@ class PaymentService
      */
     public function chargeOrder(int $orderId, array $cardInput): bool
     {
-<<<<<<< HEAD
         $order = Order::where('id', $orderId)->first();
-=======
-        $order = DB::table('orders')->where('id', $orderId)->first();
->>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
         if (! $order) {
             return false;
         }
 
         if (session()->get('user_id')) {
-<<<<<<< HEAD
             Order::where('id', $orderId)->update(['user_id' => session()->get('user_id')]);
             $order = Order::where('id', $orderId)->first();
         }
 
         $customer = User::where('user_id', $order->user_id)->first();
-=======
-            DB::table('orders')->where('id', $orderId)->update(['user_id' => session()->get('user_id')]);
-            $order = DB::table('orders')->where('id', $orderId)->first();
-        }
-
-        $customer = DB::table('user')->where('user_id', $order->user_id)->first();
->>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
         if (! $customer) {
             return false;
         }
 
-<<<<<<< HEAD
         $orderDetails = OrderDetail::where('order_id', $orderId)->get();
-=======
-        $orderDetails = DB::table('order_details')->where('order_id', $orderId)->get();
->>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
 
         $response = $this->submitToGateway($orderId, $order->grand_total, $customer, $cardInput);
 
@@ -73,11 +53,7 @@ class PaymentService
         $authCode = $transactionResponse->getAuthCode();
 
         $this->recordTransaction($orderId, $order, $orderDetails, $transactionId, $authCode);
-<<<<<<< HEAD
         Order::where('id', $orderId)->update(['status' => 1]);
-=======
-        DB::table('orders')->where('id', $orderId)->update(['status' => 1]);
->>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
 
         $this->redeemCouponIfApplied();
         $this->generateGiftCardCouponIfNeeded($orderId, $orderDetails);
@@ -170,11 +146,7 @@ class PaymentService
     {
         $firstDetail = collect($orderDetails)->first();
 
-<<<<<<< HEAD
         Transaction::create([
-=======
-        DB::table('transaction')->insert([
->>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
             'order_id' => $orderId,
             'order_type' => $firstDetail->type ?? '',
             'checkout_type' => session()->get('checkout_type', 'Monthly'),
@@ -191,12 +163,7 @@ class PaymentService
             return;
         }
 
-<<<<<<< HEAD
         CouponCheckout::where('coupon_number', session()->get('coupon_code'))
-=======
-        DB::table('coupon_checkout')
-            ->where('coupon_number', session()->get('coupon_code'))
->>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
             ->update(['status' => 1]);
     }
 
@@ -211,31 +178,18 @@ class PaymentService
             return;
         }
 
-<<<<<<< HEAD
         $giftCard = GiftCard::where('name', $firstDetail->item)->first();
-=======
-        $giftCard = DB::table('gift_card')->where('name', $firstDetail->item)->first();
->>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
         if (! $giftCard) {
             return;
         }
 
         $couponNumber = strtoupper(substr(md5(time()), 0, 7));
 
-<<<<<<< HEAD
         CouponCheckout::create([
-=======
-        DB::table('coupon_checkout')->insertGetId([
->>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
             'gift_card_id' => $giftCard->id,
             'order_id' => $orderId,
             'coupon_number' => $couponNumber,
         ]);
 
-<<<<<<< HEAD
-=======
-        // Watermarked coupon image generation (CI legacy feature) — not yet
-        // ported; revisit with Intervention Image if it's still needed.
->>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
     }
 }

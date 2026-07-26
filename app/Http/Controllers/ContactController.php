@@ -2,14 +2,9 @@
 
 namespace App\Http\Controllers;
 
-<<<<<<< HEAD
 use App\Models\ContactUs;
 use App\Models\Setting;
 use Illuminate\Http\Request;
-=======
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
->>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
 use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
@@ -54,11 +49,7 @@ class ContactController extends Controller
             return redirect()->back()->withInput()->withErrors($error);
         }
 
-<<<<<<< HEAD
         ContactUs::create([
-=======
-        DB::table('contact_us')->insert([
->>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
             'name' => htmlspecialchars($post['name']),
             'email' => htmlspecialchars($post['email']),
             'phone' => htmlspecialchars($post['phone']),
@@ -98,11 +89,7 @@ class ContactController extends Controller
 
     private function sendNotification(array $post): void
     {
-<<<<<<< HEAD
         $to = Setting::get('email');
-=======
-        $to = DB::table('settings')->where('option', 'email')->value('value');
->>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
 
         try {
             Mail::send('mails.contact-us', [
@@ -115,12 +102,8 @@ class ContactController extends Controller
                 $mail->to($to)->subject('Contact Us')->from($post['email']);
             });
         } catch (\Exception $e) {
-<<<<<<< HEAD
             Log::error('Failed to send contact us email: ' . $e->getMessage());
             
-=======
-            // Match legacy behaviour: a failed email should not block the redirect
->>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
         }
     }
 }

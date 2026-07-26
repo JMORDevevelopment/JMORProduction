@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-<<<<<<< HEAD
 use App\Models\News;
-=======
->>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
 use App\Services\ContentPageService;
 use App\Services\NewsService;
 
@@ -32,11 +29,7 @@ class NewsController extends Controller
     {
         return view(
             'frontend.news_detail',
-<<<<<<< HEAD
             $this->contentPages->detailViewData(News::class, $link, 'news_datas')
-=======
-            $this->contentPages->detailViewData('news', $link, 'news_datas')
->>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
         );
     }
 }

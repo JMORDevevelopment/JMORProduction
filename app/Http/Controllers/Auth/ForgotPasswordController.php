@@ -27,11 +27,7 @@ class ForgotPasswordController extends Controller
         $newPassword = substr(md5(mt_rand()), 0, 8);
         $newHash = md5($newPassword);
 
-<<<<<<< HEAD
         User::where('email', $email)->update(['password' => $newHash]);
-=======
-        DB::table('user')->where('email', $email)->update(['password' => $newHash]);
->>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
 
         try {
             Mail::send('mails.forgot-password', [
