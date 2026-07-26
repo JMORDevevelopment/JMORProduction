@@ -21,7 +21,7 @@ class CheckoutService
         $discount = session()->get('discount_value', 0);
         $grandTotal = $subTotal - $discount;
 
-        $order = Order::query()->create([
+        $order = Order::create([
             'user_id' => session()->get('user_id'),
             'sub_total' => $subTotal,
             'discount' => $discount,
@@ -32,7 +32,7 @@ class CheckoutService
         ]);
 
         foreach ($cart as $item) {
-            OrderDetail::query()->create([
+            OrderDetail::create([
                 'item' => $item['name'],
                 'type' => $item['type'],
                 'qty' => $item['qty'],
@@ -48,7 +48,7 @@ class CheckoutService
 
     public function saveFormData(int $orderId, array $formData): void
     {
-        Order::query()->where('id', $orderId)->update([
+        Order::where('id', $orderId)->update([
             'checkout_data' => json_encode($formData),
         ]);
     }

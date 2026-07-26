@@ -23,7 +23,7 @@ class Setting extends Model
     public static function allKeyed(): array
     {
         return Cache::remember('settings.keyed', 600, function () {
-            return static::query()->pluck('value', 'option')->toArray();
+            return static::pluck('value', 'option')->toArray();
         });
     }
 

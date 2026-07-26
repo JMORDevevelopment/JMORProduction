@@ -25,22 +25,22 @@ class PaymentService
      */
     public function chargeOrder(int $orderId, array $cardInput): bool
     {
-        $order = Order::query()->where('id', $orderId)->first();
+        $order = Order::where('id', $orderId)->first();
         if (! $order) {
             return false;
         }
 
         if (session()->get('user_id')) {
-            Order::query()->where('id', $orderId)->update(['user_id' => session()->get('user_id')]);
-            $order = Order::query()->where('id', $orderId)->first();
+            Order::where('id', $orderId)->update(['user_id' => session()->get('user_id')]);
+            $order = Order::where('id', $orderId)->first();
         }
 
-        $customer = User::query()->where('user_id', $order->user_id)->first();
+        $customer = User::where('user_id', $order->user_id)->first();
         if (! $customer) {
             return false;
         }
 
-        $orderDetails = OrderDetail::query()->where('order_id', $orderId)->get();
+        $orderDetails = OrderDetail::where('order_id', $orderId)->get();
 
         $response = $this->submitToGateway($orderId, $order->grand_total, $customer, $cardInput);
 
@@ -53,7 +53,7 @@ class PaymentService
         $authCode = $transactionResponse->getAuthCode();
 
         $this->recordTransaction($orderId, $order, $orderDetails, $transactionId, $authCode);
-        Order::query()->where('id', $orderId)->update(['status' => 1]);
+        Order::where('id', $orderId)->update(['status' => 1]);
 
         $this->redeemCouponIfApplied();
         $this->generateGiftCardCouponIfNeeded($orderId, $orderDetails);
@@ -146,7 +146,7 @@ class PaymentService
     {
         $firstDetail = collect($orderDetails)->first();
 
-        Transaction::query()->create([
+        Transaction::create([
             'order_id' => $orderId,
             'order_type' => $firstDetail->type ?? '',
             'checkout_type' => session()->get('checkout_type', 'Monthly'),
@@ -163,8 +163,7 @@ class PaymentService
             return;
         }
 
-        CouponCheckout::query()
-            ->where('coupon_number', session()->get('coupon_code'))
+        CouponCheckout::where('coupon_number', session()->get('coupon_code'))
             ->update(['status' => 1]);
     }
 
@@ -179,20 +178,18 @@ class PaymentService
             return;
         }
 
-        $giftCard = GiftCard::query()->where('name', $firstDetail->item)->first();
+        $giftCard = GiftCard::where('name', $firstDetail->item)->first();
         if (! $giftCard) {
             return;
         }
 
         $couponNumber = strtoupper(substr(md5(time()), 0, 7));
 
-        CouponCheckout::query()->create([
+        CouponCheckout::create([
             'gift_card_id' => $giftCard->id,
             'order_id' => $orderId,
             'coupon_number' => $couponNumber,
         ]);
 
-        // Watermarked coupon image generation (CI legacy feature) — not yet
-        // ported; revisit with Intervention Image if it's still needed.
     }
 }

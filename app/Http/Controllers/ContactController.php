@@ -49,7 +49,7 @@ class ContactController extends Controller
             return redirect()->back()->withInput()->withErrors($error);
         }
 
-        ContactUs::query()->create([
+        ContactUs::create([
             'name' => htmlspecialchars($post['name']),
             'email' => htmlspecialchars($post['email']),
             'phone' => htmlspecialchars($post['phone']),
@@ -102,7 +102,8 @@ class ContactController extends Controller
                 $mail->to($to)->subject('Contact Us')->from($post['email']);
             });
         } catch (\Exception $e) {
-            // Match legacy behaviour: a failed email should not block the redirect
+            Log::error('Failed to send contact us email: ' . $e->getMessage());
+            
         }
     }
 }

@@ -23,7 +23,7 @@ class SignUpController extends Controller
             'state'     => old('state', ''),
             'zip'       => old('zip', ''),
             'error'     => session('errors') ? session('errors')->getBag('default')->getMessages() : [],
-            'regions'   => Region::query()->get(),
+            'regions'   => Region::get(),
             'text_sign_up' => 'Sign Up',
             'text_form' => 'You can create an account here.',
             'text_firstname' => 'First Name',
@@ -58,7 +58,7 @@ class SignUpController extends Controller
         if (empty($post['zip']))       $error['error_zip']       = 'Enter zip code';
 
         // Check existing email
-        $user_exists = User::query()->where('email', $post['email'])->first();
+        $user_exists = User::where('email', $post['email'])->first();
         if ($user_exists) {
             $error['error_exists'] = 'Email already exists';
         }
@@ -80,7 +80,7 @@ class SignUpController extends Controller
             'date_added'   => date('Y-m-d'),
             'user_group_id'=> config('app.c_default_group', 1),
         ];
-        $user = User::query()->create($insertData);
+        $user = User::create($insertData);
 
         // Log the user in
         Auth::loginUsingId($user->user_id);
@@ -88,7 +88,7 @@ class SignUpController extends Controller
 
         // Link guest order if exists
         if ($order_id = session()->get('order_id')) {
-            Order::query()->where('id', $order_id)->update(['user_id' => $user->user_id]);
+            Order::where('id', $order_id)->update(['user_id' => $user->user_id]);
         }
 
         return redirect('/checkout');

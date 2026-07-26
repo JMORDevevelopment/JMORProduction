@@ -10,13 +10,12 @@ class PackageService
 {
     public function listAll(): array
     {
-        return Package::query()->orderBy('priority', 'asc')->get()->all();
+        return Package::orderBy('priority', 'asc')->get()->all();
     }
 
     public function byCategory(string $categoryName): array
     {
-        return Package::query()
-            ->where('category_name', $categoryName)
+        return Package::where('category_name', $categoryName)
             ->orderBy('priority', 'asc')
             ->get()
             ->all();
@@ -24,8 +23,7 @@ class PackageService
 
     public function findById(int $packageId): array
     {
-        return Package::query()
-            ->where('id', $packageId)
+        return Package::where('id', $packageId)
             ->orderBy('priority', 'asc')
             ->get()
             ->map(fn ($item) => $item->toArray())
@@ -40,20 +38,18 @@ class PackageService
      */
     public function buildCartLines(int $packageId, ?int $serverQty, ?int $systemQty, string $packageType): array
     {
-        $package = Package::query()->where('id', $packageId)->first();
+        $package = Package::where('id', $packageId)->first();
 
         if (! $package) {
             return ['lines' => [], 'checkoutType' => 'Monthly'];
         }
 
-        $serverPrice = PackagePrice::query()
-            ->where('package_id', $packageId)
+        $serverPrice = PackagePrice::where('package_id', $packageId)
             ->where('from_qty', '<=', $serverQty)
             ->where('to_qty', '>=', $serverQty)
             ->first();
 
-        $systemPrice = SystemPrice::query()
-            ->where('package_id', $packageId)
+        $systemPrice = SystemPrice::where('package_id', $packageId)
             ->where('from_qty', '<=', $systemQty)
             ->where('to_qty', '>=', $systemQty)
             ->first();
