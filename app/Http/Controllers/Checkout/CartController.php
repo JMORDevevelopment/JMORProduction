@@ -38,13 +38,13 @@ class CartController extends Controller
         );
 
         if (empty($result['lines'])) {
-            return redirect('/cart');
+            return redirect()->route('cart');
         }
 
         $this->cart->addLines($result['lines']);
         $this->cart->setCheckoutType($result['checkoutType']);
 
-        return redirect('/cart');
+        return redirect()->route('cart');
     }
 
     public function addGiftCard(Request $request)
@@ -55,7 +55,7 @@ class CartController extends Controller
         $gift = GiftCard::where('id', $giftId)->first();
 
         if (! $gift) {
-            return redirect('/cart');
+            return redirect()->route('cart');
         }
 
         $this->cart->markGiftCard($giftId);
@@ -69,7 +69,7 @@ class CartController extends Controller
             'description' => $gift->description,
         ]]);
 
-        return redirect('/cart');
+        return redirect()->route('cart');
     }
 
     public function updateItemQty(Request $request, $rowid, $qty)
@@ -90,6 +90,6 @@ class CartController extends Controller
     {
         $this->cart->removeItem($rowid);
 
-        return redirect('/cart');
+        return redirect()->route('cart');
     }
 }

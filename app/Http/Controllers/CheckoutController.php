@@ -16,12 +16,8 @@ class CheckoutController extends Controller
 
     public function index()
     {
-        if (! session()->has('user_id')) {
-            return redirect('/login');
-        }
-
         if ($this->cart->isEmpty()) {
-            return redirect('/');
+            return redirect()->route('home');
         }
 
         return view('frontend.checkout', [
@@ -34,12 +30,8 @@ class CheckoutController extends Controller
 
     public function confirm()
     {
-        if (! session()->has('user_id')) {
-            return redirect('/login');
-        }
-
         if ($this->cart->isEmpty()) {
-            return redirect('/');
+            return redirect()->route('home');
         }
 
         return view('frontend.checkout_confirm', [
@@ -53,32 +45,32 @@ class CheckoutController extends Controller
     public function placeOrder()
     {
         if ($this->cart->isEmpty()) {
-            return redirect('/');
+            return redirect()->route('home');
         }
 
         $orderId = $this->checkout->createOrder($this->cart->items());
         session()->put('order_id', $orderId);
 
-        return session()->has('user_id') ? redirect('/checkout') : redirect('/login');
+        return session()->has('user_id') ? redirect()->route('checkout') : redirect()->route('login');
     }
 
     public function placeOrderGiftCard()
     {
         if ($this->cart->isEmpty()) {
-            return redirect('/');
+            return redirect()->route('home');
         }
 
         $orderId = $this->checkout->createOrder($this->cart->items());
         session()->put('order_id', $orderId);
 
-        return session()->has('user_id') ? redirect('/checkout-confirm') : redirect('/login');
+        return session()->has('user_id') ? redirect()->route('checkout.confirm') : redirect()->route('login');
     }
 
     public function saveFormData(Request $request)
     {
         $this->checkout->saveFormData(session()->get('order_id'), $request->all());
 
-        return redirect('/checkout-confirm');
+        return redirect()->route('checkout.confirm');
     }
 
     public function success()
