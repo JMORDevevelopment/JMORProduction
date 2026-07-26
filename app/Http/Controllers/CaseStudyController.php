@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-<<<<<<< HEAD
 use App\Models\CaseStudy;
-=======
->>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
 use App\Services\ContentPageService;
 
 class CaseStudyController extends Controller
@@ -23,11 +20,7 @@ class CaseStudyController extends Controller
     {
         return view(
             'frontend.case_studies_detail',
-<<<<<<< HEAD
             $this->contentPages->detailViewData(CaseStudy::class, $link, 'case_studies_datas')
-=======
-            $this->contentPages->detailViewData('case_studies', $link, 'case_studies_datas')
->>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
         );
     }
 }

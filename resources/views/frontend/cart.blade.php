@@ -30,9 +30,9 @@
                                         <td>
                                             <input class="input form-control change_qty" qty-id="{{ $rowid }}" name="change_qty" style="max-width:80px;" type="number" value="{{ $item['qty'] }}">
                                         </td>
-                                        <td>${{ number_format($item['price'], 2) }}</td>
+                                        <td>${{ number_format($item['price'] / max($item['qty'], 1), 2) }}</td>
                                         <td>
-                                            <span id="total-{{ $rowid }}">${{ number_format($item['price'] * $item['qty'], 2) }}</span>
+                                            <span id="total-{{ $rowid }}">${{ number_format($item['price'], 2) }}</span>
                                         </td>
                                         <td class="text-left">
                                             <a href="{{ url('cart/removeItem/'.$rowid) }}" data-did="{{ $rowid }}" onclick="return confirm('Are you sure to delete this record ?')" class="btn btn-danger delete_class"><i class="fa fa-trash"></i></a>
@@ -47,7 +47,7 @@
                             <?php
                                 $sub_total = 0;
                                 foreach($cartItems as $item) {
-                                    $sub_total += $item['price'] * $item['qty'];
+                                    $sub_total += $item['price'];
                                 }
                                 $discount_value = session()->get('discount_value', 0);
                                 $grand_total = $sub_total - $discount_value;

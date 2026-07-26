@@ -25,7 +25,7 @@ class CheckoutController extends Controller
         }
 
         return view('frontend.checkout', [
-            'cartItems' => $this->cart->items(),
+            'cartItems' => collect($this->cart->items())->keyBy('id')->all(),
             'title' => 'Check Out',
             'description' => '',
             'keywords' => '',
@@ -43,7 +43,7 @@ class CheckoutController extends Controller
         }
 
         return view('frontend.checkout_confirm', [
-            'cartItems' => $this->cart->items(),
+            'cartItems' => collect($this->cart->items())->keyBy('id')->all(),
             'title' => 'Checkout Confirm',
             'description' => '',
             'keywords' => '',
