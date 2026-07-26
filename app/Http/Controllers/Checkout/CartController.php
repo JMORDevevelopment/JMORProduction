@@ -3,10 +3,17 @@
 namespace App\Http\Controllers\Checkout;
 
 use App\Http\Controllers\Controller;
+<<<<<<< HEAD
 use App\Models\GiftCard;
 use App\Services\CartService;
 use App\Services\PackageService;
 use Illuminate\Http\Request;
+=======
+use App\Services\CartService;
+use App\Services\PackageService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+>>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
 
 class CartController extends Controller
 {
@@ -52,7 +59,11 @@ class CartController extends Controller
         $this->cart->resetForGiftCardPurchase();
 
         $giftId = $request->input('gift_id');
+<<<<<<< HEAD
         $gift = GiftCard::where('id', $giftId)->first();
+=======
+        $gift = DB::table('gift_card')->where('id', $giftId)->first();
+>>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
 
         if (! $gift) {
             return redirect('/cart');

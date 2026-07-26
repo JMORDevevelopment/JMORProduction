@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+<<<<<<< HEAD
 use App\Models\Recommended;
+=======
+>>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
 use App\Services\ContentPageService;
 
 class RecommendedController extends Controller
@@ -20,7 +23,11 @@ class RecommendedController extends Controller
     {
         return view(
             'frontend.recommended_detail',
+<<<<<<< HEAD
             $this->contentPages->detailViewData(Recommended::class, $link, 'recommended_datas')
+=======
+            $this->contentPages->detailViewData('recommended', $link, 'recommended_datas')
+>>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
         );
     }
 }

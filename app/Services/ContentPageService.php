@@ -2,7 +2,11 @@
 
 namespace App\Services;
 
+<<<<<<< HEAD
 use Illuminate\Database\Eloquent\Model;
+=======
+use Illuminate\Support\Facades\DB;
+>>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
 
 /**
  * Shared logic for the "listing page + detail-by-link page" pattern used
@@ -13,12 +17,19 @@ class ContentPageService
 {
     /**
      * Fetch a single row by its `link` slug, or abort with a 404.
+<<<<<<< HEAD
      *
      * @param class-string<Model> $modelClass
      */
     public function findByLink(string $modelClass, string $link): Model
     {
         $row = $modelClass::where('link', $link)->first();
+=======
+     */
+    public function findByLink(string $table, string $link): object
+    {
+        $row = DB::table($table)->where('link', $link)->first();
+>>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
 
         if (! $row) {
             abort(404);
@@ -30,7 +41,11 @@ class ContentPageService
     /**
      * Build the standard meta fields (title/description/keywords) from a row.
      */
+<<<<<<< HEAD
     public function metaFor(Model $row): array
+=======
+    public function metaFor(object $row): array
+>>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
     {
         return [
             'title' => $row->meta_title ?: $row->name,
@@ -41,6 +56,7 @@ class ContentPageService
 
     /**
      * Full view payload for a detail page: the row (under $dataKey) plus meta fields.
+<<<<<<< HEAD
      *
      * @param class-string<Model> $modelClass
      */
@@ -50,6 +66,15 @@ class ContentPageService
 
         return array_merge(
             [$dataKey => $row->toArray()],
+=======
+     */
+    public function detailViewData(string $table, string $link, string $dataKey): array
+    {
+        $row = $this->findByLink($table, $link);
+
+        return array_merge(
+            [$dataKey => (array) $row],
+>>>>>>> f3ffa73 (refactor: split fat HomeController into domain controllers/services, add Blade mail templates)
             $this->metaFor($row)
         );
     }
