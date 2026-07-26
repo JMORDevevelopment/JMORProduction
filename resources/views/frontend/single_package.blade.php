@@ -69,6 +69,10 @@
 
     @if(!empty($package_data))
         @foreach($package_data as $cx => $pkg)
+            <?php
+                $pkg_description_full = html_entity_decode(html_entity_decode($pkg['description'] ?? '', ENT_QUOTES), ENT_QUOTES);
+                $pkg_description_short = html_entity_decode(html_entity_decode(strip_tags($pkg['description'] ?? ''), ENT_QUOTES), ENT_QUOTES);
+            ?>
             <section class="wt-section bg-gray text-center inner-page-header">
                 <div class="container">
                     <div class="row justify-content-md-center align-items-center text-white py-4 py-lg-5">
@@ -96,7 +100,7 @@
                                         <a href="#"></a>
                                     </div>
                                 </div>
-                                <p>{!! $pkg['description'] !!}</p>
+                                <p>{!! $pkg_description_full !!}</p>
                             </div>
                         @break {{-- We only need the first package for the main content --}}
                         @endforeach
@@ -115,6 +119,9 @@
                         </div>
                         @if(!empty($package_data))
                             @foreach($package_data as $c => $pkg)
+                                <?php
+                                    $pkg_description_short = html_entity_decode(html_entity_decode(strip_tags($pkg['description'] ?? ''), ENT_QUOTES), ENT_QUOTES);
+                                ?>
                                 <div class="monthly_price" id="monthly_price">
                                     <form class="form-inline" action="{{ url('home/addToCartPackages') }}" method="post">
                                         @csrf
@@ -134,7 +141,7 @@
                                                         $sever_format_num = $server_price ? number_format($server_price->pack_price, 2, '.', '') : '0.00';
                                                         $system_format_num = $system_price ? number_format($system_price->system_price, 2, '.', '') : '0.00';
                                                     ?>
-                                                    <p class="text-muted">{{ Str::limit(strip_tags($pkg['description']), 150) }}</p>
+                                                    <p class="text-muted">{{ Str::limit($pkg_description_short, 150) }}</p>
                                                     @if($server_price)
                                                         <div class="form-group">
                                                             <label for="server_qty">Server Qty(<span>${{ $sever_format_num }}</span>)</label>
@@ -186,7 +193,7 @@
                                                             $system_format_number = '0.00';
                                                         }
                                                     ?>
-                                                    <p class="text-muted">{{ Str::limit(strip_tags($pkg['description']), 150) }}</p>
+                                                    <p class="text-muted">{{ Str::limit($pkg_description_short, 150) }}</p>
                                                     @if($server_price)
                                                         <div class="form-group">
                                                             <label for="server_qty_yearly">Server Qty(<span>${{ $sever_format_number }}</span>)</label>

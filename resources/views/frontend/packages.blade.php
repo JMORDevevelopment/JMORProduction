@@ -93,6 +93,7 @@
                             <?php
                                 $server_price = DB::table('package_price')->where('package_id', $pkg->id)->where('from_qty', 1)->first();
                                 $system_price = DB::table('system_price')->where('package_id', $pkg->id)->where('from_qty', 1)->first();
+                                $pkg_description = html_entity_decode(html_entity_decode(strip_tags($pkg->description ?? ''), ENT_QUOTES), ENT_QUOTES);
                             ?>
                             <div class="col-md-4 monthly_price" id="monthly_price">
                                 <div class="card text-center mb-md-0 mb-3">
@@ -105,7 +106,7 @@
                                             @endif
                                             <span style="font-size:22px; color:#1b1e24;">WKSTNS Price</span>
                                             <h3>${{ number_format($system_price->system_price ?? 0, 2) }} <small style="font-size:16px;">Each</small></h3>
-                                            <p class="text-muted">{{ Str::limit(strip_tags($pkg->description), 150) }}</p>
+                                            <p class="text-muted">{{ Str::limit($pkg_description, 150) }}</p>
                                             <a href="{{ url('home/single_package/'.$pkg->id) }}" class="btn btn-pill btn-outline-primary mt-3">View Details</a>
                                         </div>
                                     </div>
@@ -135,7 +136,7 @@
                                             ?>
                                             <span style="font-size:22px; color:#1b1e24;">WKSTNS Price</span>
                                             <h3>${{ number_format($total_system, 2) }} <small style="font-size:16px;">Each</small></h3>
-                                            <p class="text-muted">{{ Str::limit(strip_tags($pkg->description), 150) }}</p>
+                                            <p class="text-muted">{{ Str::limit($pkg_description, 150) }}</p>
                                             <a href="{{ url('home/single_package/'.$pkg->id) }}" class="btn btn-pill btn-outline-primary mt-3">View Details</a>
                                         </div>
                                     </div>
