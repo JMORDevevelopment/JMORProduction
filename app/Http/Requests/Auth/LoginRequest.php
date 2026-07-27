@@ -13,9 +13,15 @@ class LoginRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        $this->merge([
-            'email' => trim($this->input('email')),
-        ]);
+        $this->merge($this->trimRecursive($this->all()));
+    }
+
+    private function trimRecursive($value)
+    {
+        if (is_array($value)) {
+            return array_map([$this, 'trimRecursive'], $value);
+        }
+        return is_string($value) ? trim($value) : $value;
     }
 
     public function rules(): array
@@ -32,7 +38,6 @@ class LoginRequest extends FormRequest
             'email.required'  => 'Email address is required.',
             'email.email'     => 'Please enter a valid email address.',
             'email.max'       => 'Email cannot exceed 255 characters.',
-
             'password.required' => 'Password is required.',
             'password.min'      => 'Password must be at least 8 characters.',
             'password.max'      => 'Password cannot exceed 255 characters.',

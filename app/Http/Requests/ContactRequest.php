@@ -14,8 +14,15 @@ class ContactRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        // Trim all fields
-        $this->merge(array_map('trim', $this->all()));
+        $this->merge($this->trimRecursive($this->all()));
+    }
+
+    private function trimRecursive($value)
+    {
+        if (is_array($value)) {
+            return array_map([$this, 'trimRecursive'], $value);
+        }
+        return is_string($value) ? trim($value) : $value;
     }
 
     public function rules(): array
@@ -44,21 +51,16 @@ class ContactRequest extends FormRequest
         return [
             'name.required'       => 'Please enter your full name.',
             'name.max'            => 'Name cannot exceed 255 characters.',
-
             'email.required'      => 'Email address is required.',
             'email.email'         => 'Please enter a valid email address.',
             'email.max'           => 'Email cannot exceed 255 characters.',
-
             'phone.required'      => 'Phone number is required.',
             'phone.regex'         => 'Please enter a valid phone number (digits, spaces, +, -, parentheses).',
             'phone.max'           => 'Phone number cannot exceed 20 characters.',
-
             'reason.required'     => 'Please select a reason for contacting us.',
             'reason.max'          => 'Reason cannot exceed 255 characters.',
-
             'message.required'    => 'Please enter your message.',
             'message.max'         => 'Message cannot exceed 5000 characters.',
-
             'protection_question.required' => 'Please answer the protection question.',
             'protection_question.integer'   => 'Your answer must be a number.',
         ];
