@@ -15,9 +15,15 @@ class ForgotPasswordRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        $this->merge([
-            'email' => trim($this->input('email')),
-        ]);
+        $this->merge($this->trimRecursive($this->all()));
+    }
+
+    private function trimRecursive($value)
+    {
+        if (is_array($value)) {
+            return array_map([$this, 'trimRecursive'], $value);
+        }
+        return is_string($value) ? trim($value) : $value;
     }
 
     public function rules(): array
