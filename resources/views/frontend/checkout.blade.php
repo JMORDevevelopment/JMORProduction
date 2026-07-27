@@ -34,14 +34,14 @@
                             </thead>
                             <tbody>
                                 <?php
-                                    $sub_total = 0;
-                                    $discount_value = session()->get('discount_value', 0);
-                                    $grand_total = 0;
+                                $sub_total = 0;
+                                $discount_value = session()->get('discount_value', 0);
+                                $grand_total = 0;
                                 ?>
-                                @if(count($cartItems) > 0)
-                                    @foreach($cartItems as $item)
+                                @if (count($cartItems) > 0)
+                                    @foreach ($cartItems as $item)
                                         <?php
-                                            $sub_total += $item['price'] * $item['qty'];
+                                        $sub_total += $item['price'] * $item['qty'];
                                         ?>
                                         <tr id="{{ $loop->index }}">
                                             <td>{{ $item['name'] }}</td>
@@ -51,7 +51,11 @@
                                         </tr>
                                     @endforeach
                                 @else
-                                    <tr><td colspan="5"><p>Your cart is empty.....</p></td></tr>
+                                    <tr>
+                                        <td colspan="5">
+                                            <p>Your cart is empty.....</p>
+                                        </td>
+                                    </tr>
                                 @endif
                             </tbody>
                             <tfoot>
@@ -68,7 +72,7 @@
                                     <td style="border: 0px!important;padding: 5px 15px!important;">Discount:</td>
                                     <td style="border: 0px!important;padding: 5px 15px!important;">
                                         <b>
-                                            @if($discount_value > 0)
+                                            @if ($discount_value > 0)
                                                 ${{ number_format($discount_value, 2) }}
                                             @else
                                                 0
@@ -96,73 +100,110 @@
 
                     <div class="col-lg-6">
                         <h3 class="text-left">Submit Information</h3>
-                        @if(session('error_login'))
+                        @if (session('error_login'))
                             <div class="alert alert-warning alert-dismissible">
-                                <h4><i class="icon fa fa-warning"></i>Alert!</h4>{{ session('error_login')['global_error'] }}
+                                <h4><i class="icon fa fa-warning"></i>Alert!</h4>
+                                {{ session('error_login')['global_error'] }}
+                            </div>
+                        @endif
+
+                        @if ($errors->any())
+                            <div class="alert alert-danger alert-dismissible">
+                                <h4><i class="icon fa fa-warning"></i>Please fix the following:</h4>
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
                         @endif
 
                         <form action="{{ url('home/checkout_from_data') }}" class="well" method="post">
                             @csrf
                             <?php
-                                // Get first cart item to determine package
-                                $first_item = reset($cartItems);
-                                if($first_item) {
-                                    $pack_id = str_replace(['p','s'], '', $first_item['id']);
-                                    $form = DB::table('checkout_meta')->where('package_id', $pack_id)->first();
-                                    if($form) {
-                                        $tab_datas = DB::table('checkout_form')->where('form_id', $form->id)->get()->toArray();
-                                    } else {
-                                        $tab_datas = [];
-                                    }
+                            // Get first cart item to determine package
+                            $first_item = reset($cartItems);
+                            if ($first_item) {
+                                $pack_id = str_replace(['p', 's'], '', $first_item['id']);
+                                $form = DB::table('checkout_meta')->where('package_id', $pack_id)->first();
+                                if ($form) {
+                                    $tab_datas = DB::table('checkout_form')->where('form_id', $form->id)->get()->toArray();
                                 } else {
                                     $tab_datas = [];
                                 }
+                            } else {
+                                $tab_datas = [];
+                            }
                             ?>
-                            @if(!empty($tab_datas))
-                                @foreach($tab_datas as $tab_data)
+                            @if (!empty($tab_datas))
+                                @foreach ($tab_datas as $tab_data)
                                     <div class="control-group">
                                         <div class="form-group mb-4">
-                                            @if($tab_data->types == 1)
-                                                <input type="text" name="{{ $tab_data->name }}" {{ $tab_data->required == 1 ? 'required' : '' }} class="form-control form-control-lg" placeholder="{{ $tab_data->placeholder }}">
+                                            @if ($tab_data->types == 1)
+                                                <input type="text" name="{{ $tab_data->name }}"
+                                                    value="{{ old($tab_data->name) }}"
+                                                    {{ $tab_data->required == 1 ? 'required' : '' }}
+                                                    class="form-control form-control-lg @error($tab_data->name) is-invalid @enderror"
+                                                    placeholder="{{ $tab_data->placeholder }}">
                                             @else
-                                                <textarea name="{{ $tab_data->name }}" {{ $tab_data->required == 1 ? 'required' : '' }} class="form-control form-control-lg" placeholder="{{ $tab_data->placeholder }}"></textarea>
+                                                <textarea name="{{ $tab_data->name }}" {{ $tab_data->required == 1 ? 'required' : '' }}
+                                                    class="form-control form-control-lg @error($tab_data->name) is-invalid @enderror"
+                                                    placeholder="{{ $tab_data->placeholder }}">{{ old($tab_data->name) }}</textarea>
                                             @endif
-                                            <p class="help-block"></p>
+                                            @error($tab_data->name)
+                                                <p class="help-block text-danger mb-0">{{ $message }}</p>
+                                            @else
+                                                <p class="help-block"></p>
+                                            @enderror
                                         </div>
                                     </div>
                                 @endforeach
 
-                                @foreach($cartItems as $item)
-                                    @for($p=0; $p<$item['qty']; $p++)
-                                        <?php $x = $p+1; ?>
+                                @foreach ($cartItems as $item)
+                                    @for ($p = 0; $p < $item['qty']; $p++)
+                                        <?php $x = $p + 1; ?>
                                         <div class="control-group">
-                                            <input type="hidden" name="system_number[]" value="{{ $x }}" class="form-control form-control-lg"/>
+                                            <input type="hidden" name="system_number[]" value="{{ $x }}"
+                                                class="form-control form-control-lg" />
                                             <table class="table table-bordered">
                                                 <thead>
-                                                    <tr><th colspan="2">System# {{ $x }}</th></tr>
+                                                    <tr>
+                                                        <th colspan="2">System# {{ $x }}</th>
+                                                    </tr>
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                        $pack_id = str_replace(['p','s'], '', $item['id']);
-                                                        $form = DB::table('checkout_meta')->where('package_id', $pack_id)->first();
-                                                        if($form) {
-                                                            $system_info = DB::table('system_information')->where('form_id', $form->id)->get()->toArray();
-                                                        } else {
-                                                            $system_info = [];
-                                                        }
+                                                    $pack_id = str_replace(['p', 's'], '', $item['id']);
+                                                    $form = DB::table('checkout_meta')->where('package_id', $pack_id)->first();
+                                                    if ($form) {
+                                                        $system_info = DB::table('system_information')->where('form_id', $form->id)->get()->toArray();
+                                                    } else {
+                                                        $system_info = [];
+                                                    }
                                                     ?>
-                                                    @if(!empty($system_info))
-                                                        @foreach($system_info as $sys)
+                                                    @if (!empty($system_info))
+                                                        @foreach ($system_info as $sys)
+                                                            <?php $old_arr = old($sys->s_name, []); ?>
                                                             <tr style="padding: 0px 0px!important;">
-                                                                <th style="padding: 15px 15px!important;">{{ $sys->s_label }}</th>
+                                                                <th style="padding: 15px 15px!important;">
+                                                                    {{ $sys->s_label }}</th>
                                                                 <td style="padding: 5px 5px !important;">
-                                                                    @if($sys->s_types == 1)
-                                                                        <input type="text" name="{{ $sys->s_name }}[]" class="form-control form-control-lg" placeholder="{{ $sys->s_placeholder }}">
+                                                                    @if ($sys->s_types == 1)
+                                                                        <input type="text" name="{{ $sys->s_name }}[]"
+                                                                            value="{{ $old_arr[$p] ?? '' }}"
+                                                                            class="form-control form-control-lg @error($sys->s_name . '.' . $p) is-invalid @enderror"
+                                                                            placeholder="{{ $sys->s_placeholder }}">
                                                                     @else
-                                                                        <textarea name="{{ $sys->s_name }}[]" class="form-control form-control-lg" placeholder="{{ $sys->s_placeholder }}"></textarea>
+                                                                        <textarea name="{{ $sys->s_name }}[]"
+                                                                            class="form-control form-control-lg @error($sys->s_name . '.' . $p) is-invalid @enderror"
+                                                                            placeholder="{{ $sys->s_placeholder }}">{{ $old_arr[$p] ?? '' }}</textarea>
                                                                     @endif
-                                                                    <p class="help-block"></p>
+                                                                    @error($sys->s_name . '.' . $p)
+                                                                        <p class="help-block text-danger mb-0">
+                                                                            {{ $message }}</p>
+                                                                    @else
+                                                                        <p class="help-block"></p>
+                                                                    @enderror
                                                                 </td>
                                                             </tr>
                                                         @endforeach
@@ -174,7 +215,8 @@
                                 @endforeach
 
                                 <div class="text-right">
-                                    <button class="btn btn-lg btn-primary py-3 mt-3 px-4 btn-pill" type="submit">Submit</button><br>
+                                    <button class="btn btn-lg btn-primary py-3 mt-3 px-4 btn-pill"
+                                        type="submit">Submit</button><br>
                                 </div>
                             @else
                                 <div class="alert alert-danger col-md-6">No submit form data</div>
@@ -189,3 +231,4 @@
 
     @include('partials.script_file')
 @endsection
+    

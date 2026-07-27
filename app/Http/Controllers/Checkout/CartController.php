@@ -17,13 +17,12 @@ class CartController extends Controller
 
     public function index()
     {
-        if ($this->cart->isEmpty()) {
-            return view('frontend.cart')->with('message', 'Your cart is empty.');
-        }
-
         $cartItems = $this->cart->items();
 
-        return view('frontend.cart', compact('cartItems'));
+        return view('frontend.cart', [
+            'cartItems' => $cartItems,
+            'message' => empty($cartItems) ? 'Your cart is empty.' : null,
+        ]);
     }
 
     public function addPackages(Request $request)
@@ -61,7 +60,7 @@ class CartController extends Controller
         $this->cart->markGiftCard($giftId);
 
         $this->cart->replace([[
-            'id' => $gift->id . 'gc',
+            'id' => $gift->id.'gc',
             'qty' => 1,
             'type' => 'Gift Card',
             'price' => $gift->price,

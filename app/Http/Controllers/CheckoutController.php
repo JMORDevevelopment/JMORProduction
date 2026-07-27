@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\CartService;
 use App\Services\CheckoutService;
 use Illuminate\Http\Request;
+use App\Http\Requests\Checkout\SaveCheckoutFormRequest;
 
 class CheckoutController extends Controller
 {
@@ -66,7 +67,7 @@ class CheckoutController extends Controller
         return session()->has('user_id') ? redirect()->route('checkout.confirm') : redirect()->route('login');
     }
 
-    public function saveFormData(Request $request)
+    public function saveFormData(SaveCheckoutFormRequest $request)
     {
         $this->checkout->saveFormData(session()->get('order_id'), $request->all());
 
