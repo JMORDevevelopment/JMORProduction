@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class MediaResource extends Model
 {
-   
     protected $table = 'media_resouces';
 
     public $timestamps = false;

@@ -7,9 +7,7 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-    public function __construct(private SearchService $search)
-    {
-    }
+    public function __construct(private SearchService $search) {}
 
     public function content(Request $request)
     {

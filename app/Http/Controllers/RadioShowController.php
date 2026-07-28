@@ -11,8 +11,7 @@ class RadioShowController extends Controller
     public function __construct(
         private RadioShowService $radioShows,
         private ContentPageService $contentPages
-    ) {
-    }
+    ) {}
 
     public function posts()
     {

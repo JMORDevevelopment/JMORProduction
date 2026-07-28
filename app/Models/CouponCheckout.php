@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class CouponCheckout extends Model
 {
-  
     protected $table = 'coupon_checkout';
 
     public $timestamps = false;

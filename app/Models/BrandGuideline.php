@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class BrandGuideline extends Model
 {
-
     protected $table = 'brand_guidelines';
 
     public $timestamps = false;

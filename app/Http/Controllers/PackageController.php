@@ -6,9 +6,7 @@ use App\Services\PackageService;
 
 class PackageController extends Controller
 {
-    public function __construct(private PackageService $packages)
-    {
-    }
+    public function __construct(private PackageService $packages) {}
 
     public function list()
     {

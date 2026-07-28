@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Checkout\SaveCheckoutFormRequest;
 use App\Services\CartService;
 use App\Services\CheckoutService;
-use Illuminate\Http\Request;
-use App\Http\Requests\Checkout\SaveCheckoutFormRequest;
 
 class CheckoutController extends Controller
 {
     public function __construct(
         private CartService $cart,
         private CheckoutService $checkout
-    ) {
-    }
+    ) {}
 
     public function index()
     {

@@ -21,7 +21,6 @@ class Menu extends Model
             ->orderBy('position', 'asc');
     }
 
-
     public function childrenRecursive()
     {
         return $this->children()->with('childrenRecursive');

@@ -23,6 +23,7 @@ class ForgotPasswordRequest extends FormRequest
         if (is_array($value)) {
             return array_map([$this, 'trimRecursive'], $value);
         }
+
         return is_string($value) ? trim($value) : $value;
     }
 
@@ -37,8 +38,8 @@ class ForgotPasswordRequest extends FormRequest
     {
         return [
             'email.required' => 'Email address is required.',
-            'email.email'    => 'Please enter a valid email address.',
-            'email.max'      => 'Email cannot exceed 255 characters.',
+            'email.email' => 'Please enter a valid email address.',
+            'email.max' => 'Email cannot exceed 255 characters.',
         ];
     }
 

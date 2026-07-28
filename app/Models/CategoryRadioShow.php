@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class CategoryRadioShow extends Model
 {
-
     protected $table = 'category_radio_show';
 
     public $timestamps = false;

@@ -22,3 +22,35 @@ $(window).on('load resize', function () {
         $('#otherDiv').removeClass('custom-size');
     }
 });
+
+// Mega menu hover — shows full-width dropdown on hover with smooth delay
+(function () {
+    var timer;
+
+    $('.jm-header__navlist > li').each(function () {
+        var $li = $(this);
+        var $menu = $li.find('.jm-megamenu');
+        if ($menu.length === 0) return;
+
+        $li.on('mouseenter', function () {
+            clearTimeout(timer);
+            $menu.css('display', 'block');
+        });
+
+        $li.on('mouseleave', function () {
+            timer = setTimeout(function () {
+                $menu.css('display', 'none');
+            }, 200);
+        });
+
+        $menu.on('mouseenter', function () {
+            clearTimeout(timer);
+        });
+
+        $menu.on('mouseleave', function () {
+            timer = setTimeout(function () {
+                $menu.css('display', 'none');
+            }, 200);
+        });
+    });
+})();

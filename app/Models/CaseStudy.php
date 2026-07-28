@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class CaseStudy extends Model
 {
-
     protected $table = 'case_studies';
 
     public $timestamps = false;

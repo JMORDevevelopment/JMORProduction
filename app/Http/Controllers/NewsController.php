@@ -11,8 +11,7 @@ class NewsController extends Controller
     public function __construct(
         private NewsService $news,
         private ContentPageService $contentPages
-    ) {
-    }
+    ) {}
 
     public function list(int $start = 0)
     {

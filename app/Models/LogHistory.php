@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class LogHistory extends Model
 {
-
     protected $table = 'log_history';
 
     public $timestamps = false;

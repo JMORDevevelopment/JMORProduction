@@ -30,10 +30,10 @@ class ChargeCreditCardRequest extends FormRequest
             // If it's 6 digits (MMYYYY), convert to MM/YY
             if (preg_match('/^\d{4}$/', $cleaned)) {
                 // e.g., "1224" -> "12/24"
-                $cleaned = substr($cleaned, 0, 2) . '/' . substr($cleaned, 2, 2);
+                $cleaned = substr($cleaned, 0, 2).'/'.substr($cleaned, 2, 2);
             } elseif (preg_match('/^\d{6}$/', $cleaned)) {
                 // e.g., "122024" -> "12/24" (strip century)
-                $cleaned = substr($cleaned, 0, 2) . '/' . substr($cleaned, 2, 2);
+                $cleaned = substr($cleaned, 0, 2).'/'.substr($cleaned, 2, 2);
             }
             $data['expiry'] = $cleaned;
         }
@@ -51,7 +51,7 @@ class ChargeCreditCardRequest extends FormRequest
         return [
             'number' => ['required', 'string', 'regex:/^[0-9]{13,19}$/'],
             'expiry' => ['required', 'string', 'regex:/^(0[1-9]|1[0-2])\/([0-9]{2})$/'],
-            'cvc'    => ['required', 'string', 'regex:/^[0-9]{3,4}$/'],
+            'cvc' => ['required', 'string', 'regex:/^[0-9]{3,4}$/'],
         ];
     }
 
@@ -59,12 +59,11 @@ class ChargeCreditCardRequest extends FormRequest
     {
         return [
             'number.required' => 'Credit card number is required.',
-            'number.regex'    => 'Please enter a valid credit card number (13–19 digits).',
+            'number.regex' => 'Please enter a valid credit card number (13–19 digits).',
             'expiry.required' => 'Expiry date is required.',
-            'expiry.regex'    => 'Please enter a valid expiry date in MM/YY format (e.g., 12/24).',
-            'cvc.required'    => 'CVC code is required.',
-            'cvc.regex'       => 'Please enter a valid CVC (3 or 4 digits).',
+            'expiry.regex' => 'Please enter a valid expiry date in MM/YY format (e.g., 12/24).',
+            'cvc.required' => 'CVC code is required.',
+            'cvc.regex' => 'Please enter a valid CVC (3 or 4 digits).',
         ];
     }
-
 }

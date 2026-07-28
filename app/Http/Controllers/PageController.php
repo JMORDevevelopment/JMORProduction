@@ -7,9 +7,7 @@ use App\Services\ContentPageService;
 
 class PageController extends Controller
 {
-    public function __construct(private ContentPageService $contentPages)
-    {
-    }
+    public function __construct(private ContentPageService $contentPages) {}
 
     public function show(string $pageLink)
     {

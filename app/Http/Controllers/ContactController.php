@@ -69,7 +69,7 @@ class ContactController extends Controller
                 $mail->to($to)->subject('Contact Us')->from($post['email']);
             });
         } catch (\Exception $e) {
-            Log::error('Failed to send contact us email: ' . $e->getMessage());
+            Log::error('Failed to send contact us email: '.$e->getMessage());
         }
     }
 }
