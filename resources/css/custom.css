@@ -343,6 +343,7 @@ input:focus {
 .jm-header {
     background: var(--jm-white);
     padding: 0;
+    position: relative;
     z-index: 1030;
     box-shadow: 0 2px 14px -8px rgba(6, 32, 60, 0.28);
     border-bottom: 1px solid var(--jm-border);
@@ -381,7 +382,6 @@ input:focus {
     overflow-x: auto;
     overflow-y: hidden;
     scrollbar-width: none;
-    -ms-overflow-style: none;
 }
 
 .jm-header__navlist::-webkit-scrollbar {
@@ -1132,8 +1132,8 @@ input:focus {
 
 .jm-plan-card__price {
     display: flex;
-    align-items: baseline;
-    gap: 6px;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .jm-plan-card__price-amount {
@@ -1144,17 +1144,20 @@ input:focus {
     line-height: 1.1;
 }
 
-.jm-plan-card__price-detail {
-    font-size: 15px;
-    color: var(--jm-text-muted);
+.jm-plan-card__price-extra {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
 
-.jm-plan-card__desc {
+.jm-plan-card__price-line {
     font-size: 14px;
     color: var(--jm-text-muted);
-    padding-bottom: 16px;
-    border-bottom: 1px solid #e6edf5;
     line-height: 1.5;
+}
+
+.jm-plan-card__price-line:first-of-type {
+    margin-top: 2px;
 }
 
 .jm-plan-card__list {
@@ -1582,18 +1585,8 @@ input:focus {
     max-height: 46px;
     width: auto;
     margin-bottom: 0;
-}
-
-.jm-footer__logo::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--jm-navy-dark);
-    -webkit-mask: url('/assets/images/logo.png') no-repeat center / contain;
-    mask: url('/assets/images/logo.png') no-repeat center / contain;
-    -webkit-mask-mode: luminance;
-    mask-mode: luminance;
-    pointer-events: none;
+    filter: brightness(0) invert(1);
+    opacity: 0.92;
 }
 
 .jm-footer__tagline {

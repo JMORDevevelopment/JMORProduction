@@ -4,7 +4,8 @@
 @endphp
 
 <li
-    class="nav-item{{ !$isDesktopMega && $hasChildren ? ' dropdown' : '' }}{{ $depth > 0 && $hasChildren ? ' dropdown-submenu' : '' }}">
+    class="nav-item{{ !$isDesktopMega && $hasChildren ? ' dropdown' : '' }}{{ $depth > 0 && $hasChildren ? ' dropdown-submenu' : '' }}"
+    @if ($isDesktopMega) data-megamenu="{{ $item->id }}"@endif>
     <a href="{{ url($item->url) }}"
         class="{{ $depth === 0 ? 'jm-nav-link' : 'dropdown-item jm-dropdown-item' }}{{ !$isDesktopMega && $hasChildren ? ' dropdown-toggle' : '' }}"
         @if ($hasChildren && !$isDesktopMega) id="navbarDropdownMenuLink-{{ $item->id }}"
@@ -17,48 +18,11 @@
         @endif
     </a>
 
-    @if ($hasChildren)
-        @if ($isDesktopMega)
-            {{-- Full-width mega menu for desktop nav --}}
-            <div class="jm-megamenu">
-                <div class="container">
-                    <div class="jm-megamenu__inner">
-                        <div class="jm-megamenu__intro">
-                            <div class="jm-megamenu__title">{{ $item->title }}</div>
-                            <a href="{{ url($item->url) }}" class="jm-megamenu__all">
-                                See all {{ $item->title }} &rarr;
-                            </a>
-                        </div>
-                        <div class="jm-megamenu__cols">
-                            @php
-                                $cols = $item->childrenRecursive->chunk((int) ceil($item->childrenRecursive->count() / 3) ?: 1);
-                            @endphp
-                            @foreach ($cols as $chunk)
-                                <div class="jm-megamenu__col">
-                                    @foreach ($chunk as $child)
-                                        @if ($child->childrenRecursive->isNotEmpty())
-                                            <div class="jm-megamenu__col-title">{{ $child->title }}</div>
-                                            <ul class="jm-megamenu__links">
-                                                @foreach ($child->childrenRecursive as $grandchild)
-                                                    <li><a href="{{ url($grandchild->url) }}">{{ $grandchild->title }}</a></li>
-                                                @endforeach
-                                            </ul>
-                                        @else
-                                            <a href="{{ url($child->url) }}" class="jm-megamenu__direct-link">{{ $child->title }}</a>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @else
-            <ul class="dropdown-menu jm-dropdown-menu" aria-labelledby="navbarDropdownMenuLink-{{ $item->id }}">
-                @foreach ($item->childrenRecursive as $child)
-                    @include('partials.navigation', ['item' => $child, 'depth' => $depth + 1, 'desktop' => $desktop ?? false])
-                @endforeach
-            </ul>
-        @endif
+    @if ($hasChildren && !$isDesktopMega)
+        <ul class="dropdown-menu jm-dropdown-menu" aria-labelledby="navbarDropdownMenuLink-{{ $item->id }}">
+            @foreach ($item->childrenRecursive as $child)
+                @include('partials.navigation', ['item' => $child, 'depth' => $depth + 1, 'desktop' => $desktop ?? false])
+            @endforeach
+        </ul>
     @endif
 </li>

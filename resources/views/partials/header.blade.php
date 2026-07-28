@@ -63,6 +63,44 @@
                 </ul>
             </nav>
 
+            @foreach ($navigation as $item)
+                @if ($item->childrenRecursive->isNotEmpty())
+                    <div class="jm-megamenu" data-megamenu="{{ $item->id }}">
+                        <div class="container">
+                            <div class="jm-megamenu__inner">
+                                <div class="jm-megamenu__intro">
+                                    <div class="jm-megamenu__title">{{ $item->title }}</div>
+                                    <a href="{{ url($item->url) }}" class="jm-megamenu__all">
+                                        See all {{ $item->title }} &rarr;
+                                    </a>
+                                </div>
+                                <div class="jm-megamenu__cols">
+                                    @php
+                                        $cols = $item->childrenRecursive->chunk((int) ceil($item->childrenRecursive->count() / 3) ?: 1);
+                                    @endphp
+                                    @foreach ($cols as $chunk)
+                                        <div class="jm-megamenu__col">
+                                            @foreach ($chunk as $child)
+                                                @if ($child->childrenRecursive->isNotEmpty())
+                                                    <div class="jm-megamenu__col-title">{{ $child->title }}</div>
+                                                    <ul class="jm-megamenu__links">
+                                                        @foreach ($child->childrenRecursive as $grandchild)
+                                                            <li><a href="{{ url($grandchild->url) }}">{{ $grandchild->title }}</a></li>
+                                                        @endforeach
+                                                    </ul>
+                                                @else
+                                                    <a href="{{ url($child->url) }}" class="jm-megamenu__direct-link">{{ $child->title }}</a>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            @endforeach
+
             <div class="jm-header__actions">
                 <form action="{{ url('search') }}" method="post" autocomplete="off"
                     class="jm-header__search d-none d-xl-flex" role="search">

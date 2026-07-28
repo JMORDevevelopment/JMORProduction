@@ -163,9 +163,9 @@
                             $costs = is_array($homeTab['cost'])
                                 ? $homeTab['cost']
                                 : json_decode($homeTab['cost'] ?? '[]', true);
-                            $firstCost = is_array($costs) && !empty($costs[0]) ? $costs[0] : '';
-                            $priceDetail = is_array($costs) && !empty($costs[1]) ? $costs[1] : '';
-                            $priceNote = is_array($costs) && !empty($costs[2]) ? $costs[2] : '';
+                            $costLines = array_values(array_filter($costs, fn($c) => !empty($c)));
+                            $primaryCost = $costLines[0] ?? '';
+                            $extraCosts = array_slice($costLines, 1);
                             $isPopular = $i === 2;
                         @endphp
                         <div class="col-lg-3 col-md-6">
@@ -175,17 +175,17 @@
                                 <div class="jm-plan-card__body">
                                     <h3 class="jm-plan-card__name">{{ $homeTab['tab_title'] ?? 'Plan' }}</h3>
 
-                                    @if (!empty($firstCost))
+                                    @if (!empty($primaryCost))
                                         <div class="jm-plan-card__price">
-                                            <span class="jm-plan-card__price-amount">{{ $firstCost }}</span>
-                                            @if (!empty($priceDetail))
-                                                <span class="jm-plan-card__price-detail">{{ $priceDetail }}</span>
+                                            <div class="jm-plan-card__price-amount">{!! $primaryCost !!}</div>
+                                            @if (!empty($extraCosts))
+                                                <div class="jm-plan-card__price-extra">
+                                                    @foreach ($extraCosts as $extra)
+                                                        <div class="jm-plan-card__price-line">{!! $extra !!}</div>
+                                                    @endforeach
+                                                </div>
                                             @endif
                                         </div>
-                                    @endif
-
-                                    @if (!empty($priceNote))
-                                        <div class="jm-plan-card__desc">{{ $priceNote }}</div>
                                     @endif
 
                                     @if (!empty($tabList) && is_array($tabList))
