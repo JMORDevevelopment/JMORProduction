@@ -6,7 +6,9 @@
     <div class="container">
         <div class="row" style="row-gap:36px">
             <div class="col-lg-3 col-md-6">
-                <img src="{{ asset('assets/images/logo.png') }}" alt="The JMOR Connection, Inc." class="jm-footer__logo">
+                <span class="jm-footer__logo" role="img" aria-label="The JMOR Connection, Inc.">
+                    <img src="{{ asset('assets/images/logo.png') }}" alt="" aria-hidden="true">
+                </span>
                 <p class="jm-footer__tagline">Engineering Technology to Grow your Business.&reg;</p>
                 <ul class="jm-footer__socials" aria-label="Footer social links">
                     <li><a href="{{ $topSettings[11]->value ?? 'https://www.instagram.com/gosocialjmor/' }}"><img

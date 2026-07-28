@@ -91,22 +91,24 @@
                 @include('partials.slider_section')
             </div>
 
-            <div class="jm-featured-track" id="featuredTrack">
-                @forelse ($mainSliders as $mainSlider)
-                    <div class="jm-featured-card">
-                        <div class="jm-featured-card__img">
-                            <img src="{{ url($mainSlider['slider_image'] ?? '') }}" alt="{{ $mainSlider['slider_name'] ?? '' }}">
+            <div class="jm-featured-carousel">
+                <div class="jm-featured-track" id="featuredTrack">
+                    @forelse ($mainSliders as $mainSlider)
+                        <div class="jm-featured-card">
+                            <div class="jm-featured-card__img">
+                                <img src="{{ url($mainSlider['slider_image'] ?? '') }}" alt="{{ $mainSlider['slider_name'] ?? '' }}">
+                            </div>
+                            <div class="jm-featured-card__body">
+                                <h3>{{ $mainSlider['slider_name'] ?? '' }}</h3>
+                                @if (!empty($mainSlider['slider_link']))
+                                    <a href="{{ $mainSlider['slider_link'] }}" class="jm-btn jm-btn--blue jm-btn--sm">View details</a>
+                                @endif
+                            </div>
                         </div>
-                        <div class="jm-featured-card__body">
-                            <h3>{{ $mainSlider['slider_name'] ?? '' }}</h3>
-                            @if (!empty($mainSlider['slider_link']))
-                                <a href="{{ $mainSlider['slider_link'] }}" class="jm-btn jm-btn--blue jm-btn--sm">View details</a>
-                            @endif
-                        </div>
-                    </div>
-                @empty
-                    <div style="text-align:center;padding:40px;color:var(--jm-text-light);width:100%">No featured services available.</div>
-                @endforelse
+                    @empty
+                        <div style="text-align:center;padding:40px;color:var(--jm-text-light);width:100%">No featured services available.</div>
+                    @endforelse
+                </div>
             </div>
         </div>
     </section>
@@ -413,13 +415,18 @@
             const prevBtn = document.querySelector('[data-slide="prev"]');
             const nextBtn = document.querySelector('[data-slide="next"]');
             let current = 0;
-            const perView = window.innerWidth < 640 ? 1 : window.innerWidth < 992 ? 2 : 3;
-            const maxSlide = Math.max(0, cards.length - perView);
+
+            function getPerView() {
+                return window.innerWidth < 640 ? 1 : window.innerWidth < 992 ? 2 : 3;
+            }
 
             function updateTrack() {
-                const gapTotal = 24 * perView;
+                const perView = getPerView();
+                const maxSlide = Math.max(0, cards.length - perView);
+                const gapTotal = 24 * (perView - 1);
                 const basis = `calc((100% - ${gapTotal}px) / ${perView})`;
                 cards.forEach(c => { c.style.flex = `0 0 ${basis}`; });
+                if (current > maxSlide) current = maxSlide;
                 track.style.transform = `translateX(calc(-${current} * (${basis} + 24px)))`;
             }
 
@@ -431,6 +438,8 @@
 
             if (nextBtn) nextBtn.addEventListener('click', function (e) {
                 e.preventDefault();
+                const perView = getPerView();
+                const maxSlide = Math.max(0, cards.length - perView);
                 current = Math.min(maxSlide, current + 1);
                 updateTrack();
             });
