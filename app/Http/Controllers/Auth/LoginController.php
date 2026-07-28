@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Models\LogHistory;
+use App\Models\Order;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
@@ -15,20 +17,14 @@ class LoginController extends Controller
         return view('frontend.login');
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
         // Manual MD5 authentication (legacy)
-        $user = DB::table('user')
-            ->where('email', $request->email)
+        $user = User::where('email', $request->email)
             ->where('password', md5($request->password))
             ->first();
 
-        if (!$user) {
+        if (! $user) {
             throw ValidationException::withMessages([
                 'email' => 'Wrong login details',
             ]);
@@ -46,20 +42,20 @@ class LoginController extends Controller
 
         // Link guest order (if any)
         if ($order_id = session()->get('order_id')) {
-            DB::table('orders')->where('id', $order_id)->update(['user_id' => $user->user_id]);
+            Order::where('id', $order_id)->update(['user_id' => $user->user_id]);
         }
 
         // Log IP history
-        DB::table('log_history')->insert([
+        LogHistory::create([
             'user_id' => $user->user_id,
             'ip' => $request->ip(),
         ]);
 
         // Redirect based on gift_cards session
         if (session()->has('gift_cards')) {
-            return redirect('/checkout-confirm');
+            return redirect()->route('checkout.confirm');
         }
 
-        return redirect('/checkout');
+        return redirect()->route('checkout');
     }
 }

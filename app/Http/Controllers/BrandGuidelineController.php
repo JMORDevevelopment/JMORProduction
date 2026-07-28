@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BrandGuideline;
 use App\Services\ContentPageService;
 
 class BrandGuidelineController extends Controller
 {
-    public function __construct(private ContentPageService $contentPages)
-    {
-    }
+    public function __construct(private ContentPageService $contentPages) {}
 
     public function posts()
     {
@@ -19,7 +18,7 @@ class BrandGuidelineController extends Controller
     {
         return view(
             'frontend.brand_guidelines_detail',
-            $this->contentPages->detailViewData('brand_guidelines', $link, 'brand_guidelines_datas')
+            $this->contentPages->detailViewData(BrandGuideline::class, $link, 'brand_guidelines_datas')
         );
     }
 }

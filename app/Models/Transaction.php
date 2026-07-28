@@ -8,8 +8,6 @@ class Transaction extends Model
 {
     protected $table = 'transaction';
 
-    // CI's `transaction` table has no created_at/updated_at columns —
-    // it only has `published`, which is timestamp-on-update/current.
     public $timestamps = false;
 
     protected $fillable = [

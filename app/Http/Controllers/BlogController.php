@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
 use App\Services\ContentPageService;
 
 class BlogController extends Controller
 {
-    public function __construct(private ContentPageService $contentPages)
-    {
-    }
+    public function __construct(private ContentPageService $contentPages) {}
 
     public function posts()
     {
@@ -19,7 +18,7 @@ class BlogController extends Controller
     {
         return view(
             'frontend.blog_detail',
-            $this->contentPages->detailViewData('blog', $link, 'blog_datas')
+            $this->contentPages->detailViewData(Blog::class, $link, 'blog_datas')
         );
     }
 }

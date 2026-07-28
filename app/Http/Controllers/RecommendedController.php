@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Recommended;
 use App\Services\ContentPageService;
 
 class RecommendedController extends Controller
 {
-    public function __construct(private ContentPageService $contentPages)
-    {
-    }
+    public function __construct(private ContentPageService $contentPages) {}
 
     public function posts()
     {
@@ -19,7 +18,7 @@ class RecommendedController extends Controller
     {
         return view(
             'frontend.recommended_detail',
-            $this->contentPages->detailViewData('recommended', $link, 'recommended_datas')
+            $this->contentPages->detailViewData(Recommended::class, $link, 'recommended_datas')
         );
     }
 }

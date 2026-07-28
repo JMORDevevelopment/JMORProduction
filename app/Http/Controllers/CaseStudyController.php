@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CaseStudy;
 use App\Services\ContentPageService;
 
 class CaseStudyController extends Controller
 {
-    public function __construct(private ContentPageService $contentPages)
-    {
-    }
+    public function __construct(private ContentPageService $contentPages) {}
 
     public function posts()
     {
@@ -19,7 +18,7 @@ class CaseStudyController extends Controller
     {
         return view(
             'frontend.case_studies_detail',
-            $this->contentPages->detailViewData('case_studies', $link, 'case_studies_datas')
+            $this->contentPages->detailViewData(CaseStudy::class, $link, 'case_studies_datas')
         );
     }
 }

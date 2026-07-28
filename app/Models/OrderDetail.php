@@ -8,7 +8,6 @@ class OrderDetail extends Model
 {
     protected $table = 'order_details';
 
-    // No created_at/updated_at columns in CI's schema; only date_added.
     public $timestamps = false;
 
     protected $fillable = [

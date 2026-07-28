@@ -2,7 +2,8 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\DB;
+use App\Models\CategoryRadioShow;
+use App\Models\RadioShow;
 
 class RadioShowService
 {
@@ -12,16 +13,16 @@ class RadioShowService
      */
     public function categoryViewData(string $categoryLink, ?string $currentYear = null): array
     {
-        $category = DB::table('category_radio_show')->where('link', $categoryLink)->first();
+        $category = CategoryRadioShow::where('link', $categoryLink)->first();
 
         if (! $category) {
             abort(404);
         }
 
-        $children = DB::table('category_radio_show')->where('parent_id', $category->id)->get()->toArray();
+        $children = CategoryRadioShow::where('parent_id', $category->id)->get()->all();
 
         return [
-            'category_radio_show' => [(array) $category],
+            'category_radio_show' => [$category->toArray()],
             'top_title' => $category->title,
             'category_id' => $category->id,
             'currentYear' => $currentYear,
@@ -37,32 +38,29 @@ class RadioShowService
      * Shows directly in a category; if it's a top-level (parent_id == 0)
      * category, also includes shows from every child category.
      */
-    private function showsForCategory(object $category, array $children): array
+    private function showsForCategory(CategoryRadioShow $category, array $children): array
     {
         if ($category->parent_id != 0) {
-            return DB::table('radio_show')
-                ->where('category_id', $category->id)
+            return RadioShow::where('category_id', $category->id)
                 ->orderBy('id', 'desc')
                 ->get()
-                ->toArray();
+                ->all();
         }
 
-        $ownShows = DB::table('radio_show')
-            ->where('category_id', $category->id)
+        $ownShows = RadioShow::where('category_id', $category->id)
             ->orderBy('id', 'desc')
             ->get()
-            ->toArray();
+            ->all();
 
         if (empty($children)) {
             return $ownShows;
         }
 
         $childIds = array_column($children, 'id');
-        $childShows = DB::table('radio_show')
-            ->whereIn('category_id', $childIds)
+        $childShows = RadioShow::whereIn('category_id', $childIds)
             ->orderBy('id', 'desc')
             ->get()
-            ->toArray();
+            ->all();
 
         return array_merge($ownShows, $childShows);
     }

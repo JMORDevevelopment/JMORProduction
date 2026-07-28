@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MediaVideo;
 use App\Services\ContentPageService;
 
 class MediaVideoController extends Controller
 {
-    public function __construct(private ContentPageService $contentPages)
-    {
-    }
+    public function __construct(private ContentPageService $contentPages) {}
 
     public function posts()
     {
@@ -19,7 +18,7 @@ class MediaVideoController extends Controller
     {
         return view(
             'frontend.media_video_detail',
-            $this->contentPages->detailViewData('media_video', $link, 'media_video_datas')
+            $this->contentPages->detailViewData(MediaVideo::class, $link, 'media_video_datas')
         );
     }
 }

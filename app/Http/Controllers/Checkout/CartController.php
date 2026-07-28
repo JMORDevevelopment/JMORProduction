@@ -3,19 +3,18 @@
 namespace App\Http\Controllers\Checkout;
 
 use App\Http\Controllers\Controller;
+use App\Models\GiftCard;
 use App\Services\CartService;
 use App\Services\PackageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
     public function __construct(
         private CartService $cart,
         private PackageService $packages
-    ) {
-    }
+    ) {}
 
     public function index()
     {
@@ -26,6 +25,52 @@ class CartController extends Controller
         $data['cartItems'] = $cartItems;
 
         return view('frontend.cart', $data);
+    }
+
+    public function addPackages(Request $request)
+    {
+        $this->cart->resetForPackagePurchase();
+
+        $result = $this->packages->buildCartLines(
+            (int) $request->input('package_id'),
+            $request->input('server_qty'),
+            $request->input('system_qty'),
+            $request->input('package_type')
+        );
+
+        if (empty($result['lines'])) {
+            return redirect()->route('cart');
+        }
+
+        $this->cart->addLines($result['lines']);
+        $this->cart->setCheckoutType($result['checkoutType']);
+
+        return redirect()->route('cart');
+    }
+
+    public function addGiftCard(Request $request)
+    {
+        $this->cart->resetForGiftCardPurchase();
+
+        $giftId = $request->input('gift_id');
+        $gift = GiftCard::where('id', $giftId)->first();
+
+        if (! $gift) {
+            return redirect()->route('cart');
+        }
+
+        $this->cart->markGiftCard($giftId);
+
+        $this->cart->replace([[
+            'id' => $gift->id.'gc',
+            'qty' => 1,
+            'type' => 'Gift Card',
+            'price' => $gift->price,
+            'name' => $gift->name,
+            'description' => $gift->description,
+        ]]);
+
+        return redirect()->route('cart');
     }
 
     // AJAX – update quantity
@@ -51,7 +96,7 @@ class CartController extends Controller
             ->first();
 
         if ($coupon) {
-            $gift = DB::table('gift_card')->where('id', $coupon->gift_card_id)->first();
+            $gift = GiftCard::where('id', $coupon->gift_card_id)->first();
             if ($gift) {
                 session()->put('coupon_code', $coupon->coupon_number);
                 session()->put('discount_value', $gift->price);
@@ -69,55 +114,10 @@ class CartController extends Controller
         $cart = session()->get('cart', []);
         if (isset($cart[$rowid])) {
             unset($cart[$rowid]);
-            $cart = array_values($cart); // re-index
+            $cart = array_values($cart);
             session()->put('cart', $cart);
         }
 
-        return redirect('/cart');
-    }
-
-    public function addPackages(Request $request)
-    {
-        $this->cart->resetForPackagePurchase();
-
-        $result = $this->packages->buildCartLines(
-            (int) $request->input('package_id'),
-            $request->input('server_qty'),
-            $request->input('system_qty'),
-            $request->input('package_type')
-        );
-
-        if (empty($result['lines'])) {
-            return redirect('/cart');
-        }
-
-        $this->cart->addLines($result['lines']);
-        $this->cart->setCheckoutType($result['checkoutType']);
-
-        return redirect('/cart');
-    }
-
-    public function addGiftCard(Request $request)
-    {
-        $this->cart->resetForGiftCardPurchase();
-
-        $giftId = $request->input('gift_id');
-        $gift = DB::table('gift_card')->where('id', $giftId)->first();
-
-        if (! $gift) {
-            return redirect('/cart');
-        }
-
-        $this->cart->markGiftCard($giftId);
-        $this->cart->replace([[
-            'id' => $gift->id.'gc',
-            'qty' => 1,
-            'type' => 'Gift Card',
-            'price' => $gift->price,
-            'name' => $gift->name,
-            'description' => $gift->description,
-        ]]);
-
-        return redirect('/cart');
+        return redirect()->route('cart');
     }
 }

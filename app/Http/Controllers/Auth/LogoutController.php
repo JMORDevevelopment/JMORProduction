@@ -18,6 +18,6 @@ class LogoutController extends Controller
         // Clear our custom session keys
         session()->forget(['user_id', 'token']);
 
-        return redirect('/');
+        return redirect()->route('home');
     }
 }

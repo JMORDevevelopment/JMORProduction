@@ -12,13 +12,41 @@ import 'slick-carousel';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import '@fortawesome/fontawesome-free/css/v4-shims.min.css';
 
-// Ported from the CI footer.php — removes the 100px left margin on the nav
-// wrapper under 900px so the collapsed navbar doesn't overflow on small
-// screens. (assets/js/app.js's .play_slide Slick init was left out: that
-// class has no matching element in slider_section.php, confirmed dead code
-// same as theme.css/ace-responsive-menu/slider_section1.php.)
 $(window).on('load resize', function () {
     if ($(window).width() < 900) {
         $('#otherDiv').removeClass('custom-size');
     }
 });
+
+(function () {
+    var timer;
+
+    $('.jm-header__navlist > li[data-megamenu]').each(function () {
+        var $li = $(this);
+        var menuId = $li.data('megamenu');
+        var $menu = $('.jm-megamenu[data-megamenu="' + menuId + '"]');
+        if ($menu.length === 0) return;
+
+        $li.on('mouseenter', function () {
+            clearTimeout(timer);
+            $('.jm-megamenu').hide();
+            $menu.css('display', 'block');
+        });
+
+        $li.on('mouseleave', function () {
+            timer = setTimeout(function () {
+                $menu.css('display', 'none');
+            }, 200);
+        });
+
+        $menu.on('mouseenter', function () {
+            clearTimeout(timer);
+        });
+
+        $menu.on('mouseleave', function () {
+            timer = setTimeout(function () {
+                $menu.css('display', 'none');
+            }, 200);
+        });
+    });
+})();

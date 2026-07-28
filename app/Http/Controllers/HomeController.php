@@ -6,15 +6,9 @@ use App\Models\HomeTab;
 use App\Models\Service;
 use App\Models\Setting;
 use App\Models\Slider;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
-use net\authorize\api\constants\ANetEnvironment;
-use net\authorize\api\contract\v1 as AnetAPI;
-use net\authorize\api\controller as AnetController;
 
 class HomeController extends Controller
-{   
+{
     public function index()
     {
         $title = Setting::get('meta_title', '');

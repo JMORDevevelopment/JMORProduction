@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PressRelease;
 use App\Services\ContentPageService;
 
 class PressReleaseController extends Controller
 {
-    public function __construct(private ContentPageService $contentPages)
-    {
-    }
+    public function __construct(private ContentPageService $contentPages) {}
 
     public function posts()
     {
@@ -19,7 +18,7 @@ class PressReleaseController extends Controller
     {
         return view(
             'frontend.press_releases_detail',
-            $this->contentPages->detailViewData('press_releases', $link, 'press_releases_datas')
+            $this->contentPages->detailViewData(PressRelease::class, $link, 'press_releases_datas')
         );
     }
 }

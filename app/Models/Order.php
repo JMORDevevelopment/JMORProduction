@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    public $timestamps = false;
+
     protected $table = 'orders';
 
-    // CI's `orders` table has no `updated_at` semantics beyond what Laravel's
-    // timestamps() migration already added; created_at/updated_at are kept.
     protected $fillable = [
         'user_id',
         'sub_total',
@@ -33,5 +33,10 @@ class Order extends Model
     public function details()
     {
         return $this->hasMany(OrderDetail::class, 'order_id');
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'user_id');
     }
 }

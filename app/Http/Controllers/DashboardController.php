@@ -94,7 +94,7 @@ class DashboardController extends Controller
             ->where('order_type', '!=', 'Gift Card')
             ->first();
 
-        if (!$transaction) {
+        if (! $transaction) {
             abort(404);
         }
 
@@ -108,7 +108,7 @@ class DashboardController extends Controller
         }
 
         // "Other Info" box: scalar (non-array) checkout_data values.
-        $otherInfo = array_filter($checkoutData, fn ($value) => !is_array($value));
+        $otherInfo = array_filter($checkoutData, fn ($value) => ! is_array($value));
 
         // "System Information" table: array-valued checkout_data entries.
         $systemInfo = array_filter($checkoutData, fn ($value) => is_array($value));

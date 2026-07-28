@@ -1,15 +1,16 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\SignUpController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Auth\SignUpController;
 use App\Http\Controllers\Checkout\CartController;
 use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\PackageController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PackageController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Middleware\CheckUserLogin;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -23,18 +24,26 @@ Route::middleware(CheckUserLogin::class)->prefix('dashboard')->group(function ()
     Route::get('/order_invoice/{order_id}', [DashboardController::class, 'orderInvoice'])->name('dashboard.order_invoice');
 });
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-// Authentication Routes
+// ==============================
+// AUTHENTICATION ROUTES
+// ==============================
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
+Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 
 Route::get('/sign-up', [SignUpController::class, 'showSignUpForm'])->name('sign-up');
-Route::post('/sign-up/validate', [SignUpController::class, 'validate']);
+Route::post('/sign-up/validate', [SignUpController::class, 'validate'])->name('sign-up.validate');
 
 Route::get('/forgot-password', [ForgotPasswordController::class, 'showForm'])->name('forgot-password');
 Route::post('/forgot-pass', [ForgotPasswordController::class, 'sendResetLink'])->name('forgot-pass');
 
 Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
+
+// ==============================
+// CONTACT ROUTES
+// ==============================
+Route::get('/contact', [ContactController::class, 'show'])->name('contact');
+Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
+
 // ==============================
 // CART ROUTES
 // ==============================
@@ -46,8 +55,8 @@ Route::get('/cart/removeItem/{rowid}', [CartController::class, 'removeItem'])->n
 // ==============================
 // CHECKOUT & ORDER ROUTES
 // ==============================
-Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
-Route::get('/checkout-confirm', [CheckoutController::class, 'confirm'])->name('checkout.confirm');
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout')->middleware('auth.user');
+Route::get('/checkout-confirm', [CheckoutController::class, 'confirm'])->name('checkout.confirm')->middleware('auth.user');
 Route::get('/home/placeOrder', [CheckoutController::class, 'placeOrder'])->name('place.order');
 Route::get('/home/placeOrderGiftcard', [CheckoutController::class, 'placeOrderGiftCard'])->name('place.gift');
 Route::post('/home/checkout_from_data', [CheckoutController::class, 'saveFormData'])->name('checkout.data');
@@ -60,6 +69,7 @@ Route::get('/checkout-success', [CheckoutController::class, 'success'])->name('c
 Route::post('/home/addToCartPackages', [CartController::class, 'addPackages'])->name('add.cart.packages');
 Route::post('/home/addToCartGift', [CartController::class, 'addGiftCard'])->name('add.cart.gift');
 Route::get('/home/single_package/{id}', [PackageController::class, 'single'])->name('single.package');
+
 // ==============================
 // PACKAGES
 // ==============================

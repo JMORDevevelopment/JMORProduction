@@ -14,8 +14,14 @@ return new class extends Migration
         Schema::create('log_history', function (Blueprint $table) {
             $table->integer('id', true);
             $table->integer('user_id');
-            $table->text('ip');
-            $table->timestamp('log_time')->useCurrentOnUpdate()->useCurrent();
+            $table->string('ip', 45);
+            $table->timestamp('log_time')->useCurrent();
+            $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('user_id')
+                ->on('user')
+                ->onDelete('cascade');
         });
     }
 

@@ -2,31 +2,31 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\DB;
+use App\Models\Package;
+use App\Models\PackagePrice;
+use App\Models\SystemPrice;
 
 class PackageService
 {
     public function listAll(): array
     {
-        return DB::table('packages')->orderBy('priority', 'asc')->get()->toArray();
+        return Package::orderBy('priority', 'asc')->get()->all();
     }
 
     public function byCategory(string $categoryName): array
     {
-        return DB::table('packages')
-            ->where('category_name', $categoryName)
+        return Package::where('category_name', $categoryName)
             ->orderBy('priority', 'asc')
             ->get()
-            ->toArray();
+            ->all();
     }
 
     public function findById(int $packageId): array
     {
-        return DB::table('packages')
-            ->where('id', $packageId)
+        return Package::where('id', $packageId)
             ->orderBy('priority', 'asc')
             ->get()
-            ->map(fn ($item) => (array) $item)
+            ->map(fn ($item) => $item->toArray())
             ->toArray();
     }
 
@@ -38,20 +38,18 @@ class PackageService
      */
     public function buildCartLines(int $packageId, ?int $serverQty, ?int $systemQty, string $packageType): array
     {
-        $package = DB::table('packages')->where('id', $packageId)->first();
+        $package = Package::where('id', $packageId)->first();
 
         if (! $package) {
             return ['lines' => [], 'checkoutType' => 'Monthly'];
         }
 
-        $serverPrice = DB::table('package_price')
-            ->where('package_id', $packageId)
+        $serverPrice = PackagePrice::where('package_id', $packageId)
             ->where('from_qty', '<=', $serverQty)
             ->where('to_qty', '>=', $serverQty)
             ->first();
 
-        $systemPrice = DB::table('system_price')
-            ->where('package_id', $packageId)
+        $systemPrice = SystemPrice::where('package_id', $packageId)
             ->where('from_qty', '<=', $systemQty)
             ->where('to_qty', '>=', $systemQty)
             ->first();
@@ -100,5 +98,32 @@ class PackageService
         }
 
         return $unitPrice * $qty;
+    }
+
+    public function recalculateLinePrice(int $packageId, string $type, int $qty, bool $isYearly): float
+    {
+        $package = Package::where('id', $packageId)->first();
+
+        if (! $package) {
+            return 0;
+        }
+
+        $discount = $isYearly ? $package->discount : 0;
+
+        if ($type === 'Server') {
+            $tier = PackagePrice::where('package_id', $packageId)
+                ->where('from_qty', '<=', $qty)
+                ->where('to_qty', '>=', $qty)
+                ->first();
+
+            return $this->priceTotal($tier?->pack_price, $qty, $discount);
+        }
+
+        $tier = SystemPrice::where('package_id', $packageId)
+            ->where('from_qty', '<=', $qty)
+            ->where('to_qty', '>=', $qty)
+            ->first();
+
+        return $this->priceTotal($tier?->system_price, $qty, $discount);
     }
 }
