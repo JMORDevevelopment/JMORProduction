@@ -320,8 +320,6 @@ input:focus {
 .jm-topbar__socials img {
     width: 14px;
     height: 14px;
-    filter: brightness(0) invert(1);
-    opacity: 1;
     object-fit: contain;
 }
 
@@ -1585,8 +1583,7 @@ input:focus {
     max-height: 46px;
     width: auto;
     margin-bottom: 0;
-    filter: brightness(0) invert(1);
-    opacity: 0.92;
+
 }
 
 .jm-footer__tagline {
