@@ -57,7 +57,7 @@
                     @endif
 
                     <div class="col-lg-4">
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center mb-3">
                             <div class="text-center">
                                 @include('partials.billing_toggle')
                             </div>

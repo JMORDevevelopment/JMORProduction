@@ -26,7 +26,7 @@
     <main role="main">
         <div class="wt-section bg-light">
             <div class="container">
-                <div class="row justify-content-center">
+                <div class="row justify-content-center mb-4">
                     <div class="text-center">
                         @include('partials.billing_toggle')
                     </div>
