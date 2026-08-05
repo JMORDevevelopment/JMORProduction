@@ -883,8 +883,6 @@ input:focus {
 }
 
 .jm-service-card__icon img {
-    max-width: 54px;
-    max-height: 54px;
     object-fit: contain;
 }
 
