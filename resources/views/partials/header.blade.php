@@ -31,17 +31,17 @@
                 </ul>
 
                 <span class="jm-topbar__divider" aria-hidden="true"></span>
-                <a href="{{ url('gift-card') }}" class="jm-topbar__link">Gift Card</a>
+                <a href="{{ route('gift-card') }}" class="jm-topbar__link">Gift Card</a>
 
                 @auth
                     <span class="jm-topbar__divider" aria-hidden="true"></span>
-                    <a href="{{ url('dashboard') }}" class="jm-topbar__link--strong">My Account</a>
+                    <a href="{{ route('dashboard') }}" class="jm-topbar__link--strong">My Account</a>
                     <span class="jm-topbar__divider" aria-hidden="true"></span>
                     <a href="{{ route('logout') }}" class="jm-topbar__link"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log out</a>
-                    <form id="logout-form" action="{{ url('logout') }}" method="POST" class="d-none">@csrf</form>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
                 @else
-                    <a href="{{ url('login') }}" class="jm-topbar__link--strong">Login</a>
+                    <a href="{{ route('login') }}" class="jm-topbar__link--strong">Login</a>
                 @endauth
             </div>
         </div>
@@ -51,7 +51,7 @@
 <header class="jm-header" role="banner">
     <div class="container">
         <div class="jm-header__row">
-            <a href="{{ url('/') }}" class="jm-header__brand" aria-label="JMOR home">
+            <a href="{{ route('home') }}" class="jm-header__brand" aria-label="JMOR home">
                 <img src="{{ asset('assets/images/logo.png') }}" alt="The JMOR Connection, Inc.">
             </a>
 
@@ -70,7 +70,7 @@
                             <div class="jm-megamenu__inner">
                                 <div class="jm-megamenu__intro">
                                     <div class="jm-megamenu__title">{{ $item->title }}</div>
-                                    <a href="{{ url($item->url) }}" class="jm-megamenu__all">
+                                    <a href="{{ Route::has($item->url) ? route($item->url) : url($item->url) }}" class="jm-megamenu__all">
                                         See all {{ $item->title }} &rarr;
                                     </a>
                                 </div>
@@ -85,11 +85,11 @@
                                                     <div class="jm-megamenu__col-title">{{ $child->title }}</div>
                                                     <ul class="jm-megamenu__links">
                                                         @foreach ($child->childrenRecursive as $grandchild)
-                                                            <li><a href="{{ url($grandchild->url) }}">{{ $grandchild->title }}</a></li>
+                                                            <li><a href="{{ Route::has($grandchild->url) ? route($grandchild->url) : url($grandchild->url) }}">{{ $grandchild->title }}</a></li>
                                                         @endforeach
                                                     </ul>
                                                 @else
-                                                    <a href="{{ url($child->url) }}" class="jm-megamenu__direct-link">{{ $child->title }}</a>
+                                                    <a href="{{ Route::has($child->url) ? route($child->url) : url($child->url) }}" class="jm-megamenu__direct-link">{{ $child->title }}</a>
                                                 @endif
                                             @endforeach
                                         </div>
@@ -102,14 +102,14 @@
             @endforeach
 
             <div class="jm-header__actions">
-                <form action="{{ url('search') }}" method="post" autocomplete="off"
+                <form action="{{ route('search') }}" method="post" autocomplete="off"
                     class="jm-header__search d-none d-xl-flex" role="search">
                     @csrf
                     <input type="text" name="search" placeholder="Search" aria-label="Search site">
                     <button type="submit" aria-label="Search"><i class="fa fa-search" aria-hidden="true"></i></button>
                 </form>
 
-                <a href="{{ url('contact') }}" class="jm-header__cta-btn d-none d-md-inline-flex">Reach Out Today</a>
+                <a href="{{ route('contact') }}" class="jm-header__cta-btn d-none d-md-inline-flex">Reach Out Today</a>
 
                 <button class="jm-header__toggle d-lg-none" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
@@ -127,7 +127,7 @@
                     @include('partials.navigation', ['item' => $item, 'depth' => 0])
                 @endforeach
             </ul>
-            <a href="{{ url('contact') }}" class="jm-btn jm-btn--orange jm-header__mobile-cta">Reach Out Today</a>
+            <a href="{{ route('contact') }}" class="jm-btn jm-btn--orange jm-header__mobile-cta">Reach Out Today</a>
         </div>
     </div>
 </header>
