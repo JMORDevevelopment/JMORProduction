@@ -101,7 +101,7 @@
                             <div class="jm-featured-card__body">
                                 <h3>{{ $mainSlider['slider_name'] ?? '' }}</h3>
                                 @if (!empty($mainSlider['slider_link']))
-                                    <a href="{{ Route::has($mainSlider['slider_link']) ? route($mainSlider['slider_link']) : url($mainSlider['slider_link']) }}" class="jm-btn jm-btn--blue jm-btn--sm">View details</a>
+                                    <a href="{{ $mainSlider['slider_link'] }}" class="jm-btn jm-btn--blue jm-btn--sm">View details</a>
                                 @endif
                             </div>
                         </div>
