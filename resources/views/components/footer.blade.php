@@ -1,7 +1,3 @@
-@php
-    $topSettings = \App\Models\Setting::orderBy('id')->get();
-@endphp
-
 <footer class="jm-footer" role="contentinfo">
     <div class="container">
         <div class="row" style="row-gap:36px">

@@ -1564,6 +1564,63 @@ input:focus {
     font-size: 17px;
 }
 
+.jm-coming-soon {
+    padding: 96px 0 120px;
+    background: var(--jm-off-white);
+}
+
+.jm-coming-soon__inner {
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.jm-coming-soon__badge {
+    width: 84px;
+    height: 84px;
+    margin: 0 auto 24px;
+    border-radius: 50%;
+    background: var(--jm-blue);
+    color: var(--jm-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+}
+
+.jm-coming-soon__eyebrow {
+    margin-bottom: 0.6rem;
+}
+
+.jm-coming-soon__title {
+    font-family: var(--jm-font-heading);
+    font-size: clamp(1.9rem, 4vw, 2.7rem);
+    font-weight: 800;
+    color: var(--jm-navy);
+    line-height: 1.15;
+    margin-bottom: 1rem;
+}
+
+.jm-coming-soon__copy {
+    font-size: 1.1rem;
+    color: var(--jm-text-secondary);
+    margin-bottom: 2rem;
+}
+
+.jm-coming-soon__actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.jm-coming-soon__actions .jm-btn {
+    height: 48px;
+    padding: 0 26px;
+    border-radius: 9px;
+    font-size: 16px;
+}
+
 .jm-footer {
     background: var(--jm-navy-dark);
     color: var(--jm-text-lighter);
