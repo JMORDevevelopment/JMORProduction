@@ -29,36 +29,36 @@
             <div class="col-lg-3 col-md-6">
                 <h4 class="jm-footer__title">Solutions</h4>
                 <ul class="jm-footer__links">
-                    <li><a href="{{ url('it-service-providers-in-new-jersey-for-homes-and-businesses') }}">IT Services New Jersey</a></li>
-                    <li><a href="{{ url('network-cyber-security-internet-safety') }}">Network Cyber Security</a></li>
-                    <li><a href="{{ url('hardware-firewalls-and-utm-devices') }}">Hardware Firewalls &amp; UTM</a></li>
-                    <li><a href="{{ url('antivirus-malware-ransomware-vunerability-endpoint-management-solutions') }}">Endpoint Protection</a></li>
-                    <li><a href="{{ url('ai-solutions-for-businesses-consumers-safe-secure-ai-integrations-in-nj-and-beyond') }}">AI Solutions</a></li>
-                    <li><a href="{{ url('technical-relocation-services') }}">Technical Relocation</a></li>
+                    <li><a href="{{ route('it-service-providers-in-new-jersey-for-homes-and-businesses') }}">IT Services New Jersey</a></li>
+                    <li><a href="{{ route('network-cyber-security-internet-safety') }}">Network Cyber Security</a></li>
+                    <li><a href="{{ route('hardware-firewalls-and-utm-devices') }}">Hardware Firewalls &amp; UTM</a></li>
+                    <li><a href="{{ route('antivirus-malware-ransomware-vunerability-endpoint-management-solutions') }}">Endpoint Protection</a></li>
+                    <li><a href="{{ route('ai-solutions-for-businesses-consumers-safe-secure-ai-integrations-in-nj-and-beyond') }}">AI Solutions</a></li>
+                    <li><a href="{{ route('technical-relocation-services') }}">Technical Relocation</a></li>
                 </ul>
             </div>
 
             <div class="col-lg-3 col-md-6">
                 <h4 class="jm-footer__title">Company</h4>
                 <ul class="jm-footer__links">
-                    <li><a href="{{ url('about-us') }}">About us</a></li>
-                    <li><a href="{{ url('our-mission') }}">Our Mission</a></li>
-                    <li><a href="{{ url('why-choose-jmor') }}">Why choose JMOR?</a></li>
-                    <li><a href="{{ url('testimonials') }}">Testimonials</a></li>
-                    <li><a href="{{ url('media-relations') }}">Media Relations</a></li>
-                    <li><a href="{{ url('contact') }}">Contact</a></li>
+                    <li><a href="{{ route('about-us') }}">About us</a></li>
+                    <li><a href="{{ route('our-mission') }}">Our Mission</a></li>
+                    <li><a href="{{ route('why-choose-jmor') }}">Why choose JMOR?</a></li>
+                    <li><a href="{{ route('testimonials') }}">Testimonials</a></li>
+                    <li><a href="{{ route('media-relations') }}">Media Relations</a></li>
+                    <li><a href="{{ route('contact') }}">Contact</a></li>
                 </ul>
             </div>
 
             <div class="col-lg-3 col-md-6">
                 <h4 class="jm-footer__title">Resources</h4>
                 <ul class="jm-footer__links">
-                    <li><a href="{{ url('technology-guides-it-resources-the-jmor-connection-inc') }}">Technology Guides</a></li>
-                    <li><a href="{{ url('the-jmor-blog') }}">Blog</a></li>
-                    <li><a href="{{ url('case-studies') }}">Case studies</a></li>
-                    <li><a href="{{ url('jmor-shows') }}">JMOR Shows</a></li>
-                    <li><a href="{{ url('events') }}">Events</a></li>
-                    <li><a href="{{ url('the-jmor-store') }}">The JMOR Store</a></li>
+                    <li><a href="{{ route('technology-guides-it-resources-the-jmor-connection-inc') }}">Technology Guides</a></li>
+                    <li><a href="{{ route('the-jmor-blog') }}">Blog</a></li>
+                    <li><a href="{{ route('case-studies') }}">Case studies</a></li>
+                    <li><a href="{{ route('jmor-shows') }}">JMOR Shows</a></li>
+                    <li><a href="{{ route('events') }}">Events</a></li>
+                    <li><a href="{{ route('the-jmor-store') }}">The JMOR Store</a></li>
                 </ul>
             </div>
         </div>
@@ -66,10 +66,10 @@
         <div class="jm-footer__bottom">
             <div>&copy; The JMOR Connection, Inc. {{ date('Y') }} &middot; All Rights Reserved.</div>
             <div class="jm-footer__legal">
-                <a href="{{ url('refund-policy') }}">Refund Policy</a>
-                <a href="{{ url('privacy-policy') }}">Privacy Policy</a>
-                <a href="{{ url('terms') }}">Terms and Conditions</a>
-                <a href="{{ url('sitemap') }}">Sitemap</a>
+                <a href="{{ route('refund-policy') }}">Refund Policy</a>
+                <a href="{{ route('privacy-policy') }}">Privacy Policy</a>
+                <a href="{{ route('terms') }}">Terms and Conditions</a>
+                <a href="{{ route('sitemap') }}">Sitemap</a>
             </div>
         </div>
 

@@ -11,8 +11,8 @@
                     <p class="jm-hero__copy">The JMOR Connection keeps your systems up, secure and current — computer, network and IT support delivered right the first time.</p>
 
                     <div class="jm-hero__actions">
-                        <a href="{{ url('contact') }}" class="jm-btn jm-btn--orange jm-btn--lg">Reach Out Today</a>
-                        <a href="{{ url('packages') }}" class="jm-btn jm-btn--outline jm-btn--lg">See service plans</a>
+                        <a href="{{ route('contact') }}" class="jm-btn jm-btn--orange jm-btn--lg">Reach Out Today</a>
+                        <a href="{{ route('packages') }}" class="jm-btn jm-btn--outline jm-btn--lg">See service plans</a>
                     </div>
 
                     <div class="jm-hero__stats">
@@ -54,13 +54,13 @@
                     <div class="jm-eyebrow">What we do</div>
                     <h2>Our Services</h2>
                 </div>
-                <a href="{{ url('solutions') }}" class="jm-link-arrow">All solutions &rarr;</a>
+                <a href="{{ route('solutions') }}" class="jm-link-arrow">All solutions &rarr;</a>
             </div>
 
             <div class="row g-4">
                 @forelse ($mainServices as $mainService)
                     <div class="col-md-4 col-lg-3 col-sm-6">
-                        <a href="{{ url('service/' . ($mainService['link'] ?? '#')) }}" class="jm-card jm-service-card">
+                        <a href="{{ route('service.detail', ($mainService['link'] ?? '#')) }}" class="jm-card jm-service-card">
                             <div class="jm-service-card__icon">
                                 @if (!empty($mainService['image']))
                                     <img src="{{ $mainService['image'] }}" alt="">
@@ -124,14 +124,14 @@
             </div>
 
             <div class="jm-industries__pills">
-                <a href="{{ url('attorneys-law-firms') }}" class="jm-industries__pill">Attorneys &amp; Law Firms</a>
-                <a href="{{ url('cpa-firms') }}" class="jm-industries__pill">CPA Firms &amp; Accountants</a>
-                <a href="{{ url('dentists') }}" class="jm-industries__pill">Dentists</a>
-                <a href="{{ url('general-practice-doctors') }}" class="jm-industries__pill">General Practice Doctors</a>
-                <a href="{{ url('fast-food-restaurants') }}" class="jm-industries__pill">Fast Food Restaurants</a>
-                <a href="{{ url('manufacturers') }}" class="jm-industries__pill">Manufacturers</a>
-                <a href="{{ url('office-managers') }}" class="jm-industries__pill">Office Managers</a>
-                <a href="{{ url('packages/home') }}" class="jm-industries__pill">Homes &amp; families</a>
+                <a href="{{ route('attorneys-law-firms') }}" class="jm-industries__pill">Attorneys &amp; Law Firms</a>
+                <a href="{{ route('cpa-firms') }}" class="jm-industries__pill">CPA Firms &amp; Accountants</a>
+                <a href="{{ route('dentists') }}" class="jm-industries__pill">Dentists</a>
+                <a href="{{ route('general-practice-doctors') }}" class="jm-industries__pill">General Practice Doctors</a>
+                <a href="{{ route('fast-food-restaurants') }}" class="jm-industries__pill">Fast Food Restaurants</a>
+                <a href="{{ route('manufacturers') }}" class="jm-industries__pill">Manufacturers</a>
+                <a href="{{ route('office-managers') }}" class="jm-industries__pill">Office Managers</a>
+                <a href="{{ route('packages.detail', 'home') }}" class="jm-industries__pill">Homes &amp; families</a>
             </div>
         </div>
     </section>
@@ -198,7 +198,7 @@
                                         </ul>
                                     @endif
 
-                                    <a href="{{ url('contact') }}" class="jm-btn jm-btn--outline-blue jm-plan-card__cta">Get this plan</a>
+                                    <a href="{{ route('contact') }}" class="jm-btn jm-btn--outline-blue jm-plan-card__cta">Get this plan</a>
                                 </div>
                             </div>
                         </div>
@@ -298,19 +298,19 @@
                         <p class="jm-about__blockquote">Our clients and our community come first and we want to let them know that we are here today, tomorrow and for your growing needs of the future. We ask all of our clients the same question: are you willing to sacrifice quality and service for price?</p>
                     </div>
                     <div class="jm-about__actions">
-                        <a href="{{ url('about') }}" class="jm-btn jm-btn--orange">Why choose JMOR?</a>
-                        <a href="{{ url('testimonials') }}" class="jm-btn jm-btn--outline-blue">Read testimonials</a>
+                        <a href="{{ route('about') }}" class="jm-btn jm-btn--orange">Why choose JMOR?</a>
+                        <a href="{{ route('testimonials') }}" class="jm-btn jm-btn--outline-blue">Read testimonials</a>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="jm-about__media">
                         <img src="{{ asset('assets/images/motherboard.jpeg') }}" alt="JMOR IT support in New Jersey" class="img-fluid">
                         <div class="jm-about__side-cards">
-                            <a href="{{ url('case-studies') }}" class="jm-about__side-card">
+                            <a href="{{ route('case-studies') }}" class="jm-about__side-card">
                                 <div class="jm-about__side-card-title">Case studies</div>
                                 <div class="jm-about__side-card-desc">Real NJ businesses, real fixes</div>
                             </a>
-                            <a href="{{ url('our-mission') }}" class="jm-about__side-card">
+                            <a href="{{ route('our-mission') }}" class="jm-about__side-card">
                                 <div class="jm-about__side-card-title">Our mission &amp; DEI</div>
                                 <div class="jm-about__side-card-desc">How we work, and why</div>
                             </a>
@@ -329,7 +329,7 @@
                     <h2>News Headlines and Social Media</h2>
                 </div>
                 <div style="display:flex;gap:18px">
-                    <a href="{{ url('the-jmor-blog') }}" class="jm-link-arrow">Blog &rarr;</a>
+                    <a href="{{ route('the-jmor-blog') }}" class="jm-link-arrow">Blog &rarr;</a>
                     <a href="https://www.instagram.com/gosocialjmor/" target="_blank" class="jm-link-arrow">Instagram &rarr;</a>
                 </div>
             </div>
@@ -344,7 +344,7 @@
                         </div>
                         <div class="jm-news__video-body">
                             <p>At JMOR we are not going to start selling you shoes; yes, are clients may have feet but we are A Technology Company. Our firm is not one to jump on bandwagons; we will continue to do what we have been doing for years: professional Computer, Network, IT Support and Repair Services delivered right the first time.</p>
-                            <a href="{{ url('the-jmor-blog') }}" class="jm-link-arrow">Read more &rarr;</a>
+                            <a href="{{ route('the-jmor-blog') }}" class="jm-link-arrow">Read more &rarr;</a>
                         </div>
                     </div>
                 </div>
@@ -379,7 +379,7 @@
                     <a href="tel:8777675667" class="jm-cta-banner__phone">
                         (877) 767-5667
                     </a>
-                    <a href="{{ url('contact') }}" class="jm-btn jm-btn--orange">Request information</a>
+                    <a href="{{ route('contact') }}" class="jm-btn jm-btn--orange">Request information</a>
                 </div>
             </div>
         </div>
