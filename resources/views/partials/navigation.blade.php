@@ -1,12 +1,13 @@
 @php
     $hasChildren = $item->childrenRecursive->isNotEmpty();
     $isDesktopMega = ($desktop ?? false) && $depth === 0 && $hasChildren;
+    $itemUrl = \Illuminate\Support\Facades\Route::has($item->url) ? route($item->url) : url($item->url);
 @endphp
 
 <li
     class="nav-item{{ !$isDesktopMega && $hasChildren ? ' dropdown' : '' }}{{ $depth > 0 && $hasChildren ? ' dropdown-submenu' : '' }}"
     @if ($isDesktopMega) data-megamenu="{{ $item->id }}"@endif>
-    <a href="{{ url($item->url) }}"
+    <a href="{{ $itemUrl }}"
         class="{{ $depth === 0 ? 'jm-nav-link' : 'dropdown-item jm-dropdown-item' }}{{ !$isDesktopMega && $hasChildren ? ' dropdown-toggle' : '' }}"
         @if ($hasChildren && !$isDesktopMega) id="navbarDropdownMenuLink-{{ $item->id }}"
            data-bs-toggle="dropdown"
