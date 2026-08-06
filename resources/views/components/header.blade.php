@@ -1,7 +1,3 @@
-@php
-    $topSettings = \App\Models\Setting::orderBy('id')->get();
-@endphp
-
 <div class="jm-topbar">
     <div class="container">
         <div class="jm-topbar__row">
