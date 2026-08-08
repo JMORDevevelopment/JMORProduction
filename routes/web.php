@@ -16,10 +16,6 @@ use App\Http\Middleware\CheckUserLogin;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // ==============================
-<<<<<<< HEAD
-// AUTHENTICATION ROUTES
-// ==============================
-=======
 // USER DASHBOARD ROUTES
 // ==============================
 Route::middleware(CheckUserLogin::class)->prefix('dashboard')->group(function () {
@@ -28,9 +24,9 @@ Route::middleware(CheckUserLogin::class)->prefix('dashboard')->group(function ()
     Route::get('/order_invoice/{order_id}', [DashboardController::class, 'orderInvoice'])->name('dashboard.order_invoice');
 });
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-// Authentication Routes
->>>>>>> c33ce3f (dashboard and orders)
+// ==============================
+// AUTHENTICATION ROUTES
+// ==============================
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 
