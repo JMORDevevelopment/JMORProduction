@@ -36,7 +36,7 @@ Route::post('/sign-up/validate', [SignUpController::class, 'validate'])->name('s
 Route::get('/forgot-password', [ForgotPasswordController::class, 'showForm'])->name('forgot-password');
 Route::post('/forgot-pass', [ForgotPasswordController::class, 'sendResetLink'])->name('forgot-pass');
 
-Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
+Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 // ==============================
 // CONTACT ROUTES

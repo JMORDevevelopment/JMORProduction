@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\User;
+use App\Models\OrderDetail;
 class DashboardController extends Controller
 {
     /**
