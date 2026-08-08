@@ -1,7 +1,7 @@
 @php
     $hasChildren = $item->childrenRecursive->isNotEmpty();
     $isDesktopMega = ($desktop ?? false) && $depth === 0 && $hasChildren;
-    $itemUrl = Route::has($item->url) ? route($item->url) : url($item->url);
+    $itemUrl = request()->routeIs($item->url) ? route($item->url) : url($item->url);
 @endphp
 
 <li class="nav-item{{ !$isDesktopMega && $hasChildren ? ' dropdown' : '' }}{{ $depth > 0 && $hasChildren ? ' dropdown-submenu' : '' }}"

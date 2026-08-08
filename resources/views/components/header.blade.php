@@ -66,7 +66,7 @@
                             <div class="jm-megamenu__inner">
                                 <div class="jm-megamenu__intro">
                                     <div class="jm-megamenu__title">{{ $item->title }}</div>
-                                    <a href="{{ Route::has($item->url) ? route($item->url) : url($item->url) }}" class="jm-megamenu__all">
+                                    <a href="{{ request()->routeIs($item->url) ? route($item->url) : url($item->url) }}" class="jm-megamenu__all">
                                         See all {{ $item->title }} &rarr;
                                     </a>
                                 </div>
@@ -81,11 +81,11 @@
                                                     <div class="jm-megamenu__col-title">{{ $child->title }}</div>
                                                     <ul class="jm-megamenu__links">
                                                         @foreach ($child->childrenRecursive as $grandchild)
-                                                            <li><a href="{{ Route::has($grandchild->url) ? route($grandchild->url) : url($grandchild->url) }}">{{ $grandchild->title }}</a></li>
+                                                            <li><a href="{{ request()->routeIs($grandchild->url) ? route($grandchild->url) : url($grandchild->url) }}">{{ $grandchild->title }}</a></li>
                                                         @endforeach
                                                     </ul>
                                                 @else
-                                                    <a href="{{ Route::has($child->url) ? route($child->url) : url($child->url) }}" class="jm-megamenu__direct-link">{{ $child->title }}</a>
+                                                    <a href="{{ request()->routeIs($child->url) ? route($child->url) : url($child->url) }}" class="jm-megamenu__direct-link">{{ $child->title }}</a>
                                                 @endif
                                             @endforeach
                                         </div>
