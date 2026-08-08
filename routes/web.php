@@ -17,6 +17,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // ==============================
 // USER DASHBOARD ROUTES
+<<<<<<< HEAD
 // ==============================
 Route::middleware(CheckUserLogin::class)->prefix('dashboard')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -26,7 +27,16 @@ Route::middleware(CheckUserLogin::class)->prefix('dashboard')->group(function ()
 
 // ==============================
 // AUTHENTICATION ROUTES
+=======
+>>>>>>> 3e91cfe (web.php resolve conflict)
 // ==============================
+Route::middleware(CheckUserLogin::class)->prefix('dashboard')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/orders', [DashboardController::class, 'orders'])->name('dashboard.orders');
+});
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
+// Authentication Routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 
@@ -119,7 +129,6 @@ Route::get('/manufacturers', fn () => view('frontend.coming-soon'))->name('manuf
 Route::get('/office-managers', fn () => view('frontend.coming-soon'))->name('office-managers');
 
 Route::get('/gift-card', fn () => view('frontend.coming-soon'))->name('gift-card');
-Route::get('/dashboard', fn () => view('frontend.coming-soon'))->name('dashboard');
 Route::get('/search', fn () => view('frontend.coming-soon'))->name('search');
 Route::post('/search', fn () => view('frontend.coming-soon'))->name('search.submit');
 

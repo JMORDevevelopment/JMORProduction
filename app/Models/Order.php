@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+
     protected $table = 'orders';
+
+    public $timestamps = false;
 
     protected $fillable = [
         'user_id',
@@ -16,11 +19,6 @@ class Order extends Model
         'create_date',
         'status',
         'checkout_data',
-    ];
-
-    protected $casts = [
-        'create_date' => 'date',
-        'status' => 'integer',
     ];
 
     public function customer()
