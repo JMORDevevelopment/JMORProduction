@@ -6,8 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    // NOTE: schema from PaymentService's insert (order_id, order_type,
+    // checkout_type, transaction_id, user_id, amount, auth_code). The
+    // legacy table name is singular; confirm real columns/PK with
+    // `DESCRIBE transaction;`.
+>>>>>>> 3e91cfe (web.php resolve conflict)
     protected $table = 'transaction';
 
+=======
+    protected $table = 'transaction';
+
+    // CI's `transaction` table has no created_at/updated_at columns —
+    // it only has `published`, which is timestamp-on-update/current.
+>>>>>>> c33ce3f (dashboard and orders)
     public $timestamps = false;
 
     protected $fillable = [
@@ -15,11 +29,21 @@ class Transaction extends Model
         'order_type',
         'checkout_type',
         'transaction_id',
+<<<<<<< HEAD
         'user_id',
         'amount',
         'auth_code',
     ];
 
+<<<<<<< HEAD
+=======
+=======
+        'auth_code',
+        'user_id',
+        'amount',
+    ];
+
+>>>>>>> 3e91cfe (web.php resolve conflict)
     protected $casts = [
         'amount' => 'float',
         'published' => 'datetime',
@@ -30,6 +54,10 @@ class Transaction extends Model
      *   $this->db->get_where('orders', array('id' => $trans_data['order_id']))->row()->status;
      * Replaced here with an eager-loadable relationship instead of an N+1 query.
      */
+<<<<<<< HEAD
+=======
+>>>>>>> c33ce3f (dashboard and orders)
+>>>>>>> 3e91cfe (web.php resolve conflict)
     public function order()
     {
         return $this->belongsTo(Order::class, 'order_id');
