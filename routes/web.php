@@ -7,17 +7,16 @@ use App\Http\Controllers\Auth\SignUpController;
 use App\Http\Controllers\Checkout\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Middleware\CheckUserLogin;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // ==============================
 // USER DASHBOARD ROUTES
-<<<<<<< HEAD
 // ==============================
 Route::middleware(CheckUserLogin::class)->prefix('dashboard')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -27,20 +26,7 @@ Route::middleware(CheckUserLogin::class)->prefix('dashboard')->group(function ()
 
 // ==============================
 // AUTHENTICATION ROUTES
-<<<<<<< HEAD
-=======
->>>>>>> 3e91cfe (web.php resolve conflict)
 // ==============================
-Route::middleware(CheckUserLogin::class)->prefix('dashboard')->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/orders', [DashboardController::class, 'orders'])->name('dashboard.orders');
-});
-
-Route::get('/', [HomeController::class, 'index'])->name('home');
-// Authentication Routes
-=======
-// ==============================
->>>>>>> 79011fe (fix: resolve leftover merge conflict markers in dashboard branch)
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 
@@ -157,7 +143,7 @@ Route::get('/category-jmor-shows/jmor-reviews', fn () => view('frontend.coming-s
 Route::get('/recommended', fn () => view('frontend.coming-soon'))->name('recommended');
 Route::get('/random-acts-of-kindness', fn () => view('frontend.coming-soon'))->name('random-acts-of-kindness');
 Route::get('/jmor-tech-talk-show', fn () => view('frontend.coming-soon'))->name('jmor-tech-talk-show');
-Route::get('/media-resources', fn () => view('frontend.coming-soon'))->name('media-resources');
+Route::get('/media-resources', fn () => view('frontend.coming-soon'))->name('media-resource\s');
 Route::get('/media-video', fn () => view('frontend.coming-soon'))->name('media-video');
 Route::get('/press-releases', fn () => view('frontend.coming-soon'))->name('press-releases');
 Route::get('/brand-guidelines', fn () => view('frontend.coming-soon'))->name('brand-guidelines');
