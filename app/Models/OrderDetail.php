@@ -21,6 +21,13 @@ class OrderDetail extends Model
         'date_added',
     ];
 
+    protected $casts = [
+        'qty' => 'integer',
+        'price' => 'float',
+        'sub_total' => 'float',
+        'date_added' => 'date',
+    ];
+
     public function order()
     {
         return $this->belongsTo(Order::class, 'order_id');
