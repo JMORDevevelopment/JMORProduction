@@ -3,13 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
-<<<<<<< HEAD
-use App\Models\OrderDetail;
 use App\Models\Transaction;
-use App\Models\User;
-=======
-use App\Models\Transaction;
->>>>>>> 3e91cfe (web.php resolve conflict)
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -72,7 +66,6 @@ class DashboardController extends Controller
             'transactions' => $transactions,
         ]);
     }
-<<<<<<< HEAD
 
     /**
      * Ports CI Dashboard::order_invoice($order_id).
@@ -132,6 +125,4 @@ class DashboardController extends Controller
             'computedSubtotal' => $computedSubtotal,
         ]);
     }
-=======
->>>>>>> 3e91cfe (web.php resolve conflict)
 }
