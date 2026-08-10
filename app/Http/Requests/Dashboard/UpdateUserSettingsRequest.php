@@ -11,9 +11,6 @@ class UpdateUserSettingsRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Recursively trim all string values (preserve arrays)
-     */
     protected function prepareForValidation(): void
     {
         $this->merge($this->trimRecursive($this->all()));
