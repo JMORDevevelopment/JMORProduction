@@ -142,12 +142,37 @@
 
     @include('partials.script_file')
 
-    <script src="https://code.jquery.com/jquery-3.5.0.min.js"
-        integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
-    <script>
-        // Quantity update – keyboard (enter)
-        $("input.change_qty").keyup(function(e) {
-            if (e.keyCode == 13) {
+    @push('scripts')
+        <script src="https://code.jquery.com/jquery-3.5.0.min.js"
+            integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+        <script>
+            // Quantity update – keyboard (enter)
+            $("input.change_qty").keyup(function(e) {
+                if (e.keyCode == 13) {
+                    var rowid = $(this).attr('qty-id');
+                    var value = $(this).val();
+                    $.ajax({
+                        url: "{{ url('cart/updateItemQty') }}/" + rowid + '/' + value,
+                        type: "post",
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(data) {
+                            if (data == 'ok') {
+                                location.reload();
+                            } else {
+                                alert('Qty No Update');
+                            }
+                        },
+                        error: function(data) {
+                            alert('Error updating quantity');
+                        }
+                    });
+                }
+            });
+
+            // Quantity update – on change
+            $('input.change_qty').on('change', function() {
                 var rowid = $(this).attr('qty-id');
                 var value = $(this).val();
                 $.ajax({
@@ -167,60 +192,37 @@
                         alert('Error updating quantity');
                     }
                 });
-            }
-        });
+            });
 
-        // Quantity update – on change
-        $('input.change_qty').on('change', function() {
-            var rowid = $(this).attr('qty-id');
-            var value = $(this).val();
-            $.ajax({
-                url: "{{ url('cart/updateItemQty') }}/" + rowid + '/' + value,
-                type: "post",
-                data: {
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(data) {
-                    if (data == 'ok') {
-                        location.reload();
+            // Apply coupon
+            $(document).ready(function() {
+                $("#check_code").click(function() {
+                    var code = $("#coupon_code").val();
+                    if (code == '') {
+                        $('#code_emp').html('Coupon Code field must be Enter');
                     } else {
-                        alert('Qty No Update');
-                    }
-                },
-                error: function(data) {
-                    alert('Error updating quantity');
-                }
-            });
-        });
-
-        // Apply coupon
-        $(document).ready(function() {
-            $("#check_code").click(function() {
-                var code = $("#coupon_code").val();
-                if (code == '') {
-                    $('#code_emp').html('Coupon Code field must be Enter');
-                } else {
-                    $('#code_emp').html('');
-                    $.ajax({
-                        url: "{{ url('cart/couponCode') }}/" + code,
-                        type: "post",
-                        data: {
-                            _token: '{{ csrf_token() }}'
-                        },
-                        success: function(data) {
-                            if (data == 'ok') {
-                                $('#coupon_tr').toggle();
-                                location.reload();
-                            } else {
-                                $('#code_wrong').html('Invalid Gift Card');
+                        $('#code_emp').html('');
+                        $.ajax({
+                            url: "{{ url('cart/couponCode') }}/" + code,
+                            type: "post",
+                            data: {
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(data) {
+                                if (data == 'ok') {
+                                    $('#coupon_tr').toggle();
+                                    location.reload();
+                                } else {
+                                    $('#code_wrong').html('Invalid Gift Card');
+                                }
+                            },
+                            error: function(data) {
+                                alert('Error applying coupon');
                             }
-                        },
-                        error: function(data) {
-                            alert('Error applying coupon');
-                        }
-                    });
-                }
+                        });
+                    }
+                });
             });
-        });
-    </script>
+        </script>
+    @endpush
 @endsection

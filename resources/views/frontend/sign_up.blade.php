@@ -6,35 +6,37 @@
     {{-- 1. Include style_file (as in CI: <?php echo $style_file; ?>) --}}
     @include('partials.style_file')
 
-    {{-- Additional inline styles to stabilise the captcha --}}
-    <style>
-        /* Give the captcha card a fixed minimum height so errors don't shift it */
-        .slidercaptcha.card {
-            min-height: 140px;
-            margin-bottom: 20px;
-            position: relative;
-            overflow: hidden;
-        }
+    @push('styles')
+        {{-- Additional inline styles to stabilise the captcha --}}
+        <style>
+            /* Give the captcha card a fixed minimum height so errors don't shift it */
+            .slidercaptcha.card {
+                min-height: 140px;
+                margin-bottom: 20px;
+                position: relative;
+                overflow: hidden;
+            }
 
-        /* Ensure the card body centres the captcha */
-        .slidercaptcha.card .card-body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-        }
+            /* Ensure the card body centres the captcha */
+            .slidercaptcha.card .card-body {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+            }
 
-        /* Style invalid fields with a red border */
-        .has-error .form-control {
-            border-color: #a94442;
-            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-        }
+            /* Style invalid fields with a red border */
+            .has-error .form-control {
+                border-color: #a94442;
+                box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            }
 
-        /* Optional: add a little spacing for the submit button */
-        #qasubmitBtn {
-            margin-top: 15px;
-        }
-    </style>
+            /* Optional: add a little spacing for the submit button */
+            #qasubmitBtn {
+                margin-top: 15px;
+            }
+        </style>
+    @endpush
 
     <section class="wt-section bg-gray text-center inner-page-header">
         <div class="container">
@@ -199,22 +201,24 @@
     @include('partials.before_footer')
     @include('partials.script_file')
 
-    {{-- Script to reset captcha when validation errors are present --}}
-    @if ($errors->any())
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                // If the captcha plugin provides a reset method, call it.
-                // Example: assuming the captcha is initialised on #captcha with slideCaptcha()
-                var captchaElement = document.getElementById('captcha');
-                if (captchaElement && typeof captchaElement.slideCaptcha === 'function') {
-                    captchaElement.slideCaptcha('reset');
-                }
-                // Hide the submit button until user re-verifies
-                var submitBtn = document.getElementById('qasubmitBtn');
-                if (submitBtn) {
-                    submitBtn.style.display = 'none';
-                }
-            });
-        </script>
-    @endif
+    @push('scripts')
+        {{-- Script to reset captcha when validation errors are present --}}
+        @if ($errors->any())
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // If the captcha plugin provides a reset method, call it.
+                    // Example: assuming the captcha is initialised on #captcha with slideCaptcha()
+                    var captchaElement = document.getElementById('captcha');
+                    if (captchaElement && typeof captchaElement.slideCaptcha === 'function') {
+                        captchaElement.slideCaptcha('reset');
+                    }
+                    // Hide the submit button until user re-verifies
+                    var submitBtn = document.getElementById('qasubmitBtn');
+                    if (submitBtn) {
+                        submitBtn.style.display = 'none';
+                    }
+                });
+            </script>
+        @endif
+    @endpush
 @endsection

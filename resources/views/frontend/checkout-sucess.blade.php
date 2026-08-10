@@ -3,12 +3,14 @@
 @section('title', 'Order Confirmed')
 
 @section('content')
-    <!-- Event snippet for Package Signup conversion page -->
-    <script>
-        gtag('event', 'conversion', {'send_to': 'AW-1071011104/dtidCPbW-dQBEKCq2f4D'});
-    </script>
-
     @include('partials.style_file')
+
+    @push('scripts')
+        <!-- Event snippet for Package Signup conversion page -->
+        <script>
+            gtag('event', 'conversion', {'send_to': 'AW-1071011104/dtidCPbW-dQBEKCq2f4D'});
+        </script>
+    @endpush
 
     <section class="wt-section bg-gray text-center inner-page-header">
         <div class="container">

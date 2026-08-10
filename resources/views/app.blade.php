@@ -191,14 +191,16 @@
             </div>
 
             <div class="col-md-6">
-                <style>
-                    .blog.pad-m.pad-top-l.powrMark.text-center {
-                        display: none !important;
-                    }
-                    .powr-instagram-feed #appView .powrMark {
-                        display: none !important;
-                    }
-                </style>
+                @push('styles')
+                    <style>
+                        .blog.pad-m.pad-top-l.powrMark.text-center {
+                            display: none !important;
+                        }
+                        .powr-instagram-feed #appView .powrMark {
+                            display: none !important;
+                        }
+                    </style>
+                @endpush
 
                 <div class="gallery">
                     {{-- Legacy Instagram feed fetch was disabled ($live_C = false) in the original
@@ -217,33 +219,35 @@
     </div>
 </div>
 
-<style>
-    .tabs_bar .tab-content .media {
-        margin-top: 15px !important;
-    }
+@push('styles')
+    <style>
+        .tabs_bar .tab-content .media {
+            margin-top: 15px !important;
+        }
 
-    .tab-content > .active {
-        display: block;
-        position: relative !important;
-        width: 100%;
-        top: 0px !important;
-        -webkit-transform: none !important;
-        transform: none !important;
-    }
+        .tab-content > .active {
+            display: block;
+            position: relative !important;
+            width: 100%;
+            top: 0px !important;
+            -webkit-transform: none !important;
+            transform: none !important;
+        }
 
-    @media screen and (min-width: 768px) {
-        li.nav-itemss:nth-child(1) {
-            width: 33%;
+        @media screen and (min-width: 768px) {
+            li.nav-itemss:nth-child(1) {
+                width: 33%;
+            }
+            li.nav-itemss:nth-child(1) a {
+                padding: 10px 20px;
+            }
+            li.nav-itemss:nth-child(2),
+            li.nav-itemss:nth-child(3),
+            li.nav-itemss:nth-child(4) {
+                width: 22.32%;
+            }
         }
-        li.nav-itemss:nth-child(1) a {
-            padding: 10px 20px;
-        }
-        li.nav-itemss:nth-child(2),
-        li.nav-itemss:nth-child(3),
-        li.nav-itemss:nth-child(4) {
-            width: 22.32%;
-        }
-    }
-</style>
+    </style>
+@endpush
 
 @endsection

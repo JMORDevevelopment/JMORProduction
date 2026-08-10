@@ -1,3 +1,4 @@
+@push('scripts')
 <!-- JS Script Files -->
 <!-- Global Vendor -->
 <script src="{{ asset('assets_2/vendors/jquery.min.js') }}"></script>
@@ -22,3 +23,4 @@
         }
     });
 </script>
+@endpush

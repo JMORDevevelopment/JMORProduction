@@ -1,3 +1,4 @@
+@push('styles')
 <!-- Styles -->
 <link rel="stylesheet" type="text/css" href="{{ asset('assets_2/vendors/bootstrap/css/bootstrap.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets_2/vendors/font-awesome/css/fontawesome-all.min.css') }}">
@@ -7,3 +8,4 @@
 <link href="{{ asset('assets_2/vendors/aos/aos.css') }}" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets_2/css/theme.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets_2/css/styles.css') }}">
+@endpush
