@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('styles')
+@push('styles')
     <style>
         #print-modal {
 
@@ -15,7 +15,7 @@
             -webkit-box-shadow: 0 0 10px #000;
         }
     </style>
-@endsection
+@endpush
 
 @section('content')
 
@@ -198,10 +198,10 @@
   </div>
 @endsection
 
-@section('scripts')
+@push('scripts')
     <script>
         function myFunction() {
             window.print();
         }
     </script>
-@endsection
+@endpush
