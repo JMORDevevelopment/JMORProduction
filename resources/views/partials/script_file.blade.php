@@ -1,4 +1,5 @@
-@push('scripts')
+{{-- Foundation/vendor scripts: @prepend keeps them first in the scripts stack (as in CI, where jQuery loaded at the start). --}}
+@prepend('scripts')
 <!-- JS Script Files -->
 <!-- Global Vendor -->
 <script src="{{ asset('assets_2/vendors/jquery.min.js') }}"></script>

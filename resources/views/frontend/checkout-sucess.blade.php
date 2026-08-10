@@ -5,7 +5,9 @@
 @section('content')
     @include('partials.style_file')
 
-    @push('scripts')
+    {{-- Conversion snippet was at the top of the page in the original port and in
+         the <head> in the CI project, so it pushes to the top-of-page stack. --}}
+    @push('scripts-top')
         <!-- Event snippet for Package Signup conversion page -->
         <script>
             gtag('event', 'conversion', {'send_to': 'AW-1071011104/dtidCPbW-dQBEKCq2f4D'});
