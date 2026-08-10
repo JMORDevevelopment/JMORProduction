@@ -1,22 +1,24 @@
 @extends('layouts.dashboard')
 
+@section('styles')
+    <style>
+        #print-modal {
+
+            background: #FFF;
+            position: absolute;
+            left: 50%;
+            margin: 0 0 0 -465px;
+            padding: 0 68px;
+            width: 794px;
+            box-shadow: 0 0 20px #000;
+            -moz-box-shadow: 0 0 20px #000;
+            -webkit-box-shadow: 0 0 10px #000;
+        }
+    </style>
+@endsection
+
 @section('content')
 
-<style>
-#print-modal {
-
-  background:#FFF;
-  position:absolute;
-  left:50%;
-  margin:0 0 0 -465px;
-  padding:0 68px;
-  width:794px;
-  box-shadow:0 0 20px #000;
-  -moz-box-shadow:0 0 20px #000;
-  -webkit-box-shadow:0 0 10px #000;
-}
-
-</style>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -194,12 +196,12 @@
     <!-- /.content -->
     <div class="clearfix"></div>
   </div>
+@endsection
 
-<script>
-function myFunction()
-{
-    window.print();
-}
-</script>
-
+@section('scripts')
+    <script>
+        function myFunction() {
+            window.print();
+        }
+    </script>
 @endsection
