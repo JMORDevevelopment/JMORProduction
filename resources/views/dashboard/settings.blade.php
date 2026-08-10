@@ -1,15 +1,31 @@
 @extends('layouts.dashboard')
 
-@section('content')
+@section('styles')
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css">
+@endsection
+
+@section('scripts')
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js">
     </script>
-
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js">
     </script>
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
 
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        $('#table_id').dataTable({
+            "ordering": false
+        });
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css">
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+    </script>
+@endsection
+
+@section('content')
 
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -51,18 +67,4 @@
         </section>
         <!-- /.content -->
     </div>
-
-    <script>
-        $(document).ready(function() {
-            $('#table_id').DataTable();
-        });
-
-        $('#table_id').dataTable({
-            "ordering": false
-        });
-
-        $(document).ready(function() {
-            $('#example').DataTable();
-        });
-    </script>
 @endsection
