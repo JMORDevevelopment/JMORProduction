@@ -129,13 +129,6 @@ class DashboardController extends Controller
         ]);
     }
 
-    /**
-     * Ports CI Dashboard::user_settings().
-     *
-     * CI logic:
-     *   $user_datass = user WHERE user_id = session user_id -> row_array()
-     *   View renders a single row (Name / Email / Edit) for the logged-in user.
-     */
     public function userSettings()
     {
         $user = User::find(Auth::id());
@@ -146,18 +139,10 @@ class DashboardController extends Controller
         ]);
     }
 
-    /**
-     * Ports CI Dashboard::user_settings_update($id).
-     *
-     * CI logic:
-     *   $post = user WHERE user_id = $id -> row_array() (when $id && !$post)
-     *   View renders the settings_add form; link = user_settings_validate/$id.
-     */
     public function userSettingsUpdate($user_id)
     {
         $user = User::find($user_id);
 
-        // Ownership guard: only the logged-in user may edit their own settings.
         if (! $user || (int) $user->user_id !== (int) Auth::id()) {
             abort(404);
         }
@@ -170,21 +155,8 @@ class DashboardController extends Controller
         ]);
     }
 
-    /**
-     * Ports CI Dashboard::user_settings_validate($id).
-     *
-     * CI logic:
-     *   $post = input->post()  (CI's input->post() strips the CSRF token)
-     *   if password non-empty: password = md5(password)
-     *   else: unset password
-     *   update user SET $post WHERE user_id = $id
-     *   redirect('dashboard/user_settings')
-     *
-     * Validated via UpdateUserSettingsRequest (same field rules as SignUpRequest).
-     */
     public function userSettingsValidate($user_id, UpdateUserSettingsRequest $request)
     {
-        // Ownership guard: only the logged-in user may update their own settings.
         if ((int) $user_id !== (int) Auth::id()) {
             abort(404);
         }
