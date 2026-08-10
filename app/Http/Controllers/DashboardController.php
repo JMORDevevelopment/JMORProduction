@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
-use App\Models\Transaction;
-use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use App\Models\OrderDetail;
+use App\Models\Transaction;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 class DashboardController extends Controller
 {
     /**
@@ -93,7 +95,7 @@ class DashboardController extends Controller
             ->where('order_type', '!=', 'Gift Card')
             ->first();
 
-        if (!$transaction) {
+        if (! $transaction) {
             abort(404);
         }
 
@@ -107,7 +109,7 @@ class DashboardController extends Controller
         }
 
         // "Other Info" box: scalar (non-array) checkout_data values.
-        $otherInfo = array_filter($checkoutData, fn ($value) => !is_array($value));
+        $otherInfo = array_filter($checkoutData, fn ($value) => ! is_array($value));
 
         // "System Information" table: array-valued checkout_data entries.
         $systemInfo = array_filter($checkoutData, fn ($value) => is_array($value));
@@ -125,5 +127,76 @@ class DashboardController extends Controller
             'systemInfo' => $systemInfo,
             'computedSubtotal' => $computedSubtotal,
         ]);
+    }
+
+    /**
+     * Ports CI Dashboard::user_settings().
+     *
+     * CI logic:
+     *   $user_datass = user WHERE user_id = session user_id -> row_array()
+     *   View renders a single row (Name / Email / Edit) for the logged-in user.
+     */
+    public function userSettings()
+    {
+        $user = User::find(Auth::id());
+
+        return view('dashboard.settings', [
+            'title' => 'Setting',
+            'user' => $user,
+        ]);
+    }
+
+    /**
+     * Ports CI Dashboard::user_settings_update($id).
+     *
+     * CI logic:
+     *   $post = user WHERE user_id = $id -> row_array() (when $id && !$post)
+     *   View renders the settings_add form; link = user_settings_validate/$id.
+     */
+    public function userSettingsUpdate($user_id)
+    {
+        $user = User::find($user_id);
+
+        // Ownership guard: only the logged-in user may edit their own settings.
+        if (! $user || (int) $user->user_id !== (int) Auth::id()) {
+            abort(404);
+        }
+
+        return view('dashboard.settings_add', [
+            'title' => 'Setting',
+            'user' => $user,
+            'link' => route('dashboard.user_settings_validate', $user->user_id),
+            'cancel' => route('dashboard.user_settings'),
+        ]);
+    }
+
+    /**
+     * Ports CI Dashboard::user_settings_validate($id).
+     *
+     * CI logic:
+     *   $post = input->post()  (CI's input->post() strips the CSRF token)
+     *   if password non-empty: password = md5(password)
+     *   else: unset password
+     *   update user SET $post WHERE user_id = $id
+     *   redirect('dashboard/user_settings')
+     */
+    public function userSettingsValidate($user_id, Request $request)
+    {
+        // Ownership guard: only the logged-in user may update their own settings.
+        if ((int) $user_id !== (int) Auth::id()) {
+            abort(404);
+        }
+
+        $post = $request->except('_token');
+
+        if (! empty($post['password'])) {
+            $post['password'] = md5($post['password']);
+        } else {
+            unset($post['password']);
+        }
+
+        User::where('user_id', $user_id)->update($post);
+
+        return redirect()->route('dashboard.user_settings');
     }
 }
