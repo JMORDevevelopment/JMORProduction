@@ -14,59 +14,70 @@
 		<form class="form-horizontal" action="{{ $link }}" method="POST" enctype="multipart/form-data">
 		  @csrf
 		  <div class="box-body">
+			@if ($errors->any())
+				<div class="alert alert-danger alert-dismissible">
+					<h4><i class="icon fa fa-warning"></i>Please fix the following:</h4>
+					<ul class="mb-0">
+						@foreach ($errors->all() as $error)
+							<li>{{ $error }}</li>
+						@endforeach
+					</ul>
+				</div>
+			@endif
+
 			<div class="form-group">
 			  <label for="input" class="col-sm-2 control-label">First name:</label>
 			  <div class="col-sm-10">
-				<input type="text" class="form-control" name="firstname" id="input" value="{{ $user->firstname }}" placeholder="firstname">
+				<input type="text" class="form-control @error('firstname') is-invalid @enderror" name="firstname" id="input" value="{{ old('firstname', $user->firstname) }}" placeholder="firstname">
 			  </div>
 			</div>
 
 			<div class="form-group">
 			  <label for="input" class="col-sm-2 control-label">Last name:</label>
 			  <div class="col-sm-10">
-				<input type="text" class="form-control" name="lastname" id="input" value="{{ $user->lastname }}" placeholder="lastname">
+				<input type="text" class="form-control @error('lastname') is-invalid @enderror" name="lastname" id="input" value="{{ old('lastname', $user->lastname) }}" placeholder="lastname">
 			  </div>
 			</div>
 
 			<div class="form-group">
 			  <label for="input" class="col-sm-2 control-label">E-mail:</label>
 			  <div class="col-sm-10">
-				<input type="text" disabled class="form-control" name="email" id="input" value="{{ $user->email }}" placeholder="email">
+				<input type="text" disabled class="form-control" name="email" id="input" value="{{ old('email', $user->email) }}" placeholder="email">
 			  </div>
 			</div>
 
 			<div class="form-group">
 			  <label for="input" class="col-sm-2 control-label">password:</label>
 			  <div class="col-sm-10">
-				<input type="password" class="form-control" name="password" id="input" placeholder="password">
+				<input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="input" placeholder="password">
 			  </div>
 			</div>
 
 			<div class="form-group">
 			  <label for="input" class="col-sm-2 control-label">City:</label>
 			  <div class="col-sm-10">
-				<input type="text" class="form-control" name="city" id="input" value="{{ $user->city }}" placeholder="city">
+				<input type="text" class="form-control @error('city') is-invalid @enderror" name="city" id="input" value="{{ old('city', $user->city) }}" placeholder="city">
 			  </div>
 			</div>
 
 			<div class="form-group">
 			  <label for="input" class="col-sm-2 control-label">Address:</label>
 			  <div class="col-sm-10">
-				<input type="text" class="form-control" name="address" id="input" value="{{ $user->address }}" placeholder="address">
+				<input type="text" class="form-control @error('address') is-invalid @enderror" name="address" id="input" value="{{ old('address', $user->address) }}" placeholder="address">
 			  </div>
 			</div>
 
 			<div class="form-group">
 				  <label for="input" class="col-sm-2 control-label">State:</label>
 				  <div class="col-sm-10">
-				<input type="text" class="form-control" name="state" id="input" value="{{ $user->state }}" placeholder="state">
+				<input type="text" class="form-control @error('state') is-invalid @enderror" name="state" id="input" value="{{ old('state', $user->state) }}" placeholder="state">
 			</div>
 			</div>
 
 			<div class="form-group">
 				  <label for="input" class="col-sm-2 control-label">zip:</label>
 				  <div class="col-sm-10">
-				<input type="text" class="form-control" name="zip" id="input" value="{{ $user->zip }}" placeholder="zip">
+				<input type="text" class="form-control @error('zip') is-invalid @enderror" name="zip" id="input" value="{{ old('zip', $user->zip) }}" placeholder="zip">
 			</div>
 			</div>
 
