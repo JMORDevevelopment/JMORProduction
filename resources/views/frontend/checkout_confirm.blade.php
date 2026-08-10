@@ -3,108 +3,110 @@
 @section('title', 'Checkout Confirm')
 
 @section('content')
-    <style>
-        creditCardForm {
-            max-width: 700px;
-            background-color: #fff;
-            margin: 100px auto;
-            overflow: hidden;
-            padding: 25px;
-            color: #4c4e56;
-        }
+    @include('partials.style_file')
 
-        .creditCardForm label {
-            width: 100%;
-            margin-bottom: 10px;
-            text-align: left;
-        }
+    @push('styles')
+        <style>
+            creditCardForm {
+                max-width: 700px;
+                background-color: #fff;
+                margin: 100px auto;
+                overflow: hidden;
+                padding: 25px;
+                color: #4c4e56;
+            }
 
-        .creditCardForm .heading h1 {
-            text-align: left;
-            font-family: 'Open Sans', sans-serif;
-            color: #4c4e56;
-        }
+            .creditCardForm label {
+                width: 100%;
+                margin-bottom: 10px;
+                text-align: left;
+            }
 
-        .creditCardForm .payment {
-            float: left;
-            font-size: 18px;
-            padding: 10px 25px;
-            margin-top: 20px;
-            position: relative;
-        }
+            .creditCardForm .heading h1 {
+                text-align: left;
+                font-family: 'Open Sans', sans-serif;
+                color: #4c4e56;
+            }
 
-        .creditCardForm .payment .form-group {
-            float: left;
-            margin-bottom: 15px;
-        }
+            .creditCardForm .payment {
+                float: left;
+                font-size: 18px;
+                padding: 10px 25px;
+                margin-top: 20px;
+                position: relative;
+            }
 
-        .creditCardForm .payment .form-control {
-            line-height: 40px;
-            height: auto;
-            padding: 0 16px;
-        }
+            .creditCardForm .payment .form-group {
+                float: left;
+                margin-bottom: 15px;
+            }
 
-        .creditCardForm .owner {
-            width: 53%;
-            margin-right: 10px;
-        }
+            .creditCardForm .payment .form-control {
+                line-height: 40px;
+                height: auto;
+                padding: 0 16px;
+            }
 
-        .creditCardForm .CVV {
-            width: 30%;
-        }
+            .creditCardForm .owner {
+                width: 53%;
+                margin-right: 10px;
+            }
 
-        .creditCardForm #card-number-field {
-            width: 100%;
-        }
+            .creditCardForm .CVV {
+                width: 30%;
+            }
 
-        .creditCardForm #expiration-date {
-            width: 70%;
-        }
-
-        .creditCardForm #credit_cards {
-            width: 100%;
-            margin-top: 25px;
-            text-align: right;
-        }
-
-        .creditCardForm #pay-now {
-            width: 100%;
-            margin-top: 25px;
-        }
-
-        .creditCardForm .payment .btn {
-            width: 100%;
-            margin-top: 3px;
-            font-size: 24px;
-            background-color: #2ec4a5;
-            color: white;
-        }
-
-        .creditCardForm .payment select {
-            padding: 10px;
-            margin-right: 15px;
-        }
-
-        .transparent {
-            opacity: 0.2;
-        }
-
-        @media(max-width: 650px) {
-
-            .creditCardForm .owner,
-            .creditCardForm .CVV,
-            .creditCardForm #expiration-date,
-            .creditCardForm #credit_cards {
+            .creditCardForm #card-number-field {
                 width: 100%;
             }
 
-            .creditCardForm #credit_cards {
-                text-align: left;
+            .creditCardForm #expiration-date {
+                width: 70%;
             }
-        }
-    </style>
 
-    @include('partials.style_file')
+            .creditCardForm #credit_cards {
+                width: 100%;
+                margin-top: 25px;
+                text-align: right;
+            }
+
+            .creditCardForm #pay-now {
+                width: 100%;
+                margin-top: 25px;
+            }
+
+            .creditCardForm .payment .btn {
+                width: 100%;
+                margin-top: 3px;
+                font-size: 24px;
+                background-color: #2ec4a5;
+                color: white;
+            }
+
+            .creditCardForm .payment select {
+                padding: 10px;
+                margin-right: 15px;
+            }
+
+            .transparent {
+                opacity: 0.2;
+            }
+
+            @media(max-width: 650px) {
+
+                .creditCardForm .owner,
+                .creditCardForm .CVV,
+                .creditCardForm #expiration-date,
+                .creditCardForm #credit_cards {
+                    width: 100%;
+                }
+
+                .creditCardForm #credit_cards {
+                    text-align: left;
+                }
+            }
+        </style>
+    @endpush
 
     <section class="wt-section bg-gray text-center inner-page-header">
         <div class="container">
@@ -243,17 +245,20 @@
     </main>
 
     @include('partials.script_file')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/121761/card.js'></script>
-    <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/121761/jquery.card.js'></script>
-    <script type="text/javascript">
-        $('form').card({
-            container: '.card-wrapper',
-            width: 280,
-            formSelectors: {
-                nameInput: 'input[name="first-name"], input[name="last-name"]'
-            }
-        });
-    </script>
+
+    @push('scripts')
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+        <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/121761/card.js'></script>
+        <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/121761/jquery.card.js'></script>
+        <script type="text/javascript">
+            $('form').card({
+                container: '.card-wrapper',
+                width: 280,
+                formSelectors: {
+                    nameInput: 'input[name="first-name"], input[name="last-name"]'
+                }
+            });
+        </script>
+    @endpush
 @endsection
