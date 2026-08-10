@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Dashboard\UpdateUserSettingsRequest;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Transaction;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -179,8 +179,10 @@ class DashboardController extends Controller
      *   else: unset password
      *   update user SET $post WHERE user_id = $id
      *   redirect('dashboard/user_settings')
+     *
+     * Validated via UpdateUserSettingsRequest (same field rules as SignUpRequest).
      */
-    public function userSettingsValidate($user_id, Request $request)
+    public function userSettingsValidate($user_id, UpdateUserSettingsRequest $request)
     {
         // Ownership guard: only the logged-in user may update their own settings.
         if ((int) $user_id !== (int) Auth::id()) {
