@@ -2,18 +2,18 @@
 
 @section('title', 'Order Confirmed')
 
+@include('partials.style_file')
+
+{{-- Conversion snippet was at the top of the page in the original port and in
+     the <head> in the CI project, so it pushes to the top-of-page stack. --}}
+@push('scripts-top')
+    <!-- Event snippet for Package Signup conversion page -->
+    <script>
+        gtag('event', 'conversion', {'send_to': 'AW-1071011104/dtidCPbW-dQBEKCq2f4D'});
+    </script>
+@endpush
+
 @section('content')
-    @include('partials.style_file')
-
-    {{-- Conversion snippet was at the top of the page in the original port and in
-         the <head> in the CI project, so it pushes to the top-of-page stack. --}}
-    @push('scripts-top')
-        <!-- Event snippet for Package Signup conversion page -->
-        <script>
-            gtag('event', 'conversion', {'send_to': 'AW-1071011104/dtidCPbW-dQBEKCq2f4D'});
-        </script>
-    @endpush
-
     <section class="wt-section bg-gray text-center inner-page-header">
         <div class="container">
             <div class="row justify-content-md-center align-items-center text-white py-4 py-lg-5">
@@ -40,6 +40,6 @@
         </section>
         @include('partials.before_footer')
     </main>
-
-    @include('partials.script_file')
 @endsection
+
+@include('partials.script_file')
