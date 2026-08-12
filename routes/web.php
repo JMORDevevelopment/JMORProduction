@@ -26,9 +26,11 @@ Route::middleware(CheckUserLogin::class)->prefix('dashboard')->group(function ()
     Route::get('/user_settings_update/{user_id}', [DashboardController::class, 'userSettingsUpdate'])->name('dashboard.user_settings_update');
     Route::post('/user_settings_validate/{user_id}', [DashboardController::class, 'userSettingsValidate'])->name('dashboard.user_settings_validate');
 
-    // Placeholder stubs until the Gift Card / Testimonial dashboard sections are ported
-    Route::get('/giftcard', fn () => view('frontend.coming-soon'))->name('dashboard.giftcard');
-    Route::get('/testimonial', fn () => view('frontend.coming-soon'))->name('dashboard.testimonial');
+    Route::get('/giftcard', [DashboardController::class, 'giftcard'])->name('dashboard.giftcard');
+    Route::get('/giftcard_invoice/{order_id}', [DashboardController::class, 'giftcardInvoice'])->name('dashboard.giftcard_invoice');
+    Route::get('/testimonial', [DashboardController::class, 'testimonial'])->name('dashboard.testimonial');
+    Route::get('/testimonial_add/{id?}', [DashboardController::class, 'testimonialAdd'])->name('dashboard.testimonial_add');
+    Route::post('/testimonial_validate/{id?}', [DashboardController::class, 'testimonialValidate'])->name('dashboard.testimonial_validate');
 });
 
 // ==============================
