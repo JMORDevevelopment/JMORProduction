@@ -3,24 +3,10 @@
 use App\Models\Testimonial;
 use App\Models\User;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
-use Illuminate\Support\Facades\Schema;
 
-/**
- * The legacy migration set cannot run on the in-memory sqlite test database
- * (duplicate table definitions and incompatible foreign keys), so only the
- * tables these tests touch are created manually.
- */
 beforeEach(function () {
-    Schema::dropIfExists('testimony_form');
-
-    Schema::create('testimony_form', function ($table) {
-        $table->integer('id', true);
-        $table->integer('customer_id');
-        $table->text('service_used');
-        $table->text('message');
-        $table->integer('status')->default(0);
-        $table->timestamp('published')->nullable();
-    });
+    // Feature tests run through the web middleware group; bypass CSRF only.
+    $this->withoutMiddleware(PreventRequestForgery::class);
 
     $this->user = new User([
         'firstname' => 'Jane',
@@ -32,13 +18,6 @@ beforeEach(function () {
     $this->user->user_id = 9826;
 
     $this->actingAs($this->user);
-
-    // Feature tests run through the web middleware group; bypass CSRF only.
-    $this->withoutMiddleware(PreventRequestForgery::class);
-});
-
-afterEach(function () {
-    Schema::dropIfExists('testimony_form');
 });
 
 test('a logged-in user can submit a new testimonial without an id', function () {
