@@ -316,7 +316,7 @@ class DashboardController extends Controller
      * trusted from the hidden form field, mirroring CI's behavior (the field is
      * the session user id) while preventing tampering.
      */
-    public function testimonialValidate($id, TestimonialRequest $request)
+    public function testimonialValidate(TestimonialRequest $request, $id = 0)
     {
         $post = $request->validated();
         $post['customer_id'] = Auth::id();
@@ -328,7 +328,7 @@ class DashboardController extends Controller
                 abort(404);
             }
 
-            Testimonial::where('id', $id)->update($post);
+            $testimonial->update($post);
         } else {
             Testimonial::create($post);
         }
