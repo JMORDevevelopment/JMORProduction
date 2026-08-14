@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\SignUpController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\Checkout\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
@@ -144,7 +145,9 @@ Route::get('/remote-employee-engagement-solutions', fn () => view('frontend.comi
 Route::get('/covid19-remote-friendly-support-service', fn () => view('frontend.coming-soon'))->name('covid19-remote-friendly-support-service');
 Route::get('/linktree', fn () => view('frontend.coming-soon'))->name('linktree');
 Route::get('/jmor-tech-byte-sized-blunders-laugh-and-learn', fn () => view('frontend.coming-soon'))->name('jmor-tech-byte-sized-blunders-laugh-and-learn');
-Route::get('/blog', fn () => view('frontend.coming-soon'))->name('blog');
+Route::get('/blog', [BlogController::class, 'posts'])->name('blog');
+Route::get('/blog/blog/{link}', fn ($link) => redirect()->route('blog.detail', $link, 301))->name('blog.legacy_redirect');
+Route::get('/blog/{link}', [BlogController::class, 'detail'])->name('blog.detail');
 Route::get('/category-jmor-shows/shows-i-appeared-as-a-guest-on', fn () => view('frontend.coming-soon'))->name('category-jmor-shows/shows-i-appeared-as-a-guest-on');
 Route::get('/category-jmor-shows/jmor-tech-talk-show', fn () => view('frontend.coming-soon'))->name('category-jmor-shows/jmor-tech-talk-show');
 Route::get('/category-jmor-shows/jmor-unboxings', fn () => view('frontend.coming-soon'))->name('category-jmor-shows/jmor-unboxings');
