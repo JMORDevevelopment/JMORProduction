@@ -4,10 +4,12 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\SignUpController;
+use App\Http\Controllers\CaseStudyController;
 use App\Http\Controllers\Checkout\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PaymentController;
@@ -106,9 +108,13 @@ Route::get('/media-relations', fn () => view('frontend.coming-soon'))->name('med
 
 Route::get('/technology-guides-it-resources-the-jmor-connection-inc', fn () => view('frontend.coming-soon'))->name('technology-guides-it-resources-the-jmor-connection-inc');
 Route::get('/the-jmor-blog', fn () => view('frontend.coming-soon'))->name('the-jmor-blog');
-Route::get('/case-studies', fn () => view('frontend.coming-soon'))->name('case-studies');
+Route::get('/events', [EventController::class, 'posts'])->name('events');
+Route::get('/events/{link}', [EventController::class, 'detail'])->name('events.detail');
+
+Route::get('/case-studies', [CaseStudyController::class, 'posts'])->name('case-studies');
+Route::get('/case-studies/{link}', [CaseStudyController::class, 'detail'])->name('case-studies.detail');
+
 Route::get('/jmor-shows', fn () => view('frontend.coming-soon'))->name('jmor-shows');
-Route::get('/events', fn () => view('frontend.coming-soon'))->name('events');
 Route::get('/the-jmor-store', fn () => view('frontend.coming-soon'))->name('the-jmor-store');
 
 Route::get('/refund-policy', fn () => view('frontend.coming-soon'))->name('refund-policy');

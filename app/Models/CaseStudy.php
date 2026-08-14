@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class CaseStudy extends Model
 {
-
     protected $table = 'case_studies';
 
     public $timestamps = false;
@@ -14,6 +13,9 @@ class CaseStudy extends Model
     protected $fillable = [
         'name',
         'link',
+        'description',
+        'image',
+        'published',
         'meta_title',
         'meta_description',
         'meta_keywords',
