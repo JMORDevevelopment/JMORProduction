@@ -19,10 +19,7 @@ class NewsController extends Controller
         $data = array_merge(
             $this->news->paginatedList($start),
             $this->contentPages->listingViewData('News'),
-            [
-                'pagination' => '',
-                'latestPosts' => News::orderBy('news_id', 'desc')->limit(5)->get(),
-            ]
+            ['latestPosts' => News::orderBy('news_id', 'desc')->limit(5)->get()]
         );
 
         return view('frontend.news', $data);

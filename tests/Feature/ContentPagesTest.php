@@ -106,6 +106,18 @@ beforeEach(function () {
         'published' => '2020-01-01 00:00:00',
     ]);
 
+    foreach (range(2, 6) as $i) {
+        News::create([
+            'name' => "News Item {$i}",
+            'link' => "news-item-{$i}",
+            'priority' => 1,
+            'type' => 'general',
+            'description' => '<p>News description content</p>',
+            'image' => 'uploads/news/test.jpg',
+            'published' => "2020-01-0{$i} 00:00:00",
+        ]);
+    }
+
     $category = CategoryRadioShow::create([
         'title' => 'JMOR Tech Talk Show',
         'menu_status' => 1,
@@ -219,4 +231,9 @@ test('a radio show category page renders its shows', function () {
 test('the search page returns matching content', function () {
     $this->post(route('search'), ['search' => 'About'])->assertSuccessful()->assertSee('About Us');
     $this->post(route('search'), ['search' => 'nothing-matches'])->assertSuccessful()->assertSee('Nothing Record Found');
+});
+
+test('the news listing paginates after five items', function () {
+    $this->get(route('news'))->assertSuccessful()->assertSee('News Item 6')->assertSee('News Item 2');
+    $this->get(route('news.index', ['start' => 5]))->assertSuccessful()->assertSee('News Item 6')->assertSee('Showing 6 to 6 from 6 items');
 });

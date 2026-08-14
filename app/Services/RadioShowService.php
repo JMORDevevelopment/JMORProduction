@@ -34,7 +34,6 @@ class RadioShowService
             'categories' => CategoryRadioShow::orderBy('id', 'asc')->get(),
             'latestPosts' => RadioShow::where('category_id', $category->id)
                 ->orderBy('id', 'desc')
-                ->limit(5)
                 ->get(),
         ];
     }
@@ -61,8 +60,7 @@ class RadioShowService
             return $ownShows;
         }
 
-        $childIds = array_column($children, 'id');
-        $childShows = RadioShow::whereIn('category_id', $childIds)
+        $childShows = RadioShow::where('category_id', $children[0]['id'])
             ->orderBy('id', 'desc')
             ->get()
             ->all();
