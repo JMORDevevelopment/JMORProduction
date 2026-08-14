@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\SignUpController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CaseStudyController;
 use App\Http\Controllers\Checkout\CartController;
 use App\Http\Controllers\CheckoutController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Middleware\CheckUserLogin;
@@ -87,6 +89,16 @@ Route::get('/home/single_package/{id}', [PackageController::class, 'single'])->n
 // ==============================
 Route::get('/packages', [PackageController::class, 'list'])->name('packages');
 Route::get('/packages/{category}', [PackageController::class, 'detail'])->name('packages.detail');
+
+// ==============================
+// NEWS (ported from CI: home/news_list + home/news_detail)
+// ==============================
+Route::get('/news', [NewsController::class, 'list'])->name('news');
+Route::get('/news/index/{start}', [NewsController::class, 'list'])->name('news.index');
+Route::get('/news/{link}', [NewsController::class, 'detail'])->name('news.detail');
+
+// Blog detail route used by the news page sidebar; the full blog feature ships separately.
+Route::get('/blog/{link}', [BlogController::class, 'detail'])->name('blog.detail');
 
 // ==============================
 // CONTENT PAGE STUBS (placeholder until real pages are built)
