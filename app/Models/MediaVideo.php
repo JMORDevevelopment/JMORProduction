@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class MediaVideo extends Model
 {
-    
     protected $table = 'media_video';
 
     public $timestamps = false;
@@ -14,6 +13,9 @@ class MediaVideo extends Model
     protected $fillable = [
         'name',
         'link',
+        'description',
+        'video_link',
+        'published',
         'meta_title',
         'meta_description',
         'meta_keywords',

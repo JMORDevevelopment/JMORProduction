@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
+use App\Models\CategoryRadioShow;
+use App\Models\RadioShow;
 use App\Services\SearchService;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-    public function __construct(private SearchService $search)
-    {
-    }
+    public function __construct(private SearchService $search) {}
 
     public function content(Request $request)
     {
@@ -20,6 +21,7 @@ class SearchController extends Controller
             'description' => '',
             'keywords' => '',
             'main_blogs' => $results,
+            'latestPosts' => Blog::orderBy('id', 'desc')->limit(5)->get(),
         ]);
     }
 
@@ -35,6 +37,8 @@ class SearchController extends Controller
             'description' => '',
             'keywords' => '',
             'main_blogs' => $results,
+            'categories' => CategoryRadioShow::orderBy('id', 'asc')->get(),
+            'latestPosts' => RadioShow::orderBy('id', 'desc')->limit(5)->get(),
         ]);
     }
 }

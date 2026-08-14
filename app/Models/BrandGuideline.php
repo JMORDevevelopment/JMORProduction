@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class BrandGuideline extends Model
 {
-
     protected $table = 'brand_guidelines';
 
     public $timestamps = false;
@@ -14,6 +13,9 @@ class BrandGuideline extends Model
     protected $fillable = [
         'name',
         'link',
+        'description',
+        'image',
+        'published',
         'meta_title',
         'meta_description',
         'meta_keywords',

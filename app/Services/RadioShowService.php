@@ -31,6 +31,11 @@ class RadioShowService
             'description' => $category->meta_keywords ?? '',
             'keywords' => $category->meta_description ?? '',
             'show_datas' => $this->showsForCategory($category, $children),
+            'categories' => CategoryRadioShow::orderBy('id', 'asc')->get(),
+            'latestPosts' => RadioShow::where('category_id', $category->id)
+                ->orderBy('id', 'desc')
+                ->limit(5)
+                ->get(),
         ];
     }
 

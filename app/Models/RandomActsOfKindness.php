@@ -6,9 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class RandomActsOfKindness extends Model
 {
-    // NOTE: schema assumed from ContentPageService usage (link, meta_title,
-    // meta_description, meta_keywords, name). Confirm real columns/PK with
-    // `DESCRIBE random_acts_of_kindness;` before relying on this elsewhere.
     protected $table = 'random_acts_of_kindness';
 
     public $timestamps = false;
@@ -16,6 +13,9 @@ class RandomActsOfKindness extends Model
     protected $fillable = [
         'name',
         'link',
+        'description',
+        'image',
+        'published',
         'meta_title',
         'meta_description',
         'meta_keywords',

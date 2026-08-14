@@ -14,7 +14,7 @@ class ContentPageService
     /**
      * Fetch a single row by its `link` slug, or abort with a 404.
      *
-     * @param class-string<Model> $modelClass
+     * @param  class-string<Model>  $modelClass
      */
     public function findByLink(string $modelClass, string $link): Model
     {
@@ -33,7 +33,7 @@ class ContentPageService
     public function metaFor(Model $row): array
     {
         return [
-            'title' => $row->meta_title ?: $row->name,
+            'title' => $row->meta_title ?: ($row->name ?? $row->title),
             'description' => strip_tags($row->meta_description ?? ''),
             'keywords' => $row->meta_keywords ?? '',
         ];
@@ -42,7 +42,7 @@ class ContentPageService
     /**
      * Full view payload for a detail page: the row (under $dataKey) plus meta fields.
      *
-     * @param class-string<Model> $modelClass
+     * @param  class-string<Model>  $modelClass
      */
     public function detailViewData(string $modelClass, string $link, string $dataKey): array
     {

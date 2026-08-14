@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GiftCard;
 use App\Services\ContentPageService;
 
 class GiftCardController extends Controller
 {
-    public function __construct(private ContentPageService $contentPages)
-    {
-    }
+    public function __construct(private ContentPageService $contentPages) {}
 
     public function list()
     {
-        return view('frontend.gift_card', $this->contentPages->listingViewData('Gift Card'));
+        return view('frontend.gift_card', array_merge(
+            $this->contentPages->listingViewData('Gift Card'),
+            ['pakage_data' => GiftCard::orderBy('id', 'desc')->get()]
+        ));
     }
 }

@@ -6,18 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class CategoryRadioShow extends Model
 {
-
     protected $table = 'category_radio_show';
 
     public $timestamps = false;
 
     protected $fillable = [
         'title',
-        'link',
+        'menu_status',
         'parent_id',
-        'meta_title',
-        'meta_description',
-        'meta_keywords',
+        'sub_title',
+        'description',
+        'image',
+        'link',
+        'published',
     ];
 
     public function children()
