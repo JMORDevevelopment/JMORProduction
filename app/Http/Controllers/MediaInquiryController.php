@@ -37,7 +37,7 @@ class MediaInquiryController extends Controller
             'story_details' => old('story_details', ''),
             'best_contact' => old('best_contact', ''),
             'latestPosts' => $latestPosts,
-            'error' => session('errors') ? session('errors')->getBag('default')->getMessages() : [],
+            'error' => session('errors') ? collect(session('errors')->getBag('default')->getMessages())->map(fn ($msgs) => $msgs[0])->toArray() : [],
         ]);
     }
 
