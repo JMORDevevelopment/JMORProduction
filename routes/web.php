@@ -13,6 +13,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MediaInquiryController;
 use App\Http\Controllers\MediaResourceController;
 use App\Http\Controllers\MediaVideoController;
 use App\Http\Controllers\NewsController;
@@ -182,7 +183,8 @@ Route::get('/press-releases', [PressReleaseController::class, 'posts'])->name('p
 Route::get('/press-releases/{link}', [PressReleaseController::class, 'detail'])->name('press-releases.detail');
 Route::get('/brand-guidelines', [BrandGuidelineController::class, 'posts'])->name('brand-guidelines');
 Route::get('/brand-guidelines/{link}', [BrandGuidelineController::class, 'detail'])->name('brand-guidelines.detail');
-Route::get('/media-inquiries', fn () => view('frontend.coming-soon'))->name('media-inquiries');
+Route::get('/media-inquiries', [MediaInquiryController::class, 'index'])->name('media-inquiries');
+Route::post('/media-inquiries', [MediaInquiryController::class, 'validate'])->name('media-inquiries.validate');
 Route::get('/pcs', fn () => view('frontend.coming-soon'))->name('pcs');
 Route::get('/servers', fn () => view('frontend.coming-soon'))->name('servers');
 Route::get('/laptops', fn () => view('frontend.coming-soon'))->name('laptops');
