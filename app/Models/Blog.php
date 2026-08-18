@@ -13,6 +13,9 @@ class Blog extends Model
     protected $fillable = [
         'name',
         'link',
+        'description',
+        'image',
+        'published',
         'meta_title',
         'meta_description',
         'meta_keywords',
