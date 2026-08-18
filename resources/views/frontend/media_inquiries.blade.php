@@ -159,7 +159,7 @@
                                 <div class="card border-0 bg-light mb-1">
                                     <div class="card-body row align-items-center">
                                         <div class="col-12">
-                                            <h6 class="my-2 font-size-14"><a href="{{ route('blog.detail', $latestPost->link) }}">{{ $latestPost->name }}</a></h6>
+                                            <h6 class="my-2 font-size-14"><a href="{{ route('blog.detail', Str::after($latestPost->link, 'blog/')) }}">{{ $latestPost->name }}</a></h6>
                                             <span class="font-size-14 text-muted">{{ date('m-d-Y', strtotime($latestPost->published)) }}</span>
                                         </div>
                                     </div>
