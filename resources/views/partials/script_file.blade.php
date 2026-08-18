@@ -17,11 +17,27 @@
 <!-- Slider Captcha -->
 <script src="{{ asset('assets/plugins/image-puzzle-slider-captcha/disk/longbow.slidercaptcha.min.js') }}"></script>
 <script>
-    var captcha = sliderCaptcha({
-        id: 'captcha',
-        onSuccess: function() {
-            $('#qasubmitBtn').show();
-        }
-    });
+    if ($('#captcha').length) {
+        var captcha = sliderCaptcha({
+            id: 'captcha',
+            crossOrigin: true,
+            headers: { 'Access-Control-Allow-Origin': 'https://imgs.blazor.zone' },
+            onSuccess: function() {
+                $('#qasubmitBtn').show();
+                if ($('#random_number1').length) {
+                    var num_one = $('#random_number1').val();
+                    var num_two = $('#random_number2').val();
+                    var protection_question = Number(num_one) + Number(num_two);
+                    $('#protection_question').val(protection_question);
+                }
+                setTimeout(function() {
+                    resetCaptcha();
+                }, 300000);
+            },
+            onFail: function() {
+                $('#qasubmitBtn').hide();
+            }
+        });
+    }
 </script>
 @endpush
