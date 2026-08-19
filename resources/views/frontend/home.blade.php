@@ -329,7 +329,7 @@
                     <h2>News Headlines and Social Media</h2>
                 </div>
                 <div style="display:flex;gap:18px">
-                    <a href="{{ route('the-jmor-blog') }}" class="jm-link-arrow">Blog &rarr;</a>
+                    <a href="{{ route('blog') }}" class="jm-link-arrow">Blog &rarr;</a>
                     <a href="https://www.instagram.com/gosocialjmor/" target="_blank" class="jm-link-arrow">Instagram &rarr;</a>
                 </div>
             </div>
@@ -344,7 +344,7 @@
                         </div>
                         <div class="jm-news__video-body">
                             <p>At JMOR we are not going to start selling you shoes; yes, are clients may have feet but we are A Technology Company. Our firm is not one to jump on bandwagons; we will continue to do what we have been doing for years: professional Computer, Network, IT Support and Repair Services delivered right the first time.</p>
-                            <a href="{{ route('the-jmor-blog') }}" class="jm-link-arrow">Read more &rarr;</a>
+                            <a href="{{ route('blog') }}" class="jm-link-arrow">Read more &rarr;</a>
                         </div>
                     </div>
                 </div>
