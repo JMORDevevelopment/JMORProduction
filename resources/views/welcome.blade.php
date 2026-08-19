@@ -227,7 +227,7 @@
                         are A Technology Company. Our firm is not one to jump on bandwagons; we will continue to do
                         what we have been doing for years: professional Computer, Network, IT Support and Repair
                         Services delivered right the first time.
-                        <a href="{{ url('the-jmor-blog') }}" style="color:red;">Read More</a>
+                        <a href="{{ url('blog') }}" style="color:red;">Read More</a>
                     </p>
                 </div>
             </div>

@@ -121,10 +121,7 @@ Route::get('/our-mission', fn () => view('frontend.coming-soon'))->name('our-mis
 Route::get('/our-dei-diversiety-equity-inclusion-non-discrimination-policy', fn () => view('frontend.coming-soon'))->name('our-dei-diversiety-equity-inclusion-non-discrimination-policy');
 Route::get('/why-choose-jmor', fn () => view('frontend.coming-soon'))->name('why-choose-jmor');
 Route::get('/testimonials', fn () => view('frontend.coming-soon'))->name('testimonials');
-Route::get('/media-relations', fn () => view('frontend.coming-soon'))->name('media-relations');
-
 Route::get('/technology-guides-it-resources-the-jmor-connection-inc', fn () => view('frontend.coming-soon'))->name('technology-guides-it-resources-the-jmor-connection-inc');
-Route::get('/the-jmor-blog', fn () => view('frontend.coming-soon'))->name('the-jmor-blog');
 Route::get('/events', [EventController::class, 'posts'])->name('events');
 Route::get('/events/{link}', [EventController::class, 'detail'])->name('events.detail');
 

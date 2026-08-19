@@ -41,7 +41,7 @@
                     <li><a href="{{ route('our-mission') }}">Our Mission</a></li>
                     <li><a href="{{ route('why-choose-jmor') }}">Why choose JMOR?</a></li>
                     <li><a href="{{ route('testimonials') }}">Testimonials</a></li>
-                    <li><a href="{{ route('media-relations') }}">Media Relations</a></li>
+                    <li><a href="{{ route('media-resources') }}">Media Relations</a></li>
                     <li><a href="{{ route('contact') }}">Contact</a></li>
                 </ul>
             </div>
@@ -50,7 +50,7 @@
                 <h4 class="jm-footer__title">Resources</h4>
                 <ul class="jm-footer__links">
                     <li><a href="{{ route('technology-guides-it-resources-the-jmor-connection-inc') }}">Technology Guides</a></li>
-                    <li><a href="{{ route('the-jmor-blog') }}">Blog</a></li>
+                    <li><a href="{{ route('blog') }}">Blog</a></li>
                     <li><a href="{{ route('case-studies') }}">Case studies</a></li>
                     <li><a href="{{ route('jmor-shows') }}">JMOR Shows</a></li>
                     <li><a href="{{ route('events') }}">Events</a></li>
