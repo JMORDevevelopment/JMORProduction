@@ -117,17 +117,17 @@ Route::get('/blog/{link}', [BlogController::class, 'detail'])->name('blog.detail
 // CONTENT PAGE STUBS (placeholder until real pages are built)
 // ==============================
 Route::get('/it-service-providers-in-new-jersey-for-homes-and-businesses', fn () => view('frontend.coming-soon'))->name('it-service-providers-in-new-jersey-for-homes-and-businesses');
-Route::get('/network-cyber-security-internet-safety', fn () => view('frontend.coming-soon'))->name('network-cyber-security-internet-safety');
-Route::get('/hardware-firewalls-and-utm-devices', fn () => view('frontend.coming-soon'))->name('hardware-firewalls-and-utm-devices');
+Route::get('/network-cyber-security-internet-safety', [PageController::class, 'show'])->name('network-cyber-security-internet-safety');
+Route::get('/hardware-firewalls-and-utm-devices', [PageController::class, 'show'])->name('hardware-firewalls-and-utm-devices');
 Route::get('/antivirus-malware-ransomware-vunerability-endpoint-management-solutions', fn () => view('frontend.coming-soon'))->name('antivirus-malware-ransomware-vunerability-endpoint-management-solutions');
 Route::get('/ai-solutions-for-businesses-consumers-safe-secure-ai-integrations-in-nj-and-beyond', fn () => view('frontend.coming-soon'))->name('ai-solutions-for-businesses-consumers-safe-secure-ai-integrations-in-nj-and-beyond');
-Route::get('/technical-relocation-services', fn () => view('frontend.coming-soon'))->name('technical-relocation-services');
+Route::get('/technical-relocation-services', [PageController::class, 'show'])->name('technical-relocation-services');
 
-Route::get('/about-us', fn () => view('frontend.coming-soon'))->name('about-us');
+Route::get('/about-us', [PageController::class, 'show'])->name('about-us');
 Route::get('/about', fn () => view('frontend.coming-soon'))->name('about');
-Route::get('/our-mission', fn () => view('frontend.coming-soon'))->name('our-mission');
+Route::get('/our-mission', [PageController::class, 'show'])->name('our-mission');
 Route::get('/our-dei-diversiety-equity-inclusion-non-discrimination-policy', fn () => view('frontend.coming-soon'))->name('our-dei-diversiety-equity-inclusion-non-discrimination-policy');
-Route::get('/why-choose-jmor', fn () => view('frontend.coming-soon'))->name('why-choose-jmor');
+Route::get('/why-choose-jmor', [PageController::class, 'show'])->name('why-choose-jmor');
 Route::get('/testimonials', [TestimonialController::class, 'index'])->name('testimonials');
 Route::get('/technology-guides-it-resources-the-jmor-connection-inc', fn () => view('frontend.coming-soon'))->name('technology-guides-it-resources-the-jmor-connection-inc');
 Route::get('/events', [EventController::class, 'posts'])->name('events');
@@ -152,13 +152,13 @@ Route::get('/solutions', fn () => view('frontend.coming-soon'))->name('solutions
 Route::get('/service', [ServicePageController::class, 'list'])->name('service');
 Route::get('/service/{link}', [ServicePageController::class, 'detail'])->name('service.detail');
 
-Route::get('/attorneys-law-firms', fn () => view('frontend.coming-soon'))->name('attorneys-law-firms');
-Route::get('/cpa-firms', fn () => view('frontend.coming-soon'))->name('cpa-firms');
-Route::get('/dentists', fn () => view('frontend.coming-soon'))->name('dentists');
-Route::get('/general-practice-doctors', fn () => view('frontend.coming-soon'))->name('general-practice-doctors');
-Route::get('/fast-food-restaurants', fn () => view('frontend.coming-soon'))->name('fast-food-restaurants');
-Route::get('/manufacturers', fn () => view('frontend.coming-soon'))->name('manufacturers');
-Route::get('/office-managers', fn () => view('frontend.coming-soon'))->name('office-managers');
+Route::get('/attorneys-law-firms', [PageController::class, 'show'])->name('attorneys-law-firms');
+Route::get('/cpa-firms', [PageController::class, 'show'])->name('cpa-firms');
+Route::get('/dentists', [PageController::class, 'show'])->name('dentists');
+Route::get('/general-practice-doctors', [PageController::class, 'show'])->name('general-practice-doctors');
+Route::get('/fast-food-restaurants', [PageController::class, 'show'])->name('fast-food-restaurants');
+Route::get('/manufacturers', [PageController::class, 'show'])->name('manufacturers');
+Route::get('/office-managers', [PageController::class, 'show'])->name('office-managers');
 
 Route::get('/gift-card', [GiftCardController::class, 'list'])->name('gift-card');
 Route::get('/search', [SearchController::class, 'content'])->name('search');
@@ -170,11 +170,11 @@ Route::post('/search', [SearchController::class, 'content'])->name('search.submi
 Route::get('/we-serve', fn () => view('frontend.coming-soon'))->name('we-serve');
 Route::get('/social', fn () => view('frontend.coming-soon'))->name('social');
 Route::get('/request-information', fn () => view('frontend.coming-soon'))->name('request-information');
-Route::get('/custom-built-technology-solutions-in-nj', fn () => view('frontend.coming-soon'))->name('custom-built-technology-solutions-in-nj');
+Route::get('/custom-built-technology-solutions-in-nj', [PageController::class, 'show'])->name('custom-built-technology-solutions-in-nj');
 Route::get('/it-support-solutions-for-new-jersey-businesses-and-homes-the-jmor-connection', fn () => view('frontend.coming-soon'))->name('it-support-solutions-for-new-jersey-businesses-and-homes-the-jmor-connection');
 Route::get('/print-management-solution', fn () => view('frontend.coming-soon'))->name('print-management-solution');
 Route::get('/remote-employee-engagement-solutions', fn () => view('frontend.coming-soon'))->name('remote-employee-engagement-solutions');
-Route::get('/covid19-remote-friendly-support-service', fn () => view('frontend.coming-soon'))->name('covid19-remote-friendly-support-service');
+Route::get('/covid19-remote-friendly-support-service', [PageController::class, 'show'])->name('covid19-remote-friendly-support-service');
 Route::get('/linktree', fn () => view('frontend.coming-soon'))->name('linktree');
 Route::get('/jmor-tech-byte-sized-blunders-laugh-and-learn', fn () => view('frontend.coming-soon'))->name('jmor-tech-byte-sized-blunders-laugh-and-learn');
 Route::get('/blog', [BlogController::class, 'posts'])->name('blog');
@@ -199,9 +199,9 @@ Route::get('/pcs', fn () => view('frontend.coming-soon'))->name('pcs');
 Route::get('/servers', fn () => view('frontend.coming-soon'))->name('servers');
 Route::get('/laptops', fn () => view('frontend.coming-soon'))->name('laptops');
 Route::get('/accessories', fn () => view('frontend.coming-soon'))->name('accessories');
-Route::get('/it-tech-support-services-in-nj', fn () => view('frontend.coming-soon'))->name('it-tech-support-services-in-nj');
-Route::get('/custom-built-solutions', fn () => view('frontend.coming-soon'))->name('custom-built-solutions');
-Route::get('/nj-technical-relocation-services', fn () => view('frontend.coming-soon'))->name('nj-technical-relocation-services');
+Route::get('/it-tech-support-services-in-nj', [PageController::class, 'show'])->name('it-tech-support-services-in-nj');
+Route::get('/custom-built-solutions', [PageController::class, 'show'])->name('custom-built-solutions');
+Route::get('/nj-technical-relocation-services', [PageController::class, 'show'])->name('nj-technical-relocation-services');
 
 // CMS pages catch-all (must be last)
 Route::get('/{pageLink}', [PageController::class, 'show'])->name('pages');
