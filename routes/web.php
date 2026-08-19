@@ -12,14 +12,22 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\GiftCardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MediaInquiryController;
 use App\Http\Controllers\MediaResourceController;
 use App\Http\Controllers\MediaVideoController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PackageController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PressReleaseController;
+use App\Http\Controllers\RadioShowController;
+use App\Http\Controllers\RandomActsOfKindnessController;
+use App\Http\Controllers\RecommendedController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\ServicePageController;
+use App\Http\Controllers\TestimonialController;
 use App\Http\Middleware\CheckUserLogin;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -120,7 +128,7 @@ Route::get('/about', fn () => view('frontend.coming-soon'))->name('about');
 Route::get('/our-mission', fn () => view('frontend.coming-soon'))->name('our-mission');
 Route::get('/our-dei-diversiety-equity-inclusion-non-discrimination-policy', fn () => view('frontend.coming-soon'))->name('our-dei-diversiety-equity-inclusion-non-discrimination-policy');
 Route::get('/why-choose-jmor', fn () => view('frontend.coming-soon'))->name('why-choose-jmor');
-Route::get('/testimonials', fn () => view('frontend.coming-soon'))->name('testimonials');
+Route::get('/testimonials', [TestimonialController::class, 'index'])->name('testimonials');
 Route::get('/technology-guides-it-resources-the-jmor-connection-inc', fn () => view('frontend.coming-soon'))->name('technology-guides-it-resources-the-jmor-connection-inc');
 Route::get('/events', [EventController::class, 'posts'])->name('events');
 Route::get('/events/{link}', [EventController::class, 'detail'])->name('events.detail');
@@ -128,7 +136,11 @@ Route::get('/events/{link}', [EventController::class, 'detail'])->name('events.d
 Route::get('/case-studies', [CaseStudyController::class, 'posts'])->name('case-studies');
 Route::get('/case-studies/{link}', [CaseStudyController::class, 'detail'])->name('case-studies.detail');
 
-Route::get('/jmor-shows', fn () => view('frontend.coming-soon'))->name('jmor-shows');
+Route::get('/jmor-shows', [RadioShowController::class, 'posts'])->name('jmor-shows');
+Route::get('/jmor-shows/{link}', [RadioShowController::class, 'detail'])->name('jmor-shows.detail');
+Route::get('/category-jmor-shows/{category}', [RadioShowController::class, 'category'])->name('category-jmor-shows');
+Route::get('/category-jmor-shows/{category}/{year}', [RadioShowController::class, 'category'])->name('category-jmor-shows.year');
+Route::get('/search-shows', [SearchController::class, 'radio'])->name('search-shows');
 Route::get('/the-jmor-store', fn () => view('frontend.coming-soon'))->name('the-jmor-store');
 
 Route::get('/refund-policy', fn () => view('frontend.coming-soon'))->name('refund-policy');
@@ -137,7 +149,8 @@ Route::get('/terms', fn () => view('frontend.coming-soon'))->name('terms');
 Route::get('/sitemap', fn () => view('frontend.coming-soon'))->name('sitemap');
 
 Route::get('/solutions', fn () => view('frontend.coming-soon'))->name('solutions');
-Route::get('/service/{link}', fn () => view('frontend.coming-soon'))->name('service.detail');
+Route::get('/service', [ServicePageController::class, 'list'])->name('service');
+Route::get('/service/{link}', [ServicePageController::class, 'detail'])->name('service.detail');
 
 Route::get('/attorneys-law-firms', fn () => view('frontend.coming-soon'))->name('attorneys-law-firms');
 Route::get('/cpa-firms', fn () => view('frontend.coming-soon'))->name('cpa-firms');
@@ -147,9 +160,9 @@ Route::get('/fast-food-restaurants', fn () => view('frontend.coming-soon'))->nam
 Route::get('/manufacturers', fn () => view('frontend.coming-soon'))->name('manufacturers');
 Route::get('/office-managers', fn () => view('frontend.coming-soon'))->name('office-managers');
 
-Route::get('/gift-card', fn () => view('frontend.coming-soon'))->name('gift-card');
-Route::get('/search', fn () => view('frontend.coming-soon'))->name('search');
-Route::post('/search', fn () => view('frontend.coming-soon'))->name('search.submit');
+Route::get('/gift-card', [GiftCardController::class, 'list'])->name('gift-card');
+Route::get('/search', [SearchController::class, 'content'])->name('search');
+Route::post('/search', [SearchController::class, 'content'])->name('search.submit');
 
 // ==============================
 // DB MENU LINK STUBS (extra menu items surfaced in the megamenu)
@@ -166,12 +179,11 @@ Route::get('/linktree', fn () => view('frontend.coming-soon'))->name('linktree')
 Route::get('/jmor-tech-byte-sized-blunders-laugh-and-learn', fn () => view('frontend.coming-soon'))->name('jmor-tech-byte-sized-blunders-laugh-and-learn');
 Route::get('/blog', [BlogController::class, 'posts'])->name('blog');
 Route::get('/blog/blog/{link}', fn (string $link) => redirect()->route('blog.detail', $link, 301))->name('blog.legacy_redirect');
-Route::get('/category-jmor-shows/shows-i-appeared-as-a-guest-on', fn () => view('frontend.coming-soon'))->name('category-jmor-shows/shows-i-appeared-as-a-guest-on');
-Route::get('/category-jmor-shows/jmor-tech-talk-show', fn () => view('frontend.coming-soon'))->name('category-jmor-shows/jmor-tech-talk-show');
-Route::get('/category-jmor-shows/jmor-unboxings', fn () => view('frontend.coming-soon'))->name('category-jmor-shows/jmor-unboxings');
-Route::get('/category-jmor-shows/jmor-reviews', fn () => view('frontend.coming-soon'))->name('category-jmor-shows/jmor-reviews');
-Route::get('/recommended', fn () => view('frontend.coming-soon'))->name('recommended');
-Route::get('/random-acts-of-kindness', fn () => view('frontend.coming-soon'))->name('random-acts-of-kindness');
+
+Route::get('/recommended', [RecommendedController::class, 'posts'])->name('recommended');
+Route::get('/recommended/{link}', [RecommendedController::class, 'detail'])->name('recommended.detail');
+Route::get('/random-acts-of-kindness', [RandomActsOfKindnessController::class, 'posts'])->name('random-acts-of-kindness');
+Route::get('/random-acts-of-kindness/{link}', [RandomActsOfKindnessController::class, 'detail'])->name('random-acts-of-kindness.detail');
 Route::get('/jmor-tech-talk-show', fn () => view('frontend.coming-soon'))->name('jmor-tech-talk-show');
 Route::get('/media-resources', [MediaResourceController::class, 'posts'])->name('media-resources');
 Route::get('/media-resources/{link}', [MediaResourceController::class, 'detail'])->name('media-resources.detail');
@@ -190,3 +202,6 @@ Route::get('/accessories', fn () => view('frontend.coming-soon'))->name('accesso
 Route::get('/it-tech-support-services-in-nj', fn () => view('frontend.coming-soon'))->name('it-tech-support-services-in-nj');
 Route::get('/custom-built-solutions', fn () => view('frontend.coming-soon'))->name('custom-built-solutions');
 Route::get('/nj-technical-relocation-services', fn () => view('frontend.coming-soon'))->name('nj-technical-relocation-services');
+
+// CMS pages catch-all (must be last)
+Route::get('/{pageLink}', [PageController::class, 'show'])->name('pages');
