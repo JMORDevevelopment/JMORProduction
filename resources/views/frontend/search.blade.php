@@ -24,12 +24,16 @@
                     <div class="col-lg-8">
                         @forelse($main_blogs as $result)
                             <div class="jmor_radio-post">
+                                @php
+                                    $isPage = $result instanceof \App\Models\Page;
+                                    $detailUrl = $isPage ? url($result->link) : route('blog.detail', Str::after($result->link, 'blog/'));
+                                @endphp
                                 @if(!empty($result->image))
-                                    <a href="{{ route('blog.detail', Str::after($result->link, 'blog/')) }}">
+                                    <a href="{{ $detailUrl }}">
                                         <img class="rounded mb-lg-4 mb-3 img-fluid" src="{{ asset($result->image) }}" alt="card image">
                                     </a>
                                 @endif
-                                <h3><a href="{{ route('blog.detail', Str::after($result->link, 'blog/')) }}">{{ $result->name }}</a></h3>
+                                <h3><a href="{{ $detailUrl }}">{{ $result->name }}</a></h3>
                                 <div class="meta font-lora mb-3">
                                     <a href="#">Post Date</a>
                                     <a href="#">{{ date('m-d-Y', strtotime($result->published ?? $result->created_at)) }}</a>
