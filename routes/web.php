@@ -143,9 +143,9 @@ Route::get('/category-jmor-shows/{category}/{year}', [RadioShowController::class
 Route::get('/search-shows', [SearchController::class, 'radio'])->name('search-shows');
 Route::get('/the-jmor-store', fn () => view('frontend.coming-soon'))->name('the-jmor-store');
 
-Route::get('/refund-policy', fn () => view('frontend.coming-soon'))->name('refund-policy');
-Route::get('/privacy-policy', fn () => view('frontend.coming-soon'))->name('privacy-policy');
-Route::get('/terms', fn () => view('frontend.coming-soon'))->name('terms');
+Route::get('/refund-policy', fn () => app(PageController::class)->show('refund-policy'))->name('refund-policy');
+Route::get('/privacy-policy', fn () => app(PageController::class)->show('privacy-policy'))->name('privacy-policy');
+Route::get('/terms', fn () => app(PageController::class)->show('terms-and-conditions'))->name('terms');
 Route::get('/sitemap', fn () => view('frontend.coming-soon'))->name('sitemap');
 
 Route::get('/solutions', fn () => view('frontend.coming-soon'))->name('solutions');
@@ -167,7 +167,7 @@ Route::post('/search', [SearchController::class, 'content'])->name('search.submi
 // ==============================
 // DB MENU LINK STUBS (extra menu items surfaced in the megamenu)
 // ==============================
-Route::get('/we-serve', fn () => view('frontend.coming-soon'))->name('we-serve');
+Route::get('/we-serve', fn () => app(PageController::class)->show('we-serve'))->name('we-serve');
 Route::get('/social', fn () => view('frontend.coming-soon'))->name('social');
 Route::get('/request-information', fn () => view('frontend.coming-soon'))->name('request-information');
 Route::get('/custom-built-technology-solutions-in-nj', [PageController::class, 'show'])->name('custom-built-technology-solutions-in-nj');
