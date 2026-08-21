@@ -25,8 +25,10 @@ use App\Http\Controllers\PressReleaseController;
 use App\Http\Controllers\RadioShowController;
 use App\Http\Controllers\RandomActsOfKindnessController;
 use App\Http\Controllers\RecommendedController;
+use App\Http\Controllers\RequestInformationController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ServicePageController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Middleware\CheckUserLogin;
 
@@ -67,7 +69,7 @@ Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 // ==============================
 // CONTACT ROUTES
 // ==============================
-Route::get('/contact', fn () => view('frontend.coming-soon'))->name('contact');
+Route::get('/contact', [ContactController::class, 'show'])->name('contact');
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
 // ==============================
@@ -146,7 +148,7 @@ Route::get('/the-jmor-store', fn () => view('frontend.coming-soon'))->name('the-
 Route::get('/refund-policy', fn () => app(PageController::class)->show('refund-policy'))->name('refund-policy');
 Route::get('/privacy-policy', fn () => app(PageController::class)->show('privacy-policy'))->name('privacy-policy');
 Route::get('/terms', fn () => app(PageController::class)->show('terms-and-conditions'))->name('terms');
-Route::get('/sitemap', fn () => view('frontend.coming-soon'))->name('sitemap');
+Route::get('/sitemap', [SitemapController::class, 'index'])->name('sitemap');
 
 Route::get('/solutions', fn () => view('frontend.coming-soon'))->name('solutions');
 Route::get('/service', [ServicePageController::class, 'list'])->name('service');
@@ -169,7 +171,8 @@ Route::post('/search', [SearchController::class, 'content'])->name('search.submi
 // ==============================
 Route::get('/we-serve', fn () => app(PageController::class)->show('we-serve'))->name('we-serve');
 Route::get('/social', fn () => view('frontend.coming-soon'))->name('social');
-Route::get('/request-information', fn () => view('frontend.coming-soon'))->name('request-information');
+Route::get('/request-information', [RequestInformationController::class, 'index'])->name('request-information');
+Route::post('/request-information', [RequestInformationController::class, 'validate'])->name('request-information.validate');
 Route::get('/custom-built-technology-solutions-in-nj', [PageController::class, 'show'])->name('custom-built-technology-solutions-in-nj');
 Route::get('/it-support-solutions-for-new-jersey-businesses-and-homes-the-jmor-connection', fn () => view('frontend.coming-soon'))->name('it-support-solutions-for-new-jersey-businesses-and-homes-the-jmor-connection');
 Route::get('/print-management-solution', fn () => view('frontend.coming-soon'))->name('print-management-solution');
