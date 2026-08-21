@@ -31,7 +31,10 @@ class ContactController extends Controller
             'phone' => old('phone', ''),
             'reason' => old('reason', ''),
             'message' => old('message', ''),
-            'error' => session('errors') ? session('errors')->getBag('default')->getMessages() : [],
+            'address' => Setting::get('address', ''),
+            'phone_number' => Setting::get('phone', ''),
+            'success' => session('contact_success'),
+            'error' => session('errors') ? collect(session('errors')->getBag('default')->getMessages())->map(fn ($msgs) => $msgs[0])->toArray() : [],
         ]);
     }
 
@@ -51,7 +54,7 @@ class ContactController extends Controller
 
         $this->sendNotification($post);
 
-        return redirect()->route('contact', ['form' => 'submit']);
+        return redirect()->route('contact')->with('contact_success', 'Message is sent we will contact you soon.');
     }
 
     private function sendNotification(array $post): void
@@ -69,7 +72,7 @@ class ContactController extends Controller
                 $mail->to($to)->subject('Contact Us')->from($post['email']);
             });
         } catch (\Exception $e) {
-            Log::error('Failed to send contact us email: ' . $e->getMessage());
+            Log::error('Failed to send contact us email: '.$e->getMessage());
         }
     }
 }
