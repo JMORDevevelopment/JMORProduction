@@ -35,6 +35,11 @@ class Admin extends Authenticatable
         'password',
     ];
 
+    public function getNameAttribute(): string
+    {
+        return trim($this->firstname.' '.$this->lastname);
+    }
+
     /**
      * Check password supporting both MD5 (CI legacy) and bcrypt.
      * Re-hashes to bcrypt on successful MD5 login.
