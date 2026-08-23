@@ -29,7 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->authGuard('admin')
             ->login()
             ->brandName('JMOR Connection')
-            ->brandLogo(asset('assets/images/jmor-logo.png'))
+            ->brandLogo(asset('assets/images/logo.png'))
             ->colors([
                 'primary' => Color::hex('#ff6b1a'),
             ])
