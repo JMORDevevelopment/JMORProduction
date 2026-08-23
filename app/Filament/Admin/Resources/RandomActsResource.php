@@ -7,7 +7,6 @@ use App\Models\RandomActsOfKindness;
 use BackedEnum;
 use Filament\Actions;
 use Filament\Forms;
-use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -43,7 +42,7 @@ class RandomActsResource extends Resource
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
-                            ->afterStateUpdated(fn (Set $set, ?string $state) => $set(
+                            ->afterStateUpdated(fn ($set, ?string $state) => $set(
                                 'link',
                                 Str::slug($state ?? '')
                             )),

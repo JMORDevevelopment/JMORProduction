@@ -28,9 +28,12 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->authGuard('admin')
             ->login()
+            ->brandName('JMOR Connection')
+            ->brandLogo(asset('assets/images/jmor-logo.png'))
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::hex('#ff6b1a'),
             ])
+            ->sidebarCollapsibleOnDesktop()
             ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\Filament\Admin\Resources')
             ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\Filament\Admin\Pages')
             ->pages([
