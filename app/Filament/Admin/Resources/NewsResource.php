@@ -34,14 +34,14 @@ class NewsResource extends Resource
     {
         return $schema
             ->schema([
-                Forms\Components\Section::make('Content')
+                Schemas\Components\Section::make('Content')
                     ->schema([
                         Forms\Components\TextInput::make('name')
                             ->label('Title')
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
-                            ->afterStateUpdated(fn (Forms\Set $set, ?string $state) => $set('link', Str::slug($state ?? ''))),
+                            ->afterStateUpdated(fn (Schemas\Components\Utilities\Set $set, ?string $state) => $set('link', Str::slug($state ?? ''))),
 
                         Forms\Components\TextInput::make('link')
                             ->label('Slug')
@@ -65,7 +65,7 @@ class NewsResource extends Resource
                     ])
                     ->columns(2),
 
-                Forms\Components\Section::make('Details')
+                Schemas\Components\Section::make('Details')
                     ->schema([
                         Forms\Components\Select::make('type')
                             ->label('Type')

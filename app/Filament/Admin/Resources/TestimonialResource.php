@@ -33,7 +33,7 @@ class TestimonialResource extends Resource
     {
         return $schema
             ->schema([
-                Forms\Components\Section::make('Testimonial Details')
+                Schemas\Components\Section::make('Testimonial Details')
                     ->schema([
                         Forms\Components\Placeholder::make('customer_id')
                             ->label('Customer ID')
@@ -48,7 +48,7 @@ class TestimonialResource extends Resource
                             ->content(fn (Testimonial $record): string => $record->message),
                     ]),
 
-                Forms\Components\Section::make('Status')
+                Schemas\Components\Section::make('Status')
                     ->schema([
                         Forms\Components\Select::make('status')
                             ->label('Status')
