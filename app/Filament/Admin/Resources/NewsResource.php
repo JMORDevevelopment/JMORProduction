@@ -8,6 +8,7 @@ use BackedEnum;
 use Filament\Actions;
 use Filament\Forms;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -34,7 +35,7 @@ class NewsResource extends Resource
     {
         return $schema
             ->schema([
-                Schemas\Components\Section::make('Content')
+                Section::make('Content')
                     ->schema([
                         Forms\Components\TextInput::make('name')
                             ->label('Title')
@@ -65,7 +66,7 @@ class NewsResource extends Resource
                     ])
                     ->columns(2),
 
-                Schemas\Components\Section::make('Details')
+                Section::make('Details')
                     ->schema([
                         Forms\Components\Select::make('type')
                             ->label('Type')

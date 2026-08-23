@@ -8,6 +8,7 @@ use BackedEnum;
 use Filament\Actions;
 use Filament\Forms;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -33,7 +34,7 @@ class TestimonialResource extends Resource
     {
         return $schema
             ->schema([
-                Schemas\Components\Section::make('Testimonial Details')
+                Section::make('Testimonial Details')
                     ->schema([
                         Forms\Components\Placeholder::make('customer_id')
                             ->label('Customer ID')
@@ -48,7 +49,7 @@ class TestimonialResource extends Resource
                             ->content(fn (Testimonial $record): string => $record->message),
                     ]),
 
-                Schemas\Components\Section::make('Status')
+                Section::make('Status')
                     ->schema([
                         Forms\Components\Select::make('status')
                             ->label('Status')
