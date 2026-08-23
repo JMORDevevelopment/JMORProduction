@@ -10,26 +10,37 @@ class Menu extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['parent_id', 'title', 'url', 'position'];
+    protected $fillable = [
+        'parent_id',
+        'title',
+        'url',
+        'position',
+        'group_id',
+        'menu_type',
+        'page_id',
+    ];
 
-    /**
-     * Direct children of this menu item, ordered the same way the CI app did.
-     */
     public function children()
     {
         return $this->hasMany(Menu::class, 'parent_id', 'id')
             ->orderBy('position', 'asc');
     }
 
-
     public function childrenRecursive()
     {
         return $this->children()->with('childrenRecursive');
     }
 
-    /**
-     * Full top-level nav tree in one query.
-     */
+    public function parent()
+    {
+        return $this->belongsTo(Menu::class, 'parent_id');
+    }
+
+    public function group()
+    {
+        return $this->belongsTo(MenuGroup::class, 'group_id');
+    }
+
     public static function tree()
     {
         return static::where('parent_id', 0)
