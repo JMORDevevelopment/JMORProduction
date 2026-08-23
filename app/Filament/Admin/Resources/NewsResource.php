@@ -7,6 +7,7 @@ use App\Models\News;
 use BackedEnum;
 use Filament\Actions;
 use Filament\Forms;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -42,27 +43,26 @@ class NewsResource extends Resource
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
-                            ->afterStateUpdated(fn (Schemas\Components\Utilities\Set $set, ?string $state) => $set('link', Str::slug($state ?? ''))),
+                            ->afterStateUpdated(fn (Set $set, ?string $state) => $set(
+                                'link',
+                                Str::slug($state ?? '')
+                            )),
 
-                        Forms\Components\TextInput::make('link')
-                            ->label('Slug')
-                            ->required()
-                            ->maxLength(255)
-                            ->unique(ignoreRecord: true),
-
-                        Forms\Components\RichEditor::make('description')
+                        Forms\Components\Textarea::make('description')
                             ->label('Description')
                             ->required()
+                            ->rows(8)
                             ->columnSpanFull(),
 
                         Forms\Components\FileUpload::make('image')
-                            ->label('Image')
+                            ->label('Thumbnail')
                             ->image()
                             ->directory('uploads/news')
                             ->visibility('public')
                             ->imageResizeMode('cover')
                             ->imageCropAspectRatio('16:9')
-                            ->imagePreviewHeight('250'),
+                            ->imagePreviewHeight('150')
+                            ->required(fn (?string $operation): bool => $operation === 'create'),
                     ])
                     ->columns(2),
 
@@ -75,19 +75,14 @@ class NewsResource extends Resource
                                 'technology' => 'Technology',
                                 'business' => 'Business',
                             ])
-                            ->default('general')
-                            ->required(),
+                            ->default('general'),
 
                         Forms\Components\TextInput::make('priority')
                             ->label('Priority')
                             ->numeric()
                             ->default(0),
-
-                        Forms\Components\Toggle::make('published')
-                            ->label('Published')
-                            ->default(true),
                     ])
-                    ->columns(3),
+                    ->columns(2),
             ]);
     }
 
@@ -113,25 +108,10 @@ class NewsResource extends Resource
                     ->sortable(),
 
                 Tables\Columns\ImageColumn::make('image')
-                    ->label('Image')
+                    ->label('Thumbnail')
                     ->disk('public'),
-
-                Tables\Columns\IconColumn::make('published')
-                    ->label('Published')
-                    ->boolean(),
             ])
             ->defaultSort('news_id', 'desc')
-            ->filters([
-                Tables\Filters\SelectFilter::make('type')
-                    ->label('Type')
-                    ->options([
-                        'general' => 'General',
-                        'technology' => 'Technology',
-                        'business' => 'Business',
-                    ]),
-                Tables\Filters\TernaryFilter::make('published')
-                    ->label('Published'),
-            ])
             ->actions([
                 Actions\EditAction::make(),
                 Actions\DeleteAction::make(),

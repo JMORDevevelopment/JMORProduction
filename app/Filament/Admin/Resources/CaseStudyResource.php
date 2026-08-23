@@ -7,6 +7,7 @@ use App\Models\CaseStudy;
 use BackedEnum;
 use Filament\Actions;
 use Filament\Forms;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -42,37 +43,28 @@ class CaseStudyResource extends Resource
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
-                            ->afterStateUpdated(fn (Schemas\Components\Utilities\Set $set, ?string $state) => $set('link', Str::slug($state ?? ''))),
+                            ->afterStateUpdated(fn (Set $set, ?string $state) => $set(
+                                'link',
+                                Str::slug($state ?? '')
+                            )),
 
-                        Forms\Components\TextInput::make('link')
-                            ->label('Slug')
+                        Forms\Components\Textarea::make('description')
+                            ->label('Content')
                             ->required()
-                            ->maxLength(255)
-                            ->unique(ignoreRecord: true),
-
-                        Forms\Components\RichEditor::make('description')
-                            ->label('Description')
-                            ->required()
+                            ->rows(10)
                             ->columnSpanFull(),
 
                         Forms\Components\FileUpload::make('image')
-                            ->label('Image')
+                            ->label('Thumbnail')
                             ->image()
                             ->directory('uploads/case_studies')
                             ->visibility('public')
                             ->imageResizeMode('cover')
                             ->imageCropAspectRatio('16:9')
-                            ->imagePreviewHeight('250'),
+                            ->imagePreviewHeight('150')
+                            ->required(fn (?string $operation): bool => $operation === 'create'),
                     ])
                     ->columns(2),
-
-                Section::make('Publishing')
-                    ->schema([
-                        Forms\Components\Toggle::make('published')
-                            ->label('Published')
-                            ->default(true)
-                            ->columnSpanFull(),
-                    ]),
 
                 Section::make('SEO')
                     ->schema([
@@ -81,7 +73,7 @@ class CaseStudyResource extends Resource
                             ->maxLength(255),
 
                         Forms\Components\TextInput::make('meta_keywords')
-                            ->label('Meta Keywords')
+                            ->label('Meta Keyword')
                             ->maxLength(255),
 
                         Forms\Components\Textarea::make('meta_description')
@@ -107,18 +99,10 @@ class CaseStudyResource extends Resource
                     ->sortable(),
 
                 Tables\Columns\ImageColumn::make('image')
-                    ->label('Image')
+                    ->label('Thumbnail')
                     ->disk('public'),
-
-                Tables\Columns\IconColumn::make('published')
-                    ->label('Published')
-                    ->boolean(),
             ])
             ->defaultSort('id', 'desc')
-            ->filters([
-                Tables\Filters\TernaryFilter::make('published')
-                    ->label('Published'),
-            ])
             ->actions([
                 Actions\EditAction::make(),
                 Actions\DeleteAction::make(),
