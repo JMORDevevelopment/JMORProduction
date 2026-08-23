@@ -7,6 +7,7 @@ use App\Models\MediaVideo;
 use BackedEnum;
 use Filament\Actions;
 use Filament\Forms;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -42,35 +43,23 @@ class MediaVideoResource extends Resource
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
-                            ->afterStateUpdated(fn (Schemas\Components\Utilities\Set $set, ?string $state) => $set('link', Str::slug($state ?? ''))),
+                            ->afterStateUpdated(fn (Set $set, ?string $state) => $set(
+                                'link',
+                                Str::slug($state ?? '')
+                            )),
 
-                        Forms\Components\TextInput::make('link')
-                            ->label('Slug')
+                        Forms\Components\Textarea::make('description')
+                            ->label('Content')
                             ->required()
-                            ->maxLength(255)
-                            ->unique(ignoreRecord: true),
-
-                        Forms\Components\RichEditor::make('description')
-                            ->label('Description')
-                            ->required()
+                            ->rows(10)
                             ->columnSpanFull(),
 
                         Forms\Components\TextInput::make('video_link')
                             ->label('Video URL')
                             ->url()
-                            ->required()
-                            ->maxLength(500)
-                            ->helperText('YouTube or Vimeo URL'),
+                            ->maxLength(500),
                     ])
                     ->columns(2),
-
-                Section::make('Publishing')
-                    ->schema([
-                        Forms\Components\Toggle::make('published')
-                            ->label('Published')
-                            ->default(true)
-                            ->columnSpanFull(),
-                    ]),
 
                 Section::make('SEO')
                     ->schema([
@@ -79,7 +68,7 @@ class MediaVideoResource extends Resource
                             ->maxLength(255),
 
                         Forms\Components\TextInput::make('meta_keywords')
-                            ->label('Meta Keywords')
+                            ->label('Meta Keyword')
                             ->maxLength(255),
 
                         Forms\Components\Textarea::make('meta_description')
@@ -108,16 +97,8 @@ class MediaVideoResource extends Resource
                     ->label('Video')
                     ->url()
                     ->limit(50),
-
-                Tables\Columns\IconColumn::make('published')
-                    ->label('Published')
-                    ->boolean(),
             ])
             ->defaultSort('id', 'desc')
-            ->filters([
-                Tables\Filters\TernaryFilter::make('published')
-                    ->label('Published'),
-            ])
             ->actions([
                 Actions\EditAction::make(),
                 Actions\DeleteAction::make(),
