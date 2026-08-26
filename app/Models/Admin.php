@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticatable;
 
-class Admin extends Authenticatable
+class Admin extends Authenticatable implements FilamentUser
 {
     use HasFactory;
+    use TwoFactorAuthenticatable;
 
     protected $table = 'admin';
 
@@ -29,6 +33,7 @@ class Admin extends Authenticatable
         'email',
         'status',
         'role',
+        'auth_mode',
     ];
 
     protected $hidden = [
@@ -44,6 +49,19 @@ class Admin extends Authenticatable
      * Check password supporting both MD5 (CI legacy) and bcrypt.
      * Re-hashes to bcrypt on successful MD5 login.
      */
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return true;
+    }
+
+    /**
+     * The CI admin table has no remember_token column.
+     */
+    public function getRememberTokenName(): string
+    {
+        return '';
+    }
+
     public function validatePassword(string $password): bool
     {
         if (password_verify($password, $this->password)) {

@@ -6,9 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Page extends Model
 {
-    // NOTE: schema assumed from SearchService/ContentPageService usage
-    // (name, link, meta_title, meta_description, meta_keywords). Confirm
-    // real columns/PK with `DESCRIBE pages;` before relying on this elsewhere.
     protected $table = 'pages';
 
     public $timestamps = false;
@@ -16,8 +13,15 @@ class Page extends Model
     protected $fillable = [
         'name',
         'link',
+        'description',
+        'image',
+        'priority',
+        'slider_status',
+        'menu_location',
+        'form_id',
         'meta_title',
-        'meta_description',
         'meta_keywords',
+        'meta_description',
+        'menu_status',
     ];
 }
