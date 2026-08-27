@@ -29,6 +29,7 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->id('admin')
             ->path('admin')
+            ->default()
             ->authGuard('admin')
             ->login(Login::class)
             ->brandName('JMOR Connection')

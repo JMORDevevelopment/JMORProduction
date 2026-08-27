@@ -9,7 +9,15 @@ return new class extends Migration
 {
     public function up()
     {
-        $authenticatableClass = Config::getAuthenticatableModel();
+        if (Schema::hasTable('passkeys')) {
+            return;
+        }
+
+        try {
+            $authenticatableClass = Config::getAuthenticatableModel();
+        } catch (Exception $e) {
+            return;
+        }
 
         $authenticatableTableName = (new $authenticatableClass)->getTable();
 
