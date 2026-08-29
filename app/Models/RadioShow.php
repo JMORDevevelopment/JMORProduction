@@ -3,12 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class RadioShow extends Model
 {
-    // NOTE: schema assumed from RadioShowService/ContentPageService/SearchService
-    // usage (name, link, show_date, category_id, meta_title, meta_description,
-    // meta_keywords). Confirm real columns/PK with `DESCRIBE radio_show;`.
     protected $table = 'radio_show';
 
     public $timestamps = false;
@@ -16,14 +14,17 @@ class RadioShow extends Model
     protected $fillable = [
         'name',
         'link',
+        'description',
         'show_date',
         'category_id',
+        'image',
+        'published',
         'meta_title',
         'meta_description',
         'meta_keywords',
     ];
 
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo(CategoryRadioShow::class, 'category_id', 'id');
     }
