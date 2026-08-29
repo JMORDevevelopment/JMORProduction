@@ -19,4 +19,13 @@ class HomeTab extends Model
         'benefits',
         'cost',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'tab_list' => 'array',
+            'benefits' => 'array',
+            'cost' => 'array',
+        ];
+    }
 }
