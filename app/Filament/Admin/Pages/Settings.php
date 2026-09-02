@@ -8,6 +8,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Schemas\Components\Actions;
+use Filament\Schemas\Components\EmbeddedSchema;
 use Filament\Schemas\Components\Form;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
@@ -35,6 +36,11 @@ class Settings extends Page implements HasSchemas
 
     public function mount(): void
     {
+        $this->fillForm();
+    }
+
+    protected function fillForm(): void
+    {
         $settings = Setting::all();
 
         $formData = [];
@@ -43,6 +49,11 @@ class Settings extends Page implements HasSchemas
         }
 
         $this->form->fill($formData);
+    }
+
+    public function defaultForm(Schema $schema): Schema
+    {
+        return $schema->statePath('data');
     }
 
     public function form(Schema $form): Schema
@@ -55,16 +66,21 @@ class Settings extends Page implements HasSchemas
 
             $components[] = TextInput::make($setting->option)
                 ->label($label)
-                ->default($setting->value)
                 ->maxLength(255)
                 ->trim()
                 ->autocomplete(false);
         }
 
         return $form
+            ->components($components);
+    }
+
+    public function content(Schema $schema): Schema
+    {
+        return $schema
             ->components([
-                Form::make($components)
-                    ->id('settings-form')
+                Form::make([EmbeddedSchema::make('form')])
+                    ->id('form')
                     ->livewireSubmitHandler('save')
                     ->footer([
                         Actions::make([

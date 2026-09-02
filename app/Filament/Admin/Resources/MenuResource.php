@@ -48,8 +48,7 @@ class MenuResource extends Resource
                 TextInput::make('url')
                     ->label('URL')
                     ->maxLength(255)
-                    ->trim()
-                    ->rules(['nullable', 'url']),
+                    ->trim(),
 
                 Select::make('parent_id')
                     ->label('Parent Menu')
@@ -60,15 +59,13 @@ class MenuResource extends Resource
                             ->prepend('None (Top Level)', 0);
                     })
                     ->default(0)
-                    ->required()
-                    ->numeric(),
+                    ->required(),
 
                 Select::make('group_id')
                     ->label('Group')
                     ->options(fn () => MenuGroup::pluck('title', 'id'))
                     ->default(1)
-                    ->required()
-                    ->numeric(),
+                    ->required(),
 
                 Select::make('menu_type')
                     ->label('Menu Type')
