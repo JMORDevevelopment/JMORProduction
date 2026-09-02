@@ -47,6 +47,8 @@ class NewsResource extends Resource
                     ->label('Title')
                     ->required()
                     ->maxLength(250)
+                    ->trim()
+                    ->unique(ignoreRecord: true)
                     ->live(onBlur: true)
                     ->afterStateUpdated(function ($set, $state) {
                         $set('link', Str::slug($state));
@@ -56,6 +58,7 @@ class NewsResource extends Resource
                     ->label('Slug')
                     ->required()
                     ->maxLength(255)
+                    ->unique(ignoreRecord: true)
                     ->dehydrated(),
 
                 Select::make('type')
@@ -71,11 +74,13 @@ class NewsResource extends Resource
                 TextInput::make('priority')
                     ->label('Priority')
                     ->numeric()
+                    ->minValue(0)
                     ->default(0),
 
                 Textarea::make('description')
                     ->label('Content')
-                    ->rows(10),
+                    ->rows(10)
+                    ->trim(),
 
                 FileUpload::make('image')
                     ->label('Thumbnail')
@@ -83,10 +88,12 @@ class NewsResource extends Resource
                     ->disk('public_direct')
                     ->image()
                     ->imageEditor()
+                    ->required(fn (string $operation): bool => $operation === 'create')
                     ->columnSpanFull(),
 
                 DateTimePicker::make('published')
                     ->label('Published')
+                    ->required()
                     ->default(now()),
             ]);
     }

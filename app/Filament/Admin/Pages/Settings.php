@@ -56,6 +56,8 @@ class Settings extends Page implements HasSchemas
             $components[] = TextInput::make($setting->option)
                 ->label($label)
                 ->default($setting->value)
+                ->maxLength(255)
+                ->trim()
                 ->autocomplete(false);
         }
 
@@ -83,7 +85,7 @@ class Settings extends Page implements HasSchemas
 
         foreach ($data as $option => $value) {
             Setting::where('option', $option)
-                ->update(['value' => $value]);
+                ->update(['value' => trim($value)]);
         }
 
         Cache::forget('settings.keyed');

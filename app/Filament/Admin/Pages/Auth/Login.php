@@ -262,6 +262,8 @@ class Login extends SimplePage
                     ->label('Email')
                     ->email()
                     ->required()
+                    ->maxLength(255)
+                    ->trim()
                     ->autocomplete()
                     ->autofocus()
                     ->live(onBlur: true)
@@ -294,6 +296,8 @@ class Login extends SimplePage
                     ->password()
                     ->revealable(filament()->arePasswordsRevealable())
                     ->autocomplete('current-password')
+                    ->required()
+                    ->maxLength(255)
                     ->visible(fn (): bool => in_array($this->resolvedAuthMode, ['password', 'both'])),
 
                 Radio::make('code_type')
@@ -310,11 +314,14 @@ class Login extends SimplePage
                 TextInput::make('otp_code')
                     ->label('Authenticator Code')
                     ->length(6)
+                    ->required()
                     ->autocomplete('one-time-code')
                     ->visible(fn (Get $get): bool => in_array($this->resolvedAuthMode, ['2fa', 'both']) && ($get('code_type') ?? 'otp') !== 'recovery'),
 
                 TextInput::make('recovery_code')
                     ->label('Recovery Code')
+                    ->required()
+                    ->maxLength(255)
                     ->autocomplete('one-time-code')
                     ->visible(fn (Get $get): bool => in_array($this->resolvedAuthMode, ['2fa', 'both']) && ($get('code_type') ?? 'otp') === 'recovery'),
 

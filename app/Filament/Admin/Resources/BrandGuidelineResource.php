@@ -44,6 +44,7 @@ class BrandGuidelineResource extends Resource
                     ->label('Title')
                     ->required()
                     ->maxLength(255)
+                    ->trim()
                     ->live(onBlur: true)
                     ->afterStateUpdated(function ($set, $state) {
                         $set('link', Str::slug($state));
@@ -53,11 +54,13 @@ class BrandGuidelineResource extends Resource
                     ->label('Slug')
                     ->required()
                     ->maxLength(255)
+                    ->unique(ignoreRecord: true)
                     ->dehydrated(),
 
                 Textarea::make('description')
                     ->label('Content')
-                    ->rows(10),
+                    ->rows(10)
+                    ->trim(),
 
                 FileUpload::make('image')
                     ->label('Thumbnail')
@@ -65,23 +68,31 @@ class BrandGuidelineResource extends Resource
                     ->disk('public_direct')
                     ->image()
                     ->imageEditor()
+                    ->required(fn (string $operation): bool => $operation === 'create')
                     ->columnSpanFull(),
 
                 DateTimePicker::make('published')
                     ->label('Published')
+                    ->required()
                     ->default(now()),
 
                 TextInput::make('meta_title')
                     ->label('Meta Title')
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->trim()
+                    ->required(fn (string $operation): bool => $operation === 'create'),
 
                 TextInput::make('meta_keywords')
                     ->label('Meta Keywords')
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->trim()
+                    ->required(fn (string $operation): bool => $operation === 'create'),
 
                 Textarea::make('meta_description')
                     ->label('Meta Description')
-                    ->rows(3),
+                    ->rows(3)
+                    ->trim()
+                    ->required(fn (string $operation): bool => $operation === 'create'),
             ]);
     }
 
