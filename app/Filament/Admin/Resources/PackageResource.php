@@ -5,6 +5,8 @@ namespace App\Filament\Admin\Resources;
 use App\Filament\Admin\Resources\PackageResource\Pages\CreatePackage;
 use App\Filament\Admin\Resources\PackageResource\Pages\EditPackage;
 use App\Filament\Admin\Resources\PackageResource\Pages\ListPackages;
+use App\Filament\Admin\Resources\PackageResource\RelationManagers\ServerPricesRelationManager;
+use App\Filament\Admin\Resources\PackageResource\RelationManagers\SystemPricesRelationManager;
 use App\Models\Category;
 use App\Models\Package;
 use Filament\Actions\BulkActionGroup;
@@ -22,6 +24,7 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class PackageResource extends Resource
@@ -34,7 +37,7 @@ class PackageResource extends Resource
 
     protected static string|\UnitEnum|null $navigationGroup = 'CMS';
 
-    protected static ?int $navigationSort = 14;
+    protected static ?int $navigationSort = 16;
 
     protected static ?string $modelLabel = 'Package';
 
@@ -177,6 +180,17 @@ class PackageResource extends Resource
             ])
             ->defaultSort('priority')
             ->reorderable('priority')
+            ->filters([
+                SelectFilter::make('category_name')
+                    ->label('Category')
+                    ->options(fn () => Category::pluck('name', 'link')),
+                SelectFilter::make('status')
+                    ->label('Status')
+                    ->options([
+                        1 => 'Active',
+                        0 => 'Inactive',
+                    ]),
+            ])
             ->actions([
                 EditAction::make(),
                 DeleteAction::make(),
@@ -190,7 +204,10 @@ class PackageResource extends Resource
 
     public static function getRelations(): array
     {
-        return [];
+        return [
+            ServerPricesRelationManager::class,
+            SystemPricesRelationManager::class,
+        ];
     }
 
     public static function getPages(): array

@@ -18,6 +18,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 
@@ -33,7 +34,7 @@ class NewsResource extends Resource
 
     protected static string|\UnitEnum|null $navigationGroup = 'CMS';
 
-    protected static ?int $navigationSort = 11;
+    protected static ?int $navigationSort = 15;
 
     protected static ?string $modelLabel = 'News';
 
@@ -56,6 +57,7 @@ class NewsResource extends Resource
                     ->label('Slug')
                     ->required()
                     ->maxLength(255)
+                    ->unique(ignoreRecord: true)
                     ->dehydrated(),
 
                 Select::make('type')
@@ -124,6 +126,15 @@ class NewsResource extends Resource
                     ->sortable(),
             ])
             ->defaultSort('news_id', 'desc')
+            ->filters([
+                SelectFilter::make('type')
+                    ->label('Type')
+                    ->options([
+                        'news' => 'News',
+                        'video' => 'Video',
+                        'article' => 'Article',
+                    ]),
+            ])
             ->actions([
                 EditAction::make(),
                 DeleteAction::make(),
