@@ -14,9 +14,7 @@ use net\authorize\api\controller as AnetController;
 
 class PaymentService
 {
-    public function __construct(private InvoiceService $invoices)
-    {
-    }
+    public function __construct(private InvoiceService $invoices) {}
 
     /**
      * Charge the card on file for $orderId and finalize the order.

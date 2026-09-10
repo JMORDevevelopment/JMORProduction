@@ -16,15 +16,15 @@ class SignUpController extends Controller
     {
         $data = [
             'firstname' => old('firstname', ''),
-            'lastname'  => old('lastname', ''),
-            'email'     => old('email', ''),
-            'password'  => '',
-            'address'   => old('address', ''),
-            'city'      => old('city', ''),
-            'state'     => old('state', ''),
-            'zip'       => old('zip', ''),
-            'error'     => session('errors') ? session('errors')->getBag('default')->getMessages() : [],
-            'regions'   => Region::get(),
+            'lastname' => old('lastname', ''),
+            'email' => old('email', ''),
+            'password' => '',
+            'address' => old('address', ''),
+            'city' => old('city', ''),
+            'state' => old('state', ''),
+            'zip' => old('zip', ''),
+            'error' => session('errors') ? session('errors')->getBag('default')->getMessages() : [],
+            'regions' => Region::get(),
             'text_sign_up' => 'Sign Up',
             'text_form' => 'You can create an account here.',
             'text_firstname' => 'First Name',
@@ -49,16 +49,16 @@ class SignUpController extends Controller
 
         // Insert user
         $insertData = [
-            'firstname'    => htmlspecialchars($validated['firstname']),
-            'lastname'     => htmlspecialchars($validated['lastname']),
-            'email'        => htmlspecialchars($validated['email']),
-            'password'     => md5($validated['password']),
-            'address'      => $validated['address'],
-            'city'         => $validated['city'],
-            'state'        => $validated['state'],
-            'zip'          => $validated['zip'],
-            'date_added'   => date('Y-m-d'),
-            'user_group_id'=> config('app.c_default_group', 1),
+            'firstname' => htmlspecialchars($validated['firstname']),
+            'lastname' => htmlspecialchars($validated['lastname']),
+            'email' => htmlspecialchars($validated['email']),
+            'password' => md5($validated['password']),
+            'address' => $validated['address'],
+            'city' => $validated['city'],
+            'state' => $validated['state'],
+            'zip' => $validated['zip'],
+            'date_added' => date('Y-m-d'),
+            'user_group_id' => config('app.c_default_group', 1),
         ];
         $user = User::create($insertData);
 

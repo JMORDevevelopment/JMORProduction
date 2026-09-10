@@ -24,7 +24,7 @@ class LoginController extends Controller
             ->where('password', md5($request->password))
             ->first();
 
-        if (!$user) {
+        if (! $user) {
             throw ValidationException::withMessages([
                 'email' => 'Wrong login details',
             ]);
