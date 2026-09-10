@@ -30,7 +30,7 @@ class PressReleaseResource extends Resource
 
     protected static string|\UnitEnum|null $navigationGroup = 'CMS';
 
-    protected static ?int $navigationSort = 6;
+    protected static ?int $navigationSort = 9;
 
     protected static ?string $modelLabel = 'Press Release';
 
@@ -53,6 +53,7 @@ class PressReleaseResource extends Resource
                     ->label('Slug')
                     ->required()
                     ->maxLength(255)
+                    ->unique(ignoreRecord: true)
                     ->dehydrated(),
 
                 Textarea::make('description')

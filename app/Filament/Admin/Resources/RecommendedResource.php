@@ -30,7 +30,7 @@ class RecommendedResource extends Resource
 
     protected static string|\UnitEnum|null $navigationGroup = 'CMS';
 
-    protected static ?int $navigationSort = 8;
+    protected static ?int $navigationSort = 11;
 
     protected static ?string $modelLabel = 'Recommended';
 
@@ -53,6 +53,7 @@ class RecommendedResource extends Resource
                     ->label('Slug')
                     ->required()
                     ->maxLength(255)
+                    ->unique(ignoreRecord: true)
                     ->dehydrated(),
 
                 Textarea::make('description')

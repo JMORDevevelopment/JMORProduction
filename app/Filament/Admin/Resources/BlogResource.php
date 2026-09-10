@@ -30,7 +30,7 @@ class BlogResource extends Resource
 
     protected static string|\UnitEnum|null $navigationGroup = 'CMS';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 4;
 
     protected static ?string $modelLabel = 'Blog Post';
 
@@ -53,6 +53,7 @@ class BlogResource extends Resource
                     ->label('Slug')
                     ->required()
                     ->maxLength(255)
+                    ->unique(ignoreRecord: true)
                     ->dehydrated(),
 
                 Textarea::make('description')
