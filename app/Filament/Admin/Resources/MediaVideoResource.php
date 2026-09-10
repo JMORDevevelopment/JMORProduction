@@ -29,7 +29,7 @@ class MediaVideoResource extends Resource
 
     protected static string|\UnitEnum|null $navigationGroup = 'CMS';
 
-    protected static ?int $navigationSort = 10;
+    protected static ?int $navigationSort = 14;
 
     protected static ?string $modelLabel = 'Media Video';
 
@@ -51,6 +51,7 @@ class MediaVideoResource extends Resource
                     ->label('Slug')
                     ->required()
                     ->maxLength(255)
+                    ->unique(ignoreRecord: true)
                     ->dehydrated(),
 
                 Textarea::make('description')

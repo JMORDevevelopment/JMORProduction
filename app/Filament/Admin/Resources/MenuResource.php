@@ -16,6 +16,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class MenuResource extends Resource
@@ -121,6 +122,16 @@ class MenuResource extends Resource
             ])
             ->defaultSort('position', 'asc')
             ->reorderable('position')
+            ->filters([
+                SelectFilter::make('menu_type')
+                    ->label('Type')
+                    ->options([
+                        '' => 'None',
+                        'Pages' => 'Pages',
+                        'Jmor shows' => 'Jmor Shows',
+                        'Packages' => 'Packages',
+                    ]),
+            ])
             ->actions([
                 EditAction::make(),
                 DeleteAction::make(),

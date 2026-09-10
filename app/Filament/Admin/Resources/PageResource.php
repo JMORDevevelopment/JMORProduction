@@ -19,6 +19,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 
@@ -64,10 +65,6 @@ class PageResource extends Resource
                 Toggle::make('menu_status')
                     ->label('Show in Menu')
                     ->default(false),
-
-                Toggle::make('show_in_sitemap')
-                    ->label('Show in Sitemap')
-                    ->default(true),
 
                 Toggle::make('slider_status')
                     ->label('Show Slider')
@@ -128,18 +125,20 @@ class PageResource extends Resource
                     ->formatStateUsing(fn ($state) => $state ? 'Yes' : 'No')
                     ->color(fn ($state) => $state ? 'success' : 'gray'),
 
-                TextColumn::make('show_in_sitemap')
-                    ->label('Sitemap')
-                    ->badge()
-                    ->formatStateUsing(fn ($state) => $state ? 'Yes' : 'No')
-                    ->color(fn ($state) => $state ? 'success' : 'gray'),
-
                 TextColumn::make('priority')
                     ->label('Priority')
                     ->sortable(),
             ])
             ->reorderable('priority')
             ->defaultSort('id', 'desc')
+            ->filters([
+                SelectFilter::make('menu_status')
+                    ->label('Menu Status')
+                    ->options([
+                        1 => 'Shown',
+                        0 => 'Hidden',
+                    ]),
+            ])
             ->actions([
                 EditAction::make(),
                 DeleteAction::make(),

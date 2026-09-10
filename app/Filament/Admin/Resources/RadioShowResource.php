@@ -19,6 +19,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 
@@ -54,6 +55,7 @@ class RadioShowResource extends Resource
                     ->label('Slug')
                     ->required()
                     ->maxLength(255)
+                    ->unique(ignoreRecord: true)
                     ->dehydrated(),
 
                 Textarea::make('description')
@@ -125,6 +127,11 @@ class RadioShowResource extends Resource
                     ->sortable(),
             ])
             ->defaultSort('id', 'desc')
+            ->filters([
+                SelectFilter::make('category_id')
+                    ->label('Category')
+                    ->relationship('category', 'title'),
+            ])
             ->actions([
                 EditAction::make(),
                 DeleteAction::make(),
