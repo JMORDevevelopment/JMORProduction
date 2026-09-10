@@ -20,6 +20,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 
@@ -63,6 +64,7 @@ class CategoryRadioShowResource extends Resource
                     ->label('Slug')
                     ->required()
                     ->maxLength(255)
+                    ->unique(ignoreRecord: true)
                     ->dehydrated(),
 
                 Select::make('parent_id')
@@ -121,6 +123,14 @@ class CategoryRadioShowResource extends Resource
                     ->sortable(),
             ])
             ->defaultSort('id', 'desc')
+            ->filters([
+                SelectFilter::make('menu_status')
+                    ->label('Menu Status')
+                    ->options([
+                        1 => 'Shown',
+                        0 => 'Hidden',
+                    ]),
+            ])
             ->actions([
                 EditAction::make(),
                 DeleteAction::make(),

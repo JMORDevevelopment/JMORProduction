@@ -28,7 +28,7 @@ class HomeTabResource extends Resource
 
     protected static string|\UnitEnum|null $navigationGroup = 'CMS';
 
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 7;
 
     protected static ?string $modelLabel = 'Home Tab';
 
