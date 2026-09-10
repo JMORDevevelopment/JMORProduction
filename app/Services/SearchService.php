@@ -29,8 +29,8 @@ class SearchService
     public function searchRadioShows(?string $searchKey, ?string $dateKey): array
     {
         return RadioShow::when(! empty($dateKey), function ($query) use ($dateKey) {
-                $query->where('show_date', date('Y-m-d', strtotime($dateKey)));
-            })
+            $query->where('show_date', date('Y-m-d', strtotime($dateKey)));
+        })
             ->when(! empty($searchKey), function ($query) use ($searchKey) {
                 $query->where('name', 'like', '%'.$searchKey.'%');
             })

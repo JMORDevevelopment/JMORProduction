@@ -14,7 +14,7 @@ class ContentPageService
     /**
      * Fetch a single row by its `link` slug, or abort with a 404.
      *
-     * @param class-string<Model> $modelClass
+     * @param  class-string<Model>  $modelClass
      */
     public function findByLink(string $modelClass, string $link): Model
     {
@@ -42,7 +42,7 @@ class ContentPageService
     /**
      * Full view payload for a detail page: the row (under $dataKey) plus meta fields.
      *
-     * @param class-string<Model> $modelClass
+     * @param  class-string<Model>  $modelClass
      */
     public function detailViewData(string $modelClass, string $link, string $dataKey): array
     {

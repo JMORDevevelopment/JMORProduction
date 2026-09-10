@@ -40,7 +40,7 @@ class ForgotPasswordController extends Controller
                     ->from('Info@jmor.com', 'Info@jmor.com');
             });
         } catch (\Exception $e) {
-            
+
         }
 
         return redirect()->route('login', ['reset_pass' => 'yes']);
