@@ -34,4 +34,9 @@ class Transaction extends Model
     {
         return $this->belongsTo(Order::class, 'order_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'user_id');
+    }
 }
