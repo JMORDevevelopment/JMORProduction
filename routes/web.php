@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\SignUpController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BrandGuidelineController;
@@ -59,10 +60,18 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 
 Route::get('/sign-up', [SignUpController::class, 'showSignUpForm'])->name('sign-up');
-Route::post('/sign-up/validate', [SignUpController::class, 'validate'])->name('sign-up.validate');
+Route::post('/sign-up/validate', [SignUpController::class, 'validate'])
+    ->name('sign-up.validate')
+    ->middleware('throttle:5,1');
 
 Route::get('/forgot-password', [ForgotPasswordController::class, 'showForm'])->name('forgot-password');
-Route::post('/forgot-pass', [ForgotPasswordController::class, 'sendResetLink'])->name('forgot-pass');
+Route::post('/forgot-pass', [ForgotPasswordController::class, 'sendResetLink'])
+    ->name('forgot-pass')
+    ->middleware('throttle:5,1');
+Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('reset-password');
+Route::post('/reset-password', [ResetPasswordController::class, 'reset'])
+    ->name('reset-password.update')
+    ->middleware('throttle:5,1');
 
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
@@ -70,7 +79,9 @@ Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 // CONTACT ROUTES
 // ==============================
 Route::get('/contact', [ContactController::class, 'show'])->name('contact');
-Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
+Route::post('/contact', [ContactController::class, 'submit'])
+    ->name('contact.submit')
+    ->middleware('throttle:5,1');
 
 // ==============================
 // CART ROUTES
@@ -163,8 +174,12 @@ Route::get('/manufacturers', [PageController::class, 'show'])->name('manufacture
 Route::get('/office-managers', [PageController::class, 'show'])->name('office-managers');
 
 Route::get('/gift-card', [GiftCardController::class, 'list'])->name('gift-card');
-Route::get('/search', [SearchController::class, 'content'])->name('search');
-Route::post('/search', [SearchController::class, 'content'])->name('search.submit');
+Route::get('/search', [SearchController::class, 'content'])
+    ->name('search')
+    ->middleware('throttle:30,1');
+Route::post('/search', [SearchController::class, 'content'])
+    ->name('search.submit')
+    ->middleware('throttle:30,1');
 
 // ==============================
 // DB MENU LINK STUBS (extra menu items surfaced in the megamenu)
@@ -172,7 +187,9 @@ Route::post('/search', [SearchController::class, 'content'])->name('search.submi
 Route::get('/we-serve', fn () => app(PageController::class)->show('we-serve'))->name('we-serve');
 Route::get('/social', fn () => view('frontend.coming-soon'))->name('social');
 Route::get('/request-information', [RequestInformationController::class, 'index'])->name('request-information');
-Route::post('/request-information', [RequestInformationController::class, 'validate'])->name('request-information.validate');
+Route::post('/request-information', [RequestInformationController::class, 'validate'])
+    ->name('request-information.validate')
+    ->middleware('throttle:5,1');
 Route::get('/custom-built-technology-solutions-in-nj', [PageController::class, 'show'])->name('custom-built-technology-solutions-in-nj');
 Route::get('/it-support-solutions-for-new-jersey-businesses-and-homes-the-jmor-connection', fn () => view('frontend.coming-soon'))->name('it-support-solutions-for-new-jersey-businesses-and-homes-the-jmor-connection');
 Route::get('/print-management-solution', fn () => view('frontend.coming-soon'))->name('print-management-solution');
@@ -197,7 +214,9 @@ Route::get('/press-releases/{link}', [PressReleaseController::class, 'detail'])-
 Route::get('/brand-guidelines', [BrandGuidelineController::class, 'posts'])->name('brand-guidelines');
 Route::get('/brand-guidelines/{link}', [BrandGuidelineController::class, 'detail'])->name('brand-guidelines.detail');
 Route::get('/media-inquiries', [MediaInquiryController::class, 'index'])->name('media-inquiries');
-Route::post('/media-inquiries', [MediaInquiryController::class, 'validate'])->name('media-inquiries.validate');
+Route::post('/media-inquiries', [MediaInquiryController::class, 'validate'])
+    ->name('media-inquiries.validate')
+    ->middleware('throttle:5,1');
 Route::get('/pcs', fn () => view('frontend.coming-soon'))->name('pcs');
 Route::get('/servers', fn () => view('frontend.coming-soon'))->name('servers');
 Route::get('/laptops', fn () => view('frontend.coming-soon'))->name('laptops');

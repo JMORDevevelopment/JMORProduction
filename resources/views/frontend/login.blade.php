@@ -33,7 +33,7 @@
 
                                     @if(request()->has('reset_pass'))
                                         <div class="alert alert-success alert-dismissible">
-                                            <h4><i class="icon fa fa-success"></i></h4>Your new password is reset please check your email
+                                            <h4><i class="icon fa fa-success"></i></h4>If an account exists for that email, a password reset link has been sent
                                         </div>
                                     @endif
 

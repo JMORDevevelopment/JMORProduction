@@ -4,7 +4,6 @@ namespace App\Providers\Filament;
 
 use App\Filament\Admin\Pages\Auth\Login;
 use App\Filament\Admin\Pages\Dashboard;
-use App\Http\Middleware\PassThrough;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -48,11 +47,16 @@ class AdminPanelProvider extends PanelProvider
                 AccountWidget::class,
                 FilamentInfoWidget::class,
             ])
+            // Registered before the 2FA plugin so that guests are always
+            // redirected to the login page before any challenge/force
+            // middleware can run (the plugin appends its own middleware).
+            ->authMiddleware([
+                Authenticate::class,
+            ])
             ->plugins([
                 TwoFactorAuthenticationPlugin::make()
                     ->enableTwoFactorAuthentication()
                     ->enablePasskeyAuthentication(false)
-                    ->setChallengeTwoFactorMiddleware(PassThrough::class)
                     ->addTwoFactorMenuItem(),
             ])
             ->middleware([
@@ -65,9 +69,6 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-            ])
-            ->authMiddleware([
-                Authenticate::class,
             ]);
     }
 }
