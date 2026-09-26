@@ -177,11 +177,11 @@
 
                                     @if (!empty($primaryCost))
                                         <div class="jm-plan-card__price">
-                                            <div class="jm-plan-card__price-amount">{!! $primaryCost !!}</div>
+                                            <div class="jm-plan-card__price-amount">{!! \App\Support\RichText::sanitize($primaryCost) !!}</div>
                                             @if (!empty($extraCosts))
                                                 <div class="jm-plan-card__price-extra">
                                                     @foreach ($extraCosts as $extra)
-                                                        <div class="jm-plan-card__price-line">{!! $extra !!}</div>
+                                                        <div class="jm-plan-card__price-line">{!! \App\Support\RichText::sanitize($extra) !!}</div>
                                                     @endforeach
                                                 </div>
                                             @endif

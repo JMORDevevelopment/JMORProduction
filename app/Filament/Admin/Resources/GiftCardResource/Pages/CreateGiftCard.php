@@ -16,6 +16,8 @@ class CreateGiftCard extends CreateRecord
 
         // Ensure image defaults to empty string if null
         $data['image'] = $data['image'] ?? '';
+        $data['description'] = $data['description'] ?? '';
+        $data['category'] = $data['category'] ?? '';
 
         return $data;
     }
