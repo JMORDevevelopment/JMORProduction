@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\ResetPassword;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -58,5 +59,14 @@ class User extends Authenticatable
     public function getRememberTokenName()
     {
         return '';
+    }
+
+    /**
+     * Send the password reset link notification (H1: token-based reset
+     * instead of mailing a freshly generated plaintext password).
+     */
+    public function sendPasswordResetNotification($token): void
+    {
+        $this->notify(new ResetPassword($token));
     }
 }

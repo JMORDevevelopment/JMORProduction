@@ -22,6 +22,10 @@ class RequestInformationController extends Controller
         $services = Slider::pluck('slider_name')->toArray();
         $latestPosts = Blog::orderBy('id', 'desc')->limit(5)->get();
 
+        // Seed the challenge server-side; the posted firstNumber/secondNumber
+        // fields are ignored during validation (M12).
+        session(['captcha_numbers' => [$randomNumber1, $randomNumber2]]);
+
         return view('frontend.request_information', [
             'title' => 'Request Information',
             'description' => '',
@@ -87,7 +91,10 @@ class RequestInformationController extends Controller
                 'name' => $requestInfo->first_name.' '.$requestInfo->last_name,
                 'email' => $requestInfo->email,
             ], function ($mail) use ($to, $requestInfo) {
-                $mail->to($to)->subject('Request information')->from($requestInfo->email);
+                $mail->to($to)
+                    ->subject('Request information')
+                    ->from(config('mail.from.address'), config('mail.from.name'))
+                    ->replyTo($requestInfo->email);
             });
         } catch (\Exception $e) {
             Log::error('Failed to send request information email: '.$e->getMessage());

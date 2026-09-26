@@ -8,6 +8,7 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Facades\Gate;
 
 class AuthSettings extends Page implements HasForms
 {
@@ -27,8 +28,19 @@ class AuthSettings extends Page implements HasForms
 
     public array $data = [];
 
+    /**
+     * Authentication settings are super-admin only (M10): hidden from
+     * navigation for every other role.
+     */
+    public static function canAccess(): bool
+    {
+        return auth()->guard('admin')->user()?->isAdmin() ?? false;
+    }
+
     public function mount(): void
     {
+        Gate::authorize('authSettings');
+
         $admin = auth()->guard('admin')->user();
 
         $this->form->fill([
@@ -55,6 +67,8 @@ class AuthSettings extends Page implements HasForms
 
     public function save(): void
     {
+        Gate::authorize('authSettings');
+
         $data = $this->form->getState();
 
         $admin = auth()->guard('admin')->user();

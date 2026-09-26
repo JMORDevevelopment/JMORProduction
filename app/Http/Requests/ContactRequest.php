@@ -29,16 +29,25 @@ class ContactRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255'],
+            'name' => ['required', 'string', 'max:80'],
+            'email' => ['required', 'email', 'max:50'],
             'phone' => ['required', 'string', 'regex:/^[0-9\s\-\+\(\)]+$/', 'max:20'],
-            'reason' => ['required', 'string', 'max:255'],
+            'reason' => ['required', 'string', 'max:100'],
             'message' => ['required', 'string', 'max:5000'],
             'protection_question' => [
                 'required',
                 'integer',
                 function (string $attribute, mixed $value, Closure $fail) {
-                    $expected = (int) $this->input('firstNumber') + (int) $this->input('secondNumber');
+                    // Validate against the numbers seeded in session when the
+                    // form was rendered; posted firstNumber/secondNumber are
+                    // ignored so the challenge cannot be solved client-side (M12).
+                    $numbers = session('captcha_numbers');
+                    if (! is_array($numbers) || count($numbers) !== 2) {
+                        $fail('Your answer is wrong!');
+
+                        return;
+                    }
+                    $expected = (int) $numbers[0] + (int) $numbers[1];
                     if ((int) $value !== $expected) {
                         $fail('Your answer is wrong!');
                     }
@@ -51,15 +60,15 @@ class ContactRequest extends FormRequest
     {
         return [
             'name.required' => 'Please enter your full name.',
-            'name.max' => 'Name cannot exceed 255 characters.',
+            'name.max' => 'Name cannot exceed 80 characters.',
             'email.required' => 'Email address is required.',
             'email.email' => 'Please enter a valid email address.',
-            'email.max' => 'Email cannot exceed 255 characters.',
+            'email.max' => 'Email cannot exceed 50 characters.',
             'phone.required' => 'Phone number is required.',
             'phone.regex' => 'Please enter a valid phone number (digits, spaces, +, -, parentheses).',
             'phone.max' => 'Phone number cannot exceed 20 characters.',
             'reason.required' => 'Please select a reason for contacting us.',
-            'reason.max' => 'Reason cannot exceed 255 characters.',
+            'reason.max' => 'Reason cannot exceed 100 characters.',
             'message.required' => 'Please enter your message.',
             'message.max' => 'Message cannot exceed 5000 characters.',
             'protection_question.required' => 'Please answer the protection question.',

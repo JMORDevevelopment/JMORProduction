@@ -167,7 +167,7 @@ class DashboardController extends Controller
         $post = $request->except('_token');
 
         if (! empty($post['password'])) {
-            $post['password'] = md5($post['password']);
+            $post['password'] = bcrypt($post['password']);
         } else {
             unset($post['password']);
         }

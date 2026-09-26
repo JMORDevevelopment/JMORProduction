@@ -51,8 +51,8 @@ class SignUpController extends Controller
         $insertData = [
             'firstname' => htmlspecialchars($validated['firstname']),
             'lastname' => htmlspecialchars($validated['lastname']),
-            'email' => htmlspecialchars($validated['email']),
-            'password' => md5($validated['password']),
+            'email' => $validated['email'],
+            'password' => bcrypt($validated['password']),
             'address' => $validated['address'],
             'city' => $validated['city'],
             'state' => $validated['state'],
@@ -61,6 +61,9 @@ class SignUpController extends Controller
             'user_group_id' => config('app.c_default_group', 1),
         ];
         $user = User::create($insertData);
+
+        // Prevent session fixation across the privilege change (L7).
+        $request->session()->regenerate();
 
         // Log the user in
         Auth::loginUsingId($user->user_id);

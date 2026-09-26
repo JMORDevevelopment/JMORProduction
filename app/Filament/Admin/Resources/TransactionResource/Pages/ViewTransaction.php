@@ -21,6 +21,7 @@ class ViewTransaction extends ViewRecord
                 ->label('Update Status')
                 ->icon('heroicon-o-arrow-path')
                 ->color('warning')
+                ->authorize('updateStatus')
                 ->form([
                     Select::make('status')
                         ->label('Order Status')

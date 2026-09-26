@@ -40,18 +40,43 @@ class Admin extends Authenticatable implements FilamentUser
         'password',
     ];
 
+    /**
+     * Abilities reserved for super admins (role = 1).
+     *
+     * @var list<string>
+     */
+    public const array RESTRICTED_ABILITIES = [
+        'delete',
+        'forceDelete',
+        'deleteAny',
+        'restore',
+        'restoreAny',
+        'backup',
+        'updateStatus',
+        'settings',
+        'authSettings',
+    ];
+
     public function getNameAttribute(): string
     {
         return trim($this->firstname.' '.$this->lastname);
     }
 
     /**
-     * Check password supporting both MD5 (CI legacy) and bcrypt.
-     * Re-hashes to bcrypt on successful MD5 login.
+     * Only active accounts (status = 1) may access the panel.
      */
     public function canAccessPanel(Panel $panel): bool
     {
-        return true;
+        return (int) $this->status === 1;
+    }
+
+    /**
+     * Super admins (role = 1) hold unrestricted access; other roles
+     * are denied the abilities listed in RESTRICTED_ABILITIES.
+     */
+    public function isAdmin(): bool
+    {
+        return (int) $this->role === 1;
     }
 
     /**

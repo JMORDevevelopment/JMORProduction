@@ -37,6 +37,8 @@ it('validates required fields on media inquiry submission', function () {
 });
 
 it('validates captcha answer is correct', function () {
+    $this->get(route('media-inquiries'));
+
     $response = $this->post(route('media-inquiries.validate'), [
         'media' => 'CNN',
         'contact' => 'John Doe',
@@ -54,7 +56,7 @@ it('validates captcha answer is correct', function () {
     $response->assertSessionHasErrors('protection_question');
 });
 
-it('creates a media inquiry with valid data', function () {
+it('rejects a captcha answer when the challenge was never rendered', function () {
     $response = $this->post(route('media-inquiries.validate'), [
         'media' => 'CNN',
         'contact' => 'John Doe',
@@ -66,7 +68,28 @@ it('creates a media inquiry with valid data', function () {
         'best_contact' => 'Monday 9am',
         'firstNumber' => 5,
         'secondNumber' => 3,
-        'protection_question' => '8',
+        'protection_question' => 8,
+    ]);
+
+    $response->assertSessionHasErrors('protection_question');
+});
+
+it('creates a media inquiry with valid data', function () {
+    $this->get(route('media-inquiries'));
+    $captcha = session('captcha_numbers');
+
+    $response = $this->post(route('media-inquiries.validate'), [
+        'media' => 'CNN',
+        'contact' => 'John Doe',
+        'email' => 'john@cnn.com',
+        'phone' => '555-1234',
+        'story_concept' => 'Tech innovation',
+        'press_deadline' => '2026-08-30',
+        'story_details' => 'A story about tech.',
+        'best_contact' => 'Monday 9am',
+        'firstNumber' => 5,
+        'secondNumber' => 3,
+        'protection_question' => $captcha[0] + $captcha[1],
     ]);
 
     $response->assertRedirect(route('media-inquiries'));
