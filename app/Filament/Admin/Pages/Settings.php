@@ -15,6 +15,7 @@ use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Filament\Support\Enums\Alignment;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Gate;
 
 class Settings extends Page implements HasSchemas
 {
@@ -34,8 +35,19 @@ class Settings extends Page implements HasSchemas
 
     public ?array $data = [];
 
+    /**
+     * Site settings are super-admin only (M10): hidden from navigation for
+     * every other role.
+     */
+    public static function canAccess(): bool
+    {
+        return auth()->guard('admin')->user()?->isAdmin() ?? false;
+    }
+
     public function mount(): void
     {
+        Gate::authorize('settings');
+
         $this->fillForm();
     }
 
@@ -95,6 +107,8 @@ class Settings extends Page implements HasSchemas
 
     public function save(): void
     {
+        Gate::authorize('settings');
+
         $data = $this->form->getState();
 
         foreach ($data as $option => $value) {

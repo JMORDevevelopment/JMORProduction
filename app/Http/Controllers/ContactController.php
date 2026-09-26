@@ -18,6 +18,10 @@ class ContactController extends Controller
         $randomNumber1 = mt_rand($min, $max);
         $randomNumber2 = mt_rand($min, $max);
 
+        // Seed the challenge server-side; the posted firstNumber/secondNumber
+        // fields are ignored during validation (M12).
+        session(['captcha_numbers' => [$randomNumber1, $randomNumber2]]);
+
         return view('frontend.contact_us', [
             'title' => 'Contact Us',
             'description' => '',
@@ -69,7 +73,10 @@ class ContactController extends Controller
                 'reason' => $post['reason'],
                 'message' => $post['message'],
             ], function ($mail) use ($to, $post) {
-                $mail->to($to)->subject('Contact Us')->from($post['email']);
+                $mail->to($to)
+                    ->subject('Contact Us')
+                    ->from(config('mail.from.address'), config('mail.from.name'))
+                    ->replyTo($post['email']);
             });
         } catch (\Exception $e) {
             Log::error('Failed to send contact us email: '.$e->getMessage());

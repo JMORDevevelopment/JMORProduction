@@ -46,7 +46,16 @@ class RequestInformationRequest extends FormRequest
                 'required',
                 'integer',
                 function (string $attribute, mixed $value, Closure $fail) {
-                    $expected = (int) $this->input('firstNumber') + (int) $this->input('secondNumber');
+                    // Validate against the numbers seeded in session when the
+                    // form was rendered; posted firstNumber/secondNumber are
+                    // ignored so the challenge cannot be solved client-side (M12).
+                    $numbers = session('captcha_numbers');
+                    if (! is_array($numbers) || count($numbers) !== 2) {
+                        $fail('Your answer is wrong!');
+
+                        return;
+                    }
+                    $expected = (int) $numbers[0] + (int) $numbers[1];
                     if ((int) $value !== $expected) {
                         $fail('Your answer is wrong!');
                     }

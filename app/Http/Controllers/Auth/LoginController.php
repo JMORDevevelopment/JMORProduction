@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\LogHistory;
 use App\Models\Order;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
@@ -19,19 +20,28 @@ class LoginController extends Controller
 
     public function login(LoginRequest $request)
     {
-        // Manual MD5 authentication (legacy)
-        $user = User::where('email', $request->email)
-            ->where('password', md5($request->password))
-            ->first();
+        // Throttle failed attempts per email + IP (H2).
+        $throttleKey = Str::transliterate(Str::lower($request->input('email')).'|'.$request->ip());
 
-        if (! $user) {
+        if (RateLimiter::tooManyAttempts($throttleKey, 5)) {
+            throw ValidationException::withMessages([
+                'email' => 'Too many login attempts. Please try again in '.RateLimiter::availableIn($throttleKey).' seconds.',
+            ]);
+        }
+
+        // Validates bcrypt hashes directly and transparently upgrades legacy
+        // MD5 hashes (see MD5EloquentUserProvider::validateCredentials).
+        if (! Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
+            RateLimiter::hit($throttleKey);
+
             throw ValidationException::withMessages([
                 'email' => 'Wrong login details',
             ]);
         }
 
-        // Log in manually
-        Auth::loginUsingId($user->user_id, $request->has('remember'));
+        RateLimiter::clear($throttleKey);
+
+        $user = Auth::user();
 
         // Regenerate session
         $request->session()->regenerate();

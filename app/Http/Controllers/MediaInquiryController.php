@@ -20,6 +20,10 @@ class MediaInquiryController extends Controller
 
         $latestPosts = Blog::orderBy('id', 'desc')->limit(5)->get();
 
+        // Seed the challenge server-side; the posted firstNumber/secondNumber
+        // fields are ignored during validation (M12).
+        session(['captcha_numbers' => [$randomNumber1, $randomNumber2]]);
+
         return view('frontend.media_inquiries', [
             'title' => 'Media inquiries',
             'description' => '',
@@ -70,7 +74,10 @@ class MediaInquiryController extends Controller
             Mail::send('mails.media-inquiry', [
                 'mediaId' => $mediaInquiry->id,
             ], function ($mail) use ($to, $mediaInquiry) {
-                $mail->to($to)->subject('Media inquiries')->from($mediaInquiry->email);
+                $mail->to($to)
+                    ->subject('Media inquiries')
+                    ->from(config('mail.from.address'), config('mail.from.name'))
+                    ->replyTo($mediaInquiry->email);
             });
         } catch (\Exception $e) {
             Log::error('Failed to send media inquiry email: '.$e->getMessage());

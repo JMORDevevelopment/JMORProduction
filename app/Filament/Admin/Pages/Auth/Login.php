@@ -21,6 +21,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Enums\Alignment;
 use Illuminate\Auth\Events\Failed;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\HtmlString;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Locked;
@@ -36,12 +37,10 @@ class Login extends SimplePage
     #[Locked]
     public ?string $userUndertakingMultiFactorAuthentication = null;
 
-    public ?string $resolvedAuthMode = null;
-
     public function mount(): void
     {
         if (Filament::auth()->check()) {
-            redirect()->intended(Filament::getUrl());
+            throw new HttpResponseException(redirect()->intended(Filament::getUrl()));
         }
 
         $this->form->fill();
@@ -76,13 +75,12 @@ class Login extends SimplePage
             $this->throwFailureValidationException();
         }
 
-        // Use the admin's configured auth mode
+        // Use the admin's configured auth mode. This is resolved server-side
+        // only — the form never reveals which mode an account uses.
         $authMode = $user->auth_mode ?? 'both';
-        $this->resolvedAuthMode = $authMode;
 
-        // If this was just the Continue step (no auth mode resolved yet), re-render the form
-        if (is_null($this->resolvedAuthMode) || ! in_array($authMode, ['password', '2fa', 'both'])) {
-            return null;
+        if (! in_array($authMode, ['password', '2fa', 'both'])) {
+            $authMode = 'both';
         }
 
         // Mode: password only (no 2FA)
@@ -104,12 +102,8 @@ class Login extends SimplePage
         $password = $data['password'] ?? '';
         $remember = $data['remember'] ?? false;
 
-        if (blank($password)) {
-            $this->throwValidationExceptionWithMessage('data.password', 'Please enter your password.');
-        }
-
-        if (! $user->validatePassword($password)) {
-            event(new Failed('admin', $user, ['email' => $data['email'], 'password' => $password]));
+        if (blank($password) || ! $user->validatePassword($password)) {
+            event(new Failed('admin', $user, ['email' => $data['email']]));
 
             $this->throwFailureValidationException();
         }
@@ -122,7 +116,7 @@ class Login extends SimplePage
             $this->throwFailureValidationException();
         }
 
-        session()->regenerate();
+        $this->completeLogin();
 
         return app(LoginResponse::class);
     }
@@ -130,15 +124,23 @@ class Login extends SimplePage
     protected function authenticateWith2faOnly(Authenticatable $user, array $data): ?LoginResponse
     {
         if (! $user->hasEnabledTwoFactorAuthentication()) {
-            $this->throwValidationExceptionWithMessage('data.otp_code', 'Two factor authentication is not enabled for this account.');
+            $this->throwFailureValidationException();
         }
 
         $codeType = $data['code_type'] ?? 'otp';
 
         if ($codeType === 'recovery') {
-            $this->validateRecoveryCode($user, $data);
+            $valid = $this->validateRecoveryCodeSilently($user, $data);
         } else {
-            $this->validateOtpCode($user, $data);
+            $valid = $this->validateOtpCodeSilently($user, $data);
+        }
+
+        // Uniform failure so the response never discloses whether the account
+        // exists or which authentication mode it uses.
+        if (! $valid) {
+            event(new Failed('admin', $user, ['email' => $data['email']]));
+
+            $this->throwFailureValidationException();
         }
 
         // Check panel access
@@ -146,9 +148,12 @@ class Login extends SimplePage
             $this->throwFailureValidationException();
         }
 
+        // The 2FA challenge has been satisfied on this request.
+        $user->setTwoFactorChallengePassed();
+
         // Log in directly since OTP/recovery code already validated
         Filament::auth()->login($user, false);
-        session()->regenerate();
+        $this->completeLogin();
 
         return app(LoginResponse::class);
     }
@@ -158,25 +163,35 @@ class Login extends SimplePage
         $password = $data['password'] ?? '';
         $remember = $data['remember'] ?? false;
 
-        if (blank($password)) {
-            $this->throwValidationExceptionWithMessage('data.password', 'Please enter your password.');
-        }
-
-        // Step 1: Validate password
-        if (! $user->validatePassword($password)) {
-            event(new Failed('admin', $user, ['email' => $data['email'], 'password' => $password]));
+        // Step 1: Validate password. Failures are reported with the same
+        // generic message as every other credential failure.
+        if (blank($password) || ! $user->validatePassword($password)) {
+            event(new Failed('admin', $user, ['email' => $data['email']]));
 
             $this->throwFailureValidationException();
         }
 
-        // Step 2: Validate 2FA if enabled
+        // Step 2: Validate 2FA if enabled. The password was correct at this
+        // point, so field-specific feedback no longer leaks account state.
         if ($user->hasEnabledTwoFactorAuthentication()) {
             $codeType = $data['code_type'] ?? 'otp';
 
             if ($codeType === 'recovery') {
-                $this->validateRecoveryCode($user, $data);
+                if (! $this->validateRecoveryCodeSilently($user, $data)) {
+                    event(new Failed('admin', $user, ['email' => $data['email']]));
+
+                    $this->throwValidationExceptionWithMessage('data.recovery_code', 'The provided recovery code is invalid.');
+                }
+
+                $user->setTwoFactorChallengePassed();
             } else {
-                $this->validateOtpCode($user, $data);
+                if (! $this->validateOtpCodeSilently($user, $data)) {
+                    event(new Failed('admin', $user, ['email' => $data['email']]));
+
+                    $this->throwValidationExceptionWithMessage('data.otp_code', 'The provided authenticator code is invalid.');
+                }
+
+                $user->setTwoFactorChallengePassed();
             }
         }
 
@@ -189,9 +204,19 @@ class Login extends SimplePage
             $this->throwFailureValidationException();
         }
 
-        session()->regenerate();
+        $this->completeLogin();
 
         return app(LoginResponse::class);
+    }
+
+    /**
+     * Final steps shared by every successful authentication path:
+     * regenerate the session and clear the failed-attempt counter.
+     */
+    protected function completeLogin(): void
+    {
+        session()->regenerate();
+        $this->clearRateLimiter('authenticate');
     }
 
     protected function throwFailureValidationException(): never
@@ -208,30 +233,26 @@ class Login extends SimplePage
         ]);
     }
 
-    protected function validateOtpCode(Authenticatable $user, array $data): void
+    protected function validateOtpCodeSilently(Authenticatable $user, array $data): bool
     {
         $otpCode = $data['otp_code'] ?? '';
 
-        if (blank($otpCode)) {
-            $this->throwValidationExceptionWithMessage('data.otp_code', 'Please enter your authenticator code.');
+        if (blank($otpCode) || blank($user->two_factor_secret)) {
+            return false;
         }
 
         $secret = decrypt($user->two_factor_secret);
         $google2fa = app(TwoFactorAuthenticationProvider::class);
 
-        if (! $google2fa->verify($secret, $otpCode)) {
-            event(new Failed('admin', $user, ['email' => $data['email']]));
-
-            $this->throwValidationExceptionWithMessage('data.otp_code', 'The provided authenticator code is invalid.');
-        }
+        return $google2fa->verify($secret, $otpCode);
     }
 
-    protected function validateRecoveryCode(Authenticatable $user, array $data): void
+    protected function validateRecoveryCodeSilently(Authenticatable $user, array $data): bool
     {
         $recoveryCode = $data['recovery_code'] ?? '';
 
         if (blank($recoveryCode)) {
-            $this->throwValidationExceptionWithMessage('data.recovery_code', 'Please enter your recovery code.');
+            return false;
         }
 
         $validCode = collect($user->recoveryCodes())->first(
@@ -239,9 +260,7 @@ class Login extends SimplePage
         );
 
         if (! $validCode) {
-            event(new Failed('admin', $user, ['email' => $data['email']]));
-
-            $this->throwValidationExceptionWithMessage('data.recovery_code', 'The provided recovery code is invalid.');
+            return false;
         }
 
         // Replace the used recovery code with a new one
@@ -251,6 +270,8 @@ class Login extends SimplePage
         $user->forceFill([
             'two_factor_recovery_codes' => encrypt(json_encode($recoveryCodes)),
         ])->save();
+
+        return true;
     }
 
     public function form(Schema $schema): Schema
@@ -262,31 +283,14 @@ class Login extends SimplePage
                     ->label('Email')
                     ->email()
                     ->required()
+                    ->maxLength(255)
+                    ->trim()
                     ->autocomplete()
-                    ->autofocus()
-                    ->live(onBlur: true)
-                    ->afterStateUpdated(function () {
-                        $email = $this->data['email'] ?? null;
-
-                        if (blank($email)) {
-                            $this->resolvedAuthMode = null;
-
-                            return;
-                        }
-
-                        $adminProvider = Filament::auth()->getProvider();
-                        $user = $adminProvider->retrieveByCredentials(['email' => $email]);
-                        $this->resolvedAuthMode = $user?->auth_mode ?? null;
-                    }),
+                    ->autofocus(),
 
                 Placeholder::make('info')
                     ->hiddenLabel()
-                    ->content(fn (): string => match ($this->resolvedAuthMode) {
-                        'password' => 'Enter your password to sign in.',
-                        '2fa' => 'Enter your authenticator or recovery code to sign in.',
-                        'both' => 'Enter your password and authenticator code to sign in.',
-                        default => 'Enter your email above, then click Continue.',
-                    })
+                    ->content('Enter your credentials to sign in.')
                     ->visible(fn (): bool => filled($this->data['email'] ?? null)),
 
                 TextInput::make('password')
@@ -294,7 +298,7 @@ class Login extends SimplePage
                     ->password()
                     ->revealable(filament()->arePasswordsRevealable())
                     ->autocomplete('current-password')
-                    ->visible(fn (): bool => in_array($this->resolvedAuthMode, ['password', 'both'])),
+                    ->maxLength(255),
 
                 Radio::make('code_type')
                     ->label('Verification')
@@ -304,23 +308,23 @@ class Login extends SimplePage
                     ])
                     ->default('otp')
                     ->live()
-                    ->inline()
-                    ->visible(fn (): bool => in_array($this->resolvedAuthMode, ['2fa', 'both'])),
+                    ->inline(),
 
                 TextInput::make('otp_code')
                     ->label('Authenticator Code')
                     ->length(6)
+                    ->maxLength(6)
                     ->autocomplete('one-time-code')
-                    ->visible(fn (Get $get): bool => in_array($this->resolvedAuthMode, ['2fa', 'both']) && ($get('code_type') ?? 'otp') !== 'recovery'),
+                    ->visible(fn (Get $get): bool => ($get('code_type') ?? 'otp') !== 'recovery'),
 
                 TextInput::make('recovery_code')
                     ->label('Recovery Code')
+                    ->maxLength(255)
                     ->autocomplete('one-time-code')
-                    ->visible(fn (Get $get): bool => in_array($this->resolvedAuthMode, ['2fa', 'both']) && ($get('code_type') ?? 'otp') === 'recovery'),
+                    ->visible(fn (Get $get): bool => ($get('code_type') ?? 'otp') === 'recovery'),
 
                 Checkbox::make('remember')
-                    ->label('Remember me')
-                    ->visible(fn (): bool => in_array($this->resolvedAuthMode, ['password', 'both'])),
+                    ->label('Remember me'),
             ]);
     }
 
@@ -339,7 +343,7 @@ class Login extends SimplePage
         return [
             SchemaActions::make([
                 Action::make('authenticate')
-                    ->label($this->resolvedAuthMode ? 'Sign in' : 'Continue')
+                    ->label('Sign in')
                     ->submit('authenticate'),
             ])->fullWidth(),
         ];
