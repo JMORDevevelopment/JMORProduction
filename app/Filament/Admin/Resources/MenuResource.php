@@ -7,6 +7,7 @@ use App\Filament\Admin\Resources\MenuResource\Pages\EditMenu;
 use App\Filament\Admin\Resources\MenuResource\Pages\ListMenus;
 use App\Models\Menu;
 use App\Models\MenuGroup;
+use Closure;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -46,7 +47,23 @@ class MenuResource extends Resource
 
                 TextInput::make('url')
                     ->label('URL')
-                    ->maxLength(255),
+                    ->nullable()
+                    ->maxLength(255)
+                    ->dehydrateStateUsing(fn ($state) => $state ?? '')
+                    ->rule('regex:/^(?!\/\/)[^\s*]+$/')
+                    ->rule(fn () => function (string $attribute, mixed $value, Closure $fail): void {
+                        if (str_contains($value, '://')) {
+                            if (! filter_var($value, FILTER_VALIDATE_URL)) {
+                                $fail('The URL must be a valid URL or a route name.');
+                            }
+
+                            return;
+                        }
+
+                        if (preg_match('/[^a-z0-9_\-.\/]/i', $value)) {
+                            $fail('The URL must be a valid URL or a route name.');
+                        }
+                    }),
 
                 Select::make('parent_id')
                     ->label('Parent Menu')
@@ -65,6 +82,7 @@ class MenuResource extends Resource
                     ->default(1),
 
                 Select::make('menu_type')
+                    ->dehydrateStateUsing(fn ($state) => $state ?? '')
                     ->label('Menu Type')
                     ->options([
                         '' => 'None',

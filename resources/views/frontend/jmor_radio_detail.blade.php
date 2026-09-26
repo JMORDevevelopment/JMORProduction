@@ -31,7 +31,7 @@
                                 <span style="color:#007bff;">{{ date('m-d-Y', strtotime($jmor_radio_datas['show_date'])) }}</span>
                             </div>
                         </div>
-                        <p>{!! $jmor_radio_datas['description'] !!}</p>
+                        <p>{!! \App\Support\RichText::sanitize($jmor_radio_datas['description']) !!}</p>
                     </div>
                     <div class="col-lg-4">
                         <div class="jmor_radio-widget mb-4">

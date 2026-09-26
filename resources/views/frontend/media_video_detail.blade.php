@@ -23,13 +23,13 @@
                 <div class="row justify-content-between">
                     <div class="col-lg-8">
                         <div class="case_studies-post">
-                            <span>{!! $media_video_datas['video_link'] !!}</span>
+                            <span><a href="{{ $media_video_datas['video_link'] }}" target="_blank" rel="noopener noreferrer">{{ $media_video_datas['video_link'] }}</a></span>
                             <div class="meta font-lora mb-3">
                                 <a href="#">Post Date</a>
                                 <a href="#">{{ date('m-d-Y', strtotime($media_video_datas['published'])) }}</a>
                             </div>
                         </div>
-                        <p>{!! $media_video_datas['description'] !!}</p>
+                        <p>{!! \App\Support\RichText::sanitize($media_video_datas['description']) !!}</p>
                     </div>
                     <div class="col-lg-4">
                         <div class="jmor_radio-widget mb-4">

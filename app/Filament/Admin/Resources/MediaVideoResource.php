@@ -55,12 +55,14 @@ class MediaVideoResource extends Resource
                     ->dehydrated(),
 
                 Textarea::make('description')
+                    ->required()
                     ->label('Content')
                     ->rows(10),
 
                 TextInput::make('video_link')
                     ->label('Video URL')
                     ->required()
+                    ->url()->rule('url:http,https')
                     ->maxLength(255)
                     ->placeholder('https://youtube.com/watch?v=...'),
 

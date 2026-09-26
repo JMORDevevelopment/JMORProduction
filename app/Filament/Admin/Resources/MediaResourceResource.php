@@ -57,10 +57,12 @@ class MediaResourceResource extends Resource
                     ->dehydrated(),
 
                 Textarea::make('description')
+                    ->required()
                     ->label('Content')
                     ->rows(10),
 
                 FileUpload::make('image')
+                    ->dehydrateStateUsing(fn ($state) => $state ?? '')
                     ->label('Thumbnail')
                     ->directory('uploads/media-resources')
                     ->disk('public_direct')
@@ -73,14 +75,17 @@ class MediaResourceResource extends Resource
                     ->default(now()),
 
                 TextInput::make('meta_title')
+                    ->dehydrateStateUsing(fn ($state) => $state ?? '')
                     ->label('Meta Title')
                     ->maxLength(255),
 
                 TextInput::make('meta_keywords')
+                    ->dehydrateStateUsing(fn ($state) => $state ?? '')
                     ->label('Meta Keywords')
                     ->maxLength(255),
 
                 Textarea::make('meta_description')
+                    ->dehydrateStateUsing(fn ($state) => $state ?? '')
                     ->label('Meta Description')
                     ->rows(3),
             ]);

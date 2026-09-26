@@ -27,7 +27,7 @@
                                 <img class="rounded mb-lg-4 mb-3" height="250px" src="{{ asset($service_datas['image']) }}" alt="card image">
                             </a>
                         </div>
-                        <p>{!! $service_datas['description'] !!}</p>
+                        <p>{!! \App\Support\RichText::sanitize($service_datas['description']) !!}</p>
                     </div>
                     <div class="col-lg-4">
                         <div class="blog-widget mb-4">

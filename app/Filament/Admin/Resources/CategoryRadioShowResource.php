@@ -53,10 +53,12 @@ class CategoryRadioShowResource extends Resource
                     }),
 
                 TextInput::make('sub_title')
+                    ->required()
                     ->label('Subtitle')
                     ->maxLength(255),
 
                 Textarea::make('description')
+                    ->required()
                     ->label('Description')
                     ->rows(5),
 
@@ -79,6 +81,7 @@ class CategoryRadioShowResource extends Resource
                     ->default(true),
 
                 FileUpload::make('image')
+                    ->dehydrateStateUsing(fn ($state) => $state ?? '')
                     ->label('Image')
                     ->directory('uploads/category_radio_show')
                     ->disk('public_direct')

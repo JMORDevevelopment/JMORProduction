@@ -161,7 +161,10 @@ class PaymentService
             return;
         }
 
+        // Only activate an existing, still-inactive coupon (M6); the code was
+        // already existence-checked when it was applied to the cart.
         CouponCheckout::where('coupon_number', session()->get('coupon_code'))
+            ->where('status', 0)
             ->update(['status' => 1]);
     }
 
@@ -181,7 +184,11 @@ class PaymentService
             return;
         }
 
-        $couponNumber = strtoupper(substr(md5(time()), 0, 7));
+        // Unpredictable, collision-checked gift-card coupon code (M6) —
+        // replaces the old md5(time()) scheme, guessable to the second.
+        do {
+            $couponNumber = strtoupper(substr(bin2hex(random_bytes(5)), 0, 7));
+        } while (CouponCheckout::where('coupon_number', $couponNumber)->exists());
 
         CouponCheckout::create([
             'gift_card_id' => $giftCard->id,

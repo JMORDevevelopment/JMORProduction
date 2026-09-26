@@ -31,7 +31,7 @@
                                 <a href="#">{{ date('m-d-Y', strtotime($press_releases_datas['published'])) }}</a>
                             </div>
                         </div>
-                        <p>{!! $press_releases_datas['description'] !!}</p>
+                        <p>{!! \App\Support\RichText::sanitize($press_releases_datas['description']) !!}</p>
                     </div>
                     <div class="col-lg-4">
                         <div class="case_studies-widget mb-4">

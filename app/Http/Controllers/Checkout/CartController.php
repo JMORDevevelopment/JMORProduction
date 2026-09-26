@@ -80,9 +80,10 @@ class CartController extends Controller
 
     public function couponCode(Request $request, $code)
     {
-        $this->cart->applyCoupon($code);
-
-        return response('ok');
+        // The cart JS treats any non-"ok" body as an invalid gift card.
+        return $this->cart->applyCoupon($code)
+            ? response('ok')
+            : response('Invalid Gift Card');
     }
 
     public function removeItem($rowid)

@@ -28,7 +28,7 @@
                             </a>
                         @endif
                         <div class="blog-post">
-                            {!! $page_datas['description'] !!}
+                            {!! \App\Support\RichText::sanitize($page_datas['description']) !!}
                         </div>
                     </div>
                     <div class="col-lg-4">
