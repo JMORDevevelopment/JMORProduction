@@ -3,8 +3,13 @@
 namespace App\Providers;
 
 use App\Auth\MD5EloquentUserProvider;
+use App\Models\Admin;
+use Filament\Actions\Action;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -20,7 +25,41 @@ class AppServiceProvider extends ServiceProvider
             return new MD5EloquentUserProvider($app['hash'], $config['model']);
         });
 
+        $this->registerAdminAuthorization();
         $this->configureFileUploads();
+    }
+
+    /**
+     * Central authorization for the admin panel:
+     *
+     * - Super admins (role = 1) are allowed every ability.
+     * - Other admin roles are denied destructive abilities (delete, backup,
+     *   order-status changes, …) but keep access to regular CRUD.
+     * - Users of other guards are unaffected.
+     */
+    private function registerAdminAuthorization(): void
+    {
+        Gate::before(function ($user, string $ability): ?bool {
+            if (! $user instanceof Admin) {
+                return null;
+            }
+
+            if ($user->isAdmin()) {
+                return true;
+            }
+
+            if (in_array($ability, Admin::RESTRICTED_ABILITIES, true)) {
+                return false;
+            }
+
+            return null;
+        });
+
+        Action::configureUsing(function (Action $action): void {
+            if ($action instanceof DeleteAction || $action instanceof DeleteBulkAction) {
+                $action->authorize('delete');
+            }
+        });
     }
 
     /**

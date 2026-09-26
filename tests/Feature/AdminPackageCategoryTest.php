@@ -21,10 +21,17 @@ beforeEach(function () {
         'email' => 'admin@test.com',
         'password' => bcrypt('password'),
         'status' => 1,
+        'role' => 1,
         'image' => '',
         'last_login' => now(),
         'date_register' => now(),
     ]);
+
+    $this->admin->forceFill([
+        'two_factor_secret' => encrypt('test-two-factor-secret'),
+        'two_factor_confirmed_at' => now(),
+    ])->save();
+    $this->admin->setTwoFactorChallengePassed();
 
     $this->actingAs($this->admin, 'admin');
 

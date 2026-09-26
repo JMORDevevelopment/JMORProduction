@@ -36,6 +36,7 @@ class Dashboard extends BaseDashboard
                 ->icon('heroicon-o-arrow-down-tray')
                 ->color('primary')
                 ->action(fn () => $this->backup())
+                ->authorize('backup')
                 ->requiresConfirmation()
                 ->modalHeading('Database Backup')
                 ->modalDescription('This will create a SQL backup file of the entire database.')
@@ -73,7 +74,7 @@ class Dashboard extends BaseDashboard
                         return 'NULL';
                     }
 
-                    return "'".addslashes($value)."'";
+                    return DB::getPdo()->quote($value);
                 }, (array) $row);
 
                 $result .= "INSERT INTO `{$tableName}` VALUES(".implode(', ', $values).");\n";

@@ -69,7 +69,7 @@ return [
 
     'providers' => [
         'users' => [
-            'driver' => 'eloquent',
+            'driver' => 'md5-eloquent',
             'model' => User::class,
         ],
 
