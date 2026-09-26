@@ -33,7 +33,7 @@
                                     <a href="#">Post Date</a>
                                     <a href="#">{{ date('m-d-Y', strtotime($new['published'])) }}</a>
                                 </div>
-                                <p>{!! $new['description'] !!}</p>
+                                <p>{!! \App\Support\RichText::sanitize($new['description']) !!}</p>
                             </div>
                         @endforeach
                         <div class="row justify-content-between align-items-center mb-4">

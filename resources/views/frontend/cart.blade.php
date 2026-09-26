@@ -38,10 +38,13 @@
                                                 id="total-{{ $item['id'] }}">${{ number_format($item['price'], 2) }}</span>
                                         </td>
                                         <td class="text-left">
-                                            <a href="{{ url('cart/removeItem/' . $item['id']) }}"
-                                                data-did="{{ $item['id'] }}"
-                                                onclick="return confirm('Are you sure to delete this record ?')"
-                                                class="btn btn-danger delete_class"><i class="fa fa-trash"></i></a>
+                                            <form action="{{ url('cart/removeItem/' . $item['id']) }}" method="post" style="display: inline;">
+                                                @csrf
+                                                <button type="submit"
+                                                    data-did="{{ $item['id'] }}"
+                                                    onclick="return confirm('Are you sure to delete this record ?')"
+                                                    class="btn btn-danger delete_class"><i class="fa fa-trash"></i></button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -121,13 +124,17 @@
                                     <td colspan="5" style="border: 0px!important;"></td>
                                     @if ($has_gift)
                                         <td id="checkBtn" style="border: 0px!important;">
-                                            <a href="{{ url('home/placeOrderGiftcard') }}"
-                                                class="btn btn-success btn-block">Checkout</a>
+                                            <form action="{{ url('home/placeOrderGiftcard') }}" method="post" style="margin: 0;">
+                                                @csrf
+                                                <button type="submit" class="btn btn-success btn-block">Checkout</button>
+                                            </form>
                                         </td>
                                     @else
                                         <td id="checkBtn" style="border: 0px!important;">
-                                            <a href="{{ url('home/placeOrder') }}"
-                                                class="btn btn-success btn-block">Checkout</a>
+                                            <form action="{{ url('home/placeOrder') }}" method="post" style="margin: 0;">
+                                                @csrf
+                                                <button type="submit" class="btn btn-success btn-block">Checkout</button>
+                                            </form>
                                         </td>
                                     @endif
                                 </tr>

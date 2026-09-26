@@ -22,6 +22,7 @@ class EditPackage extends EditRecord
     protected function mutateFormDataBeforeSave(array $data): array
     {
         $data['image'] = $data['image'] ?? $this->record->image ?? '';
+        $data['description'] = $data['description'] ?? '';
 
         return $data;
     }

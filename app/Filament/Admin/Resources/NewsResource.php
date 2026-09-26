@@ -76,10 +76,12 @@ class NewsResource extends Resource
                     ->default(0),
 
                 Textarea::make('description')
+                    ->required()
                     ->label('Content')
                     ->rows(10),
 
                 FileUpload::make('image')
+                    ->dehydrateStateUsing(fn ($state) => $state ?? '')
                     ->label('Thumbnail')
                     ->directory('uploads/news')
                     ->disk('public_direct')

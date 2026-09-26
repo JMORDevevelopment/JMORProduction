@@ -87,9 +87,13 @@ Route::post('/contact', [ContactController::class, 'submit'])
 // CART ROUTES
 // ==============================
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
-Route::post('/cart/updateItemQty/{rowid}/{qty}', [CartController::class, 'updateItemQty'])->name('cart.update');
-Route::post('/cart/couponCode/{code}', [CartController::class, 'couponCode'])->name('cart.coupon');
-Route::get('/cart/removeItem/{rowid}', [CartController::class, 'removeItem'])->name('cart.remove');
+Route::post('/cart/updateItemQty/{rowid}/{qty}', [CartController::class, 'updateItemQty'])
+    ->name('cart.update')
+    ->middleware('throttle:30,1');
+Route::post('/cart/couponCode/{code}', [CartController::class, 'couponCode'])
+    ->name('cart.coupon')
+    ->middleware('throttle:10,1');
+Route::post('/cart/removeItem/{rowid}', [CartController::class, 'removeItem'])->name('cart.remove');
 
 // ==============================
 // CHECKOUT & ORDER ROUTES
@@ -97,17 +101,29 @@ Route::get('/cart/removeItem/{rowid}', [CartController::class, 'removeItem'])->n
 
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout')->middleware('auth.user');
 Route::get('/checkout-confirm', [CheckoutController::class, 'confirm'])->name('checkout.confirm')->middleware('auth.user');
-Route::get('/home/placeOrder', [CheckoutController::class, 'placeOrder'])->name('place.order');
-Route::get('/home/placeOrderGiftcard', [CheckoutController::class, 'placeOrderGiftCard'])->name('place.gift');
-Route::post('/home/checkout_from_data', [CheckoutController::class, 'saveFormData'])->name('checkout.data');
-Route::post('/home/chargeCreditCard', [PaymentController::class, 'chargeCreditCard'])->name('charge.card');
+Route::post('/home/placeOrder', [CheckoutController::class, 'placeOrder'])
+    ->name('place.order')
+    ->middleware('throttle:10,1');
+Route::post('/home/placeOrderGiftcard', [CheckoutController::class, 'placeOrderGiftCard'])
+    ->name('place.gift')
+    ->middleware('throttle:10,1');
+Route::post('/home/checkout_from_data', [CheckoutController::class, 'saveFormData'])
+    ->name('checkout.data')
+    ->middleware('throttle:10,1');
+Route::post('/home/chargeCreditCard', [PaymentController::class, 'chargeCreditCard'])
+    ->name('charge.card')
+    ->middleware('throttle:5,1');
 Route::get('/checkout-success', [CheckoutController::class, 'success'])->name('checkout.success');
 
 // ==============================
 // ADD TO CART
 // ==============================
-Route::post('/home/addToCartPackages', [CartController::class, 'addPackages'])->name('add.cart.packages');
-Route::post('/home/addToCartGift', [CartController::class, 'addGiftCard'])->name('add.cart.gift');
+Route::post('/home/addToCartPackages', [CartController::class, 'addPackages'])
+    ->name('add.cart.packages')
+    ->middleware('throttle:30,1');
+Route::post('/home/addToCartGift', [CartController::class, 'addGiftCard'])
+    ->name('add.cart.gift')
+    ->middleware('throttle:30,1');
 Route::get('/home/single_package/{id}', [PackageController::class, 'single'])->name('single.package');
 
 // ==============================

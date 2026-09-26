@@ -96,7 +96,7 @@
                                         <a href="#"></a>
                                     </div>
                                 </div>
-                                <p>{!! $pkg_description_full !!}</p>
+                                <p>{!! \App\Support\RichText::sanitize($pkg_description_full) !!}</p>
                             </div>
                         @break {{-- We only need the first package for the main content --}}
                         @endforeach

@@ -24,7 +24,7 @@
                     <div class="col-lg-8">
                         @foreach($posts as $post)
                             <div class="jmor_radio-post">
-                                <span>{!! $post->video_link !!}</span>
+                                <span><a href="{{ $post->video_link }}" target="_blank" rel="noopener noreferrer">{{ $post->video_link }}</a></span>
                                 <h3><a href="{{ route('media-video.detail', $post->link) }}">{{ $post->name }}</a></h3>
                                 <div class="meta font-lora mb-3">
                                     <a href="#">Post Date</a>

@@ -33,7 +33,7 @@
                                 <a href="#">{{ date('m-d-Y', strtotime($blog_datas['published'])) }}</a>
                             </div>
                         </div>
-                        <p>{!! $blog_datas['description'] !!}</p>
+                        <p>{!! \App\Support\RichText::sanitize($blog_datas['description']) !!}</p>
                     </div>
                     <div class="col-lg-4">
                         <div class="blog-widget mb-4">

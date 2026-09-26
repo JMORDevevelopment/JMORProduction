@@ -59,6 +59,7 @@ class RadioShowResource extends Resource
                     ->dehydrated(),
 
                 Textarea::make('description')
+                    ->required()
                     ->label('Description')
                     ->rows(10),
 
@@ -73,6 +74,7 @@ class RadioShowResource extends Resource
                     ->label('Show Date'),
 
                 FileUpload::make('image')
+                    ->dehydrateStateUsing(fn ($state) => $state ?? '')
                     ->label('Image')
                     ->directory('uploads/radio_show')
                     ->disk('public_direct')
