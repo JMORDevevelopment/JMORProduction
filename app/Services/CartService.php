@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\CouponCheckout;
+use App\Models\GiftCard;
+
 class CartService
 {
     public function __construct(
@@ -92,8 +95,27 @@ class CartService
         session()->put('cart', $cart);
     }
 
-    public function applyCoupon(string $code): void
+    /**
+     * Store a gift-card coupon code in the session only when the code exists
+     * and has not been redeemed yet (M6), mirroring JMOR_2 Cart::couponCode().
+     * On success the gift card's price is stored as discount_value so the
+     * checkout subtracts it from the grand total.
+     */
+    public function applyCoupon(string $code): bool
     {
-        session()->put('coupon_code', $code);
+        $coupon = CouponCheckout::where('coupon_number', $code)
+            ->where('status', 0)
+            ->first();
+
+        if (! $coupon) {
+            return false;
+        }
+
+        $price = (float) (GiftCard::where('id', $coupon->gift_card_id)->value('price') ?? 0);
+
+        session()->put('coupon_code', $coupon->coupon_number);
+        session()->put('discount_value', $price);
+
+        return true;
     }
 }

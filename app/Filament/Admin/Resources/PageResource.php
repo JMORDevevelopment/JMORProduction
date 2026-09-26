@@ -7,6 +7,7 @@ use App\Filament\Admin\Resources\PageResource\Pages\EditPage;
 use App\Filament\Admin\Resources\PageResource\Pages\ListPages;
 use App\Models\Menu;
 use App\Models\Page;
+use Closure;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -50,6 +51,27 @@ class PageResource extends Resource
                     ->live(onBlur: true)
                     ->afterStateUpdated(function ($set, $state) {
                         $set('link', Str::slug($state));
+                    })
+                    ->rule(function ($record) {
+                        return function (string $attribute, mixed $value, Closure $fail) use ($record): void {
+                            $slug = Str::slug(trim((string) $value));
+
+                            if ($slug === '') {
+                                $fail('The title must contain at least one letter or number.');
+
+                                return;
+                            }
+
+                            $query = Page::query()->where('link', $slug);
+
+                            if ($record instanceof Page) {
+                                $query->where('id', '!=', $record->id);
+                            }
+
+                            if ($query->exists()) {
+                                $fail('A page with this URL slug already exists. Please choose a different title.');
+                            }
+                        };
                     }),
 
                 Select::make('menu_location')
@@ -76,10 +98,12 @@ class PageResource extends Resource
                     ->default(0),
 
                 Textarea::make('description')
+                    ->required()
                     ->label('Content')
                     ->rows(10),
 
                 FileUpload::make('image')
+                    ->dehydrateStateUsing(fn ($state) => $state ?? '')
                     ->label('Thumbnail')
                     ->directory('uploads/pages')
                     ->disk('public_direct')
@@ -89,14 +113,17 @@ class PageResource extends Resource
                     ->columnSpanFull(),
 
                 TextInput::make('meta_title')
+                    ->dehydrateStateUsing(fn ($state) => $state ?? '')
                     ->label('Meta Title')
                     ->maxLength(255),
 
                 TextInput::make('meta_keywords')
+                    ->dehydrateStateUsing(fn ($state) => $state ?? '')
                     ->label('Meta Keywords')
                     ->maxLength(255),
 
                 Textarea::make('meta_description')
+                    ->dehydrateStateUsing(fn ($state) => $state ?? '')
                     ->label('Meta Description')
                     ->rows(3),
             ]);

@@ -50,6 +50,7 @@ class SliderResource extends Resource
                 TextInput::make('slider_link')
                     ->label('Link URL')
                     ->required()
+                    ->url()->rule('url:http,https')
                     ->maxLength(255)
                     ->placeholder('https://example.com/page'),
 

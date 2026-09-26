@@ -101,7 +101,7 @@
             <div id="home{{ $homeTab['tab_id'] }}"
                  class="container tab-pane {{ $index == 3 ? 'active' : '' }}">
                 <br>
-                {!! $homeTab['tab_description'] !!}
+                {!! \App\Support\RichText::sanitize($homeTab['tab_description']) !!}
 
                 <div class="row">
                     <div class="col-md-4">

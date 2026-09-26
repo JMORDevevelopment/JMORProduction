@@ -31,7 +31,7 @@
                                 <a href="#">{{ date('m-d-Y', strtotime($case_studies_datas['published'])) }}</a>
                             </div>
                         </div>
-                        <p>{!! $case_studies_datas['description'] !!}</p>
+                        <p>{!! \App\Support\RichText::sanitize($case_studies_datas['description']) !!}</p>
                     </div>
                     <div class="col-lg-4">
                         <div class="jmor_radio-widget mb-4">
