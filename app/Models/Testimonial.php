@@ -15,6 +15,7 @@ class Testimonial extends Model
         'service_used',
         'message',
         'status',
+        'published',
     ];
 
     protected $casts = [
