@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Notifications\ResetPassword;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -38,6 +39,11 @@ class User extends Authenticatable
     ];
 
     // Helper methods
+    public function group(): BelongsTo
+    {
+        return $this->belongsTo(UserGroup::class, 'user_group_id', 'user_group_id');
+    }
+
     public function getFullNameAttribute(): string
     {
         return trim($this->firstname.' '.$this->lastname);
