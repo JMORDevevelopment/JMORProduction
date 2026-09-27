@@ -16,6 +16,7 @@ class ContactUs extends Model
         'phone',
         'reason',
         'message',
+        'status',
         'ip',
         'date_time',
     ];
