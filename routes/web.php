@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AdminInvoiceController;
+use App\Http\Controllers\Auth\AdminForgotPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
@@ -72,6 +74,32 @@ Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showRese
 Route::post('/reset-password', [ResetPasswordController::class, 'reset'])
     ->name('reset-password.update')
     ->middleware('throttle:5,1');
+
+// ==============================
+// ADMIN PASSWORD RESET ROUTES
+// Token-based reset replacing the original CI admin Forgot_password backdoor
+// (which logged you in with only an email address).
+// ==============================
+Route::get('/admin/forgot-password', [AdminForgotPasswordController::class, 'showForm'])
+    ->name('admin.forgot-password');
+Route::post('/admin/forgot-password', [AdminForgotPasswordController::class, 'send'])
+    ->name('admin.forgot-password.send')
+    ->middleware('throttle:5,1');
+Route::get('/admin/reset-password/{token}', [AdminForgotPasswordController::class, 'showResetForm'])
+    ->name('admin.reset-password');
+Route::post('/admin/reset-password', [AdminForgotPasswordController::class, 'reset'])
+    ->name('admin.reset-password.update')
+    ->middleware('throttle:5,1');
+
+// ==============================
+// ADMIN INVOICE ROUTES (parity: CI admin/orders/transaction_invoice)
+// ==============================
+Route::middleware('auth:admin')->prefix('admin')->group(function () {
+    Route::get('/order_invoice/{order_id}', [AdminInvoiceController::class, 'orderInvoice'])
+        ->name('admin.order_invoice');
+    Route::get('/giftcard_invoice/{order_id}', [AdminInvoiceController::class, 'giftcardInvoice'])
+        ->name('admin.giftcard_invoice');
+});
 
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 

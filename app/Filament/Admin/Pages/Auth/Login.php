@@ -345,6 +345,10 @@ class Login extends SimplePage
                 Action::make('authenticate')
                     ->label('Sign in')
                     ->submit('authenticate'),
+                Action::make('forgotPassword')
+                    ->label('Forgot password?')
+                    ->url(route('admin.forgot-password'))
+                    ->color('gray'),
             ])->fullWidth(),
         ];
     }
