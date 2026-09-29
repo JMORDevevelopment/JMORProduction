@@ -1,9 +1,12 @@
 <?php
 
+use App\Filament\Admin\Resources\ContactUsResource\Pages\CreateContactUs;
 use App\Filament\Admin\Resources\ContactUsResource\Pages\EditContactUs;
 use App\Filament\Admin\Resources\ContactUsResource\Pages\ListContactUs;
+use App\Filament\Admin\Resources\MediaInquiryResource\Pages\CreateMediaInquiry;
 use App\Filament\Admin\Resources\MediaInquiryResource\Pages\EditMediaInquiry;
 use App\Filament\Admin\Resources\MediaInquiryResource\Pages\ListMediaInquiries;
+use App\Filament\Admin\Resources\RequestInformationResource\Pages\CreateRequestInformation;
 use App\Filament\Admin\Resources\RequestInformationResource\Pages\ListRequestInformations;
 use App\Filament\Admin\Resources\TestimonialResource\Pages\CreateTestimonial;
 use App\Filament\Admin\Resources\TestimonialResource\Pages\EditTestimonial;
@@ -248,4 +251,84 @@ test('admin can approve a pending testimonial', function () {
         ->assertHasNoFormErrors();
 
     $this->assertDatabaseHas('testimony_form', ['id' => $testimonial->id, 'status' => 1]);
+});
+
+test('admin can create a contact entry', function () {
+    Livewire::test(CreateContactUs::class)
+        ->fillForm([
+            'name' => 'New Person',
+            'email' => 'newperson@example.com',
+            'phone' => '555-0199',
+            'reason' => 'Question',
+            'message' => 'Hello there',
+            'status' => 1,
+        ])
+        ->call('create')
+        ->assertHasNoFormErrors();
+
+    $this->assertDatabaseHas('contact_us', [
+        'email' => 'newperson@example.com',
+        'status' => 1,
+    ]);
+});
+
+test('admin can create a media inquiry', function () {
+    Livewire::test(CreateMediaInquiry::class)
+        ->fillForm([
+            'media' => 'BBC',
+            'contact' => 'Reporter One',
+            'email' => 'reporter@bbc.com',
+            'phone' => '555-0111',
+            'story_concept' => 'A feature story',
+            'media_status' => '0',
+        ])
+        ->call('create')
+        ->assertHasNoFormErrors();
+
+    $this->assertDatabaseHas('media_inquiries', [
+        'media' => 'BBC',
+        'media_status' => '0',
+    ]);
+});
+
+test('admin can create a request information entry', function () {
+    Livewire::test(CreateRequestInformation::class)
+        ->fillForm([
+            'first_name' => 'Reg',
+            'last_name' => 'Uester',
+            'email' => 'requester@example.com',
+            'phone' => '555-0122',
+            'company' => 'Acme Corp',
+            'service_intersted' => 'Hosting',
+            'status' => 0,
+        ])
+        ->call('create')
+        ->assertHasNoFormErrors();
+
+    $this->assertDatabaseHas('request_information', [
+        'email' => 'requester@example.com',
+    ]);
+});
+
+test('admin can delete a testimonial', function () {
+    $user = User::create([
+        'firstname' => 'Delete',
+        'lastname' => 'Customer',
+        'email' => 'delete.customer@example.com',
+        'password' => bcrypt('password'),
+        'date_added' => now(),
+    ]);
+
+    $testimonial = Testimonial::create([
+        'customer_id' => $user->user_id,
+        'service_used' => 'Web Design',
+        'message' => 'Meh',
+        'status' => 0,
+        'published' => now(),
+    ]);
+
+    Livewire::test(ListTestimonials::class)
+        ->callTableAction('delete', $testimonial);
+
+    $this->assertDatabaseMissing('testimony_form', ['id' => $testimonial->id]);
 });
