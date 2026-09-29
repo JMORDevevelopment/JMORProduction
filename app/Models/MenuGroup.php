@@ -11,4 +11,9 @@ class MenuGroup extends Model
     public $timestamps = false;
 
     protected $fillable = ['title'];
+
+    public function menus()
+    {
+        return $this->hasMany(Menu::class, 'group_id');
+    }
 }

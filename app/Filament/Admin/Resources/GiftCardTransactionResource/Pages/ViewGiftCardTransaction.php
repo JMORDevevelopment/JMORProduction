@@ -43,6 +43,12 @@ class ViewGiftCardTransaction extends ViewRecord
                         ->send();
                 })
                 ->modalSubmitActionLabel('Save'),
+            Action::make('invoice')
+                ->label('Print Invoice')
+                ->icon('heroicon-o-printer')
+                ->color('gray')
+                ->url(fn (Transaction $record): string => route('admin.giftcard_invoice', $record->order_id))
+                ->openUrlInNewTab(),
             Actions\DeleteAction::make(),
         ];
     }
