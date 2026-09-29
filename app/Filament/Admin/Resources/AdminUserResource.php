@@ -103,7 +103,7 @@ class AdminUserResource extends Resource
                     ->label('Role')
                     ->options([
                         1 => 'Admin',
-                        0 => 'Simple user',
+                        2 => 'Editor',
                     ])
                     ->default(1)
                     ->required(),
@@ -138,9 +138,11 @@ class AdminUserResource extends Resource
 
                 TextColumn::make('role')
                     ->label('Role')
-                    ->badge()
-                    ->formatStateUsing(fn ($state): string => (int) $state === 1 ? 'Admin' : 'Simple user')
-                    ->color(fn ($state): string => (int) $state === 1 ? 'danger' : 'info'),
+                    ->getStateUsing(fn ($record): string => match ((int) $record->role) {
+                        1 => 'Admin',
+                        2 => 'Editor',
+                        default => '',
+                    }),
 
                 TextColumn::make('status')
                     ->label('Status')
