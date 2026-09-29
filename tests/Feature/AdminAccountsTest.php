@@ -2,10 +2,13 @@
 
 use App\Filament\Admin\Resources\AdminUserResource\Pages\CreateAdminUser;
 use App\Filament\Admin\Resources\AdminUserResource\Pages\EditAdminUser;
+use App\Filament\Admin\Resources\AdminUserResource\Pages\ListAdminUsers;
 use App\Filament\Admin\Resources\UserGroupResource\Pages\CreateUserGroup;
+use App\Filament\Admin\Resources\UserGroupResource\Pages\EditUserGroup;
 use App\Filament\Admin\Resources\UserGroupResource\Pages\ListUserGroups;
 use App\Filament\Admin\Resources\UserResource\Pages\CreateUser;
 use App\Filament\Admin\Resources\UserResource\Pages\EditUser;
+use App\Filament\Admin\Resources\UserResource\Pages\ListUsers;
 use App\Models\Admin;
 use App\Models\User;
 use App\Models\UserGroup;
@@ -263,4 +266,55 @@ test('admin can delete a user group', function () {
         ->callTableAction('delete', $group);
 
     $this->assertDatabaseMissing('user_group', ['user_group_id' => $group->user_group_id]);
+});
+
+test('admin can delete an admin account', function () {
+    $other = Admin::create([
+        'firstname' => 'Fire',
+        'lastname' => 'Me',
+        'email' => 'fireme@test.com',
+        'password' => bcrypt('password'),
+        'status' => 1,
+        'role' => 1,
+        'image' => '',
+        'last_login' => now(),
+        'date_register' => now(),
+    ]);
+
+    Livewire::test(ListAdminUsers::class)
+        ->callTableAction('delete', $other);
+
+    $this->assertDatabaseMissing('admin', ['admin_id' => $other->admin_id]);
+});
+
+test('admin can delete a frontend user', function () {
+    $group = UserGroup::create(['name' => 'Default']);
+
+    $user = User::create([
+        'firstname' => 'Gone',
+        'lastname' => 'Soon',
+        'email' => 'gone@example.com',
+        'password' => bcrypt('password'),
+        'user_group_id' => $group->getKey(),
+        'date_added' => date('Y-m-d'),
+    ]);
+
+    Livewire::test(ListUsers::class)
+        ->callTableAction('delete', $user);
+
+    $this->assertDatabaseMissing('user', ['user_id' => $user->user_id]);
+});
+
+test('admin can edit a user group', function () {
+    $group = UserGroup::create(['name' => 'Old Name']);
+
+    Livewire::test(EditUserGroup::class, ['record' => $group->getKey()])
+        ->fillForm(['name' => 'New Name'])
+        ->call('save')
+        ->assertHasNoFormErrors();
+
+    $this->assertDatabaseHas('user_group', [
+        'user_group_id' => $group->getKey(),
+        'name' => 'New Name',
+    ]);
 });
