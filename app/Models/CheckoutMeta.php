@@ -24,4 +24,9 @@ class CheckoutMeta extends Model
     {
         return $this->hasMany(SystemInformation::class, 'form_id');
     }
+
+    public function package()
+    {
+        return $this->belongsTo(Package::class, 'package_id');
+    }
 }
