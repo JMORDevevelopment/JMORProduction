@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'text_title' => 'Register',
+    'text_login' => 'Login',
+    'text_form' => 'You can create an account here.',
+    'text_firstname' => 'First Name',
+    'text_lastname' => 'Last Name',
+    'text_email' => 'Email',
+    'text_password' => 'Password',
+    'text_region' => 'Region',
+    'text_select_region' => 'Select region',
+    'text_nation' => 'Nation',
+    'text_select_nation' => 'Select nation',
+    'text_gender' => 'Gender',
+    'text_date_birth' => 'Date birth',
+    'text_male' => 'Male',
+    'text_female' => 'Female',
+    'text_register' => 'Register',
+    'text_sign_in' => 'Sign in',
+    'text_remember' => 'Remember me',
+    'text_sign_up' => 'Sign Up',
+    'text_address' => 'Address',
+    'text_city' => 'City',
+    'text_state' => 'State',
+    'text_zip' => 'Zip Code',
+    'text_already_have_account' => 'Already have an account?',
+];
