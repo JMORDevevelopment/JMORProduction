@@ -96,3 +96,9 @@ test('request information form creates a record with the session captcha answer'
         'email' => 'jane@example.com',
     ]);
 });
+
+test('contact page links the talk show tile to the guest application page', function () {
+    $this->get(route('contact'))
+        ->assertSuccessful()
+        ->assertSee(route('talk-show.checkout'), false);
+});

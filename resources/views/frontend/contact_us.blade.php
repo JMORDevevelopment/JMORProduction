@@ -33,10 +33,10 @@
                     </div>
                     <div class="col-lg-2 mb-5 mb-lg-0 text-center">
                         <div class="contactIcons text-primary mb-2">
-                            <i class="fa fa-microphone" onclick="inquiryformtwo()"></i>
+                            <i class="fa fa-microphone" onclick="window.location='{{ route('talk-show.checkout') }}'"></i>
                         </div>
                         <h3 class="h5">Talk Show Guest</h3>
-                        <p class="mb-0" style="cursor:pointer;" onclick="inquiryformtwo()">Apply Now</p>
+                        <p class="mb-0" style="cursor:pointer;" onclick="window.location='{{ route('talk-show.checkout') }}'">Apply Now</p>
                     </div>
                     <div class="col-lg-2 mb-5 mb-lg-0 text-center">
                         <div class="contactIcons text-primary mb-2">
@@ -187,5 +187,13 @@
         @include('partials.before_footer')
     </main>
 @endsection
+
+@push('scripts')
+<script>
+    function inquiryform() {
+        document.getElementById('form_one').scrollIntoView({behavior: 'smooth'});
+    }
+</script>
+@endpush
 
 @include('partials.script_file')
