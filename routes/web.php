@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\SignUpController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BrandGuidelineController;
 use App\Http\Controllers\CaseStudyController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Checkout\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GiftCardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LangController;
 use App\Http\Controllers\MediaInquiryController;
 use App\Http\Controllers\MediaResourceController;
 use App\Http\Controllers\MediaVideoController;
@@ -32,6 +34,7 @@ use App\Http\Controllers\RequestInformationController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ServicePageController;
 use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\TalkShowGuestController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Middleware\CheckUserLogin;
 
@@ -110,6 +113,11 @@ Route::get('/contact', [ContactController::class, 'show'])->name('contact');
 Route::post('/contact', [ContactController::class, 'submit'])
     ->name('contact.submit')
     ->middleware('throttle:5,1');
+Route::post('/home/interview_submit', [ContactController::class, 'interviewSubmit'])
+    ->name('contact.interview')
+    ->middleware('throttle:5,1');
+Route::post('/home/load_restaurants', [ContactController::class, 'loadWork'])
+    ->name('contact.load_restaurants');
 
 // ==============================
 // CART ROUTES
@@ -197,6 +205,8 @@ Route::get('/jmor-shows', [RadioShowController::class, 'posts'])->name('jmor-sho
 Route::get('/jmor-shows/{link}', [RadioShowController::class, 'detail'])->name('jmor-shows.detail');
 Route::get('/category-jmor-shows/{category}', [RadioShowController::class, 'category'])->name('category-jmor-shows');
 Route::get('/category-jmor-shows/{category}/{year}', [RadioShowController::class, 'category'])->name('category-jmor-shows.year');
+Route::post('/home/get_categories_list', [RadioShowController::class, 'categoriesList'])
+    ->name('radio.categories-list');
 Route::get('/search-shows', [SearchController::class, 'radio'])->name('search-shows');
 Route::get('/the-jmor-store', fn () => view('frontend.coming-soon'))->name('the-jmor-store');
 
@@ -204,6 +214,8 @@ Route::get('/refund-policy', fn () => app(PageController::class)->show('refund-p
 Route::get('/privacy-policy', fn () => app(PageController::class)->show('privacy-policy'))->name('privacy-policy');
 Route::get('/terms', fn () => app(PageController::class)->show('terms-and-conditions'))->name('terms');
 Route::get('/sitemap', [SitemapController::class, 'index'])->name('sitemap');
+Route::get('/home/sitemap_xml', [SitemapController::class, 'xml'])->name('sitemap_xml');
+Route::get('/home/sitemap_xml_upload', [SitemapController::class, 'ping'])->name('sitemap_xml_upload');
 
 Route::get('/solutions', fn () => view('frontend.coming-soon'))->name('solutions');
 Route::get('/service', [ServicePageController::class, 'list'])->name('service');
@@ -268,6 +280,13 @@ Route::get('/accessories', fn () => view('frontend.coming-soon'))->name('accesso
 Route::get('/it-tech-support-services-in-nj', [PageController::class, 'show'])->name('it-tech-support-services-in-nj');
 Route::get('/custom-built-solutions', [PageController::class, 'show'])->name('custom-built-solutions');
 Route::get('/nj-technical-relocation-services', [PageController::class, 'show'])->name('nj-technical-relocation-services');
+
+Route::get('/lang/change/{name}', [LangController::class, 'change'])->name('lang.change');
+Route::get('/category/index/{id?}', [CategoryController::class, 'index'])->name('category.index');
+Route::get('/home/talk_show_checkout', [TalkShowGuestController::class, 'checkout'])->name('talk-show.checkout');
+Route::post('/home/guestchargecard', [TalkShowGuestController::class, 'charge'])
+    ->name('talk-show.charge')
+    ->middleware('throttle:5,1');
 
 // CMS pages catch-all (must be last)
 Route::get('/{pageLink}', [PageController::class, 'show'])->name('pages');

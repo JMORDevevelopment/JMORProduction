@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Language;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 
 beforeEach(function () {
@@ -114,4 +115,17 @@ it('preserves old input on validation failure', function () {
     ]);
 
     $response->assertSessionHasErrors();
+});
+
+it('translates the email error message in macedonian', function () {
+    Language::query()->delete();
+    Language::create(['name' => 'english', 'code' => 'en', 'sort_order' => 0]);
+    Language::create(['name' => 'macedonian', 'code' => 'mk', 'sort_order' => 1]);
+
+    $this->get(route('lang.change', 'macedonian'));
+
+    $this->post(route('media-inquiries.validate'), ['email' => ''])
+        ->assertSessionHasErrors('email');
+
+    expect(session('errors')->first('email'))->toBe('Внесете емаил');
 });
