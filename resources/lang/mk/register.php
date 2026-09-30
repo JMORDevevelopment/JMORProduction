@@ -20,4 +20,9 @@ return [
     'text_sign_in' => 'Најава',
     'text_remember' => 'Запомни ме',
     'text_sign_up' => 'Регистрирај се',
+    'text_address' => 'Адреса',
+    'text_city' => 'Град',
+    'text_state' => 'Држава',
+    'text_zip' => 'Поштенски број',
+    'text_already_have_account' => 'Веќе имате сметка?',
 ];
