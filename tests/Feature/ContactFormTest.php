@@ -102,3 +102,28 @@ test('contact page links the talk show tile to the guest application page', func
         ->assertSuccessful()
         ->assertSee(route('talk-show.checkout'), false);
 });
+
+test('contact page wires the inquiry and chat tiles to the inquiry form', function () {
+    $this->get(route('contact'))
+        ->assertSuccessful()
+        ->assertSee('<p class="mb-0" style="cursor:pointer;" onclick="inquiryform()">Chat Now</p>', false)
+        ->assertSee('<p class="mb-0" style="cursor:pointer;" onclick="inquiryform()">Inquire Now</p>', false);
+});
+
+test('contact page wires the address and phone tiles to the reveal handlers', function () {
+    $this->get(route('contact'))
+        ->assertSuccessful()
+        ->assertSee("reveal('.viewadres', 'viewadres')", false)
+        ->assertSee("reveal('.viewnmbr', 'viewnmbr')", false);
+});
+
+test('contact page renders the address line break instead of raw markup', function () {
+    DB::table('settings')->insert([
+        ['option' => 'address', 'value' => '799 Franklin Ave Unit 3<br>Franklin Lakes NJ 07417'],
+    ]);
+
+    $this->get(route('contact'))
+        ->assertSuccessful()
+        ->assertSee('799 Franklin Ave Unit 3<br />', false)
+        ->assertDontSee('&lt;br&gt;', false);
+});
