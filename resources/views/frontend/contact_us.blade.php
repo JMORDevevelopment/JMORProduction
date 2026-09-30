@@ -40,22 +40,22 @@
                     </div>
                     <div class="col-lg-2 mb-5 mb-lg-0 text-center">
                         <div class="contactIcons text-primary mb-2">
-                            <i class="fa fa-commenting"></i>
+                            <i class="fa fa-commenting" onclick="inquiryform()" style="cursor:pointer;"></i>
                         </div>
                         <h3 class="h5">Live Support</h3>
-                        <p class="mb-0">Chat Now</p>
+                        <p class="mb-0" style="cursor:pointer;" onclick="inquiryform()">Chat Now</p>
                     </div>
                     <div class="col-lg-2 mb-5 mb-lg-0 text-center">
                         <div class="contactIcons text-primary mb-2">
-                            <i class="fa fa-location-arrow" id="viewadress"></i>
+                            <i class="fa fa-location-arrow" id="viewadress" style="cursor:pointer;"></i>
                         </div>
                         <h3 class="h5">Address</h3>
                         <p class="mb-0"><a id="viewadres" style="cursor:pointer;">View Address</a></p>
-                        <p class="mb-0 viewadres" style="display:none;">{{ $address }}</p>
+                        <p class="mb-0 viewadres" style="display:none;">{!! nl2br(e(str_replace(['<br>', '<br/>', '<br />'], "\n", $address))) !!}</p>
                     </div>
                     <div class="col-lg-2 mb-5 mb-lg-0 text-center">
                         <div class="contactIcons text-primary mb-2">
-                            <i class="fa fa-phone" id="viewnmbrr"></i>
+                            <i class="fa fa-phone" id="viewnmbrr" style="cursor:pointer;"></i>
                         </div>
                         <h3 class="h5">Phone Number</h3>
                         <a id="viewnmbr" style="cursor:pointer;">View Number</a>
@@ -193,6 +193,34 @@
     function inquiryform() {
         document.getElementById('form_one').scrollIntoView({behavior: 'smooth'});
     }
+
+    function reveal(selector, hideId) {
+        document.querySelectorAll(selector).forEach(function (el) {
+            el.style.display = 'block';
+        });
+        var link = document.getElementById(hideId);
+        if (link) {
+            link.style.display = 'none';
+        }
+    }
+
+    ['viewadres', 'viewadress'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) {
+            el.addEventListener('click', function () {
+                reveal('.viewadres', 'viewadres');
+            });
+        }
+    });
+
+    ['viewnmbr', 'viewnmbrr'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) {
+            el.addEventListener('click', function () {
+                reveal('.viewnmbr', 'viewnmbr');
+            });
+        }
+    });
 </script>
 @endpush
 
