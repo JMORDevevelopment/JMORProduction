@@ -28,7 +28,10 @@ test('strings are translated after switching to macedonian', function () {
 
     $this->get(route('sign-up'))
         ->assertOk()
-        ->assertSee('Име');
+        ->assertSee('Име')
+        ->assertSee('Град')
+        ->assertSee('Поштенски број')
+        ->assertSee('Веќе имате сметка');
 
     $this->get(route('home'))
         ->assertOk()
