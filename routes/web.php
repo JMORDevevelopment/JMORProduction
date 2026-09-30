@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\SignUpController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BrandGuidelineController;
 use App\Http\Controllers\CaseStudyController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Checkout\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GiftCardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LangController;
 use App\Http\Controllers\MediaInquiryController;
 use App\Http\Controllers\MediaResourceController;
 use App\Http\Controllers\MediaVideoController;
@@ -32,6 +34,7 @@ use App\Http\Controllers\RequestInformationController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ServicePageController;
 use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\TalkShowGuestController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Middleware\CheckUserLogin;
 
@@ -268,6 +271,13 @@ Route::get('/accessories', fn () => view('frontend.coming-soon'))->name('accesso
 Route::get('/it-tech-support-services-in-nj', [PageController::class, 'show'])->name('it-tech-support-services-in-nj');
 Route::get('/custom-built-solutions', [PageController::class, 'show'])->name('custom-built-solutions');
 Route::get('/nj-technical-relocation-services', [PageController::class, 'show'])->name('nj-technical-relocation-services');
+
+Route::get('/lang/change/{name}', [LangController::class, 'change'])->name('lang.change');
+Route::get('/category/index/{id?}', [CategoryController::class, 'index'])->name('category.index');
+Route::get('/home/talk_show_checkout', [TalkShowGuestController::class, 'checkout'])->name('talk-show.checkout');
+Route::post('/home/guestchargecard', [TalkShowGuestController::class, 'charge'])
+    ->name('talk-show.charge')
+    ->middleware('throttle:5,1');
 
 // CMS pages catch-all (must be last)
 Route::get('/{pageLink}', [PageController::class, 'show'])->name('pages');

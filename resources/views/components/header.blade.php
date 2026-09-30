@@ -8,6 +8,16 @@
             </div>
 
             <div class="jm-topbar__right">
+                <div class="jm-topbar__languages" aria-label="Language switcher">
+                    @foreach ($languages as $language)
+                        @unless($loop->first)
+                            <span class="jm-topbar__divider" aria-hidden="true">|</span>
+                        @endunless
+                        <a href="{{ route('lang.change', $language->name) }}"
+                            class="jm-topbar__link{{ session('lang', 'english') === $language->name ? ' jm-topbar__link--strong' : '' }}"
+                            hreflang="{{ $language->code }}">{{ ucfirst($language->name) }}</a>
+                    @endforeach
+                </div>
                 <ul class="jm-topbar__socials" aria-label="social links">
                     <li><a href="{{ $topSettings[11]->value ?? 'https://www.instagram.com/gosocialjmor/' }}"
                             title="Instagram"><img src="{{ asset('assets/images/insta.png') }}" alt="Instagram"></a>
@@ -34,10 +44,10 @@
                     <a href="{{ route('dashboard') }}" class="jm-topbar__link--strong">My Account</a>
                     <span class="jm-topbar__divider" aria-hidden="true"></span>
                     <a href="{{ route('logout') }}" class="jm-topbar__link"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log out</a>
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('header.text_logout') }}</a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
                 @else
-                    <a href="{{ route('login') }}" class="jm-topbar__link--strong">Login</a>
+                    <a href="{{ route('login') }}" class="jm-topbar__link--strong">{{ __('header.text_login') }}</a>
                 @endauth
             </div>
         </div>
