@@ -131,7 +131,7 @@
                                         <div class="">
                                             <div class="col-8">
                                                 <h6 class="my-2 font-size-14">
-                                                    <a href="{{ route('category-jmor-shows', ['category' => $category->link, 'year' => date('Y')]) }}">{{ $category->title }}</a>
+                                                    <a href="{{ route('category-jmor-shows.year', ['category' => $category->link, 'year' => date('Y')]) }}">{{ $category->title }}</a>
                                                 </h6>
                                             </div>
                                         </div>
@@ -174,7 +174,7 @@
         $('#archive_year').on('change', function(){
             var val = this.value;
             $.ajax({
-                url: '{{ url("home/get_categories_list") }}',
+                url: '{{ route('radio.categories-list') }}',
                 type: 'POST',
                 data: {year: val, _token: '{{ csrf_token() }}'},
             }).then(function(data) {
