@@ -113,6 +113,11 @@ Route::get('/contact', [ContactController::class, 'show'])->name('contact');
 Route::post('/contact', [ContactController::class, 'submit'])
     ->name('contact.submit')
     ->middleware('throttle:5,1');
+Route::post('/home/interview_submit', [ContactController::class, 'interviewSubmit'])
+    ->name('contact.interview')
+    ->middleware('throttle:5,1');
+Route::post('/home/load_restaurants', [ContactController::class, 'loadWork'])
+    ->name('contact.load_restaurants');
 
 // ==============================
 // CART ROUTES
@@ -200,6 +205,8 @@ Route::get('/jmor-shows', [RadioShowController::class, 'posts'])->name('jmor-sho
 Route::get('/jmor-shows/{link}', [RadioShowController::class, 'detail'])->name('jmor-shows.detail');
 Route::get('/category-jmor-shows/{category}', [RadioShowController::class, 'category'])->name('category-jmor-shows');
 Route::get('/category-jmor-shows/{category}/{year}', [RadioShowController::class, 'category'])->name('category-jmor-shows.year');
+Route::post('/home/get_categories_list', [RadioShowController::class, 'categoriesList'])
+    ->name('radio.categories-list');
 Route::get('/search-shows', [SearchController::class, 'radio'])->name('search-shows');
 Route::get('/the-jmor-store', fn () => view('frontend.coming-soon'))->name('the-jmor-store');
 
@@ -207,6 +214,8 @@ Route::get('/refund-policy', fn () => app(PageController::class)->show('refund-p
 Route::get('/privacy-policy', fn () => app(PageController::class)->show('privacy-policy'))->name('privacy-policy');
 Route::get('/terms', fn () => app(PageController::class)->show('terms-and-conditions'))->name('terms');
 Route::get('/sitemap', [SitemapController::class, 'index'])->name('sitemap');
+Route::get('/home/sitemap_xml', [SitemapController::class, 'xml'])->name('sitemap_xml');
+Route::get('/home/sitemap_xml_upload', [SitemapController::class, 'ping'])->name('sitemap_xml_upload');
 
 Route::get('/solutions', fn () => view('frontend.coming-soon'))->name('solutions');
 Route::get('/service', [ServicePageController::class, 'list'])->name('service');
