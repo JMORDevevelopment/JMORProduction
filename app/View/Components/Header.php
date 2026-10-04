@@ -2,7 +2,6 @@
 
 namespace App\View\Components;
 
-use App\Models\Language;
 use App\Models\Menu;
 use App\Models\Setting;
 use Illuminate\Contracts\View\View;
@@ -18,7 +17,6 @@ class Header extends Component
         return view('components.header', [
             'topSettings' => Setting::orderBy('id')->get(),
             'navigation' => Menu::tree(),
-            'languages' => Language::orderBy('sort_order')->get(),
         ]);
     }
 }

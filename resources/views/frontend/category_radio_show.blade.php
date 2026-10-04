@@ -44,7 +44,7 @@
                                     <div class="">
                                         <div class="col-8">
                                             <h6 class="my-2 font-size-14">
-                                                <a href="{{ route('category-jmor-shows.year', ['category' => $category->link, 'year' => date('Y')]) }}">{{ $category->title }}</a>
+                                                <a href="{{ route('category-jmor-shows', ['category' => $category->link, 'year' => date('Y')]) }}">{{ $category->title }}</a>
                                             </h6>
                                         </div>
                                     </div>

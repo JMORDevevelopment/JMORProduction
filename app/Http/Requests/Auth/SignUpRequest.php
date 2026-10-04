@@ -42,15 +42,15 @@ class SignUpRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'firstname.required' => __('register_error.error_firstname'),
+            'firstname.required' => 'First name is required.',
             'firstname.max' => 'First name cannot exceed 255 characters.',
-            'lastname.required' => __('register_error.error_lastname'),
+            'lastname.required' => 'Last name is required.',
             'lastname.max' => 'Last name cannot exceed 255 characters.',
-            'email.required' => __('register_error.error_email'),
-            'email.email' => __('register_error.error_email'),
+            'email.required' => 'Email address is required.',
+            'email.email' => 'Please enter a valid email address.',
             'email.max' => 'Email cannot exceed 96 characters.',
-            'email.unique' => __('register_error.error_exists'),
-            'password.required' => __('register_error.error_password'),
+            'email.unique' => 'This email is already registered.',
+            'password.required' => 'Password is required.',
             'password.min' => 'Password must be at least 8 characters.',
             'password.max' => 'Password cannot exceed 255 characters.',
             'address.required' => 'Address is required.',

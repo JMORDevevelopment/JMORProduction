@@ -36,44 +36,8 @@
             },
             onFail: function() {
                 $('#qasubmitBtn').hide();
-            },
-            onRefresh: function() {
-                $('#qasubmitBtn').hide();
             }
         });
-        var resetCaptcha = function() {
-            captcha.reset();
-            $('#qasubmitBtn').hide();
-        };
-    }
-    if ($('#captchab').length) {
-        var captchab = sliderCaptcha({
-            id: 'captchab',
-            crossOrigin: true,
-            headers: { 'Access-Control-Allow-Origin': 'https://imgs.blazor.zone' },
-            onSuccess: function() {
-                $('#qasubmitBtnb').show();
-                if ($('#random_number1b').length) {
-                    var num_one = $('#random_number1b').val();
-                    var num_two = $('#random_number2b').val();
-                    var protection_question = Number(num_one) + Number(num_two);
-                    $('#protection_questionb').val(protection_question);
-                }
-                setTimeout(function() {
-                    resetCaptchaB();
-                }, 300000);
-            },
-            onFail: function() {
-                $('#qasubmitBtnb').hide();
-            },
-            onRefresh: function() {
-                $('#qasubmitBtnb').hide();
-            }
-        });
-        var resetCaptchaB = function() {
-            captchab.reset();
-            $('#qasubmitBtnb').hide();
-        };
     }
 </script>
 @endpush

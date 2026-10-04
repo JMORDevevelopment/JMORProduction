@@ -70,30 +70,6 @@ class PaymentService
         return true;
     }
 
-    /**
-     * Charge an amount that is not tied to an order (the talk show guest
-     * application checkout). The original CI handler was non-functional
-     * (unset variables, no persistence); this performs the intended
-     * Authorize.Net auth-capture without writing to the orders tables.
-     */
-    public function chargeGuestApplication(float $amount, array $cardInput): bool
-    {
-        $customer = (object) [
-            'firstname' => 'Talk Show',
-            'lastname' => 'Guest',
-            'company' => '',
-            'address' => '',
-            'city' => '',
-            'state' => '',
-            'zip' => '',
-            'email' => '',
-        ];
-
-        $response = $this->submitToGateway(0, $amount, $customer, $cardInput);
-
-        return $this->wasSuccessful($response);
-    }
-
     private function submitToGateway(int $orderId, float $amount, object $customer, array $cardInput)
     {
         $merchantAuthentication = new AnetAPI\MerchantAuthenticationType;
