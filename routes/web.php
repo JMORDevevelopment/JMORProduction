@@ -288,5 +288,9 @@ Route::post('/home/guestchargecard', [TalkShowGuestController::class, 'charge'])
     ->name('talk-show.charge')
     ->middleware('throttle:5,1');
 
+// Legacy CI 410s (original: Home::gone_410 for old product/category URLs)
+Route::get('/product/edit/{id}', fn () => response('This page has been permanently removed.', 410));
+Route::get('/cate/{id}', fn () => response('This page has been permanently removed.', 410));
+
 // CMS pages catch-all (must be last)
 Route::get('/{pageLink}', [PageController::class, 'show'])->name('pages');
