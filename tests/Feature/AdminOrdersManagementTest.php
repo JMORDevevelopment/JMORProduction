@@ -1,11 +1,14 @@
 <?php
 
+use App\Filament\Admin\Resources\GiftCardTransactionResource\Pages\ViewGiftCardTransaction;
+use App\Filament\Admin\Resources\TransactionResource\Pages\ViewTransaction;
 use App\Models\Admin;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
+use Livewire\Livewire;
 
 beforeEach(function () {
     $this->withoutMiddleware(PreventRequestForgery::class);
@@ -302,4 +305,68 @@ test('admin can view transaction with no order details', function () {
 
     $response = $this->get('/admin/transactions/'.$transaction->id);
     $response->assertStatus(200);
+});
+
+// ─── Order Status Update (original: admin/orders/updateStatus) ──────────
+
+test('admin can update an order status from the transaction view', function () {
+    $order = Order::create([
+        'user_id' => $this->user->user_id,
+        'sub_total' => 99.99,
+        'discount' => 0,
+        'grand_total' => 99.99,
+        'create_date' => now()->toDateString(),
+        'status' => 1,
+        'checkout_data' => json_encode([]),
+    ]);
+
+    $transaction = Transaction::create([
+        'order_id' => $order->id,
+        'order_type' => 'Monthly',
+        'checkout_type' => 'Monthly',
+        'transaction_id' => 'TXN777',
+        'auth_code' => 'AUTH777',
+        'user_id' => $this->user->user_id,
+        'amount' => 99.99,
+    ]);
+
+    Livewire::test(ViewTransaction::class, ['record' => $transaction->id])
+        ->callAction('updateStatus', ['status' => 2])
+        ->assertNotified();
+
+    $this->assertDatabaseHas('orders', [
+        'id' => $order->id,
+        'status' => 2,
+    ]);
+});
+
+test('admin can update a gift card order status from the transaction view', function () {
+    $order = Order::create([
+        'user_id' => $this->user->user_id,
+        'sub_total' => 50.00,
+        'discount' => 0,
+        'grand_total' => 50.00,
+        'create_date' => now()->toDateString(),
+        'status' => 1,
+        'checkout_data' => json_encode([]),
+    ]);
+
+    $transaction = Transaction::create([
+        'order_id' => $order->id,
+        'order_type' => 'Gift Card',
+        'checkout_type' => 'Gift Card',
+        'transaction_id' => 'GCT777',
+        'auth_code' => 'AUTH_G777',
+        'user_id' => $this->user->user_id,
+        'amount' => 50.00,
+    ]);
+
+    Livewire::test(ViewGiftCardTransaction::class, ['record' => $transaction->id])
+        ->callAction('updateStatus', ['status' => 2])
+        ->assertNotified();
+
+    $this->assertDatabaseHas('orders', [
+        'id' => $order->id,
+        'status' => 2,
+    ]);
 });
