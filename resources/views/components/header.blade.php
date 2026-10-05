@@ -18,23 +18,6 @@
                             hreflang="{{ $language->code }}">{{ ucfirst($language->name) }}</a>
                     @endforeach
                 </div>
-                <ul class="jm-topbar__socials" aria-label="social links">
-                    <li><a href="{{ $topSettings[11]->value ?? 'https://www.instagram.com/gosocialjmor/' }}"
-                            title="Instagram"><img src="{{ asset('assets/images/insta.png') }}" alt="Instagram"></a>
-                    </li>
-                    <li><a href="{{ $topSettings[3]->value ?? 'https://www.facebook.com/JMORConnection/' }}"
-                            title="Facebook"><img src="{{ asset('assets/images/facebook.png') }}" alt="Facebook"></a>
-                    </li>
-                    <li><a href="{{ $topSettings[4]->value ?? 'https://twitter.com/JMORCONNECTION' }}"
-                            title="Twitter"><img src="{{ asset('assets/images/twitter.png') }}" alt="Twitter"></a></li>
-                    <li><a href="{{ $topSettings[5]->value ?? '#' }}" title="YouTube"><img
-                                src="{{ asset('assets/images/youtube.png') }}" alt="YouTube"></a></li>
-                    <li><a href="{{ $topSettings[6]->value ?? 'https://www.linkedin.com/company/2623706/' }}"
-                            title="LinkedIn"><img src="{{ asset('assets/images/linkedin.png') }}" alt="LinkedIn"></a>
-                    </li>
-                    <li><a href="{{ $topSettings[7]->value ?? 'https://www.patreon.com/jmor' }}" title="Patreon"><img
-                                src="{{ asset('assets/images/social.png') }}" alt="Patreon"></a></li>
-                </ul>
 
                 <span class="jm-topbar__divider" aria-hidden="true"></span>
                 <a href="{{ route('gift-card') }}" class="jm-topbar__link">Gift Card</a>
