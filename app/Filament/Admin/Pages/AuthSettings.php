@@ -29,12 +29,12 @@ class AuthSettings extends Page implements HasForms
     public array $data = [];
 
     /**
-     * Authentication settings are super-admin only (M10): hidden from
-     * navigation for every other role.
+     * Authentication settings are gated by the grantable "authSettings"
+     * permission; super admins always pass via the Gate::before bypass.
      */
     public static function canAccess(): bool
     {
-        return auth()->guard('admin')->user()?->isAdmin() ?? false;
+        return auth()->guard('admin')->user()?->can('authSettings') ?? false;
     }
 
     public function mount(): void

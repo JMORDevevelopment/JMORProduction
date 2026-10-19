@@ -16,7 +16,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Models\Role;
 
 class AdminUserResource extends Resource
 {
@@ -37,35 +37,6 @@ class AdminUserResource extends Resource
     protected static ?string $pluralModelLabel = 'Admin Accounts';
 
     protected static ?string $slug = 'admin-users';
-
-    /**
-     * Managing admin accounts (roles, status, credentials) is restricted to
-     * full admins (role = 1) — consistent with the panel's role gating.
-     */
-    public static function canViewAny(): bool
-    {
-        return auth('admin')->user()?->isAdmin() ?? false;
-    }
-
-    public static function canCreate(): bool
-    {
-        return static::canViewAny();
-    }
-
-    public static function canEdit(Model $record): bool
-    {
-        return static::canViewAny();
-    }
-
-    public static function canDelete(Model $record): bool
-    {
-        return static::canViewAny();
-    }
-
-    public static function canView(Model $record): bool
-    {
-        return static::canViewAny();
-    }
 
     public static function form(Schema $schema): Schema
     {
@@ -101,11 +72,14 @@ class AdminUserResource extends Resource
 
                 Select::make('role')
                     ->label('Role')
-                    ->options([
-                        1 => 'Admin',
-                        2 => 'Editor',
-                    ])
-                    ->default(1)
+                    ->options(fn (): array => Role::where('guard_name', 'admin')
+                        ->pluck('name', 'name')
+                        ->all())
+                    ->default(fn (): string => config('filament-shield.super_admin.name'))
+                    ->formatStateUsing(fn ($state, $record): ?string => $record?->roles()->first()?->name
+                        ?? ($record !== null && $record->isAdmin() ? config('filament-shield.super_admin.name') : null)
+                        ?? $state)
+                    ->helperText('The super_admin role has unrestricted access. All other roles get exactly the permissions you grant them under Roles.')
                     ->required(),
 
                 Select::make('status')
@@ -136,13 +110,9 @@ class AdminUserResource extends Resource
                     ->label('Name')
                     ->getStateUsing(fn ($record): string => trim("{$record->firstname} {$record->lastname}")),
 
-                TextColumn::make('role')
+                TextColumn::make('roles')
                     ->label('Role')
-                    ->getStateUsing(fn ($record): string => match ((int) $record->role) {
-                        1 => 'Admin',
-                        2 => 'Editor',
-                        default => '',
-                    }),
+                    ->getStateUsing(fn ($record): string => $record->roles->pluck('name')->implode(', ')),
 
                 TextColumn::make('status')
                     ->label('Status')

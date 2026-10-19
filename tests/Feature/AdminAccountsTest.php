@@ -15,9 +15,12 @@ use App\Models\UserGroup;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Livewire;
+use Spatie\Permission\Models\Role;
 
 beforeEach(function () {
     $this->withoutMiddleware(PreventRequestForgery::class);
+
+    Role::findOrCreate('super_admin', 'admin');
 
     $this->admin = Admin::create([
         'firstname' => 'Test',
@@ -77,7 +80,7 @@ test('super admin can create an admin account with bcrypt password', function ()
             'lastname' => 'Root',
             'email' => 'root@test.com',
             'password' => 'secret123',
-            'role' => 1,
+            'role' => 'super_admin',
             'status' => 1,
         ])
         ->call('create');
@@ -90,6 +93,7 @@ test('super admin can create an admin account with bcrypt password', function ()
         ->and((int) $created->status)->toBe(1)
         ->and($created->image)->toBe('')
         ->and($created->date_register)->not->toBeNull()
+        ->and($created->hasRole('super_admin'))->toBeTrue()
         ->and(Hash::check('secret123', $created->password))->toBeTrue();
 });
 
@@ -100,7 +104,7 @@ test('creating an admin with a duplicate email fails validation', function () {
             'lastname' => 'Admin',
             'email' => 'admin@test.com',
             'password' => 'secret123',
-            'role' => 1,
+            'role' => 'super_admin',
             'status' => 1,
         ])
         ->call('create')
@@ -114,7 +118,7 @@ test('editing an admin with a blank password keeps the existing password', funct
             'lastname' => 'Admin',
             'email' => 'admin@test.com',
             'password' => '',
-            'role' => 1,
+            'role' => 'super_admin',
             'status' => 1,
         ])
         ->call('save')
@@ -133,7 +137,7 @@ test('editing an admin with a new password updates the hash', function () {
             'lastname' => 'Admin',
             'email' => 'admin@test.com',
             'password' => 'newpass123',
-            'role' => 1,
+            'role' => 'super_admin',
             'status' => 0,
         ])
         ->call('save')

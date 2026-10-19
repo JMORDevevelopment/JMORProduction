@@ -6,11 +6,13 @@ use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticatable;
 
 class Admin extends Authenticatable implements FilamentUser
 {
     use HasFactory;
+    use HasRoles;
     use TwoFactorAuthenticatable;
 
     protected $table = 'admin';
@@ -22,6 +24,11 @@ class Admin extends Authenticatable implements FilamentUser
     protected $keyType = 'int';
 
     public $timestamps = false;
+
+    /**
+     * Roles and permissions are bound to the panel's admin guard.
+     */
+    protected ?string $guard_name = 'admin';
 
     protected $fillable = [
         'firstname',
@@ -40,23 +47,6 @@ class Admin extends Authenticatable implements FilamentUser
         'password',
     ];
 
-    /**
-     * Abilities reserved for super admins (role = 1).
-     *
-     * @var list<string>
-     */
-    public const array RESTRICTED_ABILITIES = [
-        'delete',
-        'forceDelete',
-        'deleteAny',
-        'restore',
-        'restoreAny',
-        'backup',
-        'updateStatus',
-        'settings',
-        'authSettings',
-    ];
-
     public function getNameAttribute(): string
     {
         return trim($this->firstname.' '.$this->lastname);
@@ -71,8 +61,8 @@ class Admin extends Authenticatable implements FilamentUser
     }
 
     /**
-     * Super admins (role = 1) hold unrestricted access; other roles
-     * are denied the abilities listed in RESTRICTED_ABILITIES.
+     * Super admins (role = 1) hold unrestricted access; every other
+     * admin is limited to the permissions granted via Shield.
      */
     public function isAdmin(): bool
     {

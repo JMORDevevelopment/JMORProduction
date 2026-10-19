@@ -44,10 +44,27 @@ beforeEach(function () {
     $this->editor->setTwoFactorChallengePassed();
 });
 
-test('restricted abilities are denied to non-super admins and allowed for super admins', function () {
-    foreach (Admin::RESTRICTED_ABILITIES as $ability) {
-        expect(Gate::forUser($this->editor)->denies($ability))->toBeTrue("expected denial for role 0 on {$ability}");
+test('super admins are allowed every ability', function () {
+    $abilities = [
+        'delete', 'forceDelete', 'deleteAny', 'restore', 'restoreAny',
+        'backup', 'updateStatus', 'settings', 'authSettings',
+        'ViewAny:Blog', 'Delete:Blog', 'ViewAny:Admin',
+    ];
+
+    foreach ($abilities as $ability) {
         expect(Gate::forUser($this->superAdmin)->allows($ability))->toBeTrue("expected allow for role 1 on {$ability}");
+    }
+});
+
+test('non-super admins without permissions are denied every ability', function () {
+    $abilities = [
+        'delete', 'forceDelete', 'deleteAny', 'restore', 'restoreAny',
+        'backup', 'updateStatus', 'settings', 'authSettings',
+        'ViewAny:Blog', 'Delete:Blog', 'ViewAny:Admin',
+    ];
+
+    foreach ($abilities as $ability) {
+        expect(Gate::forUser($this->editor)->denies($ability))->toBeTrue("expected denial without permission on {$ability}");
     }
 });
 
