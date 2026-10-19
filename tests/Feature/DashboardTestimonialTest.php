@@ -8,14 +8,15 @@ beforeEach(function () {
     // Feature tests run through the web middleware group; bypass CSRF only.
     $this->withoutMiddleware(PreventRequestForgery::class);
 
-    $this->user = new User([
+    $this->user = User::create([
         'firstname' => 'Jane',
         'lastname' => 'Doe',
         'email' => 'jane@example.com',
+        'password' => bcrypt('password'),
+        'date_added' => now(),
     ]);
 
-    // user_id is not mass-assignable (guarded), so set it directly.
-    $this->user->user_id = 9826;
+    $this->user->syncRoles([ensureMemberRole()]);
 
     $this->actingAs($this->user);
 });
@@ -27,7 +28,7 @@ test('a logged-in user can submit a new testimonial without an id', function () 
     ])->assertRedirect(route('dashboard.testimonial'));
 
     $this->assertDatabaseHas('testimony_form', [
-        'customer_id' => 9826,
+        'customer_id' => $this->user->getKey(),
         'service_used' => 'Managed IT Services',
         'message' => 'Great support team!',
         'status' => 0,
@@ -36,7 +37,7 @@ test('a logged-in user can submit a new testimonial without an id', function () 
 
 test('a logged-in user can update their own testimonial by id', function () {
     $testimonial = Testimonial::create([
-        'customer_id' => 9826,
+        'customer_id' => $this->user->getKey(),
         'service_used' => 'Old service',
         'message' => 'Old message',
         'status' => 0,
@@ -49,7 +50,7 @@ test('a logged-in user can update their own testimonial by id', function () {
 
     $this->assertDatabaseHas('testimony_form', [
         'id' => $testimonial->id,
-        'customer_id' => 9826,
+        'customer_id' => $this->user->getKey(),
         'service_used' => 'New service',
         'message' => 'New message',
     ]);
@@ -57,7 +58,7 @@ test('a logged-in user can update their own testimonial by id', function () {
 
 test('a user cannot update another customer\'s testimonial', function () {
     $testimonial = Testimonial::create([
-        'customer_id' => 1,
+        'customer_id' => 777,
         'service_used' => 'Someone else',
         'message' => 'Not mine',
         'status' => 0,

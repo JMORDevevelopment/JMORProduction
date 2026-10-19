@@ -107,6 +107,8 @@ test('customer invoice page still renders after blade extraction', function () {
         'date_added' => now(),
     ]);
 
+    $user->syncRoles([ensureMemberRole()]);
+
     makeInvoiceTransaction(['order_id' => 503, 'user_id' => $user->user_id]);
 
     $this->actingAs($user, 'web');

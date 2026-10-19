@@ -6,9 +6,11 @@ use App\Notifications\ResetPassword;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
+    use HasRoles;
     use Notifiable;
 
     protected $table = 'user';
@@ -20,6 +22,11 @@ class User extends Authenticatable
     protected $keyType = 'int';
 
     public $timestamps = false;
+
+    /**
+     * Website members use the web guard for roles and permissions.
+     */
+    protected ?string $guard_name = 'web';
 
     protected $fillable = [
         'user_group_id', 'firstname', 'lastname', 'image',

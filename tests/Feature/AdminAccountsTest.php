@@ -21,6 +21,7 @@ beforeEach(function () {
     $this->withoutMiddleware(PreventRequestForgery::class);
 
     Role::findOrCreate('super_admin', 'admin');
+    ensureMemberRole();
 
     $this->admin = Admin::create([
         'firstname' => 'Test',
@@ -234,6 +235,7 @@ test('editing a frontend user with a blank password keeps the existing password'
             'email' => 'kate@example.com',
             'password' => '',
             'user_group_id' => $group->getKey(),
+            'role' => 'member',
         ])
         ->call('save')
         ->assertHasNoErrors();
