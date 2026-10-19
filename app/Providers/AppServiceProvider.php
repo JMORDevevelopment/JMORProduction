@@ -33,8 +33,8 @@ class AppServiceProvider extends ServiceProvider
      * Central authorization for the admin panel:
      *
      * - Super admins (role = 1) are allowed every ability.
-     * - Other admin roles are denied destructive abilities (delete, backup,
-     *   order-status changes, …) but keep access to regular CRUD.
+     * - Every other admin is limited to the permissions granted to their
+     *   role(s) via Shield (deny by default).
      * - Users of other guards are unaffected.
      */
     private function registerAdminAuthorization(): void
@@ -48,16 +48,16 @@ class AppServiceProvider extends ServiceProvider
                 return true;
             }
 
-            if (in_array($ability, Admin::RESTRICTED_ABILITIES, true)) {
-                return false;
-            }
-
             return null;
         });
 
         Action::configureUsing(function (Action $action): void {
-            if ($action instanceof DeleteAction || $action instanceof DeleteBulkAction) {
+            if ($action instanceof DeleteAction) {
                 $action->authorize('delete');
+            }
+
+            if ($action instanceof DeleteBulkAction) {
+                $action->authorize('deleteAny');
             }
         });
     }

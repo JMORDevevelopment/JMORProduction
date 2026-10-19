@@ -1,6 +1,7 @@
 <?php
 
 use App\Filament\Admin\Resources\PageResource\Pages\CreatePage;
+use App\Models\Admin;
 use App\Models\CouponCheckout;
 use App\Models\GiftCard;
 use App\Services\CartService;
@@ -9,6 +10,26 @@ use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 
 beforeEach(function () {
     $this->withoutMiddleware(PreventRequestForgery::class);
+
+    $this->admin = Admin::create([
+        'firstname' => 'Page',
+        'lastname' => 'Admin',
+        'email' => 'page.admin@test.com',
+        'password' => bcrypt('password'),
+        'status' => 1,
+        'role' => 1,
+        'image' => '',
+        'last_login' => now(),
+        'date_register' => now(),
+    ]);
+
+    $this->admin->forceFill([
+        'two_factor_secret' => encrypt('test-two-factor-secret'),
+        'two_factor_confirmed_at' => now(),
+    ])->save();
+    $this->admin->setTwoFactorChallengePassed();
+
+    $this->actingAs($this->admin, 'admin');
 });
 
 test('every response carries the baseline security headers', function () {
