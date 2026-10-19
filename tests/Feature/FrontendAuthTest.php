@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Password;
 
 beforeEach(function () {
     $this->withoutMiddleware(PreventRequestForgery::class);
+
+    ensureMemberRole();
 });
 
 function createFrontendUser(array $overrides = []): User
