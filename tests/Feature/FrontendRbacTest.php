@@ -1,5 +1,6 @@
 <?php
 
+use App\Filament\Admin\Resources\MemberRoleResource\Pages\CreateMemberRole;
 use App\Filament\Admin\Resources\UserResource\Pages\CreateUser;
 use App\Models\Admin;
 use App\Models\User;
@@ -156,6 +157,41 @@ test('member roles screen is accessible for super admins', function () {
     $this->actingAs($super, 'admin');
 
     $this->get('/admin/member-roles')->assertSuccessful();
+    $this->get('/admin/member-roles/create')->assertSuccessful();
+});
+
+test('super admin can create a new member role with permissions', function () {
+    ensureMemberRole();
+
+    $super = Admin::create([
+        'firstname' => 'Super',
+        'lastname' => 'Admin',
+        'email' => 'rbac.memberroles2@test.com',
+        'password' => bcrypt('password'),
+        'status' => 1,
+        'role' => 1,
+        'image' => '',
+        'last_login' => now(),
+        'date_register' => now(),
+    ]);
+
+    $this->actingAs($super, 'admin');
+
+    $viewPermission = Permission::where('guard_name', 'web')->where('name', 'viewOrders')->first();
+
+    Livewire::test(CreateMemberRole::class)
+        ->fillForm([
+            'name' => 'orders_only',
+            'permission_ids' => [$viewPermission->getKey()],
+        ])
+        ->call('create')
+        ->assertHasNoFormErrors();
+
+    $role = Role::where('name', 'orders_only')->where('guard_name', 'web')->first();
+
+    expect($role)->not->toBeNull()
+        ->and($role->hasPermissionTo('viewOrders'))->toBeTrue()
+        ->and($role->hasPermissionTo('viewDashboard'))->toBeFalse();
 });
 
 test('member roles screen is forbidden for non-super admins', function () {
