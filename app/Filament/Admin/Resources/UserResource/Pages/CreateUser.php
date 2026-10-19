@@ -9,11 +9,23 @@ class CreateUser extends CreateRecord
 {
     protected static string $resource = UserResource::class;
 
+    protected ?string $selectedRole = null;
+
     protected function mutateFormDataBeforeCreate(array $data): array
     {
+        $this->selectedRole = (string) ($data['role'] ?? 'member');
+        unset($data['role']);
+
         $data['user_group_id'] = (int) ($data['user_group_id'] ?? 1);
         $data['date_added'] = $data['date_added'] ?? date('Y-m-d');
 
         return $data;
+    }
+
+    protected function afterCreate(): void
+    {
+        $this->record->syncRoles([
+            $this->selectedRole ?? 'member',
+        ]);
     }
 }

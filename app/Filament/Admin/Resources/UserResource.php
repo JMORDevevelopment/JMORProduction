@@ -18,6 +18,7 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Spatie\Permission\Models\Role;
 
 class UserResource extends Resource
 {
@@ -76,6 +77,16 @@ class UserResource extends Resource
                     ->options(fn (): array => UserGroup::orderBy('user_group_id')->pluck('name', 'user_group_id')->all())
                     ->default(1)
                     ->required(),
+
+                Select::make('role')
+                    ->label('Role')
+                    ->options(fn (): array => Role::where('guard_name', 'web')
+                        ->pluck('name', 'name')
+                        ->all())
+                    ->default('member')
+                    ->formatStateUsing(fn ($state, $record): ?string => $record?->roles()->first()?->name ?? $state)
+                    ->helperText('Controls what this member can do on the website. Manage roles under Member Roles.')
+                    ->required(),
             ]);
     }
 
@@ -101,6 +112,10 @@ class UserResource extends Resource
                 TextColumn::make('group.name')
                     ->label('Group')
                     ->placeholder('—'),
+
+                TextColumn::make('roles')
+                    ->label('Role')
+                    ->getStateUsing(fn ($record): string => $record->roles->pluck('name')->implode(', ')),
 
                 TextColumn::make('date_added')
                     ->label('Registered')
