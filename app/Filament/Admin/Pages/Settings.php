@@ -36,12 +36,12 @@ class Settings extends Page implements HasSchemas
     public ?array $data = [];
 
     /**
-     * Site settings are super-admin only (M10): hidden from navigation for
-     * every other role.
+     * Site settings are gated by the grantable "settings" permission;
+     * super admins always pass via the Gate::before bypass.
      */
     public static function canAccess(): bool
     {
-        return auth()->guard('admin')->user()?->isAdmin() ?? false;
+        return auth()->guard('admin')->user()?->can('settings') ?? false;
     }
 
     public function mount(): void
