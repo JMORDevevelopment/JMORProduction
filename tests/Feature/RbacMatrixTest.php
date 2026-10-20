@@ -1,8 +1,11 @@
 <?php
 
 use App\Models\Admin;
+use App\Models\Blog;
 use App\Models\User;
+use Filament\Navigation\NavigationManager;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -406,4 +409,194 @@ test('removing every role from a website user locks them out of the whole member
     $this->get('/dashboard/giftcard')->assertForbidden();
     $this->get('/dashboard/testimonial')->assertForbidden();
     $this->get('/checkout')->assertForbidden();
+});
+
+function rbacMatrixLimitedWithPermissions(string $email, string $roleName, array $permissions): Admin
+{
+    $role = Role::create(['name' => $roleName, 'guard_name' => 'admin']);
+
+    foreach ($permissions as $permission) {
+        Permission::firstOrCreate(['name' => $permission, 'guard_name' => 'admin']);
+    }
+
+    $role->givePermissionTo($permissions);
+
+    $admin = rbacMatrixLimited($email);
+    $admin->assignRole($role);
+
+    return $admin;
+}
+
+test('a view-only admin can open the list but never create, edit or delete', function () {
+    $admin = rbacMatrixLimitedWithPermissions('act.viewonly@t.com', 'viewonly_blog', ['ViewAny:Blog']);
+
+    $blogId = DB::table('blog')->insertGetId([
+        'name' => 'Matrix Post',
+        'link' => 'matrix-post',
+        'description' => 'x',
+        'image' => '',
+        'published' => now(),
+        'meta_title' => '',
+        'meta_keywords' => '',
+        'meta_description' => '',
+    ]);
+
+    $this->actingAs($admin, 'admin');
+
+    $this->get('/admin/blogs')->assertSuccessful();
+    $this->get('/admin/blogs/create')->assertForbidden();
+    $this->get("/admin/blogs/{$blogId}/edit")->assertForbidden();
+
+    $blog = Blog::find($blogId);
+
+    expect(Gate::forUser($admin)->denies('create', Blog::class))->toBeTrue()
+        ->and(Gate::forUser($admin)->denies('update', $blog))->toBeTrue()
+        ->and(Gate::forUser($admin)->denies('delete', $blog))->toBeTrue()
+        ->and(Gate::forUser($admin)->denies('deleteAny', Blog::class))->toBeTrue();
+});
+
+test('a create-only admin is still locked out of every page until they also have view access', function () {
+    $admin = rbacMatrixLimitedWithPermissions('act.createonly@t.com', 'createonly_blog', ['Create:Blog']);
+
+    $blogId = DB::table('blog')->insertGetId([
+        'name' => 'Matrix Post Two',
+        'link' => 'matrix-post-two',
+        'description' => 'x',
+        'image' => '',
+        'published' => now(),
+        'meta_title' => '',
+        'meta_keywords' => '',
+        'meta_description' => '',
+    ]);
+
+    $this->actingAs($admin, 'admin');
+
+    // Filament requires ViewAny before any resource page, so a bare
+    // create permission cannot be used on its own.
+    $this->get('/admin/blogs/create')->assertForbidden();
+    $this->get('/admin/blogs')->assertForbidden();
+    $this->get("/admin/blogs/{$blogId}/edit")->assertForbidden();
+
+    expect(Gate::forUser($admin)->allows('create', Blog::class))->toBeTrue();
+});
+
+test('view plus create opens the create page but not an edit page', function () {
+    $admin = rbacMatrixLimitedWithPermissions('act.vc@t.com', 'viewcreate_blog', ['ViewAny:Blog', 'Create:Blog']);
+
+    $blogId = DB::table('blog')->insertGetId([
+        'name' => 'Matrix Post VC',
+        'link' => 'matrix-post-vc',
+        'description' => 'x',
+        'image' => '',
+        'published' => now(),
+        'meta_title' => '',
+        'meta_keywords' => '',
+        'meta_description' => '',
+    ]);
+
+    $this->actingAs($admin, 'admin');
+
+    $this->get('/admin/blogs')->assertSuccessful();
+    $this->get('/admin/blogs/create')->assertSuccessful();
+    $this->get("/admin/blogs/{$blogId}/edit")->assertForbidden();
+});
+
+test('an update-only admin is still locked out of the edit page until they also have view access', function () {
+    $admin = rbacMatrixLimitedWithPermissions('act.updateonly@t.com', 'updateonly_blog', ['Update:Blog']);
+
+    $blogId = DB::table('blog')->insertGetId([
+        'name' => 'Matrix Post Three',
+        'link' => 'matrix-post-three',
+        'description' => 'x',
+        'image' => '',
+        'published' => now(),
+        'meta_title' => '',
+        'meta_keywords' => '',
+        'meta_description' => '',
+    ]);
+
+    $this->actingAs($admin, 'admin');
+    $this->get("/admin/blogs/{$blogId}/edit")->assertForbidden();
+    $this->get('/admin/blogs')->assertForbidden();
+});
+
+test('view plus update opens an edit page directly by url but not the create page', function () {
+    $admin = rbacMatrixLimitedWithPermissions('act.vu@t.com', 'viewupdate_blog', ['ViewAny:Blog', 'Update:Blog']);
+
+    $blogId = DB::table('blog')->insertGetId([
+        'name' => 'Matrix Post VU',
+        'link' => 'matrix-post-vu',
+        'description' => 'x',
+        'image' => '',
+        'published' => now(),
+        'meta_title' => '',
+        'meta_keywords' => '',
+        'meta_description' => '',
+    ]);
+
+    $this->actingAs($admin, 'admin');
+    $this->get("/admin/blogs/{$blogId}/edit")->assertSuccessful();
+    $this->get('/admin/blogs/create')->assertForbidden();
+});
+
+test('delete and delete-any abilities are gated independently of view and update', function () {
+    $admin = rbacMatrixLimitedWithPermissions('act.delete@t.com', 'deleter_blog', ['Delete:Blog', 'DeleteAny:Blog']);
+
+    $blogId = DB::table('blog')->insertGetId([
+        'name' => 'Matrix Post Four',
+        'link' => 'matrix-post-four',
+        'description' => 'x',
+        'image' => '',
+        'published' => now(),
+        'meta_title' => '',
+        'meta_keywords' => '',
+        'meta_description' => '',
+    ]);
+
+    $blog = Blog::find($blogId);
+
+    expect(Gate::forUser($admin)->allows('delete', $blog))->toBeTrue()
+        ->and(Gate::forUser($admin)->allows('deleteAny', Blog::class))->toBeTrue()
+        ->and(Gate::forUser($admin)->denies('update', $blog))->toBeTrue()
+        ->and(Gate::forUser($admin)->denies('create', Blog::class))->toBeTrue()
+        ->and(Gate::forUser($admin)->denies('viewAny', Blog::class))->toBeTrue();
+
+    $this->actingAs($admin, 'admin');
+    $this->get('/admin/blogs')->assertForbidden();
+});
+
+test('the admin sidebar only lists the sections the current admin has permission for', function () {
+    $admin = rbacMatrixLimitedWithPermissions('act.nav@t.com', 'nav_blog_only', ['ViewAny:Blog']);
+
+    $this->actingAs($admin, 'admin');
+
+    $page = $this->get('/admin/blogs')->assertSuccessful();
+
+    $page->assertSee('/admin/blogs');
+    $page->assertDontSee('/admin/events');
+    $page->assertDontSee('/admin/testimonials');
+    $page->assertDontSee('/admin/transactions');
+    $page->assertDontSee('/admin/admin-users');
+});
+
+test('the sidebar updates for the same admin as soon as a role gains another section', function () {
+    $admin = rbacMatrixLimitedWithPermissions('act.nav2@t.com', 'nav_grow', ['ViewAny:Blog']);
+
+    $this->actingAs($admin, 'admin');
+    $this->get('/admin/blogs')->assertDontSee('/admin/events');
+
+    Permission::firstOrCreate(['name' => 'ViewAny:Event', 'guard_name' => 'admin']);
+    Role::where('name', 'nav_grow')->first()->givePermissionTo('ViewAny:Event');
+
+    // Production rebuilds navigation on every request; the test app reuses
+    // the NavigationManager singleton, so drop it to simulate the next request.
+    app()->forgetInstance(NavigationManager::class);
+
+    $this->get('/admin/blogs')->assertSee('/admin/events');
+});
+
+test('guests are bounced off every admin route regardless of permissions', function () {
+    foreach (['/admin', '/admin/blogs', '/admin/admin-users', '/admin/shield/roles', '/admin/member-roles', '/admin/settings'] as $path) {
+        $this->get($path)->assertRedirect();
+    }
 });
