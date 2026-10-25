@@ -62,6 +62,9 @@ class SignUpController extends Controller
         ];
         $user = User::create($insertData);
 
+        // New website members get the default member role (RBAC).
+        $user->syncRoles(['member']);
+
         // Prevent session fixation across the privilege change (L7).
         $request->session()->regenerate();
 

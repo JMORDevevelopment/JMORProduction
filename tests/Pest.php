@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 use Tests\TestCase;
 
@@ -52,4 +54,34 @@ expect()->extend('toBeOne', function () {
 function something()
 {
     // ..
+}
+
+/**
+ * Create the website-member role (web guard) with every frontend
+ * permission, for tests that log in frontend users.
+ */
+function ensureMemberRole(): Role
+{
+    $permissions = [
+        'viewDashboard', 'viewOrders', 'updateProfile',
+        'viewGiftCards', 'createTestimonials', 'accessCheckout',
+    ];
+
+    foreach ($permissions as $permission) {
+        Permission::firstOrCreate([
+            'name' => $permission,
+            'guard_name' => 'web',
+        ]);
+    }
+
+    $role = Role::firstOrCreate([
+        'name' => 'member',
+        'guard_name' => 'web',
+    ]);
+
+    $role->givePermissionTo(
+        Permission::where('guard_name', 'web')->get()
+    );
+
+    return $role;
 }
