@@ -11,6 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('menu_group')) {
+            return;
+        }
+
         Schema::create('menu_group', function (Blueprint $table) {
             $table->unsignedSmallInteger('id')->autoIncrement()->primary();
             $table->string('title', 255);

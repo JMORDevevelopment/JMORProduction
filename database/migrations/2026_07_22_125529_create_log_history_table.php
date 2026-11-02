@@ -11,6 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('log_history')) {
+            return;
+        }
+
         Schema::create('log_history', function (Blueprint $table) {
             $table->integer('id', true);
             $table->integer('user_id');

@@ -11,6 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('coupon_checkout')) {
+            return;
+        }
+
         Schema::create('coupon_checkout', function (Blueprint $table) {
             $table->integer('id', true);
             $table->integer('gift_card_id');

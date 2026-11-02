@@ -8,6 +8,10 @@ return new class extends Migration
 {
     public function up(): void
     {
+        if (Schema::hasColumn('admin', 'auth_mode')) {
+            return;
+        }
+
         Schema::table('admin', function (Blueprint $table) {
             $table->string('auth_mode')->default('both')->after('status');
         });

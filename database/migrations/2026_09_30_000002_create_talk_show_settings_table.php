@@ -8,6 +8,10 @@ return new class extends Migration
 {
     public function up(): void
     {
+        if (Schema::hasTable('talk_show_settings')) {
+            return;
+        }
+
         Schema::create('talk_show_settings', function (Blueprint $table) {
             $table->increments('id');
             $table->text('price');

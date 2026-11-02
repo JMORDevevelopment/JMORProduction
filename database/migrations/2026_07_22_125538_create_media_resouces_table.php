@@ -11,6 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('media_resouces')) {
+            return;
+        }
+
         Schema::create('media_resouces', function (Blueprint $table) {
             $table->integer('id', true);
             $table->text('link');

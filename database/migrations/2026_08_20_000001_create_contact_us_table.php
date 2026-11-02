@@ -8,6 +8,22 @@ return new class extends Migration
 {
     public function up(): void
     {
+        if (Schema::hasTable('contact_us')) {
+            if (! Schema::hasColumn('contact_us', 'ip')) {
+                Schema::table('contact_us', function (Blueprint $table) {
+                    $table->text('ip')->nullable();
+                });
+            }
+
+            if (! Schema::hasColumn('contact_us', 'date_time')) {
+                Schema::table('contact_us', function (Blueprint $table) {
+                    $table->string('date_time', 50)->nullable();
+                });
+            }
+
+            return;
+        }
+
         Schema::create('contact_us', function (Blueprint $table) {
             $table->id();
             $table->string('name', 80);
