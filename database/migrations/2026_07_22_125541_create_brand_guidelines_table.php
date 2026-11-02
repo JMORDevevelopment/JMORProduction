@@ -11,6 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('brand_guidelines')) {
+            return;
+        }
+
         Schema::create('brand_guidelines', function (Blueprint $table) {
             $table->integer('id', true);
             $table->text('link');

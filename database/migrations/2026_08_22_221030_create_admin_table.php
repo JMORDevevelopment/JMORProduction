@@ -8,6 +8,10 @@ return new class extends Migration
 {
     public function up(): void
     {
+        if (Schema::hasTable('admin')) {
+            return;
+        }
+
         Schema::create('admin', function (Blueprint $table) {
             $table->integer('admin_id')->primary()->autoIncrement();
             $table->string('firstname', 30);

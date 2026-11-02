@@ -11,6 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('menu')) {
+            return;
+        }
+
         Schema::create('menu', function (Blueprint $table) {
             $table->tinyInteger('id', true, true);
             $table->tinyInteger('parent_id')->unsigned()->default(0);

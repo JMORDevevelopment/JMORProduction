@@ -8,6 +8,10 @@ return new class extends Migration
 {
     public function up(): void
     {
+        if (Schema::hasTable('random_acts_of_kindness')) {
+            return;
+        }
+
         Schema::create('random_acts_of_kindness', function (Blueprint $table) {
             $table->id();
             $table->text('link');

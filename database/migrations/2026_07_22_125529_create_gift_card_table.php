@@ -11,6 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('gift_card')) {
+            return;
+        }
+
         Schema::create('gift_card', function (Blueprint $table) {
             $table->integer('id', true);
             $table->text('link');

@@ -8,6 +8,10 @@ return new class extends Migration
 {
     public function up(): void
     {
+        if (Schema::hasTable('radio_show')) {
+            return;
+        }
+
         Schema::create('radio_show', function (Blueprint $table) {
             $table->id();
             $table->text('link');

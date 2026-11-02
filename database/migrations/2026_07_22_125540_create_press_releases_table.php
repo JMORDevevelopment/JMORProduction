@@ -11,6 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('press_releases')) {
+            return;
+        }
+
         Schema::create('press_releases', function (Blueprint $table) {
             $table->integer('id', true);
             $table->text('link');

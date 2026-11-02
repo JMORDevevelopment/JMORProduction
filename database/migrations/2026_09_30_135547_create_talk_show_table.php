@@ -11,6 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('talk_show')) {
+            return;
+        }
+
         Schema::create('talk_show', function (Blueprint $table) {
             $table->increments('id');
             $table->text('name');

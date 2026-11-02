@@ -11,6 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('checkout_form')) {
+            return;
+        }
+
         Schema::create('checkout_form', function (Blueprint $table) {
             $table->integer('id', true);
             $table->string('name', 100);

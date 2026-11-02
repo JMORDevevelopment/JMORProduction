@@ -8,6 +8,10 @@ return new class extends Migration
 {
     public function up(): void
     {
+        if (Schema::hasTable('category')) {
+            return;
+        }
+
         Schema::create('category', function (Blueprint $table) {
             $table->id('category_id');
             $table->integer('priority')->default(0);

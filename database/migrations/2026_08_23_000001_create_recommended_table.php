@@ -8,6 +8,10 @@ return new class extends Migration
 {
     public function up(): void
     {
+        if (Schema::hasTable('recommended')) {
+            return;
+        }
+
         Schema::create('recommended', function (Blueprint $table) {
             $table->id();
             $table->text('link');
