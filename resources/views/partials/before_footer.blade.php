@@ -20,12 +20,24 @@
                         <div id="mc_embed_signup_scroll">
                             <div class="indicates-required"><span class="asterisk">*</span> indicates required</div>
                             <div class="mc-field-group">
-                                <label for="mce-NAME">Full Name  <span class="asterisk">*</span></label>
-                                <input type="text" value="" name="NAME" class="required" id="mce-NAME">
+                                <label for="mce-FNAME">First Name  <span class="asterisk">*</span></label>
+                                <input type="text" value="" name="FNAME" class="required" id="mce-FNAME" autocomplete="given-name" required>
+                            </div>
+                            <div class="mc-field-group">
+                                <label for="mce-LNAME">Last Name  <span class="asterisk">*</span></label>
+                                <input type="text" value="" name="LNAME" class="required" id="mce-LNAME" autocomplete="family-name" required>
                             </div>
                             <div class="mc-field-group">
                                 <label for="mce-EMAIL">Email Address  <span class="asterisk">*</span></label>
-                                <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                                <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" autocomplete="email" required>
+                            </div>
+                            <div class="mc-field-group">
+                                <label class="mc-consent" for="mc-embedded-subscribe-consent" style="display: block; text-align: left; margin: 8px 0;">
+                                    <input type="checkbox" name="NEWSLETTER_CONSENT" value="I agree" id="mc-embedded-subscribe-consent" class="required" style="width: auto; margin-right: 6px;" required>
+                                    I agree to receive the JMOR newsletter and accept the
+                                    <a href="{{ route('privacy-policy') }}" target="_blank" rel="noopener">Privacy Policy</a>.
+                                    <span class="asterisk">*</span>
+                                </label>
                             </div>
                             <div id="mce-responses" class="clear">
                                 <div class="response" id="mce-error-response" style="display:none"></div>
@@ -38,7 +50,7 @@
                 </div>
                 @push('scripts')
                     <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
-                    <script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[1]='NAME';ftypes[1]='text';fnames[0]='EMAIL';ftypes[0]='email';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+                    <script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
                 @endpush
                 <!--End mc_embed_signup-->
             </div>

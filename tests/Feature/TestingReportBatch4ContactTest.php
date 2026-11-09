@@ -150,3 +150,29 @@ test('the add work control reports inline errors and treats the web link as opti
         ->assertSee('Please enter a show or experience name.', false)
         ->assertSee('(optional) https:// or http://', false);
 });
+
+test('newsletter signup requires first name, last name, email, and consent only', function () {
+    $html = $this->get(route('contact'))->assertSuccessful()->getContent();
+
+    expect($html)->toContain('name="FNAME"');
+    expect($html)->toContain('name="LNAME"');
+    expect($html)->toContain('name="EMAIL"');
+    expect($html)->toContain('id="mc-embedded-subscribe-consent"');
+    expect($html)->toContain('href="'.route('privacy-policy').'"');
+
+    // The old single Full Name field is gone.
+    expect($html)->not->toContain('name="NAME"');
+    expect($html)->not->toContain('mce-NAME');
+});
+
+test('the talk show guest application stays publicly reachable', function () {
+    $this->get(route('contact'))
+        ->assertSuccessful()
+        ->assertSee('id="form_two"', false)
+        ->assertSee('action="'.route('contact.interview').'"', false)
+        ->assertSee('Talk Show Guest', false);
+
+    // No auth gate on the interview endpoint itself.
+    $this->post(route('contact.interview'), [])
+        ->assertSessionHasErrors(['name', 'last_name', 'phone', 'email', 'bio', 'work_name', 'interview']);
+});
