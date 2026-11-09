@@ -18,7 +18,7 @@ class Header extends Component
         return view('components.header', [
             'topSettings' => Setting::orderBy('id')->get(),
             'navigation' => Menu::tree(),
-            'languages' => Language::orderBy('sort_order')->get(),
+            'languages' => Language::where('name', '!=', 'macedonian')->orderBy('sort_order')->get(),
         ]);
     }
 }

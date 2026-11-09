@@ -8,13 +8,13 @@ beforeEach(function () {
     Language::create(['name' => 'macedonian', 'code' => 'mk', 'sort_order' => 1]);
 });
 
-test('the header shows a language switcher for every language', function () {
+test('the header language switcher omits macedonian', function () {
     $this->get(route('home'))
         ->assertOk()
         ->assertSee('/lang/change/english', false)
-        ->assertSee('/lang/change/macedonian', false)
         ->assertSee('English')
-        ->assertSee('Macedonian');
+        ->assertDontSee('/lang/change/macedonian', false)
+        ->assertDontSee('Macedonian');
 });
 
 test('switching language stores the session and redirects home', function () {
