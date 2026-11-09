@@ -6,7 +6,7 @@
         <div class="container">
             <div class="row align-items-center" style="row-gap:44px">
                 <div class="col-lg-6">
-                    <div class="jm-hero__badge">28+ years &middot; New Jersey</div>
+                    <div class="jm-hero__badge">{{ now()->year - 1993 }}+ years &middot; New Jersey</div>
                     <h1>Engineering technology to grow your business.</h1>
                     <p class="jm-hero__copy">The JMOR Connection keeps your systems up, secure and current — computer, network and IT support delivered right the first time.</p>
 
@@ -16,7 +16,7 @@
                     </div>
 
                     <div class="jm-hero__stats">
-                        <div><strong>28+</strong><span>Years in business</span></div>
+                        <div><strong>{{ now()->year - 1993 }}+</strong><span>Years in business</span></div>
                         <div><strong>24/7</strong><span>Remote support</span></div>
                         <div><strong>On-site</strong><span>NJ technicians, quarterly</span></div>
                     </div>
@@ -294,7 +294,7 @@
                     <h2>Mission Statement</h2>
                     <p class="jm-about__mission">The JMOR Connection, Inc. is dedicated to providing solutions and services that keep your business up and running smoothly. We will provide your business with the latest and most efficient technology available. We will fix your problem right the first time.</p>
                     <div class="jm-about__blockquote-wrapper">
-                        <p class="jm-about__blockquote">Having over 28 years of experience, we care more about helping our clients solve their issues over whether or not we are making money. We believe in security, trust, integrity, and professionalism. We understand the challenges of a day-to-day service business. We are not afraid to be different nor to think outside the box.</p>
+                        <p class="jm-about__blockquote">Having over {{ now()->year - 1993 }} years of experience, we care more about helping our clients solve their issues over whether or not we are making money. We believe in security, trust, integrity, and professionalism. We understand the challenges of a day-to-day service business. We are not afraid to be different nor to think outside the box.</p>
                         <p class="jm-about__blockquote">Our clients and our community come first and we want to let them know that we are here today, tomorrow and for your growing needs of the future. We ask all of our clients the same question: are you willing to sacrifice quality and service for price?</p>
                     </div>
                     <div class="jm-about__actions">
