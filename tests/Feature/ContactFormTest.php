@@ -100,21 +100,35 @@ test('request information form creates a record with the session captcha answer'
 test('contact page wires the talk show tile to the interview application form', function () {
     $this->get(route('contact'))
         ->assertSuccessful()
-        ->assertSee('<p class="mb-0" style="cursor:pointer;" onclick="inquiryformtwo()">Apply Now</p>', false);
+        ->assertSee('onclick="inquiryformtwo()"', false)
+        ->assertSee('Talk Show Guest', false)
+        ->assertSee('Apply Now', false);
 });
 
 test('contact page wires the inquiry and chat tiles to the inquiry form', function () {
     $this->get(route('contact'))
         ->assertSuccessful()
-        ->assertSee('<p class="mb-0" style="cursor:pointer;" onclick="inquiryform()">Chat Now</p>', false)
-        ->assertSee('<p class="mb-0" style="cursor:pointer;" onclick="inquiryform()">Inquire Now</p>', false);
+        ->assertSee('onclick="chatNow()"', false)
+        ->assertSee('onclick="inquiryform()"', false)
+        ->assertSee('Inquire Now', false)
+        ->assertSee('Chat With Us', false);
 });
 
-test('contact page wires the address and phone tiles to the reveal handlers', function () {
-    $this->get(route('contact'))
-        ->assertSuccessful()
-        ->assertSee("reveal('.viewadres', 'viewadres')", false)
-        ->assertSee("reveal('.viewnmbr', 'viewnmbr')", false);
+test('contact page replaces the address and phone tiles with direct actions', function () {
+    DB::table('settings')->insert([
+        ['option' => 'phone', 'value' => '(973) 394-1000'],
+    ]);
+
+    $html = $this->get(route('contact'))->assertSuccessful()->getContent();
+
+    // The View Address card and its reveal toggle are gone (issue 043).
+    expect($html)->not->toContain('viewadres');
+    expect($html)->not->toContain('View Address');
+
+    // The phone tile is a direct tel: link instead of a reveal toggle.
+    expect($html)->toContain('href="tel:+19733941000"');
+    expect($html)->toContain('(973) 394-1000');
+    expect($html)->not->toContain('View Number');
 });
 
 test('contact page renders the address line break instead of raw markup', function () {
