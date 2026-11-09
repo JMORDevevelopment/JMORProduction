@@ -6,7 +6,7 @@
 </head>
 <body style="font-family: Arial, Helvetica, sans-serif; background:#f4f4f4; padding:30px;">
     <div style="max-width:520px; margin:0 auto; background:#fff; padding:30px; border:1px solid #e5e5e5;">
-        <h2 style="margin-top:0;">JMOR Connection</h2>
+        <h2 style="margin-top:0;">The JMOR Connection, Inc.</h2>
         <p>Hello {{ $adminName }},</p>
         <p>We received a request to reset your admin panel password.</p>
         <p>

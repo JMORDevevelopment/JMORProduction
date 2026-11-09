@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Coming Soon - JMOR Connection')
+@section('title', 'Coming Soon - The JMOR Connection, Inc.')
 
 @section('content')
 
