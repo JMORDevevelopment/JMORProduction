@@ -298,7 +298,7 @@
                         <p class="jm-about__blockquote">Our clients and our community come first and we want to let them know that we are here today, tomorrow and for your growing needs of the future. We ask all of our clients the same question: are you willing to sacrifice quality and service for price?</p>
                     </div>
                     <div class="jm-about__actions">
-                        <a href="{{ route('about') }}" class="jm-btn jm-btn--orange">Why choose JMOR?</a>
+                        <a href="{{ route('why-choose-jmor') }}" class="jm-btn jm-btn--orange">Why choose JMOR?</a>
                         <a href="{{ route('testimonials') }}" class="jm-btn jm-btn--outline-blue">Read testimonials</a>
                     </div>
                 </div>
