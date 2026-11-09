@@ -1,6 +1,36 @@
 <?php
 
+use App\Support\RichText;
 use Illuminate\Support\Facades\DB;
+
+it('keeps internal relative links in sanitized content', function () {
+    $html = (string) RichText::sanitize(
+        '<p><a href="/service/it-tech-support">backup</a> and <a href="javascript:alert(1)">bad</a></p><script>x</script>'
+    );
+
+    expect($html)->toContain('href="/service/it-tech-support"')
+        ->not->toContain('javascript:')
+        ->not->toContain('<script');
+});
+
+test('page content links render as clickable links', function () {
+    DB::table('pages')->insert([
+        'link' => 'it-tech-support-services-in-nj',
+        'name' => 'IT Tech Support',
+        'priority' => 1,
+        'menu_location' => 0,
+        'description' => '<p>From routine PC maintenance, <a href="/service/it-tech-support">backup</a> and other services.</p>',
+        'image' => '',
+        'meta_title' => '',
+        'meta_keywords' => '',
+        'meta_description' => '',
+    ]);
+
+    $this->get(route('it-tech-support-services-in-nj'))
+        ->assertOk()
+        ->assertSee('href="/service/it-tech-support"', false)
+        ->assertSee('>backup</a>', false);
+});
 
 test('the homepage why choose cta points to the why choose page', function () {
     $this->get(route('home'))
