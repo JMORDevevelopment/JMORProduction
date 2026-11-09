@@ -3,7 +3,7 @@
         <div class="row justify-content-between align-items-center text-center text-md-left" data-aos-easing="linear" data-aos-delay="50">
             <div class="col-md-8">
                 <h5 class="mb-1">Smart IT that Keeps Your Business Running</h5>
-                <p class="mb-0">We to listen to our clients, understand their challenges and provide solutions that make business more efficient.</p>
+                <p class="mb-0">We listen to our clients, understand their challenges and provide solutions that make business more efficient.</p>
                 <a href="{{ route('contact') }}" class="btn btn btn-outline-light btn-pill">Contact Us</a>
             </div>
             <div class="col-md-4 text-lg-right mt-md-0 mt-3">  
