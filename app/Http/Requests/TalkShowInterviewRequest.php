@@ -15,6 +15,12 @@ class TalkShowInterviewRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge($this->trimRecursive($this->all()));
+
+        if (is_string($this->input('phone'))) {
+            $this->merge([
+                'phone' => preg_replace('/\s+/', ' ', $this->input('phone')),
+            ]);
+        }
     }
 
     private function trimRecursive($value)
@@ -32,7 +38,7 @@ class TalkShowInterviewRequest extends FormRequest
             'name' => ['required', 'string', 'max:80'],
             'last_name' => ['required', 'string', 'max:80'],
             'company_name' => ['nullable', 'string', 'max:100'],
-            'phone' => ['required', 'string', 'regex:/^[0-9\s\-\+\(\)]+$/', 'max:20'],
+            'phone' => ['required', 'string', 'regex:/^[0-9\s\-\+\(\)]+(?:\s*(?:x|ext\.?|#)\s*\d{1,6})?$/i', 'max:30'],
             'email' => ['required', 'email', 'max:50'],
             'bio' => ['required', 'string', 'max:999'],
             'work_name' => ['required', 'array', 'min:1'],
@@ -73,8 +79,8 @@ class TalkShowInterviewRequest extends FormRequest
             'last_name.max' => 'Last name cannot exceed 80 characters.',
             'company_name.max' => 'Company name cannot exceed 100 characters.',
             'phone.required' => 'Phone number is required.',
-            'phone.regex' => 'Please enter a valid phone number (digits, spaces, +, -, parentheses).',
-            'phone.max' => 'Phone number cannot exceed 20 characters.',
+            'phone.regex' => 'Please enter a valid phone number (digits, spaces, +, -, parentheses), optionally followed by an extension such as x108.',
+            'phone.max' => 'Phone number cannot exceed 30 characters.',
             'email.required' => 'Email address is required.',
             'email.email' => 'Please enter a valid email address.',
             'email.max' => 'Email cannot exceed 50 characters.',

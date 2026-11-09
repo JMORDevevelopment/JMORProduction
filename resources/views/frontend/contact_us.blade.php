@@ -23,43 +23,58 @@
                 <div class="row justify-content-center align-items-center text-center pb-lg-5">
                     <div class="col-md-8"></div>
                 </div>
+                @php
+                    $phoneDigits = preg_replace('/\D/', '', (string) $phone_number);
+                    $phoneTel = $phoneDigits === ''
+                        ? null
+                        : (strlen($phoneDigits) === 11 && str_starts_with($phoneDigits, '1')
+                            ? '+'.$phoneDigits
+                            : '+1'.$phoneDigits);
+                @endphp
                 <div class="row" style="justify-content: center;">
-                    <div class="col-lg-2 mb-5 mb-lg-0 text-center">
-                        <div class="contactIcons text-primary mb-2">
-                            <i class="fa fa-life-ring" onclick="inquiryform()"></i>
-                        </div>
-                        <h3 class="h5">Web Inquiry</h3>
-                        <p class="mb-0" style="cursor:pointer;" onclick="inquiryform()">Inquire Now</p>
+                    <div class="col-lg-3 mb-5 mb-lg-0 text-center">
+                        <button type="button" class="contact-action border-0 bg-transparent w-100"
+                                onclick="inquiryform()"
+                                aria-label="Web inquiry: jump to the inquiry form">
+                            <div class="contactIcons text-primary mb-2">
+                                <i class="fa fa-life-ring" aria-hidden="true"></i>
+                            </div>
+                            <span class="h5 d-block">Web Inquiry</span>
+                            <span class="mb-0 d-block">Inquire Now</span>
+                        </button>
                     </div>
-                    <div class="col-lg-2 mb-5 mb-lg-0 text-center">
-                        <div class="contactIcons text-primary mb-2">
-                            <i class="fa fa-microphone" onclick="inquiryformtwo()"></i>
-                        </div>
-                        <h3 class="h5">Talk Show Guest</h3>
-                        <p class="mb-0" style="cursor:pointer;" onclick="inquiryformtwo()">Apply Now</p>
+                    <div class="col-lg-3 mb-5 mb-lg-0 text-center">
+                        <button type="button" class="contact-action border-0 bg-transparent w-100"
+                                onclick="inquiryformtwo()"
+                                aria-label="Talk show guest: jump to the guest application form">
+                            <div class="contactIcons text-primary mb-2">
+                                <i class="fa fa-microphone" aria-hidden="true"></i>
+                            </div>
+                            <span class="h5 d-block">Talk Show Guest</span>
+                            <span class="mb-0 d-block">Apply Now</span>
+                        </button>
                     </div>
-                    <div class="col-lg-2 mb-5 mb-lg-0 text-center">
-                        <div class="contactIcons text-primary mb-2">
-                            <i class="fa fa-commenting" onclick="inquiryform()" style="cursor:pointer;"></i>
-                        </div>
-                        <h3 class="h5">Live Support</h3>
-                        <p class="mb-0" style="cursor:pointer;" onclick="inquiryform()">Chat Now</p>
+                    <div class="col-lg-3 mb-5 mb-lg-0 text-center">
+                        <button type="button" class="contact-action border-0 bg-transparent w-100"
+                                onclick="chatNow()"
+                                aria-label="Chat with us: jump to the message box">
+                            <div class="contactIcons text-primary mb-2">
+                                <i class="fa fa-commenting" aria-hidden="true"></i>
+                            </div>
+                            <span class="h5 d-block">Chat With Us</span>
+                            <span class="mb-0 d-block">Message now</span>
+                        </button>
                     </div>
-                    <div class="col-lg-2 mb-5 mb-lg-0 text-center">
+                    <div class="col-lg-3 mb-5 mb-lg-0 text-center">
                         <div class="contactIcons text-primary mb-2">
-                            <i class="fa fa-location-arrow" id="viewadress" style="cursor:pointer;"></i>
+                            <i class="fa fa-phone" aria-hidden="true"></i>
                         </div>
-                        <h3 class="h5">Address</h3>
-                        <p class="mb-0"><a id="viewadres" style="cursor:pointer;">View Address</a></p>
-                        <p class="mb-0 viewadres" style="display:none;">{!! nl2br(e(str_replace(['<br>', '<br/>', '<br />'], "\n", $address))) !!}</p>
-                    </div>
-                    <div class="col-lg-2 mb-5 mb-lg-0 text-center">
-                        <div class="contactIcons text-primary mb-2">
-                            <i class="fa fa-phone" id="viewnmbrr" style="cursor:pointer;"></i>
-                        </div>
-                        <h3 class="h5">Phone Number</h3>
-                        <a id="viewnmbr" style="cursor:pointer;">View Number</a>
-                        <p class="mb-0 viewnmbr" style="display:none;">{{ $phone_number }}</p>
+                        <span class="h5 d-block">Call Us</span>
+                        @if($phoneTel)
+                            <a class="mb-0 d-block" href="tel:{{ $phoneTel }}">{{ $phone_number }}</a>
+                        @else
+                            <span class="mb-0 d-block">{{ $phone_number }}</span>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -77,11 +92,28 @@
                 <div class="row text-center" style="justify-content: center;">
                     <div id="map_box" class="col-lg-5">
                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3010.113136935536!2d-74.20879448429831!3d41.022780679299395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2e287fb5beb13%3A0x5056f097f8d06e27!2s799%20Franklin%20Ave%20%233%2C%20Franklin%20Lakes%2C%20NJ%2007417%2C%20USA!5e0!3m2!1sen!2s!4v1588958264865!5m2!1sen!2s" width="100%" height="320" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                        <p class="mt-2 mb-0 small text-muted">{!! nl2br(e(str_replace(['<br>', '<br/>', '<br />'], "\n", $address))) !!}</p>
                     </div>
                     <div class="col-lg-7">
-                        @if(isset($success))
-                            <div class="alert alert-success alert-dismissible">
-                                {{ $success }}
+                        @if($success)
+                            <div id="contact-thanks" class="contact-thanks text-center" role="status" aria-live="polite">
+                                <div class="contact-thanks-card bg-white rounded shadow-sm p-5 mx-auto">
+                                    <i class="fa fa-check-circle text-success fa-3x mb-3" aria-hidden="true"></i>
+                                    <h2 class="h4">Thank you!</h2>
+                                    <p class="mb-4">{{ $success }}</p>
+                                    <p class="mb-2"><strong>Need help right away?</strong></p>
+                                    <div class="d-flex justify-content-center flex-wrap mb-3 contact-thanks-actions">
+                                        @if($phoneTel)
+                                            <a class="btn btn-primary btn-pill px-4 mr-2 mb-2" href="tel:{{ $phoneTel }}">
+                                                <i class="fa fa-phone" aria-hidden="true"></i> {{ $phone_number }}
+                                            </a>
+                                        @endif
+                                        <button type="button" class="btn btn-outline-primary btn-pill px-4 mb-2" id="thanks-chat">
+                                            <i class="fa fa-commenting" aria-hidden="true"></i> Chat With Us
+                                        </button>
+                                    </div>
+                                    <p class="text-muted small mb-0">Returning to Contact Us in <span id="thanks-count">5</span> seconds&hellip;</p>
+                                </div>
                             </div>
                         @endif
 
@@ -109,16 +141,12 @@
                                 </div>
                             </div>
 
-                            <p>US Resident</p>
-                            <label class="switch">
-                                <input id="onephone" type="checkbox" class="swi" checked>
-                                <span class="sliderp round"></span>
-                            </label>
-
                             <div class="form-group mb-4{{ isset($error['phone']) ? ' has-error' : '' }}">
                                 <div class="controls">
-                                    <input id="phone" name="phone" style="display: '';" class="form-control form-control-lg phone ph" placeholder="Enter your number...." value="{{ $phone }}">
-                                    <input id="" name="" style="display: none;" class="form-control form-control-lg phb" placeholder="Enter your number....">
+                                    <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel"
+                                           aria-label="Phone number"
+                                           style="display: '';" class="form-control form-control-lg phone ph"
+                                           placeholder="Enter your number...." value="{{ $phone }}">
                                     @if(isset($error['phone']))
                                         <span class="help-block text-danger">{{ $error['phone'] }}</span>
                                     @endif
@@ -219,8 +247,14 @@
 
                                 <div class="form-group mb-4{{ isset($error['phone']) ? ' has-error' : '' }}">
                                     <div class="controls">
-                                        <input id="phoneb" name="phone" style="display: '';" class="form-control form-control-lg phone bph" placeholder="Enter your number...." value="{{ old('phone', '') }}">
-                                        <input id="" name="" style="display: none;" class="form-control form-control-lg bphb" placeholder="Enter your number....">
+                                        <input id="phoneb" name="phone" type="tel" inputmode="tel" autocomplete="tel"
+                                               aria-label="Phone number"
+                                               style="display: '';" class="form-control form-control-lg phone bph"
+                                               placeholder="Enter your number...." value="{{ old('phone', '') }}">
+                                        <input id="" name="" type="tel" inputmode="tel"
+                                               aria-label="Phone number (non-US resident)"
+                                               style="display: none;" class="form-control form-control-lg bphb"
+                                               placeholder="Enter your number....">
                                         @if(isset($error['phone']))
                                             <span class="help-block text-danger">{{ $error['phone'] }}</span>
                                         @endif
@@ -254,7 +288,8 @@
                                     <h5>Show Appearance or Past Experience</h5>
                                 </div>
                                 <div class="col-md-4">
-                                    <button type="button" id="add_work" class="btn btn-primary pull-right">Add Work</button>
+                                    <button type="button" id="add_work" class="btn btn-primary pull-right"
+                                            aria-controls="append">Add Work or Experience</button>
                                 </div>
                             </div>
 
@@ -264,15 +299,20 @@
 
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <input type="text" id="work_name" class="form-control" value="" placeholder="Show or Experience ">
+                                            <input type="text" id="work_name" class="form-control" value=""
+                                                   placeholder="Show or Experience " aria-label="Show or experience name">
                                         </div>
                                         <div class="col-md-4">
-                                            <input type="text" id="work_detail" class="form-control" value="" placeholder="Description">
+                                            <input type="text" id="work_detail" class="form-control" value=""
+                                                   placeholder="Description" aria-label="Show or experience description">
                                         </div>
                                         <div class="col-md-4">
-                                            <input type="url" id="work_web" class="form-control" value="" placeholder="https:// or http://">
+                                            <input type="url" id="work_web" class="form-control" value=""
+                                                   placeholder="(optional) https:// or http://" aria-label="Show or experience web link">
                                         </div>
                                     </div>
+
+                                    <span id="work_error" class="text-danger" role="alert"></span>
 
                                     @if(isset($error['work_name']))
                                         <span class="help-block text-danger">{{ $error['work_name'] }}</span>
@@ -332,12 +372,26 @@
 @push('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js" type="text/javascript"></script>
 <script>
+    function scrollToForm(formId) {
+        var form = document.getElementById(formId);
+        if (!form) {
+            return;
+        }
+        form.scrollIntoView({behavior: 'smooth', block: 'start'});
+        var focusable = form.querySelector('input:not([type="hidden"]), select, textarea');
+        if (focusable) {
+            setTimeout(function () {
+                focusable.focus({preventScroll: true});
+            }, 400);
+        }
+    }
+
     function inquiryform() {
         $('#form_one').css('display', '').show();
         $('#form_two').hide();
         $('#map_box').css('display', 'block');
         $('#hed').html('Fill out the form below.');
-        document.getElementById('form_one').scrollIntoView({behavior: 'smooth'});
+        scrollToForm('form_one');
     }
 
     function inquiryformtwo() {
@@ -345,50 +399,18 @@
         $('#form_two').show();
         $('#map_box').hide();
         $('#hed').html('Interview Pitch Concept.');
-        document.getElementById('form_two').scrollIntoView({behavior: 'smooth'});
+        scrollToForm('form_two');
     }
 
-    function reveal(selector, hideId) {
-        document.querySelectorAll(selector).forEach(function (el) {
-            el.style.display = 'block';
-        });
-        var link = document.getElementById(hideId);
-        if (link) {
-            link.style.display = 'none';
+    function chatNow() {
+        inquiryform();
+        var message = document.getElementById('message');
+        if (message) {
+            setTimeout(function () {
+                message.focus({preventScroll: true});
+            }, 400);
         }
     }
-
-    ['viewadres', 'viewadress'].forEach(function (id) {
-        var el = document.getElementById(id);
-        if (el) {
-            el.addEventListener('click', function () {
-                reveal('.viewadres', 'viewadres');
-            });
-        }
-    });
-
-    ['viewnmbr', 'viewnmbrr'].forEach(function (id) {
-        var el = document.getElementById(id);
-        if (el) {
-            el.addEventListener('click', function () {
-                reveal('.viewnmbr', 'viewnmbr');
-            });
-        }
-    });
-
-    $('#onephone').change(function () {
-        if (this.checked) {
-            $('.ph').toggle();
-            $('.phb').toggle();
-            $('.ph').attr('name', 'phone');
-            $('.phb').attr('name', '');
-        } else {
-            $('.ph').toggle();
-            $('.phb').toggle();
-            $('.ph').attr('name', '');
-            $('.phb').attr('name', 'phone');
-        }
-    });
 
     $('#twophone').change(function () {
         if (this.checked) {
@@ -417,11 +439,30 @@
         return (res !== null);
     }
 
+    function showWorkError(message) {
+        var el = document.getElementById('work_error');
+        if (el) {
+            el.textContent = message;
+        }
+    }
+
+    function clearWorkError() {
+        var el = document.getElementById('work_error');
+        if (el) {
+            el.textContent = '';
+        }
+    }
+
     function checkwork() {
         if ($('#append').children().length > 0) {
+            clearWorkError();
             return true;
         }
-        alert('Add a work');
+        showWorkError('Please add at least one show or experience before sending.');
+        var workName = document.getElementById('work_name');
+        if (workName) {
+            workName.focus();
+        }
         return false;
     }
 
@@ -438,65 +479,141 @@
     }
 
     function save(id) {
-        var work_name = $('#work_name' + id).val();
-        var web = $('#web' + id).val();
+        var work_name = $('#work_name' + id).val().trim();
+        var web = $('#web' + id).val().trim();
         var detail = $('#detail' + id).val();
 
-        if (isValidURL(web)) {
-            $('#wset' + id).text(web);
-            $('#hset' + id).text(work_name);
-            $('#dset' + id).text(detail);
-            $('#edit_v' + id).fadeToggle();
-            $('#no' + id).fadeToggle();
-        } else {
-            alert('not valid web link');
+        if (work_name === '') {
+            showWorkError('Show or experience name cannot be empty.');
+            $('#work_name' + id).focus();
+            return;
         }
+        if (web !== '' && !isValidURL(web)) {
+            showWorkError('Web link must be a valid URL (https://...) or be left empty.');
+            $('#web' + id).focus();
+            return;
+        }
+
+        clearWorkError();
+        $('#wset' + id).text(web !== '' ? web : 'Not provided');
+        $('#hset' + id).text(work_name);
+        $('#dset' + id).text(detail);
+        $('#edit_v' + id).fadeToggle();
+        $('#no' + id).fadeToggle();
     }
 
     $('#add_work').click(function () {
+        clearWorkError();
+
         var counter = parseInt($('#counter').val());
         counter = counter + 1;
 
-        var work_name = $('#work_name').val();
-        var work_web = $('#work_web').val();
+        var work_name = $('#work_name').val().trim();
+        var work_web = $('#work_web').val().trim();
         var work_detail = $('#work_detail').val();
 
-        if (work_name != '') {
-            if (isValidURL(work_web)) {
-                $.ajax({
-                    type: 'post',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        id: counter,
-                        work_name: work_name,
-                        work_detail: work_detail,
-                        work_web: work_web
-                    },
-                    dataType: 'json',
-                    url: '{{ route('contact.load_restaurants') }}',
-                    success: function (response) {
-                        $('#append').append(response.html);
-                        $('#work_name').val('');
-                        $('#work_web').val('');
-                        $('#work_detail').val('');
-                    },
-                    error: function (xhr, status, error) {
-                        alert(status);
-                    }
-                });
+        if (work_name === '') {
+            showWorkError('Please enter a show or experience name.');
+            $('#work_name').focus();
+            return;
+        }
+        if (work_web !== '' && !isValidURL(work_web)) {
+            showWorkError('Web link must be a valid URL (https://...) or be left empty.');
+            $('#work_web').focus();
+            return;
+        }
 
+        $.ajax({
+            type: 'post',
+            data: {
+                _token: '{{ csrf_token() }}',
+                id: counter,
+                work_name: work_name,
+                work_detail: work_detail,
+                work_web: work_web
+            },
+            dataType: 'json',
+            url: '{{ route('contact.load_restaurants') }}',
+            success: function (response) {
+                $('#append').append(response.html);
                 $('#append').css('display', '');
                 $('#counter').val(counter);
-            } else {
-                alert('not valid web link');
+                $('#work_name').val('');
+                $('#work_web').val('');
+                $('#work_detail').val('');
+                $('#work_name').focus();
+            },
+            error: function (xhr, status, error) {
+                showWorkError('Could not add the entry. Please check your connection and try again.');
             }
-        }
+        });
     });
 
     @if($open_interview)
         inquiryformtwo();
     @endif
+
+    (function () {
+        var overlay = document.getElementById('contact-thanks');
+        if (!overlay) {
+            return;
+        }
+
+        var chatButton = document.getElementById('thanks-chat');
+        if (chatButton) {
+            chatButton.addEventListener('click', function () {
+                overlay.remove();
+                chatNow();
+            });
+        }
+
+        var countElement = document.getElementById('thanks-count');
+        var remaining = 5;
+        if (countElement) {
+            var timer = setInterval(function () {
+                remaining -= 1;
+                if (remaining <= 0) {
+                    clearInterval(timer);
+                    window.location.href = @json(route('contact'));
+                    return;
+                }
+                countElement.textContent = remaining;
+            }, 1000);
+        }
+    })();
 </script>
+@endpush
+
+@push('styles')
+    <style>
+        #form_one, #form_two {
+            scroll-margin-top: 120px;
+        }
+        .contact-action {
+            cursor: pointer;
+        }
+        .contact-action:hover .h5,
+        .contact-action:focus .h5 {
+            text-decoration: underline;
+        }
+        .contact-thanks {
+            position: fixed;
+            inset: 0;
+            background: rgba(1, 32, 64, 0.75);
+            z-index: 1050;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .contact-thanks-card {
+            max-width: 520px;
+            width: 100%;
+        }
+        .contact-thanks-actions .btn {
+            min-width: 180px;
+        }
+    </style>
 @endpush
 
 @include('partials.script_file')

@@ -15,6 +15,12 @@ class ContactRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge($this->trimRecursive($this->all()));
+
+        if (is_string($this->input('phone'))) {
+            $this->merge([
+                'phone' => preg_replace('/\s+/', ' ', $this->input('phone')),
+            ]);
+        }
     }
 
     private function trimRecursive($value)
@@ -31,7 +37,7 @@ class ContactRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:80'],
             'email' => ['required', 'email', 'max:50'],
-            'phone' => ['required', 'string', 'regex:/^[0-9\s\-\+\(\)]+$/', 'max:20'],
+            'phone' => ['required', 'string', 'regex:/^[0-9\s\-\+\(\)]+(?:\s*(?:x|ext\.?|#)\s*\d{1,6})?$/i', 'max:30'],
             'reason' => ['required', 'string', 'max:100'],
             'message' => ['required', 'string', 'max:5000'],
             'protection_question' => [
@@ -65,8 +71,8 @@ class ContactRequest extends FormRequest
             'email.email' => 'Please enter a valid email address.',
             'email.max' => 'Email cannot exceed 50 characters.',
             'phone.required' => 'Phone number is required.',
-            'phone.regex' => 'Please enter a valid phone number (digits, spaces, +, -, parentheses).',
-            'phone.max' => 'Phone number cannot exceed 20 characters.',
+            'phone.regex' => 'Please enter a valid phone number (digits, spaces, +, -, parentheses), optionally followed by an extension such as x108.',
+            'phone.max' => 'Phone number cannot exceed 30 characters.',
             'reason.required' => 'Please select a reason for contacting us.',
             'reason.max' => 'Reason cannot exceed 100 characters.',
             'message.required' => 'Please enter your message.',
