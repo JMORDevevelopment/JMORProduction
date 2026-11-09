@@ -179,7 +179,7 @@
 
                         <p>
                             About JMOR:<br>
-                            Having over 28 years of experience, we care more about helping our clients solve their
+                            Having over {{ now()->year - 1993 }} years of experience, we care more about helping our clients solve their
                             issues over whether or not we are making money. We believe in security, trust,
                             integrity, and professionalism. We understand the challenges of a day-to-day service
                             business. We are not afraid to be different nor to think outside the box. Our clients

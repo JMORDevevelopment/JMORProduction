@@ -32,7 +32,7 @@ class RichText
     private static function sanitizer(): HtmlSanitizer
     {
         return self::$sanitizer ??= new HtmlSanitizer(
-            (new HtmlSanitizerConfig)->allowSafeElements()
+            (new HtmlSanitizerConfig)->allowSafeElements()->allowRelativeLinks()
         );
     }
 }

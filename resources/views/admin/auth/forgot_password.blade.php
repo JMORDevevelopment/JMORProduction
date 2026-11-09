@@ -3,13 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Forgot Password — JMOR Connection</title>
+    <title>Forgot Password — The JMOR Connection, Inc.</title>
     <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}">
 </head>
 <body style="background:#f4f4f4;">
     <div style="max-width:420px; margin:80px auto;">
         <div style="background:#fff; border:1px solid #e5e5e5; padding:30px;">
-            <h4 style="margin-top:0;">JMOR Connection</h4>
+            <h4 style="margin-top:0;">The JMOR Connection, Inc.</h4>
             <p class="text-muted">Reset your admin password</p>
 
             @if(session('status') === 'sent')

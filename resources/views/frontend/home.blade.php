@@ -6,7 +6,7 @@
         <div class="container">
             <div class="row align-items-center" style="row-gap:44px">
                 <div class="col-lg-6">
-                    <div class="jm-hero__badge">28+ years &middot; New Jersey</div>
+                    <div class="jm-hero__badge">{{ now()->year - 1993 }}+ years &middot; New Jersey</div>
                     <h1>Engineering technology to grow your business.</h1>
                     <p class="jm-hero__copy">The JMOR Connection keeps your systems up, secure and current — computer, network and IT support delivered right the first time.</p>
 
@@ -16,7 +16,7 @@
                     </div>
 
                     <div class="jm-hero__stats">
-                        <div><strong>28+</strong><span>Years in business</span></div>
+                        <div><strong>{{ now()->year - 1993 }}+</strong><span>Years in business</span></div>
                         <div><strong>24/7</strong><span>Remote support</span></div>
                         <div><strong>On-site</strong><span>NJ technicians, quarterly</span></div>
                     </div>
@@ -294,11 +294,11 @@
                     <h2>Mission Statement</h2>
                     <p class="jm-about__mission">The JMOR Connection, Inc. is dedicated to providing solutions and services that keep your business up and running smoothly. We will provide your business with the latest and most efficient technology available. We will fix your problem right the first time.</p>
                     <div class="jm-about__blockquote-wrapper">
-                        <p class="jm-about__blockquote">Having over 28 years of experience, we care more about helping our clients solve their issues over whether or not we are making money. We believe in security, trust, integrity, and professionalism. We understand the challenges of a day-to-day service business. We are not afraid to be different nor to think outside the box.</p>
+                        <p class="jm-about__blockquote">Having over {{ now()->year - 1993 }} years of experience, we care more about helping our clients solve their issues over whether or not we are making money. We believe in security, trust, integrity, and professionalism. We understand the challenges of a day-to-day service business. We are not afraid to be different nor to think outside the box.</p>
                         <p class="jm-about__blockquote">Our clients and our community come first and we want to let them know that we are here today, tomorrow and for your growing needs of the future. We ask all of our clients the same question: are you willing to sacrifice quality and service for price?</p>
                     </div>
                     <div class="jm-about__actions">
-                        <a href="{{ route('about') }}" class="jm-btn jm-btn--orange">Why choose JMOR?</a>
+                        <a href="{{ route('why-choose-jmor') }}" class="jm-btn jm-btn--orange">Why choose JMOR?</a>
                         <a href="{{ route('testimonials') }}" class="jm-btn jm-btn--outline-blue">Read testimonials</a>
                     </div>
                 </div>
@@ -311,8 +311,12 @@
                                 <div class="jm-about__side-card-desc">Real NJ businesses, real fixes</div>
                             </a>
                             <a href="{{ route('our-mission') }}" class="jm-about__side-card">
-                                <div class="jm-about__side-card-title">Our mission &amp; DEI</div>
+                                <div class="jm-about__side-card-title">Our Mission</div>
                                 <div class="jm-about__side-card-desc">How we work, and why</div>
+                            </a>
+                            <a href="{{ route('our-dei-diversiety-equity-inclusion-non-discrimination-policy') }}" class="jm-about__side-card">
+                                <div class="jm-about__side-card-title">DEI Policy</div>
+                                <div class="jm-about__side-card-desc">Diversity, equity &amp; inclusion</div>
                             </a>
                         </div>
                     </div>
@@ -376,8 +380,8 @@
                     <p class="jm-cta-banner__sub">Talk to a JMOR technician about your systems today.</p>
                 </div>
                 <div class="jm-cta-banner__actions">
-                    <a href="tel:8777675667" class="jm-cta-banner__phone">
-                        (877) 767-5667
+                    <a href="tel:+19733941000" class="jm-cta-banner__phone">
+                        (973) 394-1000
                     </a>
                     <a href="{{ route('contact') }}" class="jm-btn jm-btn--orange">Request information</a>
                 </div>
