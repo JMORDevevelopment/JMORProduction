@@ -1,6 +1,10 @@
 <?php
 
+use App\Models\Admin;
+use App\Models\ContactUs;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Testing\TestResponse;
 
 beforeEach(function () {
@@ -175,4 +179,141 @@ test('the talk show guest application stays publicly reachable', function () {
     // No auth gate on the interview endpoint itself.
     $this->post(route('contact.interview'), [])
         ->assertSessionHasErrors(['name', 'last_name', 'phone', 'email', 'bio', 'work_name', 'interview']);
+});
+
+test('contact form offers the distinct workflow reasons', function () {
+    $html = $this->get(route('contact'))->assertSuccessful()->getContent();
+
+    expect($html)->toContain('Employment &amp; Internships');
+    expect($html)->toContain('Technology Assessment');
+    expect($html)->toContain('Residential Support');
+    expect($html)->toContain('Business Support');
+    expect($html)->toContain('id="resume_group"');
+    expect($html)->toContain('id="assessment_group"');
+    expect($html)->toContain('enctype="multipart/form-data"');
+});
+
+test('employment submission without a resume is rejected', function () {
+    $response = batch4CaptchaPost('contact.submit', [
+        'name' => 'Jane Doe',
+        'email' => 'jane@example.com',
+        'phone' => '(973) 555-1212',
+        'reason' => 'Employment & Internships',
+        'message' => 'I would like to apply',
+    ]);
+
+    $response->assertSessionHasErrors('resume');
+    $this->assertDatabaseMissing('contact_us', ['email' => 'jane@example.com']);
+});
+
+test('employment submission stores a pdf resume on the private disk', function () {
+    $response = batch4CaptchaPost('contact.submit', [
+        'name' => 'Jane Doe',
+        'email' => 'jane@example.com',
+        'phone' => '(973) 555-1212',
+        'reason' => 'Employment & Internships',
+        'message' => 'I would like to apply',
+        'resume' => UploadedFile::fake()->create('resume.pdf', 100, 'application/pdf'),
+    ]);
+
+    $response->assertSessionHasNoErrors();
+    $response->assertRedirect(route('contact'));
+
+    $record = ContactUs::where('email', 'jane@example.com')->first();
+    expect($record)->not->toBeNull();
+    expect($record->resume_path)->not->toBeNull();
+    expect(Storage::disk('local')->exists($record->resume_path))->toBeTrue();
+    // Never on the public disk.
+    expect(Storage::disk('public')->exists($record->resume_path))->toBeFalse();
+});
+
+test('technology assessment requires a scope', function () {
+    $response = batch4CaptchaPost('contact.submit', [
+        'name' => 'Jane Doe',
+        'email' => 'jane@example.com',
+        'phone' => '(973) 555-1212',
+        'reason' => 'Technology Assessment',
+        'message' => 'Please assess our office',
+    ]);
+
+    $response->assertSessionHasErrors('assessment_scope');
+});
+
+test('business assessment requires business name and type', function () {
+    $response = batch4CaptchaPost('contact.submit', [
+        'name' => 'Jane Doe',
+        'email' => 'jane@example.com',
+        'phone' => '(973) 555-1212',
+        'reason' => 'Technology Assessment',
+        'message' => 'Please assess our office',
+        'assessment_scope' => 'business',
+    ]);
+
+    $response->assertSessionHasErrors(['business_name', 'business_type']);
+});
+
+test('business assessment stores the workflow fields', function () {
+    $response = batch4CaptchaPost('contact.submit', [
+        'name' => 'Jane Doe',
+        'email' => 'jane@example.com',
+        'phone' => '(973) 555-1212',
+        'reason' => 'Technology Assessment',
+        'message' => 'Please assess our office',
+        'assessment_scope' => 'business',
+        'business_name' => 'Acme Retail',
+        'business_type' => 'Retail',
+    ]);
+
+    $response->assertSessionHasNoErrors();
+    $this->assertDatabaseHas('contact_us', [
+        'email' => 'jane@example.com',
+        'reason' => 'Technology Assessment',
+        'assessment_scope' => 'business',
+        'business_name' => 'Acme Retail',
+        'business_type' => 'Retail',
+    ]);
+});
+
+test('residential assessment stores without business fields', function () {
+    $response = batch4CaptchaPost('contact.submit', [
+        'name' => 'Jane Doe',
+        'email' => 'jane@example.com',
+        'phone' => '(973) 555-1212',
+        'reason' => 'Technology Assessment',
+        'message' => 'Please assess my home',
+        'assessment_scope' => 'residential',
+    ]);
+
+    $response->assertSessionHasNoErrors();
+    $this->assertDatabaseHas('contact_us', [
+        'email' => 'jane@example.com',
+        'assessment_scope' => 'residential',
+        'business_name' => null,
+    ]);
+});
+
+test('admin contact inbox exposes the distinct workflow sections', function () {
+    $admin = Admin::create([
+        'firstname' => 'Test',
+        'lastname' => 'Admin',
+        'email' => 'admin@test.com',
+        'password' => bcrypt('password'),
+        'status' => 1,
+        'role' => 1,
+        'image' => '',
+        'last_login' => now(),
+        'date_register' => now(),
+    ]);
+    $admin->forceFill([
+        'two_factor_secret' => encrypt('test-two-factor-secret'),
+        'two_factor_confirmed_at' => now(),
+    ])->save();
+    $admin->setTwoFactorChallengePassed();
+
+    $html = $this->actingAs($admin, 'admin')->get('/admin/contact-us')->assertSuccessful()->getContent();
+
+    expect($html)->toContain('General');
+    expect($html)->toContain('Technology Assessment');
+    expect($html)->toContain('Support');
+    expect($html)->toContain('Employment');
 });

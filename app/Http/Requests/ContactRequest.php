@@ -40,6 +40,10 @@ class ContactRequest extends FormRequest
             'phone' => ['required', 'string', 'regex:/^[0-9\s\-\+\(\)]+(?:\s*(?:x|ext\.?|#)\s*\d{1,6})?$/i', 'max:30'],
             'reason' => ['required', 'string', 'max:100'],
             'message' => ['required', 'string', 'max:5000'],
+            'assessment_scope' => ['nullable', 'string', 'in:residential,business'],
+            'business_name' => ['nullable', 'string', 'max:100'],
+            'business_type' => ['nullable', 'string', 'max:100'],
+            'resume' => ['nullable', 'file', 'mimes:pdf', 'max:5120'],
             'protection_question' => [
                 'required',
                 'integer',
@@ -62,6 +66,34 @@ class ContactRequest extends FormRequest
         ];
     }
 
+    public function after(): array
+    {
+        return [
+            function ($validator) {
+                $reason = (string) $this->input('reason');
+
+                if ($reason === 'Employment & Internships' && ! $this->hasFile('resume')) {
+                    $validator->errors()->add('resume', 'Please attach your resume as a PDF.');
+                }
+
+                if ($reason === 'Technology Assessment') {
+                    $scope = (string) $this->input('assessment_scope');
+                    if ($scope === '') {
+                        $validator->errors()->add('assessment_scope', 'Please choose residential or business for the technology assessment.');
+                    }
+                    if ($scope === 'business') {
+                        if (trim((string) $this->input('business_name')) === '') {
+                            $validator->errors()->add('business_name', 'Please enter your business name for the technology assessment.');
+                        }
+                        if (trim((string) $this->input('business_type')) === '') {
+                            $validator->errors()->add('business_type', 'Please enter your business type for the technology assessment.');
+                        }
+                    }
+                }
+            },
+        ];
+    }
+
     public function messages(): array
     {
         return [
@@ -77,6 +109,12 @@ class ContactRequest extends FormRequest
             'reason.max' => 'Reason cannot exceed 100 characters.',
             'message.required' => 'Please enter your message.',
             'message.max' => 'Message cannot exceed 5000 characters.',
+            'resume.file' => 'Please attach your resume as a PDF.',
+            'resume.mimes' => 'Your resume must be a PDF file.',
+            'resume.max' => 'Your resume cannot exceed 5 MB.',
+            'assessment_scope.in' => 'Please choose residential or business for the technology assessment.',
+            'business_name.max' => 'Business name cannot exceed 100 characters.',
+            'business_type.max' => 'Business type cannot exceed 100 characters.',
             'protection_question.required' => 'Please answer the protection question.',
             'protection_question.integer' => 'Your answer must be a number.',
         ];

@@ -117,7 +117,8 @@
                             </div>
                         @endif
 
-                        <form id="form_one" class="inquiry" action="{{ route('contact.submit') }}" method="post">
+                        <form id="form_one" class="inquiry" action="{{ route('contact.submit') }}" method="post"
+                              enctype="multipart/form-data">
                             @csrf
 
                             <div class="control-group">
@@ -155,17 +156,71 @@
 
                             <div class="form-group mb-4{{ isset($error['reason']) ? ' has-error' : '' }}">
                                 <div class="controls">
-                                    <select name="reason" class="form-control form-control-lg" required>
+                                    <select name="reason" id="reason" class="form-control form-control-lg" required>
                                         <option value="">Reason</option>
                                         <option value="Already Client" {{ $reason === 'Already Client' ? 'selected' : '' }}>Already Client</option>
                                         <option value="Donate a Product to be Unboxed" {{ $reason === 'Donate a Product to be Unboxed' ? 'selected' : '' }}>Donate a Product to be Unboxed</option>
                                         <option value="General Inquiry" {{ $reason === 'General Inquiry' ? 'selected' : '' }}>General Inquiry</option>
-                                        <option value="Support" {{ $reason === 'Support' ? 'selected' : '' }}>Support</option>
+                                        <option value="Employment &amp; Internships" {{ $reason === 'Employment & Internships' ? 'selected' : '' }}>Employment &amp; Internships</option>
+                                        <option value="Technology Assessment" {{ $reason === 'Technology Assessment' ? 'selected' : '' }}>Technology Assessment</option>
+                                        <option value="Residential Support" {{ $reason === 'Residential Support' ? 'selected' : '' }}>Residential Support</option>
+                                        <option value="Business Support" {{ $reason === 'Business Support' ? 'selected' : '' }}>Business Support</option>
                                         <option value="Vendor" {{ $reason === 'Vendor' ? 'selected' : '' }}>Vendor</option>
                                     </select>
                                     @if(isset($error['reason']))
                                         <span class="help-block text-danger">{{ $error['reason'] }}</span>
                                     @endif
+                                </div>
+                            </div>
+
+                            <div id="resume_group" class="form-group mb-4{{ isset($error['resume']) ? ' has-error' : '' }}" style="display: none;">
+                                <div class="controls">
+                                    <label for="resume" class="d-block text-left">Resume (PDF, max 5 MB) <span class="text-danger">*</span></label>
+                                    <input type="file" name="resume" id="resume" accept="application/pdf,.pdf"
+                                           class="form-control form-control-lg">
+                                    @if(isset($error['resume']))
+                                        <span class="help-block text-danger">{{ $error['resume'] }}</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div id="assessment_group" class="form-group mb-4{{ isset($error['assessment_scope']) || isset($error['business_name']) || isset($error['business_type']) ? ' has-error' : '' }}" style="display: none;">
+                                <div class="controls text-left">
+                                    <label class="d-block">Assessment type <span class="text-danger">*</span></label>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="assessment_scope"
+                                               id="scope_residential" value="residential"
+                                               {{ $assessment_scope === 'residential' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="scope_residential">Residential</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="assessment_scope"
+                                               id="scope_business" value="business"
+                                               {{ $assessment_scope === 'business' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="scope_business">Business</label>
+                                    </div>
+                                    @if(isset($error['assessment_scope']))
+                                        <span class="help-block text-danger d-block">{{ $error['assessment_scope'] }}</span>
+                                    @endif
+
+                                    <div id="business_fields" style="display: {{ $assessment_scope === 'business' ? 'block' : 'none' }};">
+                                        <div class="form-group mb-3 mt-2">
+                                            <input type="text" name="business_name" id="business_name"
+                                                   class="form-control form-control-lg" placeholder="Business Name"
+                                                   maxlength="100" value="{{ $business_name }}">
+                                            @if(isset($error['business_name']))
+                                                <span class="help-block text-danger">{{ $error['business_name'] }}</span>
+                                            @endif
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <input type="text" name="business_type" id="business_type"
+                                                   class="form-control form-control-lg" placeholder="Business Type (e.g. Retail, Healthcare, Finance)"
+                                                   maxlength="100" value="{{ $business_type }}">
+                                            @if(isset($error['business_type']))
+                                                <span class="help-block text-danger">{{ $error['business_type'] }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -433,6 +488,24 @@
     if ($.fn.mask) {
         $('.phone').mask('(999) 999-9999? x9999', {autoclear: false});
     }
+
+    function syncWorkflowFields() {
+        var reason = ($('#reason').val() || '');
+        $('#resume_group').toggle(reason === 'Employment & Internships');
+        $('#assessment_group').toggle(reason === 'Technology Assessment');
+        if (reason !== 'Employment & Internships') {
+            var resumeInput = document.getElementById('resume');
+            if (resumeInput) {
+                resumeInput.value = '';
+            }
+        }
+    }
+
+    $('#reason').on('change', syncWorkflowFields);
+    $('input[name="assessment_scope"]').on('change', function () {
+        $('#business_fields').toggle($(this).val() === 'business' && this.checked);
+    });
+    syncWorkflowFields();
 
     function isValidURL(string) {
         var res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);

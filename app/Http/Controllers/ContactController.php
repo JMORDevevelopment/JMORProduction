@@ -37,6 +37,9 @@ class ContactController extends Controller
             'phone' => old('phone', ''),
             'reason' => old('reason', ''),
             'message' => old('message', ''),
+            'assessment_scope' => old('assessment_scope', ''),
+            'business_name' => old('business_name', ''),
+            'business_type' => old('business_type', ''),
             'address' => Setting::get('address', ''),
             'phone_number' => Setting::get('phone', ''),
             'success' => session('contact_success'),
@@ -51,12 +54,23 @@ class ContactController extends Controller
     {
         $post = $request->validated();
 
+        $resumePath = null;
+        if ($request->hasFile('resume')) {
+            // Stored on the private local disk so resumes are never
+            // publicly URL-addressable (issue 055).
+            $resumePath = $request->file('resume')->store('resumes', 'local');
+        }
+
         ContactUs::create([
             'name' => htmlspecialchars($post['name']),
             'email' => htmlspecialchars($post['email']),
             'phone' => htmlspecialchars($post['phone']),
             'reason' => $post['reason'],
             'message' => $post['message'],
+            'assessment_scope' => $post['assessment_scope'] ?? null,
+            'business_name' => isset($post['business_name']) ? htmlspecialchars($post['business_name']) : null,
+            'business_type' => isset($post['business_type']) ? htmlspecialchars($post['business_type']) : null,
+            'resume_path' => $resumePath,
             'ip' => $request->ip(),
             'date_time' => date('m/d/y h:i:s a'),
         ]);
