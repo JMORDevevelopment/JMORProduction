@@ -1587,8 +1587,8 @@ Blog
 }
 
 .blog-post a {
-    text-decoration: none;
-    color: #000;
+    text-decoration: underline;
+    color: #014073;
 }
 
 .blog-post .meta a:first-child {
@@ -1597,12 +1597,14 @@ Blog
     border-radius: 50px;
     color: #888888;
     margin-right: 8px;
+    text-decoration: none;
 }
 
 .blog-post .meta a:last-child {
     font-style: italic;
     color: #a9a9a9;
     font-size: 14px;
+    text-decoration: none;
 } 
 li.nav-item.active > a { 
 	border-bottom: 2px solid #00000061 !important;
