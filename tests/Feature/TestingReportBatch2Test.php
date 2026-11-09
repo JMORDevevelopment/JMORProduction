@@ -13,6 +13,13 @@ it('keeps internal relative links in sanitized content', function () {
         ->not->toContain('<script');
 });
 
+test('content links are visually distinct in page content', function () {
+    $css = file_get_contents(public_path('assets_2/css/theme.css'));
+
+    expect(preg_match('/\.blog-post a \{[^}]+\}/', $css, $m) ?: 0)->toBe(1);
+    expect($m[0])->toContain('text-decoration: underline')->toContain('#014073');
+});
+
 test('page content links render as clickable links', function () {
     DB::table('pages')->insert([
         'link' => 'it-tech-support-services-in-nj',
