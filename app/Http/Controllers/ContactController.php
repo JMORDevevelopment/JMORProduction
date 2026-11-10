@@ -200,7 +200,10 @@ class ContactController extends Controller
                 'email' => $post['email'],
                 'phone' => $post['phone'],
                 'reason' => $post['reason'],
-                'message' => $post['message'],
+                // Laravel's Mailer overwrites the "message" key with its own
+                // Illuminate\Mail\Message instance before rendering, so the
+                // body must use a different key (the view expects inquiryBody).
+                'inquiryBody' => $post['message'],
             ], function ($mail) use ($to, $post) {
                 $mail->to($to)
                     ->subject('Contact Us')
