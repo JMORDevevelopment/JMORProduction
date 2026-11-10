@@ -102,6 +102,8 @@ Route::middleware('auth:admin')->prefix('admin')->group(function () {
         ->name('admin.order_invoice');
     Route::get('/giftcard_invoice/{order_id}', [AdminInvoiceController::class, 'giftcardInvoice'])
         ->name('admin.giftcard_invoice');
+    Route::get('/talk_show/{talkShow}/signed-pdf', [ContactController::class, 'downloadSignedPdf'])
+        ->name('admin.talk_show.signed_pdf');
 });
 
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');

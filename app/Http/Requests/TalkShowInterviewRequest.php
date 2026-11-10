@@ -48,6 +48,8 @@ class TalkShowInterviewRequest extends FormRequest
             'weblink' => ['required', 'array', 'min:1'],
             'weblink.*' => ['string', 'max:500'],
             'interview' => ['required', 'string', 'max:10000'],
+            'signature' => ['required', 'string', 'max:100'],
+            'agreement_accepted' => ['required', 'accepted'],
             'protection_question' => [
                 'required',
                 'integer',
@@ -97,6 +99,10 @@ class TalkShowInterviewRequest extends FormRequest
             'weblink.*.max' => 'Web link cannot exceed 500 characters.',
             'interview.required' => 'Please enter your interview pitch concept.',
             'interview.max' => 'Interview pitch cannot exceed 10000 characters.',
+            'signature.required' => 'Please type your full name as your electronic signature.',
+            'signature.max' => 'Signature cannot exceed 100 characters.',
+            'agreement_accepted.required' => 'You must accept the guest agreement before submitting.',
+            'agreement_accepted.accepted' => 'You must accept the guest agreement before submitting.',
             'protection_question.required' => 'Please answer the protection question.',
             'protection_question.integer' => 'Your answer must be a number.',
         ];

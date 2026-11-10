@@ -264,10 +264,19 @@
                             </div>
                         </form>
 
-                        <form id="form_two" class="inquiry" style="display:none;" onsubmit="return checkwork();"
+                        <form id="form_two" class="inquiry{{ count($error) ? ' ts-show-all' : '' }}" style="display:none;"
+                              onsubmit="return checkwork();"
                               action="{{ route('contact.interview') }}" method="post">
                             @csrf
 
+                            <nav class="ts-steps mb-4" aria-label="Application progress">
+                                <span class="ts-step-pill active" data-step-pill="1">1. Contact</span>
+                                <span class="ts-step-pill" data-step-pill="2">2. Experience</span>
+                                <span class="ts-step-pill" data-step-pill="3">3. Agreement</span>
+                            </nav>
+
+                            <fieldset class="ts-step" data-step="1">
+                                <legend class="sr-only">Step 1: Contact information</legend>
                             <div class="control-group">
                                 <div class="form-group mb-4{{ isset($error['name']) ? ' has-error' : '' }}">
                                     <input type="text" class="form-control form-control-lg"
@@ -327,6 +336,13 @@
                                 </div>
                             </div>
 
+                                <div class="ts-nav text-right">
+                                    <button type="button" class="btn btn-primary ts-next" data-next="2">Next</button>
+                                </div>
+                            </fieldset>
+
+                            <fieldset class="ts-step" data-step="2" hidden>
+                                <legend class="sr-only">Step 2: Experience and pitch</legend>
                             <div class="form-group mb-4{{ isset($error['bio']) ? ' has-error' : '' }}">
                                 <div class="controls">
                                     <textarea rows="10" cols="100" name="bio" class="form-control form-control-lg"
@@ -381,12 +397,60 @@
                                 <div class="controls">
                                     <textarea rows="10" cols="100" name="interview" class="form-control form-control-lg"
                                               placeholder="Interview Pitch Concept" id="interview" required
-                                              style="resize:none">{{ old('interview', '') }}</textarea>
+                                              style="resize:none">{{ old('interview') }}</textarea>
                                     @if(isset($error['interview']))
                                         <span class="help-block text-danger">{{ $error['interview'] }}</span>
                                     @endif
                                 </div>
                             </div>
+
+                                <div class="ts-nav d-flex justify-content-between">
+                                    <button type="button" class="btn btn-outline-secondary ts-back" data-back="1">Back</button>
+                                    <button type="button" class="btn btn-primary ts-next" data-next="3">Next</button>
+                                </div>
+                            </fieldset>
+
+                            <fieldset class="ts-step" data-step="3" hidden>
+                                <legend class="sr-only">Step 3: Agreement and signature</legend>
+
+                                <div class="ts-agreement mb-4 p-3 border rounded">
+                                    <h5>Guest Agreement</h5>
+                                    @if(! empty($agreementUrl))
+                                        <p class="mb-2">
+                                            Please review the
+                                            <a href="{{ $agreementUrl }}" target="_blank" rel="noopener">JMOR guest agreement (PDF)</a>
+                                            before signing.
+                                        </p>
+                                    @else
+                                        <p class="mb-2">
+                                            By signing below you confirm that the information provided is accurate and
+                                            agree to be considered as a guest on the JMOR Tech Talk Show, including
+                                            publication of your biography and appearance details.
+                                        </p>
+                                    @endif
+                                    <div class="form-check{{ isset($error['agreement_accepted']) ? ' has-error' : '' }}">
+                                        <input class="form-check-input" type="checkbox" name="agreement_accepted"
+                                               value="1" id="agreement_accepted"
+                                               {{ old('agreement_accepted') ? 'checked' : '' }} required>
+                                        <label class="form-check-label" for="agreement_accepted">
+                                            I have reviewed and accept the guest agreement.
+                                        </label>
+                                        @if(isset($error['agreement_accepted']))
+                                            <span class="help-block text-danger d-block">{{ $error['agreement_accepted'] }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="form-group mb-4{{ isset($error['signature']) ? ' has-error' : '' }}">
+                                    <label for="signatureb">Electronic Signature</label>
+                                    <input type="text" class="form-control form-control-lg" id="signatureb"
+                                           name="signature" maxlength="100" required
+                                           placeholder="Type your full name as your signature"
+                                           value="{{ old('signature', '') }}" />
+                                    @if(isset($error['signature']))
+                                        <span class="help-block text-danger">{{ $error['signature'] }}</span>
+                                    @endif
+                                </div>
 
                             <div class="control-group{{ isset($error['protection_question']) ? ' has-error' : '' }} text-left">
                                 <label class="control-label text-left" style="font-weight:bold; text-align:left;"></label>
@@ -412,9 +476,13 @@
                                 </div>
                             </div>
 
-                            <div id="qasubmitBtnb" class="text-center" style="display: none;">
-                                <button class="btn btn-lg btn-primary py-3 mt-3 px-4 btn-pill" type="submit">Send Your Message</button>
-                            </div>
+                                <div class="ts-nav d-flex justify-content-between align-items-center">
+                                    <button type="button" class="btn btn-outline-secondary ts-back" data-back="2">Back</button>
+                                    <div id="qasubmitBtnb" style="display: none;">
+                                        <button class="btn btn-lg btn-primary py-3 mt-3 px-4 btn-pill" type="submit">Send Your Message</button>
+                                    </div>
+                                </div>
+                            </fieldset>
                         </form>
                     </div>
                 </div>
@@ -456,6 +524,60 @@
         $('#hed').html('Interview Pitch Concept.');
         scrollToForm('form_two');
     }
+
+    function tsShowStep(step) {
+        var form = document.getElementById('form_two');
+        if (!form || form.classList.contains('ts-show-all')) {
+            return;
+        }
+        form.querySelectorAll('.ts-step').forEach(function (fieldset) {
+            fieldset.hidden = fieldset.getAttribute('data-step') !== String(step);
+        });
+        form.querySelectorAll('.ts-step-pill').forEach(function (pill) {
+            pill.classList.toggle('active', pill.getAttribute('data-step-pill') === String(step));
+        });
+        var active = form.querySelector('.ts-step:not([hidden]) input:not([type="hidden"]), .ts-step:not([hidden]) textarea');
+        if (active) {
+            active.focus({preventScroll: true});
+        }
+        form.scrollIntoView({behavior: 'smooth', block: 'start'});
+    }
+
+    function tsValidateStep(step) {
+        var form = document.getElementById('form_two');
+        var fieldset = form.querySelector('.ts-step[data-step="' + step + '"]');
+        if (!fieldset) {
+            return true;
+        }
+        var fields = fieldset.querySelectorAll('input, textarea, select');
+        for (var i = 0; i < fields.length; i++) {
+            if (fields[i].type === 'hidden' || fields[i].disabled) {
+                continue;
+            }
+            if (!fields[i].checkValidity()) {
+                fields[i].reportValidity();
+                fields[i].focus();
+                return false;
+            }
+        }
+        return true;
+    }
+
+    document.addEventListener('click', function (event) {
+        var next = event.target.closest('.ts-next');
+        if (next) {
+            var form = document.getElementById('form_two');
+            var current = parseInt(next.getAttribute('data-next'), 10) - 1;
+            if (tsValidateStep(current)) {
+                tsShowStep(parseInt(next.getAttribute('data-next'), 10));
+            }
+            return;
+        }
+        var back = event.target.closest('.ts-back');
+        if (back) {
+            tsShowStep(parseInt(back.getAttribute('data-back'), 10));
+        }
+    });
 
     function chatNow() {
         inquiryform();
@@ -661,6 +783,46 @@
     <style>
         #form_one, #form_two {
             scroll-margin-top: 120px;
+        }
+        .ts-steps {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .ts-step-pill {
+            flex: 1;
+            min-width: 100px;
+            text-align: center;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: #e9ecef;
+            color: #495057;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        .ts-step-pill.active {
+            background: #0d6efd;
+            color: #fff;
+        }
+        .ts-step[hidden] {
+            display: none;
+        }
+        #form_two.ts-show-all .ts-step[hidden] {
+            display: block;
+        }
+        #form_two.ts-show-all .ts-nav {
+            display: none;
+        }
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
         }
         .contact-action {
             cursor: pointer;

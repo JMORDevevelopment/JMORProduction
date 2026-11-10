@@ -13,5 +13,6 @@ class TalkShowSetting extends Model
     protected $fillable = [
         'price',
         'question',
+        'agreement_path',
     ];
 }
