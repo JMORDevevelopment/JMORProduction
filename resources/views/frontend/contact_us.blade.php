@@ -31,49 +31,59 @@
                             ? '+'.$phoneDigits
                             : '+1'.$phoneDigits);
                 @endphp
-                <div class="row" style="justify-content: center;">
+                <div class="row contact-tiles" style="justify-content: center;">
                     <div class="col-lg-3 mb-5 mb-lg-0 text-center">
                         <button type="button" class="contact-action border-0 bg-transparent w-100"
                                 onclick="inquiryform()"
                                 aria-label="Web inquiry: jump to the inquiry form">
-                            <div class="contactIcons text-primary mb-2">
-                                <i class="fa fa-life-ring" aria-hidden="true"></i>
-                            </div>
-                            <span class="h5 d-block">Web Inquiry</span>
-                            <span class="mb-0 d-block">Inquire Now</span>
+                            <span class="contact-tile__icon" aria-hidden="true">
+                                <i class="fa fa-envelope"></i>
+                            </span>
+                            <span class="h5 d-block contact-tile__title">Web Inquiry</span>
+                            <span class="mb-0 d-block contact-tile__sub">Inquire Now</span>
                         </button>
                     </div>
                     <div class="col-lg-3 mb-5 mb-lg-0 text-center">
                         <button type="button" class="contact-action border-0 bg-transparent w-100"
                                 onclick="inquiryformtwo()"
                                 aria-label="Talk show guest: jump to the guest application form">
-                            <div class="contactIcons text-primary mb-2">
-                                <i class="fa fa-microphone" aria-hidden="true"></i>
-                            </div>
-                            <span class="h5 d-block">Talk Show Guest</span>
-                            <span class="mb-0 d-block">Apply Now</span>
+                            <span class="contact-tile__icon" aria-hidden="true">
+                                <i class="fa fa-microphone"></i>
+                            </span>
+                            <span class="h5 d-block contact-tile__title">Talk Show Guest</span>
+                            <span class="mb-0 d-block contact-tile__sub">Apply Now</span>
                         </button>
                     </div>
                     <div class="col-lg-3 mb-5 mb-lg-0 text-center">
                         <button type="button" class="contact-action border-0 bg-transparent w-100"
                                 onclick="chatNow()"
                                 aria-label="Chat with us: jump to the message box">
-                            <div class="contactIcons text-primary mb-2">
-                                <i class="fa fa-commenting" aria-hidden="true"></i>
-                            </div>
-                            <span class="h5 d-block">Chat With Us</span>
-                            <span class="mb-0 d-block">Message now</span>
+                            <span class="contact-tile__icon" aria-hidden="true">
+                                <i class="fa fa-comment-dots"></i>
+                            </span>
+                            <span class="h5 d-block contact-tile__title">Chat With Us</span>
+                            <span class="mb-0 d-block contact-tile__sub">Message now</span>
                         </button>
                     </div>
                     <div class="col-lg-3 mb-5 mb-lg-0 text-center">
-                        <div class="contactIcons text-primary mb-2">
-                            <i class="fa fa-phone" aria-hidden="true"></i>
-                        </div>
-                        <span class="h5 d-block">Call Us</span>
                         @if($phoneTel)
-                            <a class="mb-0 d-block" href="tel:{{ $phoneTel }}">{{ $phone_number }}</a>
+                            <a class="contact-action d-block w-100 text-decoration-none"
+                               href="tel:{{ $phoneTel }}"
+                               aria-label="Call us at {{ $phone_number }}">
+                                <span class="contact-tile__icon" aria-hidden="true">
+                                    <i class="fa fa-phone"></i>
+                                </span>
+                                <span class="h5 d-block contact-tile__title">Call Us</span>
+                                <span class="mb-0 d-block contact-tile__sub">{{ $phone_number }}</span>
+                            </a>
                         @else
-                            <span class="mb-0 d-block">{{ $phone_number }}</span>
+                            <div class="contact-action d-block w-100">
+                                <span class="contact-tile__icon" aria-hidden="true">
+                                    <i class="fa fa-phone"></i>
+                                </span>
+                                <span class="h5 d-block contact-tile__title">Call Us</span>
+                                <span class="mb-0 d-block contact-tile__sub">{{ $phone_number }}</span>
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -824,12 +834,70 @@
             white-space: nowrap;
             border: 0;
         }
+        .contact-tiles {
+            justify-content: center;
+        }
         .contact-action {
             cursor: pointer;
+            display: block;
+            padding: 8px 4px;
+            border-radius: 16px;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            color: inherit;
+            text-decoration: none;
         }
-        .contact-action:hover .h5,
-        .contact-action:focus .h5 {
-            text-decoration: underline;
+        .contact-action:hover,
+        .contact-action:focus {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 24px rgba(1, 32, 64, 0.1);
+            text-decoration: none;
+            outline: none;
+        }
+        .contact-action:hover .contact-tile__title,
+        .contact-action:focus .contact-tile__title {
+            text-decoration: none;
+            color: #0053a0;
+        }
+        .contact-tile__icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 84px;
+            height: 84px;
+            margin: 0 auto 16px;
+            border-radius: 50%;
+            background: #eff5fb;
+            color: #0053a0;
+            box-shadow: inset 0 0 0 1px rgba(0, 83, 160, 0.08);
+            transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+        }
+        .contact-tile__icon i {
+            font-size: 32px;
+            line-height: 1;
+        }
+        .contact-action:hover .contact-tile__icon,
+        .contact-action:focus .contact-tile__icon {
+            background: #0053a0;
+            color: #fff;
+            transform: scale(1.05);
+        }
+        .contact-tile__title {
+            font-weight: 700;
+            color: #012040;
+            margin-bottom: 4px;
+        }
+        .contact-tile__sub {
+            color: #5c6b7a;
+            font-size: 0.95rem;
+        }
+        @media (max-width: 991.98px) {
+            .contact-tile__icon {
+                width: 72px;
+                height: 72px;
+            }
+            .contact-tile__icon i {
+                font-size: 28px;
+            }
         }
         .contact-thanks {
             position: fixed;
