@@ -46,8 +46,21 @@
             $('#qasubmitBtn').hide();
         };
     }
-    if ($('#captchab').length) {
-        var captchab = sliderCaptcha({
+    // Talk-show captcha lives inside a hidden multi-step form; init it
+    // only once its container is visible so the slider has real dimensions.
+    window.jmorInitTalkShowCaptcha = function() {
+        if (window.__jmorTsCaptchaReady || !document.getElementById('captchab')) {
+            return;
+        }
+        if (typeof sliderCaptcha === 'undefined') {
+            return;
+        }
+        var $box = $('#captchab');
+        if (!$box.is(':visible') || $box.width() === 0) {
+            return;
+        }
+        window.__jmorTsCaptchaReady = true;
+        window.captchab = sliderCaptcha({
             id: 'captchab',
             crossOrigin: true,
             headers: { 'Access-Control-Allow-Origin': 'https://imgs.blazor.zone' },
@@ -71,9 +84,14 @@
             }
         });
         var resetCaptchaB = function() {
-            captchab.reset();
+            window.captchab.reset();
             $('#qasubmitBtnb').hide();
         };
+    };
+    if ($('#captchab').length) {
+        if ($('#captchab').is(':visible') && $('#captchab').width() > 0) {
+            window.jmorInitTalkShowCaptcha();
+        }
     }
 </script>
 @endpush

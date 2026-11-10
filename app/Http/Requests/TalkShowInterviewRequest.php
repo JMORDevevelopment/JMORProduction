@@ -42,11 +42,13 @@ class TalkShowInterviewRequest extends FormRequest
             'email' => ['required', 'email', 'max:50'],
             'bio' => ['required', 'string', 'max:999'],
             'work_name' => ['required', 'array', 'min:1'],
-            'work_name.*' => ['string', 'max:500'],
+            // nullable: empty strings are converted to null by middleware, and
+            // description / web link are optional on an entry.
+            'work_name.*' => ['nullable', 'string', 'max:500'],
             'work_detail' => ['required', 'array', 'min:1'],
-            'work_detail.*' => ['string', 'max:5000'],
+            'work_detail.*' => ['nullable', 'string', 'max:5000'],
             'weblink' => ['required', 'array', 'min:1'],
-            'weblink.*' => ['string', 'max:500'],
+            'weblink.*' => ['nullable', 'string', 'max:500'],
             'interview' => ['required', 'string', 'max:10000'],
             'signature' => ['required', 'string', 'max:100'],
             'agreement_accepted' => ['required', 'accepted'],

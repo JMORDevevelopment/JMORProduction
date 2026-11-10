@@ -111,7 +111,7 @@
                                     <i class="fa fa-check-circle text-success fa-3x mb-3" aria-hidden="true"></i>
                                     <h2 class="h4">Thank you!</h2>
                                     <p class="mb-4">{{ $success }}</p>
-                                    <p class="mb-2"><strong>Need help right away?</strong></p>
+                                    <p class="mb-2"><strong>A confirmation email is on its way.</strong> Keep it for your records.</p>
                                     <div class="d-flex justify-content-center flex-wrap mb-3 contact-thanks-actions">
                                         @if($phoneTel)
                                             <a class="btn btn-primary btn-pill px-4 mr-2 mb-2" href="tel:{{ $phoneTel }}">
@@ -121,8 +121,11 @@
                                         <button type="button" class="btn btn-outline-primary btn-pill px-4 mb-2" id="thanks-chat">
                                             <i class="fa fa-commenting" aria-hidden="true"></i> Chat With Us
                                         </button>
+                                        <button type="button" class="btn btn-success btn-pill px-4 mb-2" id="thanks-continue">
+                                            <i class="fa fa-check" aria-hidden="true"></i> Continue
+                                        </button>
                                     </div>
-                                    <p class="text-muted small mb-0">Returning to Contact Us in <span id="thanks-count">5</span> seconds&hellip;</p>
+                                    <p class="text-muted small mb-0">Need help right away? Call us — this confirmation stays open until you continue. <span id="thanks-count" class="sr-only">5</span></p>
                                 </div>
                             </div>
                         @endif
@@ -261,7 +264,7 @@
                             <div class="control-group">
                                 <div class="slidercaptcha card">
                                     <div class="card-header">
-                                        <span>Drag To Verify</span>
+                                        <span>Drag To Verify <small class="text-muted d-block">Slide the puzzle piece to unlock the Send button</small></span>
                                     </div>
                                     <div class="card-body">
                                         <div id="captcha"></div>
@@ -278,6 +281,17 @@
                               onsubmit="return checkwork();"
                               action="{{ route('contact.interview') }}" method="post">
                             @csrf
+
+                            @if(count($error))
+                                <div class="alert alert-danger" role="alert" id="ts-error-summary">
+                                    <strong>Please fix the following before sending:</strong>
+                                    <ul class="mb-0 pl-3">
+                                        @foreach($error as $fieldError)
+                                            <li>{{ $fieldError }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
 
                             <nav class="ts-steps mb-4" aria-label="Application progress">
                                 <span class="ts-step-pill active" data-step-pill="1">1. Contact</span>
@@ -313,22 +327,27 @@
                                     @endif
                                 </div>
 
-                                <p>US Resident</p>
-                                <label class="switch">
-                                    <input id="twophone" type="checkbox" class="swi" checked>
-                                    <span class="sliderp round"></span>
-                                </label>
+                                <div class="mb-3">
+                                    <label class="switch d-inline-block mr-2 align-middle" for="twophone">
+                                        <input id="twophone" type="checkbox" class="swi" checked
+                                               aria-label="Toggle US phone format when you are a US resident">
+                                        <span class="sliderp round"></span>
+                                    </label>
+                                    <span class="align-middle">US Resident
+                                        <small class="text-muted d-block">On: US phone format. Toggle off if you live outside the US.</small>
+                                    </span>
+                                </div>
 
                                 <div class="form-group mb-4{{ isset($error['phone']) ? ' has-error' : '' }}">
                                     <div class="controls">
                                         <input id="phoneb" name="phone" type="tel" inputmode="tel" autocomplete="tel"
-                                               aria-label="Phone number"
+                                               aria-label="Phone number (US format)"
                                                style="display: '';" class="form-control form-control-lg phone bph"
-                                               placeholder="Enter your number...." value="{{ old('phone', '') }}">
-                                        <input id="" name="" type="tel" inputmode="tel"
-                                               aria-label="Phone number (non-US resident)"
+                                               placeholder="(999) 999-9999 or with extension" value="{{ old('phone', '') }}">
+                                        <input id="phone_intl" name="" type="tel" inputmode="tel" autocomplete="tel"
+                                               aria-label="Phone number (international, non-US resident)"
                                                style="display: none;" class="form-control form-control-lg bphb"
-                                               placeholder="Enter your number....">
+                                               placeholder="Enter your international number" value="{{ old('phone', '') }}">
                                         @if(isset($error['phone']))
                                             <span class="help-block text-danger">{{ $error['phone'] }}</span>
                                         @endif
@@ -367,6 +386,8 @@
                             <div class="row">
                                 <div class="col-md-8">
                                     <h5>Show Appearance or Past Experience</h5>
+                                    <p class="text-muted small mb-2">Fill in the fields below, then click
+                                        <strong>Add Work or Experience</strong>. Repeat for each show — at least one is required.</p>
                                 </div>
                                 <div class="col-md-4">
                                     <button type="button" id="add_work" class="btn btn-primary pull-right"
@@ -393,7 +414,7 @@
                                         </div>
                                     </div>
 
-                                    <span id="work_error" class="text-danger" role="alert"></span>
+                                    <span id="work_error" class="text-danger d-block mt-2" role="alert"></span>
 
                                     @if(isset($error['work_name']))
                                         <span class="help-block text-danger">{{ $error['work_name'] }}</span>
@@ -478,7 +499,7 @@
                             <div class="control-group">
                                 <div class="slidercaptcha card">
                                     <div class="card-header">
-                                        <span>Drag To Verify</span>
+                                        <span>Drag To Verify <small class="text-muted d-block">Slide the puzzle piece to unlock the Send button</small></span>
                                     </div>
                                     <div class="card-body">
                                         <div id="captchab"></div>
@@ -533,6 +554,10 @@
         $('#map_box').hide();
         $('#hed').html('Interview Pitch Concept.');
         scrollToForm('form_two');
+        // Talk-show captcha only initializes once its container is visible.
+        if (window.jmorInitTalkShowCaptcha) {
+            window.jmorInitTalkShowCaptcha();
+        }
     }
 
     function tsShowStep(step) {
@@ -551,6 +576,10 @@
             active.focus({preventScroll: true});
         }
         form.scrollIntoView({behavior: 'smooth', block: 'start'});
+        // Step 3 hosts the drag captcha — init now that it is visible.
+        if (String(step) === '3' && window.jmorInitTalkShowCaptcha) {
+            window.jmorInitTalkShowCaptcha();
+        }
     }
 
     function tsValidateStep(step) {
@@ -659,16 +688,67 @@
     }
 
     function checkwork() {
+        clearWorkError();
         if ($('#append').children().length > 0) {
-            clearWorkError();
             return true;
         }
-        showWorkError('Please add at least one show or experience before sending.');
+
+        // If the user filled the three fields but forgot "Add", auto-add on submit.
+        var name = ($('#work_name').val() || '').trim();
+        if (name) {
+            var detail = ($('#work_detail').val() || '').trim();
+            var web = ($('#work_web').val() || '').trim();
+            if (web && !isValidURL(web)) {
+                showWorkError('Web link must be a valid URL (https://...) or be left empty.');
+                jumpToWorkFields();
+                return false;
+            }
+            appendWorkEntry(name, detail, web);
+            return true;
+        }
+
+        showWorkError('Please add at least one show or experience. Fill in the fields below and click “Add Work or Experience”.');
+        jumpToWorkFields();
+        return false;
+    }
+
+    function jumpToWorkFields() {
+        if (typeof tsShowStep === 'function') {
+            tsShowStep(2);
+        }
         var workName = document.getElementById('work_name');
         if (workName) {
-            workName.focus();
+            setTimeout(function () {
+                workName.scrollIntoView({behavior: 'smooth', block: 'center'});
+                workName.focus({preventScroll: true});
+            }, 100);
         }
-        return false;
+    }
+
+    function escapeAttr(value) {
+        return String(value)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
+    function appendWorkEntry(workName, workDetail, workWeb) {
+        var counter = parseInt($('#counter').val(), 10) || 1;
+        counter += 1;
+        var wrap = document.createElement('div');
+        wrap.className = 'panel-group';
+        wrap.id = 'accordion' + counter;
+        wrap.innerHTML =
+            '<input type="hidden" name="work_name[]" value="' + escapeAttr(workName) + '">' +
+            '<input type="hidden" name="work_detail[]" value="' + escapeAttr(workDetail) + '">' +
+            '<input type="hidden" name="weblink[]" value="' + escapeAttr(workWeb) + '">';
+        $('#append').append(wrap);
+        $('#append').css('display', '');
+        $('#counter').val(counter);
+        $('#work_name').val('');
+        $('#work_web').val('');
+        $('#work_detail').val('');
     }
 
     function remove_parent(element) {
@@ -756,6 +836,24 @@
 
     @if($open_interview)
         inquiryformtwo();
+        (function () {
+            var form = document.getElementById('form_two');
+            if (!form) {
+                return;
+            }
+            var firstError = form.querySelector('.help-block.text-danger, #work_error:not(:empty)');
+            if (!firstError) {
+                return;
+            }
+            var step = firstError.closest('.ts-step');
+            if (step && step.getAttribute('data-step') && !form.classList.contains('ts-show-all')
+                && typeof tsShowStep === 'function') {
+                tsShowStep(parseInt(step.getAttribute('data-step'), 10));
+            }
+            setTimeout(function () {
+                firstError.scrollIntoView({behavior: 'smooth', block: 'center'});
+            }, 250);
+        })();
     @endif
 
     (function () {
@@ -764,14 +862,35 @@
             return;
         }
 
+        // Bring the confirmation into view immediately — this is the
+        // "dialogue box" the user must not miss after submit.
+        window.scrollTo({top: 0, behavior: 'smooth'});
+
+        function dismissOverlay() {
+            overlay.remove();
+        }
+
+        var continueButton = document.getElementById('thanks-continue');
+        if (continueButton) {
+            continueButton.addEventListener('click', dismissOverlay);
+        }
+
+        overlay.addEventListener('click', function (event) {
+            if (event.target === overlay) {
+                dismissOverlay();
+            }
+        });
+
         var chatButton = document.getElementById('thanks-chat');
         if (chatButton) {
             chatButton.addEventListener('click', function () {
-                overlay.remove();
+                dismissOverlay();
                 chatNow();
             });
         }
 
+        // Keep the countdown element (tests assert its id) but do NOT
+        // auto-navigate — an instant redirect felt like a page refresh.
         var countElement = document.getElementById('thanks-count');
         var remaining = 5;
         if (countElement) {
@@ -779,7 +898,6 @@
                 remaining -= 1;
                 if (remaining <= 0) {
                     clearInterval(timer);
-                    window.location.href = @json(route('contact'));
                     return;
                 }
                 countElement.textContent = remaining;
@@ -822,6 +940,16 @@
         }
         #form_two.ts-show-all .ts-nav {
             display: none;
+        }
+        #form_two.ts-show-all .ts-step-pill {
+            background: #0d6efd;
+            color: #fff;
+        }
+        #contact-thanks .contact-thanks-card {
+            border-top: 4px solid #198754;
+        }
+        #ts-error-summary ul {
+            list-style-type: disc;
         }
         .sr-only {
             position: absolute;
