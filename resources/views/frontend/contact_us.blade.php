@@ -283,9 +283,9 @@
                             @csrf
 
                             @if(count($error))
-                                <div class="alert alert-danger" role="alert" id="ts-error-summary">
-                                    <strong>Please fix the following before sending:</strong>
-                                    <ul class="mb-0 pl-3">
+                                <div class="alert alert-danger ts-error-summary" role="alert" id="ts-error-summary" tabindex="-1">
+                                    <strong><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Please fix the following before sending:</strong>
+                                    <ul>
                                         @foreach($error as $fieldError)
                                             <li>{{ $fieldError }}</li>
                                         @endforeach
@@ -300,115 +300,149 @@
                             </nav>
 
                             <fieldset class="ts-step" data-step="1">
-                                <legend class="sr-only">Step 1: Contact information</legend>
-                            <div class="control-group">
-                                <div class="form-group mb-4{{ isset($error['name']) ? ' has-error' : '' }}">
-                                    <input type="text" class="form-control form-control-lg"
-                                           name="name" placeholder="First Name" required
-                                           value="{{ old('name', '') }}" />
-                                    @if(isset($error['name']))
-                                        <span class="help-block text-danger">{{ $error['name'] }}</span>
-                                    @endif
-                                </div>
-                                <div class="form-group mb-4{{ isset($error['last_name']) ? ' has-error' : '' }}">
-                                    <input type="text" class="form-control form-control-lg"
-                                           name="last_name" placeholder="Last Name" required
-                                           value="{{ old('last_name', '') }}" />
-                                    @if(isset($error['last_name']))
-                                        <span class="help-block text-danger">{{ $error['last_name'] }}</span>
-                                    @endif
-                                </div>
-                                <div class="form-group mb-4{{ isset($error['company_name']) ? ' has-error' : '' }}">
-                                    <input type="text" class="form-control form-control-lg"
-                                           name="company_name" placeholder="Company Name"
-                                           value="{{ old('company_name', '') }}" />
-                                    @if(isset($error['company_name']))
-                                        <span class="help-block text-danger">{{ $error['company_name'] }}</span>
-                                    @endif
-                                </div>
+                                <legend class="ts-step__title">Step 1: Contact information</legend>
 
-                                <div class="mb-3">
-                                    <label class="switch d-inline-block mr-2 align-middle" for="twophone">
-                                        <input id="twophone" type="checkbox" class="swi" checked
-                                               aria-label="Toggle US phone format when you are a US resident">
-                                        <span class="sliderp round"></span>
-                                    </label>
-                                    <span class="align-middle">US Resident
-                                        <small class="text-muted d-block">On: US phone format. Toggle off if you live outside the US.</small>
-                                    </span>
-                                </div>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="ts-field{{ isset($error['name']) ? ' has-error' : '' }}">
+                                            <label for="ts_name">First Name <span class="text-danger" aria-hidden="true">*</span></label>
+                                            <input type="text" class="form-control" id="ts_name"
+                                                   name="name" placeholder="e.g. Jane" required
+                                                   value="{{ old('name', '') }}" />
+                                            @if(isset($error['name']))
+                                                <span class="help-block text-danger">{{ $error['name'] }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="ts-field{{ isset($error['last_name']) ? ' has-error' : '' }}">
+                                            <label for="ts_last_name">Last Name <span class="text-danger" aria-hidden="true">*</span></label>
+                                            <input type="text" class="form-control" id="ts_last_name"
+                                                   name="last_name" placeholder="e.g. Doe" required
+                                                   value="{{ old('last_name', '') }}" />
+                                            @if(isset($error['last_name']))
+                                                <span class="help-block text-danger">{{ $error['last_name'] }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="ts-field{{ isset($error['company_name']) ? ' has-error' : '' }}">
+                                            <label for="ts_company">Company / Organization <small class="text-muted">(optional)</small></label>
+                                            <input type="text" class="form-control" id="ts_company"
+                                                   name="company_name" placeholder="e.g. Acme Corp"
+                                                   value="{{ old('company_name', '') }}" />
+                                            @if(isset($error['company_name']))
+                                                <span class="help-block text-danger">{{ $error['company_name'] }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
 
-                                <div class="form-group mb-4{{ isset($error['phone']) ? ' has-error' : '' }}">
-                                    <div class="controls">
-                                        <input id="phoneb" name="phone" type="tel" inputmode="tel" autocomplete="tel"
-                                               aria-label="Phone number (US format)"
-                                               style="display: '';" class="form-control form-control-lg phone bph"
-                                               placeholder="(999) 999-9999 or with extension" value="{{ old('phone', '') }}">
-                                        <input id="phone_intl" name="" type="tel" inputmode="tel" autocomplete="tel"
-                                               aria-label="Phone number (international, non-US resident)"
-                                               style="display: none;" class="form-control form-control-lg bphb"
-                                               placeholder="Enter your international number" value="{{ old('phone', '') }}">
-                                        @if(isset($error['phone']))
-                                            <span class="help-block text-danger">{{ $error['phone'] }}</span>
-                                        @endif
+                                    <div class="col-12">
+                                        <div class="ts-field">
+                                            <label class="ts-switch" for="twophone">
+                                                <input id="twophone" type="checkbox" class="swi" checked
+                                                       aria-label="Toggle US phone format when you are a US resident">
+                                                <span class="sliderp round"></span>
+                                                <span class="ts-switch-row">
+                                                    <span class="ts-switch-row__label">US Resident</span>
+                                                    <small class="ts-switch-row__hint">On: US phone format. Toggle off if you live outside the US.</small>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="ts-field{{ isset($error['phone']) ? ' has-error' : '' }}">
+                                            <label for="phoneb">Phone Number <span class="text-danger" aria-hidden="true">*</span></label>
+                                            <input id="phoneb" name="phone" type="tel" inputmode="tel" autocomplete="tel"
+                                                   aria-label="Phone number (US format)"
+                                                   class="form-control phone bph" required
+                                                   placeholder="(999) 999-9999 or with extension"
+                                                   value="{{ old('phone', '') }}">
+                                            <input id="phone_intl" name="" type="tel" inputmode="tel" autocomplete="tel"
+                                                   aria-label="Phone number (international format)"
+                                                   style="display: none;" class="form-control bphb"
+                                                   placeholder="e.g. +44 20 7946 0958" value="{{ old('phone', '') }}">
+                                            @if(isset($error['phone']))
+                                                <span class="help-block text-danger">{{ $error['phone'] }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="ts-field{{ isset($error['email']) ? ' has-error' : '' }}">
+                                            <label for="emailb">Email <span class="text-danger" aria-hidden="true">*</span></label>
+                                            <input type="email" name="email" class="form-control" placeholder="you@example.com"
+                                                   id="emailb" required value="{{ old('email', '') }}" />
+                                            @if(isset($error['email']))
+                                                <span class="help-block text-danger">{{ $error['email'] }}</span>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group mb-4{{ isset($error['email']) ? ' has-error' : '' }}">
-                                <div class="controls">
-                                    <input type="email" name="email" class="form-control form-control-lg" placeholder="Email"
-                                           id="emailb" required value="{{ old('email', '') }}" />
-                                    @if(isset($error['email']))
-                                        <span class="help-block text-danger">{{ $error['email'] }}</span>
-                                    @endif
-                                </div>
-                            </div>
-
-                                <div class="ts-nav text-right">
+                                <div class="ts-nav ts-nav--end">
                                     <button type="button" class="btn btn-primary ts-next" data-next="2">Next</button>
                                 </div>
                             </fieldset>
 
                             <fieldset class="ts-step" data-step="2" hidden>
-                                <legend class="sr-only">Step 2: Experience and pitch</legend>
-                            <div class="form-group mb-4{{ isset($error['bio']) ? ' has-error' : '' }}">
-                                <div class="controls">
-                                    <textarea rows="10" cols="100" name="bio" class="form-control form-control-lg"
-                                              placeholder="Bio" id="bio" required
-                                              maxlength="999" style="resize:none">{{ old('bio', '') }}</textarea>
+                                <legend class="ts-step__title">Step 2: Experience and pitch</legend>
+
+                                <div class="ts-field mb-4{{ isset($error['bio']) ? ' has-error' : '' }}">
+                                    <label for="bio">Your Bio <span class="text-danger" aria-hidden="true">*</span></label>
+                                    <textarea rows="6" name="bio" class="form-control"
+                                              placeholder="Tell us about your background, expertise, and what you would bring to the show." id="bio" required
+                                              maxlength="999">{{ old('bio', '') }}</textarea>
                                     @if(isset($error['bio']))
                                         <span class="help-block text-danger">{{ $error['bio'] }}</span>
                                     @endif
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <h5>Show Appearance or Past Experience</h5>
-                                    <p class="text-muted small mb-2">Fill in the fields below, then click
-                                        <strong>Add Work or Experience</strong>. Repeat for each show — at least one is required.</p>
-                                </div>
-                                <div class="col-md-4">
-                                    <button type="button" id="add_work" class="btn btn-primary pull-right"
-                                            aria-controls="append">Add Work or Experience</button>
-                                </div>
-                            </div>
+                                <div class="mb-4">
+                                    <div class="row align-items-start mb-3">
+                                        <div class="col-md-8">
+                                            <h5>Show Appearance or Past Experience</h5>
+                                            <p class="text-muted small mb-2">Fill in the fields below, then click
+                                                <strong>Add Work or Experience</strong>. Repeat for each show — at least one is required.</p>
+                                        </div>
+                                        <div class="col-md-4 text-md-end">
+                                            <button type="button" id="add_work" class="btn btn-primary"
+                                                    aria-controls="append">Add Work or Experience</button>
+                                        </div>
+                                    </div>
 
-                            <div class="form-group mb-4{{ isset($error['work_name']) ? ' has-error' : '' }}">
-                                <div class="controls">
-                                    <div style="height: auto; scroll-behavior: auto; max-height: 600px; overflow: auto; display: none;" id="append" class="form-control thumbnail-sortable"></div>
+                                    @php
+                                        $oldWorkNames = old('work_name');
+                                        $oldWorkDetails = old('work_detail');
+                                        $oldWorkLinks = old('weblink');
+                                        $hasOldWorks = is_array($oldWorkNames) && $oldWorkNames !== [];
+                                    @endphp
+                                    <div id="append" class="ts-work-list" style="{{ $hasOldWorks ? 'display: flex;' : 'display: none;' }}">
+                                        @if($hasOldWorks)
+                                            @foreach($oldWorkNames as $oldIndex => $oldWorkName)
+                                                @include('frontend.ajaxv', [
+                                                    'id' => 900 + (int) $oldIndex,
+                                                    'work_name' => (string) $oldWorkName,
+                                                    'work_detail' => is_array($oldWorkDetails) ? (string) ($oldWorkDetails[$oldIndex] ?? '') : '',
+                                                    'work_web' => is_array($oldWorkLinks) ? (string) ($oldWorkLinks[$oldIndex] ?? '') : '',
+                                                ])
+                                            @endforeach
+                                        @endif
+                                    </div>
 
-                                    <div class="row">
+                                    <div class="row g-3">
                                         <div class="col-md-4">
+                                            <label class="d-block fw-semibold mb-1" for="work_name">Show or Experience</label>
                                             <input type="text" id="work_name" class="form-control" value=""
                                                    placeholder="Show or Experience " aria-label="Show or experience name">
                                         </div>
                                         <div class="col-md-4">
+                                            <label class="d-block fw-semibold mb-1" for="work_detail">Description</label>
                                             <input type="text" id="work_detail" class="form-control" value=""
                                                    placeholder="Description" aria-label="Show or experience description">
                                         </div>
                                         <div class="col-md-4">
+                                            <label class="d-block fw-semibold mb-1" for="work_web">Web Link <small class="text-muted">(optional)</small></label>
                                             <input type="url" id="work_web" class="form-control" value=""
                                                    placeholder="(optional) https:// or http://" aria-label="Show or experience web link">
                                         </div>
@@ -420,40 +454,37 @@
                                         <span class="help-block text-danger">{{ $error['work_name'] }}</span>
                                     @endif
                                 </div>
-                            </div>
 
-                            <input type="hidden" id="counter" name="counter" value="1">
+                                <input type="hidden" id="counter" name="counter" value="{{ old('counter', 1) }}">
 
-                            <div class="form-group mb-4{{ isset($error['interview']) ? ' has-error' : '' }}">
-                                <div class="controls">
-                                    <textarea rows="10" cols="100" name="interview" class="form-control form-control-lg"
-                                              placeholder="Interview Pitch Concept" id="interview" required
-                                              style="resize:none">{{ old('interview') }}</textarea>
+                                <div class="ts-field{{ isset($error['interview']) ? ' has-error' : '' }}">
+                                    <label for="interview">Interview Pitch Concept <span class="text-danger" aria-hidden="true">*</span></label>
+                                    <textarea rows="6" name="interview" class="form-control"
+                                              placeholder="What would you like to talk about on the show?" id="interview" required>{{ old('interview') }}</textarea>
                                     @if(isset($error['interview']))
                                         <span class="help-block text-danger">{{ $error['interview'] }}</span>
                                     @endif
                                 </div>
-                            </div>
 
-                                <div class="ts-nav d-flex justify-content-between">
+                                <div class="ts-nav">
                                     <button type="button" class="btn btn-outline-secondary ts-back" data-back="1">Back</button>
                                     <button type="button" class="btn btn-primary ts-next" data-next="3">Next</button>
                                 </div>
                             </fieldset>
 
                             <fieldset class="ts-step" data-step="3" hidden>
-                                <legend class="sr-only">Step 3: Agreement and signature</legend>
+                                <legend class="ts-step__title">Step 3: Agreement and signature</legend>
 
                                 <div class="ts-agreement mb-4 p-3 border rounded">
                                     <h5>Guest Agreement</h5>
                                     @if(! empty($agreementUrl))
-                                        <p class="mb-2">
+                                        <p class="mb-3">
                                             Please review the
                                             <a href="{{ $agreementUrl }}" target="_blank" rel="noopener">JMOR guest agreement (PDF)</a>
                                             before signing.
                                         </p>
                                     @else
-                                        <p class="mb-2">
+                                        <p class="mb-3">
                                             By signing below you confirm that the information provided is accurate and
                                             agree to be considered as a guest on the JMOR Tech Talk Show, including
                                             publication of your biography and appearance details.
@@ -467,14 +498,14 @@
                                             I have reviewed and accept the guest agreement.
                                         </label>
                                         @if(isset($error['agreement_accepted']))
-                                            <span class="help-block text-danger d-block">{{ $error['agreement_accepted'] }}</span>
+                                            <span class="help-block text-danger">{{ $error['agreement_accepted'] }}</span>
                                         @endif
                                     </div>
                                 </div>
 
-                                <div class="form-group mb-4{{ isset($error['signature']) ? ' has-error' : '' }}">
-                                    <label for="signatureb">Electronic Signature</label>
-                                    <input type="text" class="form-control form-control-lg" id="signatureb"
+                                <div class="ts-field mb-4{{ isset($error['signature']) ? ' has-error' : '' }}">
+                                    <label for="signatureb">Electronic Signature <span class="text-danger" aria-hidden="true">*</span></label>
+                                    <input type="text" class="form-control" id="signatureb"
                                            name="signature" maxlength="100" required
                                            placeholder="Type your full name as your signature"
                                            value="{{ old('signature', '') }}" />
@@ -483,35 +514,34 @@
                                     @endif
                                 </div>
 
-                            <div class="control-group{{ isset($error['protection_question']) ? ' has-error' : '' }} text-left">
-                                <label class="control-label text-left" style="font-weight:bold; text-align:left;"></label>
-                                <div class="form-group mb-4">
-                                    <input type="hidden" name="protection_question" class="form-control form-control-lg"
-                                           placeholder="Protection question" id="protection_questionb" />
+                                <div class="ts-field{{ isset($error['protection_question']) ? ' has-error' : '' }}">
+                                    <input type="hidden" name="protection_question" id="protection_questionb" />
                                     <input name="firstNumber" type="hidden" id="random_number1b" value="{{ $random_number1 }}" />
                                     <input name="secondNumber" type="hidden" id="random_number2b" value="{{ $random_number2 }}" />
                                     @if(isset($error['protection_question']))
                                         <span class="help-block text-danger">{{ $error['protection_question'] }}</span>
                                     @endif
                                 </div>
-                            </div>
 
-                            <div class="control-group">
-                                <div class="slidercaptcha card">
-                                    <div class="card-header">
-                                        <span>Drag To Verify <small class="text-muted d-block">Slide the puzzle piece to unlock the Send button</small></span>
+                                <div class="ts-captcha mb-4">
+                                    <div class="ts-captcha__head">
+                                        <span>
+                                            <strong><i class="fa fa-lock" aria-hidden="true"></i> Drag To Verify</strong>
+                                            <small class="d-block text-muted">Slide the puzzle piece to unlock the submit button</small>
+                                        </span>
                                     </div>
-                                    <div class="card-body">
+                                    <div class="ts-captcha__body">
                                         <div id="captchab"></div>
                                     </div>
                                 </div>
-                            </div>
 
-                                <div class="ts-nav d-flex justify-content-between align-items-center">
+                                <div class="ts-nav ts-nav--between">
                                     <button type="button" class="btn btn-outline-secondary ts-back" data-back="2">Back</button>
-                                    <div id="qasubmitBtnb" style="display: none;">
-                                        <button class="btn btn-lg btn-primary py-3 mt-3 px-4 btn-pill" type="submit">Send Your Message</button>
-                                    </div>
+                                    <span class="ts-nav__submit">
+                                        <span class="ts-nav__hint" id="ts_submit_hint">Drag the slider above to enable submit.</span>
+                                        <button id="qasubmitBtnb" class="btn btn-primary btn-lg px-4" type="submit"
+                                                disabled>Submit Application</button>
+                                    </span>
                                 </div>
                             </fieldset>
                         </form>
@@ -629,21 +659,9 @@
     }
 
     $('#twophone').change(function () {
-        if (this.checked) {
-            $('.bph').toggle();
-            $('.bphb').toggle();
-            $('.bph').attr('name', 'phone');
-            $('.bphb').attr('name', '');
-            $('.bph').prop('required', true);
-            $('.bphb').prop('required', false);
-        } else {
-            $('.bph').toggle();
-            $('.bphb').toggle();
-            $('.bph').attr('name', '');
-            $('.bphb').attr('name', 'phone');
-            $('.bphb').prop('required', true);
-            $('.bph').prop('required', false);
-        }
+        var isUs = this.checked;
+        $('#phoneb').toggle(isUs).attr('name', isUs ? 'phone' : '').prop('required', isUs);
+        $('#phone_intl').toggle(!isUs).attr('name', isUs ? '' : 'phone').prop('required', !isUs);
     });
 
     if ($.fn.mask) {
@@ -689,8 +707,30 @@
 
     function checkwork() {
         clearWorkError();
-        if ($('#append').children().length > 0) {
-            return true;
+
+        // Every added entry must still have a name and a valid optional link.
+        var cardsValid = true;
+        $('#append .ts-work-card').each(function () {
+            var nameInput = $(this).find('input[name="work_name[]"]').first();
+            var webInput = $(this).find('input[name="weblink[]"]').first();
+            var cardName = (nameInput.val() || '').trim();
+            var cardWeb = (webInput.val() || '').trim();
+            if (!cardName) {
+                showWorkError('Please enter a show or experience name for every added entry.');
+                nameInput.trigger('focus');
+                cardsValid = false;
+                return false;
+            }
+            if (cardWeb && !isValidURL(cardWeb)) {
+                showWorkError('Web link must be a valid URL (https://...) or be left empty.');
+                webInput.trigger('focus');
+                cardsValid = false;
+                return false;
+            }
+        });
+        if (!cardsValid) {
+            jumpToWorkFields();
+            return false;
         }
 
         // If the user filled the three fields but forgot "Add", auto-add on submit.
@@ -704,6 +744,10 @@
                 return false;
             }
             appendWorkEntry(name, detail, web);
+            return true;
+        }
+
+        if ($('#append .ts-work-card').length > 0) {
             return true;
         }
 
@@ -733,18 +777,41 @@
             .replace(/"/g, '&quot;');
     }
 
+    function buildWorkCard(id, workName, workDetail, workWeb) {
+        return '' +
+            '<div class="ts-work-card" id="accordion' + id + '">' +
+                '<div class="ts-work-card__head">' +
+                    '<span class="ts-work-card__title"><i class="fa fa-television" aria-hidden="true"></i> Entry ' + id + '</span>' +
+                    '<button type="button" class="ts-work-card__remove" onclick="remove_parent(this);" ' +
+                        'aria-label="Remove entry ' + id + '">' +
+                        '<i class="fa fa-trash" aria-hidden="true"></i> Remove' +
+                    '</button>' +
+                '</div>' +
+                '<div class="ts-work-card__grid">' +
+                    '<div>' +
+                        '<label for="work_name' + id + '">Show or Experience <span class="text-danger" aria-hidden="true">*</span></label>' +
+                        '<input type="text" name="work_name[]" id="work_name' + id + '" class="form-control" ' +
+                            'value="' + escapeAttr(workName) + '" maxlength="255" required>' +
+                    '</div>' +
+                    '<div>' +
+                        '<label for="detail' + id + '">Description</label>' +
+                        '<textarea name="work_detail[]" id="detail' + id + '" class="form-control" rows="2" ' +
+                            'maxlength="500">' + escapeAttr(workDetail) + '</textarea>' +
+                    '</div>' +
+                    '<div>' +
+                        '<label for="web' + id + '">Web Link <small class="text-muted">(optional)</small></label>' +
+                        '<input type="url" name="weblink[]" id="web' + id + '" class="form-control" ' +
+                            'value="' + escapeAttr(workWeb) + '" placeholder="https://">' +
+                    '</div>' +
+                '</div>' +
+            '</div>';
+    }
+
     function appendWorkEntry(workName, workDetail, workWeb) {
         var counter = parseInt($('#counter').val(), 10) || 1;
         counter += 1;
-        var wrap = document.createElement('div');
-        wrap.className = 'panel-group';
-        wrap.id = 'accordion' + counter;
-        wrap.innerHTML =
-            '<input type="hidden" name="work_name[]" value="' + escapeAttr(workName) + '">' +
-            '<input type="hidden" name="work_detail[]" value="' + escapeAttr(workDetail) + '">' +
-            '<input type="hidden" name="weblink[]" value="' + escapeAttr(workWeb) + '">';
-        $('#append').append(wrap);
-        $('#append').css('display', '');
+        $('#append').append(buildWorkCard(counter, workName, workDetail, workWeb));
+        $('#append').css('display', 'flex');
         $('#counter').val(counter);
         $('#work_name').val('');
         $('#work_web').val('');
@@ -752,39 +819,10 @@
     }
 
     function remove_parent(element) {
-        $(element).closest('.panel-group').remove();
-        if ($('#append').children().length < 1) {
+        $(element).closest('.ts-work-card').remove();
+        if ($('#append .ts-work-card').length < 1) {
             $('#append').css('display', 'none');
         }
-    }
-
-    function edit_parent(object, id) {
-        $('#edit_v' + id).fadeToggle();
-        $('#no' + id).fadeToggle();
-    }
-
-    function save(id) {
-        var work_name = $('#work_name' + id).val().trim();
-        var web = $('#web' + id).val().trim();
-        var detail = $('#detail' + id).val();
-
-        if (work_name === '') {
-            showWorkError('Show or experience name cannot be empty.');
-            $('#work_name' + id).focus();
-            return;
-        }
-        if (web !== '' && !isValidURL(web)) {
-            showWorkError('Web link must be a valid URL (https://...) or be left empty.');
-            $('#web' + id).focus();
-            return;
-        }
-
-        clearWorkError();
-        $('#wset' + id).text(web !== '' ? web : 'Not provided');
-        $('#hset' + id).text(work_name);
-        $('#dset' + id).text(detail);
-        $('#edit_v' + id).fadeToggle();
-        $('#no' + id).fadeToggle();
     }
 
     $('#add_work').click(function () {
@@ -821,7 +859,7 @@
             url: '{{ route('contact.load_restaurants') }}',
             success: function (response) {
                 $('#append').append(response.html);
-                $('#append').css('display', '');
+                $('#append').css('display', 'flex');
                 $('#counter').val(counter);
                 $('#work_name').val('');
                 $('#work_web').val('');
@@ -837,6 +875,14 @@
     @if($open_interview)
         inquiryformtwo();
         (function () {
+            var summary = document.getElementById('ts-error-summary');
+            if (summary) {
+                setTimeout(function () {
+                    summary.scrollIntoView({behavior: 'smooth', block: 'center'});
+                    summary.focus({preventScroll: true});
+                }, 250);
+                return;
+            }
             var form = document.getElementById('form_two');
             if (!form) {
                 return;
@@ -911,7 +957,19 @@
     <style>
         #form_one, #form_two {
             scroll-margin-top: 120px;
+            text-align: left;
         }
+        .help-block {
+            display: block;
+            margin-top: 0.4rem;
+            font-size: 0.86rem;
+        }
+        .ts-field.has-error .form-control,
+        .form-group.has-error .form-control {
+            border-color: #dc3545;
+        }
+
+        /* Wizard stepper */
         .ts-steps {
             display: flex;
             gap: 8px;
@@ -932,24 +990,190 @@
             background: #0d6efd;
             color: #fff;
         }
+
+        /* Step cards */
+        .ts-step {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
         .ts-step[hidden] {
+            display: none;
+        }
+        .ts-step__title {
+            display: block;
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #212529;
+            padding: 0;
+            margin: 0 0 1rem;
+            border: 0;
+        }
+        .ts-field > label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+        }
+
+        /* US resident switch */
+        .ts-switch {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            margin: 0;
+            font-weight: 600;
+        }
+        .ts-switch .swi {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .ts-switch .sliderp {
+            position: relative;
+            display: inline-block;
+            width: 42px;
+            height: 24px;
+            background: #adb5bd;
+            border-radius: 999px;
+            transition: background 0.15s ease;
+        }
+        .ts-switch .sliderp::before {
+            content: "";
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 18px;
+            height: 18px;
+            background: #fff;
+            border-radius: 50%;
+            transition: transform 0.15s ease;
+        }
+        .ts-switch .swi:checked + .sliderp {
+            background: #0d6efd;
+        }
+        .ts-switch .swi:checked + .sliderp::before {
+            transform: translateX(18px);
+        }
+        .ts-switch-row {
+            display: flex;
+            flex-direction: column;
+        }
+        .ts-switch-row__hint {
+            color: #6c757d;
+            font-size: 0.85rem;
+            font-weight: 400;
+        }
+
+        /* Step navigation */
+        .ts-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+        }
+        .ts-nav--end {
+            justify-content: flex-end;
+        }
+        .ts-nav__submit {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .ts-nav__hint {
+            color: #6c757d;
+            font-size: 0.85rem;
+        }
+
+        /* Added work entries */
+        .ts-work-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            max-height: 480px;
+            overflow: auto;
+            margin-bottom: 1rem;
+        }
+        .ts-work-card {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1rem;
+            background: #fff;
+        }
+        .ts-work-card__head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        .ts-work-card__title {
+            font-weight: 700;
+            font-size: 0.92rem;
+        }
+        .ts-work-card__remove {
+            background: none;
+            border: 0;
+            color: #dc3545;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .ts-work-card__grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.75rem;
+        }
+        .ts-work-card label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+        .ts-work-card textarea {
+            resize: vertical;
+        }
+
+        /* Captcha frame */
+        .ts-captcha {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .ts-captcha__head {
+            padding: 0.75rem 1rem;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .ts-captcha__head small {
+            color: #6c757d;
+        }
+        .ts-captcha__body {
+            padding: 1rem;
+        }
+
+        /* Error summary + show-all after server validation errors */
+        .ts-error-summary ul {
+            list-style-type: disc;
+            margin: 0.5rem 0 0;
+            padding-left: 1.2rem;
+        }
+        #form_two.ts-show-all .ts-steps {
             display: none;
         }
         #form_two.ts-show-all .ts-step[hidden] {
             display: block;
         }
-        #form_two.ts-show-all .ts-nav {
+        #form_two.ts-show-all .ts-nav .ts-back,
+        #form_two.ts-show-all .ts-nav .ts-next {
             display: none;
         }
-        #form_two.ts-show-all .ts-step-pill {
-            background: #0d6efd;
-            color: #fff;
-        }
+
         #contact-thanks .contact-thanks-card {
             border-top: 4px solid #198754;
-        }
-        #ts-error-summary ul {
-            list-style-type: disc;
         }
         .sr-only {
             position: absolute;

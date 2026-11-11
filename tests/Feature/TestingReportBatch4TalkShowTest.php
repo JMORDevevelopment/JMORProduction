@@ -85,6 +85,27 @@ test('talk show application offers agreement review and electronic signature fie
         ->toContain('Electronic Signature');
 });
 
+test('talk show wizard exposes accessible step navigation and labeled fields', function () {
+    $html = $this->get(route('contact'))->assertSuccessful()->getContent();
+
+    expect($html)
+        ->toContain('for="signatureb"')
+        ->toContain('for="phoneb"')
+        ->toContain('id="qasubmitBtnb"')
+        ->toContain('Submit Application')
+        ->toContain('Drag the slider above to enable submit');
+});
+
+test('a failed submission repopulates previously added work entries', function () {
+    postTalkShowWizard(['interview' => '']);
+
+    $html = $this->get(route('contact'))->assertSuccessful()->getContent();
+
+    expect($html)
+        ->toContain('name="work_name[]"')
+        ->toContain('value="The Tonight Show"');
+});
+
 // ─── Agreement upload by JMOR ─────────────────────────────────────────
 
 test('uploaded guest agreement is offered for review on the application', function () {

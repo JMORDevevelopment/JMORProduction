@@ -247,6 +247,7 @@ test('the add work endpoint returns an html block with escaped values', function
 
     expect($payload['msg'] ?? null)->toBeNull();
     expect($payload['html'])->toContain('work_name[]');
+    expect($payload['html'])->toContain('ts-work-card');
     expect($payload['html'])->toContain('&lt;b&gt;My Show&lt;/b&gt;');
     expect($payload['html'])->not->toContain('<b>My Show</b>');
 });

@@ -65,7 +65,8 @@
             crossOrigin: true,
             headers: { 'Access-Control-Allow-Origin': 'https://imgs.blazor.zone' },
             onSuccess: function() {
-                $('#qasubmitBtnb').show();
+                $('#qasubmitBtnb').prop('disabled', false);
+                $('#ts_submit_hint').hide();
                 if ($('#random_number1b').length) {
                     var num_one = $('#random_number1b').val();
                     var num_two = $('#random_number2b').val();
@@ -77,15 +78,18 @@
                 }, 300000);
             },
             onFail: function() {
-                $('#qasubmitBtnb').hide();
+                $('#qasubmitBtnb').prop('disabled', true);
+                $('#ts_submit_hint').show();
             },
             onRefresh: function() {
-                $('#qasubmitBtnb').hide();
+                $('#qasubmitBtnb').prop('disabled', true);
+                $('#ts_submit_hint').show();
             }
         });
         var resetCaptchaB = function() {
             window.captchab.reset();
-            $('#qasubmitBtnb').hide();
+            $('#qasubmitBtnb').prop('disabled', true);
+            $('#ts_submit_hint').show();
         };
     };
     if ($('#captchab').length) {
