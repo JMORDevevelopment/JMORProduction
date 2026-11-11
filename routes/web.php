@@ -23,6 +23,7 @@ use App\Http\Controllers\MediaInquiryController;
 use App\Http\Controllers\MediaResourceController;
 use App\Http\Controllers\MediaVideoController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PaymentController;
@@ -120,6 +121,11 @@ Route::post('/home/interview_submit', [ContactController::class, 'interviewSubmi
     ->middleware('throttle:5,1');
 Route::post('/home/load_restaurants', [ContactController::class, 'loadWork'])
     ->name('contact.load_restaurants');
+
+// Newsletter: local handler by default; production can point the form at
+// Mailchimp with NEWSLETTER_FORM_ACTION instead.
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])
+    ->name('newsletter.subscribe');
 
 // ==============================
 // CART ROUTES
