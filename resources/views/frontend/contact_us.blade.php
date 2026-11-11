@@ -438,8 +438,8 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label class="d-block fw-semibold mb-1" for="work_detail">Description</label>
-                                            <input type="text" id="work_detail" class="form-control" value=""
-                                                   placeholder="Description" aria-label="Show or experience description">
+                                            <textarea id="work_detail" class="form-control" rows="2" maxlength="500"
+                                                      placeholder="Description" aria-label="Show or experience description"></textarea>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="d-block fw-semibold mb-1" for="work_web">Web Link <small class="text-muted">(optional)</small></label>
