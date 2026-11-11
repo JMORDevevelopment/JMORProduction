@@ -72,8 +72,8 @@
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock color-blue"></i></span>
                                                         <input id="password" name="password" placeholder="Password"
-                                                            value="{{ old('password') ?? $password ?? '' }}"
-                                                            class="form-control" type="password">
+                                                            value=""
+                                                            class="form-control" type="password" autocomplete="current-password">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
