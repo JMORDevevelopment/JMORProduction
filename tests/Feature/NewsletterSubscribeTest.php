@@ -1,5 +1,8 @@
 <?php
 
+use App\Mail\NewsletterConfirmation;
+use Illuminate\Support\Facades\Mail;
+
 beforeEach(function () {
     $path = storage_path('app/newsletter_subscribers.json');
     if (is_file($path)) {
@@ -51,6 +54,23 @@ test('a valid newsletter signup is stored and confirmed', function () {
     expect($match)->not->toBeEmpty()
         ->and(reset($match)['first_name'])->toBe('Jane')
         ->and(reset($match)['status'])->toBe('pending');
+});
+
+test('a confirmation email is sent to the subscriber', function () {
+    Mail::fake();
+
+    $this->post(route('newsletter.subscribe'), [
+        'FNAME' => 'Jane',
+        'LNAME' => 'Doe',
+        'EMAIL' => 'confirm-me@example.com',
+        'NEWSLETTER_CONSENT' => 'I agree',
+    ])->assertSessionHas('newsletter_success');
+
+    Mail::assertSent(NewsletterConfirmation::class, function ($mail) {
+        return $mail->hasTo('confirm-me@example.com')
+            && $mail->firstName === 'Jane'
+            && $mail->envelope()->subject === 'Please confirm your JMOR newsletter subscription';
+    });
 });
 
 test('duplicate newsletter signups do not create a second subscriber', function () {

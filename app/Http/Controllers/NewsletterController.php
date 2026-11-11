@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewsletterConfirmation;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class NewsletterController extends Controller
 {
@@ -29,6 +31,20 @@ class NewsletterController extends Controller
         if ($existing === null) {
             $this->storeSubscriber($validated);
             Log::info('Newsletter subscriber stored', ['email' => $validated['EMAIL']]);
+        }
+
+        try {
+            Mail::to($validated['EMAIL'])->send(new NewsletterConfirmation(
+                firstName: $validated['FNAME'],
+                lastName: $validated['LNAME'],
+                email: $validated['EMAIL'],
+            ));
+            Log::info('Newsletter confirmation sent', ['email' => $validated['EMAIL']]);
+        } catch (\Throwable $e) {
+            Log::error('Newsletter confirmation failed', [
+                'email' => $validated['EMAIL'],
+                'error' => $e->getMessage(),
+            ]);
         }
 
         return redirect()
