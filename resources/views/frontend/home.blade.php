@@ -338,7 +338,11 @@
                 <div class="col-lg-7">
                     <div class="jm-card jm-news__video">
                         <div class="jm-news__video-frame">
-                            <iframe src="https://www.youtube.com/embed/VZ3gZACXylc" title="JMOR" frameborder="0"
+                            <iframe data-optional-embed
+                                data-embed-src="https://www.youtube.com/embed/VZ3gZACXylc"
+                                data-embed-title="JMOR"
+                                data-embed-allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                title="JMOR" frameborder="0"
                                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                 allowfullscreen></iframe>
                         </div>

@@ -76,7 +76,10 @@
 
                 <div class="row text-center" style="justify-content: center;">
                     <div id="map_box" class="col-lg-5">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3010.113136935536!2d-74.20879448429831!3d41.022780679299395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2e287fb5beb13%3A0x5056f097f8d06e27!2s799%20Franklin%20Ave%20%233%2C%20Franklin%20Lakes%2C%20NJ%2007417%2C%20USA!5e0!3m2!1sen!2s!4v1588958264865!5m2!1sen!2s" width="100%" height="320" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                        <iframe data-optional-embed
+                            data-embed-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3010.113136935536!2d-74.20879448429831!3d41.022780679299395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2e287fb5beb13%3A0x5056f097f8d06e27!2s799%20Franklin%20Ave%20%233%2C%20Franklin%20Lakes%2C%20NJ%2007417%2C%20USA!5e0!3m2!1sen!2s!4v1588958264865!5m2!1sen!2s"
+                            data-embed-title="JMOR office location map"
+                            title="JMOR office location map" width="100%" height="320" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
                     </div>
                     <div class="col-lg-7">
                         @if(isset($success))
@@ -189,7 +192,7 @@
                                 <div class="form-group mb-4{{ isset($error['name']) ? ' has-error' : '' }}">
                                     <input type="text" class="form-control form-control-lg"
                                            name="name" placeholder="First Name" required
-                                           value="{{ old('name', '') }}" />
+                                           value="{{ ($interview_old ?? false) ? old('name', '') : '' }}" />
                                     @if(isset($error['name']))
                                         <span class="help-block text-danger">{{ $error['name'] }}</span>
                                     @endif
@@ -219,7 +222,7 @@
 
                                 <div class="form-group mb-4{{ isset($error['phone']) ? ' has-error' : '' }}">
                                     <div class="controls">
-                                        <input id="phoneb" name="phone" style="display: '';" class="form-control form-control-lg phone bph" placeholder="Enter your number...." value="{{ old('phone', '') }}">
+                                        <input id="phoneb" name="phone" style="display: '';" class="form-control form-control-lg phone bph" placeholder="Enter your number...." value="{{ ($interview_old ?? false) ? old('phone', '') : '' }}">
                                         <input id="" name="" style="display: none;" class="form-control form-control-lg bphb" placeholder="Enter your number....">
                                         @if(isset($error['phone']))
                                             <span class="help-block text-danger">{{ $error['phone'] }}</span>
@@ -231,7 +234,7 @@
                             <div class="form-group mb-4{{ isset($error['email']) ? ' has-error' : '' }}">
                                 <div class="controls">
                                     <input type="email" name="email" class="form-control form-control-lg" placeholder="Email"
-                                           id="emailb" required value="{{ old('email', '') }}" />
+                                           id="emailb" required value="{{ ($interview_old ?? false) ? old('email', '') : '' }}" />
                                     @if(isset($error['email']))
                                         <span class="help-block text-danger">{{ $error['email'] }}</span>
                                     @endif

@@ -66,6 +66,7 @@
                 <a href="{{ route('privacy-policy') }}">Privacy Policy</a>
                 <a href="{{ route('terms') }}">Terms and Conditions</a>
                 <a href="{{ route('sitemap') }}">Sitemap</a>
+                <a href="#" data-jm-cookie-settings>Cookie Settings</a>
             </div>
         </div>
 

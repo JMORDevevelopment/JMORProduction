@@ -24,6 +24,21 @@ class ContactController extends Controller
         // fields are ignored during validation (M12).
         session(['captcha_numbers' => [$randomNumber1, $randomNumber2]]);
 
+        // Which form failed validation? Talk-show fields are unique to it;
+        // reason/message are unique to the web inquiry. Shared keys
+        // (name/email/phone) must only repopulate the form that failed (060).
+        $openInterview = old('last_name') !== null
+            || old('bio') !== null
+            || old('interview') !== null
+            || old('work_name') !== null
+            || old('company_name') !== null
+            || old('counter') !== null
+            || old('signature') !== null
+            || old('agreement_accepted') !== null;
+
+        $inquiryFailed = ! $openInterview
+            && (old('reason') !== null || old('message') !== null || old('protection_question') !== null);
+
         return view('frontend.contact_us', [
             'title' => 'Contact Us',
             'description' => '',
@@ -32,18 +47,19 @@ class ContactController extends Controller
             'random_number2' => $randomNumber2,
             'random_number1_show' => $randomNumber1,
             'random_number2_show' => $randomNumber2,
-            'name' => old('name', ''),
-            'email' => old('email', ''),
-            'phone' => old('phone', ''),
-            'reason' => old('reason', ''),
-            'message' => old('message', ''),
+            'name' => $inquiryFailed ? (string) old('name', '') : '',
+            'email' => $inquiryFailed ? (string) old('email', '') : '',
+            'phone' => $inquiryFailed ? (string) old('phone', '') : '',
+            'reason' => $inquiryFailed ? (string) old('reason', '') : '',
+            'message' => $inquiryFailed ? (string) old('message', '') : '',
+            'interview_old' => $openInterview,
             'address' => Setting::get('address', ''),
             'phone_number' => Setting::get('phone', ''),
             'success' => session('contact_success'),
             'error' => session('errors') ? collect(session('errors')->getBag('default')->getMessages())->map(fn ($msgs) => $msgs[0])->toArray() : [],
             // Re-open the talk show interview form when it was the form that
             // failed validation (the original relied on query-string alerts).
-            'open_interview' => old('last_name') !== null || old('bio') !== null || old('interview') !== null,
+            'open_interview' => $openInterview,
         ]);
     }
 
