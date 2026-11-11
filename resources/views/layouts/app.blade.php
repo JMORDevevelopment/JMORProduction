@@ -22,6 +22,7 @@
     <x-header />
     @yield('content')
     <x-footer />
+    @include('partials.cookie-consent')
     @stack('scripts')
     @filamentScripts
 </body>
