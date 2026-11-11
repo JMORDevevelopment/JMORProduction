@@ -385,7 +385,7 @@
                                 </div>
                             </fieldset>
 
-                            <fieldset class="ts-step" data-step="2" hidden>
+                            <fieldset class="ts-step" data-step="2"{{ count($error) ? '' : ' hidden' }}>
                                 <legend class="ts-step__title">Step 2: Experience and pitch</legend>
 
                                 <div class="ts-field mb-4{{ isset($error['bio']) ? ' has-error' : '' }}">
@@ -472,7 +472,7 @@
                                 </div>
                             </fieldset>
 
-                            <fieldset class="ts-step" data-step="3" hidden>
+                            <fieldset class="ts-step" data-step="3"{{ count($error) ? '' : ' hidden' }}>
                                 <legend class="ts-step__title">Step 3: Agreement and signature</legend>
 
                                 <div class="ts-agreement mb-4 p-3 border rounded">
@@ -583,6 +583,14 @@
         $('#form_two').show();
         $('#map_box').hide();
         $('#hed').html('Interview Pitch Concept.');
+        // After a server validation error every step (including submit) must
+        // be reachable — the hidden attribute alone can beat our CSS.
+        var formTwo = document.getElementById('form_two');
+        if (formTwo && formTwo.classList.contains('ts-show-all')) {
+            formTwo.querySelectorAll('.ts-step').forEach(function (fieldset) {
+                fieldset.hidden = false;
+            });
+        }
         scrollToForm('form_two');
         // Talk-show captcha only initializes once its container is visible.
         if (window.jmorInitTalkShowCaptcha) {

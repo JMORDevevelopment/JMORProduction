@@ -96,6 +96,21 @@ test('talk show wizard exposes accessible step navigation and labeled fields', f
         ->toContain('Drag the slider above to enable submit');
 });
 
+test('a failed submission shows every step so the submit button stays reachable', function () {
+    postTalkShowWizard(['interview' => '']);
+
+    $html = $this->get(route('contact'))->assertSuccessful()->getContent();
+
+    // Show-all mode must not leave step 2/3 with the hidden attribute —
+    // that hid the submit button and made the form unresubmittable.
+    expect($html)
+        ->toContain('class="ts-step" data-step="2"')
+        ->toContain('class="ts-step" data-step="3"')
+        ->not->toContain('data-step="2" hidden')
+        ->not->toContain('data-step="3" hidden')
+        ->toContain('id="qasubmitBtnb"');
+});
+
 test('a failed submission repopulates previously added work entries', function () {
     postTalkShowWizard(['interview' => '']);
 
