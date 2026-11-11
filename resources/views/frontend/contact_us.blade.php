@@ -277,7 +277,27 @@
                             </div>
                         </form>
 
-                        <form id="form_two" class="inquiry{{ count($error) ? ' ts-show-all' : '' }}" style="display:none;"
+                        @php
+                            // After a validation error, reopen only the step that failed.
+                            $errorStep = 1;
+                            if (count($error)) {
+                                $stepFields = [
+                                    1 => ['name', 'last_name', 'company_name', 'phone', 'email'],
+                                    2 => ['bio', 'work_name', 'work_detail', 'weblink', 'interview', 'counter'],
+                                    3 => ['agreement_accepted', 'signature', 'protection_question'],
+                                ];
+                                foreach ($stepFields as $stepNumber => $fieldNames) {
+                                    foreach ($fieldNames as $fieldName) {
+                                        if (isset($error[$fieldName])) {
+                                            $errorStep = $stepNumber;
+                                            break 2;
+                                        }
+                                    }
+                                }
+                            }
+                        @endphp
+
+                        <form id="form_two" class="inquiry" style="display:none;"
                               onsubmit="return checkwork();"
                               action="{{ route('contact.interview') }}" method="post">
                             @csrf
@@ -294,12 +314,12 @@
                             @endif
 
                             <nav class="ts-steps mb-4" aria-label="Application progress">
-                                <span class="ts-step-pill active" data-step-pill="1">1. Contact</span>
-                                <span class="ts-step-pill" data-step-pill="2">2. Experience</span>
-                                <span class="ts-step-pill" data-step-pill="3">3. Agreement</span>
+                                <span class="ts-step-pill{{ $errorStep === 1 ? ' active' : '' }}" data-step-pill="1">1. Contact</span>
+                                <span class="ts-step-pill{{ $errorStep === 2 ? ' active' : '' }}" data-step-pill="2">2. Experience</span>
+                                <span class="ts-step-pill{{ $errorStep === 3 ? ' active' : '' }}" data-step-pill="3">3. Agreement</span>
                             </nav>
 
-                            <fieldset class="ts-step" data-step="1">
+                            <fieldset class="ts-step" data-step="1"{{ $errorStep !== 1 ? ' hidden' : '' }}>
                                 <legend class="ts-step__title">Step 1: Contact information</legend>
 
                                 <div class="row g-3">
@@ -385,7 +405,7 @@
                                 </div>
                             </fieldset>
 
-                            <fieldset class="ts-step" data-step="2"{{ count($error) ? '' : ' hidden' }}>
+                            <fieldset class="ts-step" data-step="2"{{ $errorStep !== 2 ? ' hidden' : '' }}>
                                 <legend class="ts-step__title">Step 2: Experience and pitch</legend>
 
                                 <div class="ts-field mb-4{{ isset($error['bio']) ? ' has-error' : '' }}">
@@ -472,7 +492,7 @@
                                 </div>
                             </fieldset>
 
-                            <fieldset class="ts-step" data-step="3"{{ count($error) ? '' : ' hidden' }}>
+                            <fieldset class="ts-step" data-step="3"{{ $errorStep !== 3 ? ' hidden' : '' }}>
                                 <legend class="ts-step__title">Step 3: Agreement and signature</legend>
 
                                 <div class="ts-agreement mb-4 p-3 border rounded">
@@ -583,14 +603,6 @@
         $('#form_two').show();
         $('#map_box').hide();
         $('#hed').html('Interview Pitch Concept.');
-        // After a server validation error every step (including submit) must
-        // be reachable — the hidden attribute alone can beat our CSS.
-        var formTwo = document.getElementById('form_two');
-        if (formTwo && formTwo.classList.contains('ts-show-all')) {
-            formTwo.querySelectorAll('.ts-step').forEach(function (fieldset) {
-                fieldset.hidden = false;
-            });
-        }
         scrollToForm('form_two');
         // Talk-show captcha only initializes once its container is visible.
         if (window.jmorInitTalkShowCaptcha) {
@@ -600,7 +612,7 @@
 
     function tsShowStep(step) {
         var form = document.getElementById('form_two');
-        if (!form || form.classList.contains('ts-show-all')) {
+        if (!form) {
             return;
         }
         form.querySelectorAll('.ts-step').forEach(function (fieldset) {
@@ -883,6 +895,12 @@
     @if($open_interview)
         inquiryformtwo();
         (function () {
+            // Land on the step that failed so the user can fix it in place.
+            @if(count($error))
+                if (typeof tsShowStep === 'function') {
+                    tsShowStep({{ $errorStep }});
+                }
+            @endif
             var summary = document.getElementById('ts-error-summary');
             if (summary) {
                 setTimeout(function () {
@@ -891,22 +909,12 @@
                 }, 250);
                 return;
             }
-            var form = document.getElementById('form_two');
-            if (!form) {
-                return;
+            var firstError = document.querySelector('#form_two .help-block.text-danger, #work_error:not(:empty)');
+            if (firstError) {
+                setTimeout(function () {
+                    firstError.scrollIntoView({behavior: 'smooth', block: 'center'});
+                }, 250);
             }
-            var firstError = form.querySelector('.help-block.text-danger, #work_error:not(:empty)');
-            if (!firstError) {
-                return;
-            }
-            var step = firstError.closest('.ts-step');
-            if (step && step.getAttribute('data-step') && !form.classList.contains('ts-show-all')
-                && typeof tsShowStep === 'function') {
-                tsShowStep(parseInt(step.getAttribute('data-step'), 10));
-            }
-            setTimeout(function () {
-                firstError.scrollIntoView({behavior: 'smooth', block: 'center'});
-            }, 250);
         })();
     @endif
 
@@ -1168,16 +1176,6 @@
             list-style-type: disc;
             margin: 0.5rem 0 0;
             padding-left: 1.2rem;
-        }
-        #form_two.ts-show-all .ts-steps {
-            display: none;
-        }
-        #form_two.ts-show-all .ts-step[hidden] {
-            display: block;
-        }
-        #form_two.ts-show-all .ts-nav .ts-back,
-        #form_two.ts-show-all .ts-nav .ts-next {
-            display: none;
         }
 
         #contact-thanks .contact-thanks-card {

@@ -96,19 +96,47 @@ test('talk show wizard exposes accessible step navigation and labeled fields', f
         ->toContain('Drag the slider above to enable submit');
 });
 
-test('a failed submission shows every step so the submit button stays reachable', function () {
+test('a failed submission reopens only the step that failed', function () {
+    // interview lives on step 2
     postTalkShowWizard(['interview' => '']);
 
     $html = $this->get(route('contact'))->assertSuccessful()->getContent();
 
-    // Show-all mode must not leave step 2/3 with the hidden attribute —
-    // that hid the submit button and made the form unresubmittable.
     expect($html)
-        ->toContain('class="ts-step" data-step="2"')
-        ->toContain('class="ts-step" data-step="3"')
+        ->not->toContain('ts-show-all')
+        ->toContain('data-step="1" hidden')
         ->not->toContain('data-step="2" hidden')
+        ->toContain('data-step="3" hidden')
+        ->toContain('class="ts-step-pill active" data-step-pill="2"')
+        ->toContain('id="ts-error-summary"')
+        ->toContain('id="qasubmitBtnb"')
+        ->toContain('tsShowStep(2)');
+});
+
+test('a failed phone number reopens step one with its error', function () {
+    postTalkShowWizard(['phone' => 'NOT-A-PHONE']);
+
+    $html = $this->get(route('contact'))->assertSuccessful()->getContent();
+
+    expect($html)
+        ->not->toContain('data-step="1" hidden')
+        ->toContain('data-step="2" hidden')
+        ->toContain('data-step="3" hidden')
+        ->toContain('valid phone number')
+        ->toContain('tsShowStep(1)');
+});
+
+test('a failed signature reopens step three so the form can be resubmitted', function () {
+    postTalkShowWizard(['signature' => '']);
+
+    $html = $this->get(route('contact'))->assertSuccessful()->getContent();
+
+    expect($html)
+        ->toContain('data-step="1" hidden')
+        ->toContain('data-step="2" hidden')
         ->not->toContain('data-step="3" hidden')
-        ->toContain('id="qasubmitBtnb"');
+        ->toContain('id="qasubmitBtnb"')
+        ->toContain('tsShowStep(3)');
 });
 
 test('a failed submission repopulates previously added work entries', function () {

@@ -29,6 +29,10 @@ class ContactController extends Controller
         // fields are ignored during validation (M12).
         session(['captcha_numbers' => [$randomNumber1, $randomNumber2]]);
 
+        $errors = session('errors')
+            ? collect(session('errors')->getBag('default')->getMessages())->map(fn ($msgs) => $msgs[0])->toArray()
+            : [];
+
         return view('frontend.contact_us', [
             'title' => 'Contact Us',
             'description' => '',
@@ -51,11 +55,28 @@ class ContactController extends Controller
             'address' => Setting::get('address', ''),
             'phone_number' => Setting::get('phone', ''),
             'success' => session('contact_success'),
-            'error' => session('errors') ? collect(session('errors')->getBag('default')->getMessages())->map(fn ($msgs) => $msgs[0])->toArray() : [],
+            'error' => $errors,
             // Re-open the talk show interview form when it was the form that
             // failed validation (the original relied on query-string alerts).
-            'open_interview' => old('last_name') !== null || old('bio') !== null || old('interview') !== null,
+            'open_interview' => $this->shouldOpenInterview(),
         ]);
+    }
+
+    /**
+     * The talk-show wizard posts to a different endpoint than the contact
+     * form. Open it whenever that form's input is present in the old input
+     * (keys survive empty-string → null conversion).
+     */
+    private function shouldOpenInterview(): bool
+    {
+        $old = old();
+
+        return array_key_exists('last_name', $old)
+            || array_key_exists('bio', $old)
+            || array_key_exists('interview', $old)
+            || array_key_exists('signature', $old)
+            || array_key_exists('agreement_accepted', $old)
+            || array_key_exists('counter', $old);
     }
 
     public function submit(ContactRequest $request)
