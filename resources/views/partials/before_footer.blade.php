@@ -16,7 +16,7 @@
                     </style>
                 @endpush
                 <div id="mc_embed_signup">
-                    <form action="https://jmor.us20.list-manage.com/subscribe/post?u=162c559900d0da871b5ac38b9&amp;id=8ad51d0bdf" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                    <form action="https://jmor.us20.list-manage.com/subscribe/post?u=162c559900d0da871b5ac38b9&amp;id=8ad51d0bdf" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
                         <div id="mc_embed_signup_scroll">
                             <div class="indicates-required"><span class="asterisk">*</span> indicates required</div>
                             <div class="mc-field-group">
