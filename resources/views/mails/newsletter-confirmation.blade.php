@@ -27,7 +27,7 @@
                                 Email: <strong>{{ $email }}</strong>
                             </p>
                             <p style="margin: 24px 0;">
-                                <a href="{{ url('/') }}" style="display: inline-block; background-color: #0d6efd; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 4px; font-weight: bold;">
+                                <a href="{{ $confirmUrl }}" style="display: inline-block; background-color: #0d6efd; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 4px; font-weight: bold;">
                                     Confirm subscription
                                 </a>
                             </p>

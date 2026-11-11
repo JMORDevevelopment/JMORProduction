@@ -69,8 +69,105 @@ test('a confirmation email is sent to the subscriber', function () {
     Mail::assertSent(NewsletterConfirmation::class, function ($mail) {
         return $mail->hasTo('confirm-me@example.com')
             && $mail->firstName === 'Jane'
-            && $mail->envelope()->subject === 'Please confirm your JMOR newsletter subscription';
+            && $mail->envelope()->subject === 'Please confirm your JMOR newsletter subscription'
+            && preg_match('#/newsletter/confirm/[A-Za-z0-9]{40}$#', $mail->confirmUrl) === 1;
     });
+});
+
+test('the confirmation email links to a real confirm endpoint', function () {
+    Mail::fake();
+
+    $this->post(route('newsletter.subscribe'), [
+        'FNAME' => 'Jane',
+        'LNAME' => 'Doe',
+        'EMAIL' => 'link-check@example.com',
+        'NEWSLETTER_CONSENT' => 'I agree',
+    ]);
+
+    $confirmUrl = null;
+    Mail::assertSent(NewsletterConfirmation::class, function ($mail) use (&$confirmUrl) {
+        $confirmUrl = $mail->confirmUrl;
+
+        return true;
+    });
+
+    $this->get($confirmUrl)
+        ->assertSuccessful()
+        ->assertSee("You're confirmed!", false);
+});
+
+test('confirming a token marks the subscriber confirmed', function () {
+    Mail::fake();
+
+    $this->post(route('newsletter.subscribe'), [
+        'FNAME' => 'Jane',
+        'LNAME' => 'Doe',
+        'EMAIL' => 'confirm-flow@example.com',
+        'NEWSLETTER_CONSENT' => 'I agree',
+    ]);
+
+    $rows = json_decode(file_get_contents(storage_path('app/newsletter_subscribers.json')), true);
+    $row = collect($rows)->firstWhere('email', 'confirm-flow@example.com');
+    expect($row['status'])->toBe('pending')
+        ->and($row['token'])->not->toBeEmpty();
+
+    $this->get(route('newsletter.confirm', ['token' => $row['token']]))
+        ->assertSuccessful()
+        ->assertSee("You're confirmed!", false);
+
+    $rows = json_decode(file_get_contents(storage_path('app/newsletter_subscribers.json')), true);
+    $row = collect($rows)->firstWhere('email', 'confirm-flow@example.com');
+    expect($row['status'])->toBe('confirmed')
+        ->and($row['confirmed_at'])->not->toBeEmpty();
+});
+
+test('an invalid confirm token shows an error page', function () {
+    $this->get(route('newsletter.confirm', ['token' => str_repeat('a', 40)]))
+        ->assertSuccessful()
+        ->assertSee('Invalid confirmation link', false);
+});
+
+test('confirming twice is safe and reports already confirmed', function () {
+    Mail::fake();
+
+    $this->post(route('newsletter.subscribe'), [
+        'FNAME' => 'Jane',
+        'LNAME' => 'Doe',
+        'EMAIL' => 'double-confirm@example.com',
+        'NEWSLETTER_CONSENT' => 'I agree',
+    ]);
+
+    $rows = json_decode(file_get_contents(storage_path('app/newsletter_subscribers.json')), true);
+    $token = collect($rows)->firstWhere('email', 'double-confirm@example.com')['token'];
+
+    $this->get(route('newsletter.confirm', ['token' => $token]))
+        ->assertSee("You're confirmed!", false);
+
+    $this->get(route('newsletter.confirm', ['token' => $token]))
+        ->assertSuccessful()
+        ->assertSee('Already confirmed', false);
+});
+
+test('re-subscribing after confirm says already subscribed and does not resend pending flow', function () {
+    Mail::fake();
+
+    $payload = [
+        'FNAME' => 'Jane',
+        'LNAME' => 'Doe',
+        'EMAIL' => 'already@example.com',
+        'NEWSLETTER_CONSENT' => 'I agree',
+    ];
+
+    $this->post(route('newsletter.subscribe'), $payload);
+    $rows = json_decode(file_get_contents(storage_path('app/newsletter_subscribers.json')), true);
+    $token = collect($rows)->firstWhere('email', 'already@example.com')['token'];
+    $this->get(route('newsletter.confirm', ['token' => $token]));
+
+    Mail::fake();
+    $response = $this->from(route('contact'))->post(route('newsletter.subscribe'), $payload);
+    $response->assertRedirect(route('contact'));
+    $response->assertSessionHas('newsletter_success', 'You are already subscribed to the JMOR newsletter.');
+    Mail::assertNothingSent();
 });
 
 test('duplicate newsletter signups do not create a second subscriber', function () {

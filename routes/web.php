@@ -127,6 +127,10 @@ Route::post('/home/load_restaurants', [ContactController::class, 'loadWork'])
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])
     ->name('newsletter.subscribe');
 
+Route::get('/newsletter/confirm/{token}', [NewsletterController::class, 'confirm'])
+    ->name('newsletter.confirm')
+    ->where('token', '[A-Za-z0-9]+');
+
 // ==============================
 // CART ROUTES
 // ==============================

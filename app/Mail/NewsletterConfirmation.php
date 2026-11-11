@@ -16,6 +16,7 @@ class NewsletterConfirmation extends Mailable
         public string $firstName,
         public string $lastName,
         public string $email,
+        public string $confirmUrl,
     ) {}
 
     public function envelope(): Envelope
@@ -34,6 +35,7 @@ class NewsletterConfirmation extends Mailable
                 'firstName' => $this->firstName,
                 'lastName' => $this->lastName,
                 'email' => $this->email,
+                'confirmUrl' => $this->confirmUrl,
             ],
         );
     }
