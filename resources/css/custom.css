@@ -21,6 +21,8 @@
     --jm-success: #1a9d5c;
     --jm-font-heading: 'Archivo', system-ui, sans-serif;
     --jm-font-body: 'Source Sans 3', system-ui, sans-serif;
+    /* One vertical rhythm for every marketing section (issue 039). */
+    --jm-section-pad: 84px;
 }
 
 * {
@@ -372,18 +374,28 @@ input:focus {
     justify-content: center;
 }
 
+/* Wrap instead of clipping: long labels such as "Media Relations" used to be
+   cut off on mid-size desktops (issue 005). */
 .jm-header__navlist {
     display: flex;
-    gap: 2px;
+    gap: 2px 4px;
     margin: 0;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: none;
+    flex-wrap: wrap;
+    overflow: visible;
+    justify-content: center;
 }
 
 .jm-header__navlist::-webkit-scrollbar {
     display: none;
+}
+
+/* Mid-size desktops keep every nav label visible by tightening the spacing
+   before the horizontal scroll/clipping kicks in. */
+@media (max-width: 1199.98px) {
+    .jm-nav-link {
+        font-size: 14.5px;
+        padding: 9px 8px;
+    }
 }
 
 .jm-nav-link {
@@ -606,6 +618,11 @@ input:focus {
 
 .jm-header__search button:hover {
     background: var(--jm-blue-hover);
+}
+
+.jm-header__search button i {
+    line-height: 1;
+    display: block;
 }
 
 .jm-header__toggle {
@@ -847,7 +864,7 @@ input:focus {
 }
 
 .jm-services {
-    padding: 84px 0;
+    padding: var(--jm-section-pad) 0;
     background: var(--jm-white);
 }
 
@@ -908,7 +925,7 @@ input:focus {
 }
 
 .jm-featured {
-    padding: 80px 0;
+    padding: var(--jm-section-pad) 0;
     background: var(--jm-section-alt);
     border-top: 1px solid #e6edf5;
     border-bottom: 1px solid #e6edf5;
@@ -1003,7 +1020,7 @@ input:focus {
 }
 
 .jm-industries {
-    padding: 84px 0;
+    padding: var(--jm-section-pad) 0;
     background: var(--jm-white);
 }
 
@@ -1040,7 +1057,7 @@ input:focus {
 }
 
 .jm-plans {
-    padding: 86px 0;
+    padding: var(--jm-section-pad) 0;
     background: var(--jm-navy);
     color: var(--jm-white);
 }
@@ -1274,7 +1291,7 @@ input:focus {
 }
 
 .jm-about {
-    padding: 86px 0;
+    padding: var(--jm-section-pad) 0;
     background: var(--jm-white);
 }
 
@@ -1397,8 +1414,77 @@ input:focus {
     width: 100%;
 }
 
+/* ============================================
+   Homepage blog feed (issues 019 / 030)
+   ============================================ */
+.jm-blog-feed {
+    padding: var(--jm-section-pad) 0;
+    background: var(--jm-white);
+    border-top: 1px solid #e6edf5;
+}
+
+.jm-blog-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    background: var(--jm-white);
+    border: 1px solid var(--jm-border);
+}
+
+.jm-blog-card__img {
+    display: block;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--jm-section-alt);
+}
+
+.jm-blog-card__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.jm-blog-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    flex: 1 1 auto;
+    padding: 22px;
+}
+
+.jm-blog-card__meta {
+    font-family: var(--jm-font-heading);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--jm-text-light);
+}
+
+.jm-blog-card__body h3 {
+    margin: 0;
+    font-family: var(--jm-font-heading);
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.32;
+    color: var(--jm-navy);
+}
+
+.jm-blog-card__body p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--jm-text-muted);
+}
+
+.jm-blog-card__body .jm-link-arrow {
+    margin-top: auto;
+    padding-top: 0.6rem;
+}
+
 .jm-news {
-    padding: 80px 0;
+    padding: var(--jm-section-pad) 0;
     background: var(--jm-section-alt);
     border-top: 1px solid #e6edf5;
 }
@@ -1889,5 +1975,221 @@ input:focus {
     .jm-cta-banner__inner {
         flex-direction: column;
         text-align: center;
+    }
+}
+
+/* ============================================
+   Contact page acquisition pathways (044 / 048)
+   ============================================ */
+.contact-paths {
+    row-gap: 1.25rem;
+    margin-top: 0.5rem;
+}
+
+.contact-paths--secondary {
+    margin-top: 2.25rem;
+}
+
+.contact-path {
+    display: block;
+    height: 100%;
+    padding: 1.35rem 1rem;
+    border: 1px solid var(--jm-border);
+    border-radius: 14px;
+    background: var(--jm-white);
+    color: var(--jm-text);
+    transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+
+.contact-path:hover,
+.contact-path:focus {
+    transform: translateY(-2px);
+    border-color: var(--jm-blue);
+    box-shadow: 0 14px 30px -18px rgba(6, 32, 60, 0.5);
+    color: var(--jm-text);
+}
+
+.contact-path--primary {
+    border-top: 3px solid var(--jm-orange);
+}
+
+.contact-path h3 {
+    font-family: var(--jm-font-heading);
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.contact-path p {
+    color: var(--jm-blue);
+    font-weight: 600;
+}
+
+.contact-paths--secondary .contact-path {
+    padding: 1rem;
+    background: var(--jm-off-white);
+}
+
+.contact-paths--secondary .contactIcons .fa {
+    width: 64px;
+    height: 64px;
+    font-size: 22px;
+}
+
+/* ============================================
+   Sitewide formatting normalization (issue 039)
+   Shared heading rhythm, text wrapping and a
+   responsive section spacing scale so every
+   marketing section lines up the same way.
+   ============================================ */
+.jm-eyebrow {
+    line-height: 1.2;
+}
+
+.jm-hero h1,
+.jm-section-head h2,
+.jm-about h2,
+.jm-blog-feed h2,
+.jm-news h2,
+.jm-cta-banner h2 {
+    line-height: 1.15;
+    text-wrap: balance;
+}
+
+.jm-card h3,
+.jm-featured-card__body h3 {
+    line-height: 1.32;
+}
+
+.jm-hero__copy,
+.jm-section-head p,
+.jm-about__mission,
+.jm-about__blockquote {
+    text-wrap: pretty;
+}
+
+@media (max-width: 991.98px) {
+    :root {
+        --jm-section-pad: 64px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    :root {
+        --jm-section-pad: 52px;
+    }
+
+    .jm-section-head {
+        margin-bottom: 1.75rem;
+    }
+
+    .jm-section-head h2 {
+        font-size: 2rem;
+    }
+}
+
+/* ============================================
+   Homepage lead capture (issue 036)
+   ============================================ */
+.jm-lead {
+    padding: var(--jm-section-pad) 0;
+    background: var(--jm-section-alt);
+    border-top: 1px solid #e6edf5;
+}
+
+.jm-lead h2 {
+    margin: 0.2rem 0 0.9rem;
+    font-family: var(--jm-font-heading);
+    font-size: 2.25rem;
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--jm-navy);
+}
+
+.jm-lead__copy {
+    margin-bottom: 1.1rem;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--jm-text-muted);
+}
+
+.jm-lead__points {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0 0 1.4rem;
+    padding: 0;
+    list-style: none;
+}
+
+.jm-lead__points li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    font-size: 0.97rem;
+    color: var(--jm-text-secondary);
+}
+
+.jm-lead__points i {
+    margin-top: 0.3rem;
+    color: var(--jm-check);
+}
+
+.jm-lead__form {
+    padding: 26px;
+    background: var(--jm-white);
+    border: 1px solid var(--jm-border);
+    border-radius: 16px;
+    box-shadow: 0 10px 34px -24px rgba(6, 32, 60, 0.45);
+}
+
+.jm-lead__form label {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-family: var(--jm-font-heading);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--jm-text-secondary);
+}
+
+.jm-lead__form input,
+.jm-lead__form textarea {
+    width: 100%;
+    padding: 0.7rem 0.85rem;
+    font-family: var(--jm-font-body);
+    font-size: 0.97rem;
+    color: var(--jm-text);
+    background: var(--jm-white);
+    border: 1px solid var(--jm-border-dark);
+    border-radius: 10px;
+}
+
+.jm-lead__form input:focus,
+.jm-lead__form textarea:focus {
+    border-color: var(--jm-blue);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 83, 160, 0.15);
+}
+
+.jm-hero__call {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    font-family: var(--jm-font-heading);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--jm-white);
+}
+
+.jm-hero__call:hover {
+    color: var(--jm-orange);
+}
+
+@media (max-width: 767.98px) {
+    .jm-lead h2 {
+        font-size: 1.85rem;
+    }
+
+    .jm-lead__form {
+        padding: 18px;
     }
 }

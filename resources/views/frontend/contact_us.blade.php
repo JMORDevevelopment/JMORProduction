@@ -23,49 +23,79 @@
                 <div class="row justify-content-center align-items-center text-center pb-lg-5">
                     <div class="col-md-8"></div>
                 </div>
-                <div class="row" style="justify-content: center;">
-                    <div class="col-lg-2 mb-5 mb-lg-0 text-center">
-                        <div class="contactIcons text-primary mb-2">
-                            <i class="fa fa-life-ring" onclick="inquiryform()"></i>
-                        </div>
-                        <h3 class="h5">Web Inquiry</h3>
-                        <p class="mb-0" style="cursor:pointer;" onclick="inquiryform()">Inquire Now</p>
+                {{-- Primary customer-acquisition pathways come first and each one has
+                     its own destination; guest/show support sits in a quieter
+                     secondary row so it no longer competes (issues 044 / 048). --}}
+                <div class="row justify-content-center contact-paths">
+                    <div class="col-lg-3 col-md-6 mb-4 mb-lg-0 text-center">
+                        <a href="{{ route('request-information') }}" class="contact-path contact-path--primary"
+                            data-conversion="technology_assessment">
+                            <div class="contactIcons text-primary mb-2">
+                                <i class="fa fa-clipboard-check"></i>
+                            </div>
+                            <h3 class="h5">Technology Assessment</h3>
+                            <p class="mb-0">Start here &rarr;</p>
+                        </a>
                     </div>
-                    <div class="col-lg-2 mb-5 mb-lg-0 text-center">
-                        <div class="contactIcons text-primary mb-2">
-                            <i class="fa fa-microphone" onclick="inquiryformtwo()"></i>
-                        </div>
-                        <h3 class="h5">Talk Show Guest</h3>
-                        <p class="mb-0" style="cursor:pointer;" onclick="inquiryformtwo()">Apply Now</p>
+                    <div class="col-lg-3 col-md-6 mb-4 mb-lg-0 text-center">
+                        <a href="#inquiry-form" class="contact-path contact-path--primary"
+                            onclick="inquiryform()" data-conversion="web_inquiry">
+                            <div class="contactIcons text-primary mb-2">
+                                <i class="fa fa-life-ring"></i>
+                            </div>
+                            <h3 class="h5">Web Inquiry</h3>
+                            <p class="mb-0">Ask a question &rarr;</p>
+                        </a>
                     </div>
-                    <div class="col-lg-2 mb-5 mb-lg-0 text-center">
-                        <div class="contactIcons text-primary mb-2">
-                            <i class="fa fa-commenting" onclick="inquiryform()" style="cursor:pointer;"></i>
-                        </div>
-                        <h3 class="h5">Live Support</h3>
-                        <p class="mb-0" style="cursor:pointer;" onclick="inquiryform()">Chat Now</p>
+                    <div class="col-lg-3 col-md-6 mb-4 mb-lg-0 text-center">
+                        <a href="tel:{{ preg_replace('/[^0-9+]/', '', $phone_number) }}" class="contact-path contact-path--primary"
+                            data-conversion="phone_call">
+                            <div class="contactIcons text-primary mb-2">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            <h3 class="h5">Phone Number</h3>
+                            <p class="mb-0">{{ $phone_number ?: 'Call us' }}</p>
+                        </a>
                     </div>
-                    <div class="col-lg-2 mb-5 mb-lg-0 text-center">
+                    <div class="contact-path contact-path--primary mb-4 mb-lg-0 text-center">
                         <div class="contactIcons text-primary mb-2">
-                            <i class="fa fa-location-arrow" id="viewadress" style="cursor:pointer;"></i>
+                            <i class="fa fa-location-arrow"></i>
                         </div>
                         <h3 class="h5">Address</h3>
-                        <p class="mb-0"><a id="viewadres" style="cursor:pointer;">View Address</a></p>
-                        <p class="mb-0 viewadres" style="display:none;">{!! nl2br(e(str_replace(['<br>', '<br/>', '<br />'], "\n", $address))) !!}</p>
+                        <p class="mb-2 contact-path__address">{!! nl2br(e(str_replace(['<br>', '<br/>', '<br />'], "\n", $address))) !!}</p>
+                        <a href="https://maps.google.com/?q={{ urlencode(strip_tags($address)) }}"
+                            target="_blank" rel="noopener" data-conversion="directions">
+                            Get directions &rarr;
+                        </a>
                     </div>
-                    <div class="col-lg-2 mb-5 mb-lg-0 text-center">
-                        <div class="contactIcons text-primary mb-2">
-                            <i class="fa fa-phone" id="viewnmbrr" style="cursor:pointer;"></i>
-                        </div>
-                        <h3 class="h5">Phone Number</h3>
-                        <a id="viewnmbr" style="cursor:pointer;">View Number</a>
-                        <p class="mb-0 viewnmbr" style="display:none;">{{ $phone_number }}</p>
+                </div>
+
+                <div class="row justify-content-center contact-paths contact-paths--secondary">
+                    <div class="col-lg-3 col-md-6 mb-3 mb-md-0 text-center">
+                        <a href="#inquiry-form" class="contact-path" onclick="inquiryformtwo()"
+                            data-conversion="talk_show_guest">
+                            <div class="contactIcons text-primary mb-2">
+                                <i class="fa fa-microphone"></i>
+                            </div>
+                            <h3 class="h5">Talk Show Guest</h3>
+                            <p class="mb-0">Apply to appear &rarr;</p>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-6 text-center">
+                        <a href="https://www.instagram.com/gosocialjmor/" target="_blank" rel="noopener"
+                            class="contact-path" data-conversion="live_support">
+                            <div class="contactIcons text-primary mb-2">
+                                <i class="fa fa-commenting"></i>
+                            </div>
+                            <h3 class="h5">Live Support</h3>
+                            <p class="mb-0">Message us &rarr;</p>
+                        </a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="wt-section inquirysection">
+        <section class="wt-section inquirysection" id="inquiry-form">
             <div class="container">
                 <div class="row justify-content-center align-items-center text-center mb-lg-4 mb-4">
                     <div class="col-md-6 mb-lg-5 mb-4">
@@ -80,12 +110,14 @@
                     </div>
                     <div class="col-lg-7">
                         @if(isset($success))
-                            <div class="alert alert-success alert-dismissible">
+                            <div class="alert alert-success alert-dismissible" role="alert" id="contact-success">
+                                <strong>Thank you &mdash; your message was sent.</strong><br>
                                 {{ $success }}
                             </div>
                         @endif
 
-                        <form id="form_one" class="inquiry" action="{{ route('contact.submit') }}" method="post">
+                        <form id="form_one" class="inquiry" action="{{ route('contact.submit') }}" method="post"
+                              data-conversion-form="web_inquiry">
                             @csrf
 
                             <div class="control-group">
@@ -348,34 +380,6 @@
         document.getElementById('form_two').scrollIntoView({behavior: 'smooth'});
     }
 
-    function reveal(selector, hideId) {
-        document.querySelectorAll(selector).forEach(function (el) {
-            el.style.display = 'block';
-        });
-        var link = document.getElementById(hideId);
-        if (link) {
-            link.style.display = 'none';
-        }
-    }
-
-    ['viewadres', 'viewadress'].forEach(function (id) {
-        var el = document.getElementById(id);
-        if (el) {
-            el.addEventListener('click', function () {
-                reveal('.viewadres', 'viewadres');
-            });
-        }
-    });
-
-    ['viewnmbr', 'viewnmbrr'].forEach(function (id) {
-        var el = document.getElementById(id);
-        if (el) {
-            el.addEventListener('click', function () {
-                reveal('.viewnmbr', 'viewnmbr');
-            });
-        }
-    });
-
     $('#onephone').change(function () {
         if (this.checked) {
             $('.ph').toggle();
@@ -496,6 +500,29 @@
     @if($open_interview)
         inquiryformtwo();
     @endif
+
+    // Lightweight conversion tracking. It only records to a dataLayer/gtag when
+    // one of those is already present, so it adds no new dependency (048).
+    (function () {
+        function track(eventName, params) {
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push(Object.assign({event: eventName}, params || {}));
+
+            if (typeof window.gtag === 'function') {
+                window.gtag('event', eventName, params || {});
+            }
+        }
+
+        document.querySelectorAll('[data-conversion]').forEach(function (link) {
+            link.addEventListener('click', function () {
+                track('contact_cta_click', {cta: link.dataset.conversion});
+            });
+        });
+
+        @if(isset($success))
+            track('contact_form_submitted', {form: 'web_inquiry'});
+        @endif
+    })();
 </script>
 @endpush
 

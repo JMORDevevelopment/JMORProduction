@@ -205,6 +205,16 @@ Route::get('/jmor-shows', [RadioShowController::class, 'posts'])->name('jmor-sho
 Route::get('/jmor-shows/{link}', [RadioShowController::class, 'detail'])->name('jmor-shows.detail');
 Route::get('/category-jmor-shows/{category}', [RadioShowController::class, 'category'])->name('category-jmor-shows');
 Route::get('/category-jmor-shows/{category}/{year}', [RadioShowController::class, 'category'])->name('category-jmor-shows.year');
+
+// Guest appearances are their own feed, separate from the main blog (020).
+Route::get('/shows-i-appeared-as-a-guest-on', [RadioShowController::class, 'guestAppearances'])
+    ->name('guest-appearances');
+
+// The old "JMOR Tech Talk Cast" page duplicated "JMOR Tech Talk Show" and split
+// its search authority, so both legacy URLs permanently redirect to the show
+// category feed (023).
+Route::redirect('/jmor-tech-talk-cast', '/category-jmor-shows/jmor-tech-talk-show', 301);
+Route::redirect('/jmor-tech-talk-show', '/category-jmor-shows/jmor-tech-talk-show', 301);
 Route::post('/home/get_categories_list', [RadioShowController::class, 'categoriesList'])
     ->name('radio.categories-list');
 Route::get('/search-shows', [SearchController::class, 'radio'])->name('search-shows');
@@ -260,7 +270,8 @@ Route::get('/recommended', [RecommendedController::class, 'posts'])->name('recom
 Route::get('/recommended/{link}', [RecommendedController::class, 'detail'])->name('recommended.detail');
 Route::get('/random-acts-of-kindness', [RandomActsOfKindnessController::class, 'posts'])->name('random-acts-of-kindness');
 Route::get('/random-acts-of-kindness/{link}', [RandomActsOfKindnessController::class, 'detail'])->name('random-acts-of-kindness.detail');
-Route::get('/jmor-tech-talk-show', fn () => view('frontend.coming-soon'))->name('jmor-tech-talk-show');
+// "JMOR Tech Talk Cast" is gone: the show lives on the canonical category feed
+// and this legacy URL keeps its inbound links working (023).
 Route::get('/media-resources', [MediaResourceController::class, 'posts'])->name('media-resources');
 Route::get('/media-resources/{link}', [MediaResourceController::class, 'detail'])->name('media-resources.detail');
 Route::get('/media-video', [MediaVideoController::class, 'posts'])->name('media-video');

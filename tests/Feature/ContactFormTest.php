@@ -100,21 +100,30 @@ test('request information form creates a record with the session captcha answer'
 test('contact page wires the talk show tile to the interview application form', function () {
     $this->get(route('contact'))
         ->assertSuccessful()
-        ->assertSee('<p class="mb-0" style="cursor:pointer;" onclick="inquiryformtwo()">Apply Now</p>', false);
+        ->assertSee('onclick="inquiryformtwo()"', false)
+        ->assertSee('Talk Show Guest', false);
 });
 
-test('contact page wires the inquiry and chat tiles to the inquiry form', function () {
+test('contact page gives every acquisition pathway its own destination', function () {
     $this->get(route('contact'))
         ->assertSuccessful()
-        ->assertSee('<p class="mb-0" style="cursor:pointer;" onclick="inquiryform()">Chat Now</p>', false)
-        ->assertSee('<p class="mb-0" style="cursor:pointer;" onclick="inquiryform()">Inquire Now</p>', false);
+        // Technology assessment has its own page instead of reusing the form.
+        ->assertSee('href="'.route('request-information').'"', false)
+        // Web inquiry opens the inquiry form.
+        ->assertSee('onclick="inquiryform()"', false)
+        // Live support no longer competes by reusing the inquiry form.
+        ->assertSee('data-conversion="live_support"', false);
 });
 
-test('contact page wires the address and phone tiles to the reveal handlers', function () {
+test('contact page shows the address and phone instead of hiding them behind toggles', function () {
+    DB::table('settings')->insert([
+        ['option' => 'phone', 'value' => '(877) 767-5667'],
+    ]);
+
     $this->get(route('contact'))
         ->assertSuccessful()
-        ->assertSee("reveal('.viewadres', 'viewadres')", false)
-        ->assertSee("reveal('.viewnmbr', 'viewnmbr')", false);
+        ->assertSee('href="tel:8777675667"', false)
+        ->assertSee('Get directions', false);
 });
 
 test('contact page renders the address line break instead of raw markup', function () {
