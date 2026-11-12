@@ -15,6 +15,12 @@ class TalkShowInterviewRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge($this->trimRecursive($this->all()));
+
+        if (is_string($this->input('phone'))) {
+            $this->merge([
+                'phone' => preg_replace('/\s+/', ' ', $this->input('phone')),
+            ]);
+        }
     }
 
     private function trimRecursive($value)
@@ -32,16 +38,20 @@ class TalkShowInterviewRequest extends FormRequest
             'name' => ['required', 'string', 'max:80'],
             'last_name' => ['required', 'string', 'max:80'],
             'company_name' => ['nullable', 'string', 'max:100'],
-            'phone' => ['required', 'string', 'regex:/^[0-9\s\-\+\(\)]+$/', 'max:20'],
+            'phone' => ['required', 'string', 'regex:/^[0-9\s\-\+\(\)]+(?:\s*(?:x|ext\.?|#)\s*\d{1,6})?$/i', 'max:30'],
             'email' => ['required', 'email', 'max:50'],
             'bio' => ['required', 'string', 'max:999'],
             'work_name' => ['required', 'array', 'min:1'],
-            'work_name.*' => ['string', 'max:500'],
+            // nullable: empty strings are converted to null by middleware, and
+            // description / web link are optional on an entry.
+            'work_name.*' => ['nullable', 'string', 'max:500'],
             'work_detail' => ['required', 'array', 'min:1'],
-            'work_detail.*' => ['string', 'max:5000'],
+            'work_detail.*' => ['nullable', 'string', 'max:5000'],
             'weblink' => ['required', 'array', 'min:1'],
-            'weblink.*' => ['string', 'max:500'],
+            'weblink.*' => ['nullable', 'string', 'max:500'],
             'interview' => ['required', 'string', 'max:10000'],
+            'signature' => ['required', 'string', 'max:100'],
+            'agreement_accepted' => ['required', 'accepted'],
             'protection_question' => [
                 'required',
                 'integer',
@@ -73,8 +83,8 @@ class TalkShowInterviewRequest extends FormRequest
             'last_name.max' => 'Last name cannot exceed 80 characters.',
             'company_name.max' => 'Company name cannot exceed 100 characters.',
             'phone.required' => 'Phone number is required.',
-            'phone.regex' => 'Please enter a valid phone number (digits, spaces, +, -, parentheses).',
-            'phone.max' => 'Phone number cannot exceed 20 characters.',
+            'phone.regex' => 'Please enter a valid phone number (digits, spaces, +, -, parentheses), optionally followed by an extension such as x108.',
+            'phone.max' => 'Phone number cannot exceed 30 characters.',
             'email.required' => 'Email address is required.',
             'email.email' => 'Please enter a valid email address.',
             'email.max' => 'Email cannot exceed 50 characters.',
@@ -91,6 +101,10 @@ class TalkShowInterviewRequest extends FormRequest
             'weblink.*.max' => 'Web link cannot exceed 500 characters.',
             'interview.required' => 'Please enter your interview pitch concept.',
             'interview.max' => 'Interview pitch cannot exceed 10000 characters.',
+            'signature.required' => 'Please type your full name as your electronic signature.',
+            'signature.max' => 'Signature cannot exceed 100 characters.',
+            'agreement_accepted.required' => 'You must accept the guest agreement before submitting.',
+            'agreement_accepted.accepted' => 'You must accept the guest agreement before submitting.',
             'protection_question.required' => 'Please answer the protection question.',
             'protection_question.integer' => 'Your answer must be a number.',
         ];

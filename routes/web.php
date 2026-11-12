@@ -23,6 +23,7 @@ use App\Http\Controllers\MediaInquiryController;
 use App\Http\Controllers\MediaResourceController;
 use App\Http\Controllers\MediaVideoController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PaymentController;
@@ -102,6 +103,8 @@ Route::middleware('auth:admin')->prefix('admin')->group(function () {
         ->name('admin.order_invoice');
     Route::get('/giftcard_invoice/{order_id}', [AdminInvoiceController::class, 'giftcardInvoice'])
         ->name('admin.giftcard_invoice');
+    Route::get('/talk_show/{talkShow}/signed-pdf', [ContactController::class, 'downloadSignedPdf'])
+        ->name('admin.talk_show.signed_pdf');
 });
 
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
@@ -118,6 +121,15 @@ Route::post('/home/interview_submit', [ContactController::class, 'interviewSubmi
     ->middleware('throttle:5,1');
 Route::post('/home/load_restaurants', [ContactController::class, 'loadWork'])
     ->name('contact.load_restaurants');
+
+// Newsletter: local handler by default; production can point the form at
+// Mailchimp with NEWSLETTER_FORM_ACTION instead.
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])
+    ->name('newsletter.subscribe');
+
+Route::get('/newsletter/confirm/{token}', [NewsletterController::class, 'confirm'])
+    ->name('newsletter.confirm')
+    ->where('token', '[A-Za-z0-9]+');
 
 // ==============================
 // CART ROUTES

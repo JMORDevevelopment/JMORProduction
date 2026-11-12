@@ -46,13 +46,27 @@
             $('#qasubmitBtn').hide();
         };
     }
-    if ($('#captchab').length) {
-        var captchab = sliderCaptcha({
+    // Talk-show captcha lives inside a hidden multi-step form; init it
+    // only once its container is visible so the slider has real dimensions.
+    window.jmorInitTalkShowCaptcha = function() {
+        if (window.__jmorTsCaptchaReady || !document.getElementById('captchab')) {
+            return;
+        }
+        if (typeof sliderCaptcha === 'undefined') {
+            return;
+        }
+        var $box = $('#captchab');
+        if (!$box.is(':visible') || $box.width() === 0) {
+            return;
+        }
+        window.__jmorTsCaptchaReady = true;
+        window.captchab = sliderCaptcha({
             id: 'captchab',
             crossOrigin: true,
             headers: { 'Access-Control-Allow-Origin': 'https://imgs.blazor.zone' },
             onSuccess: function() {
-                $('#qasubmitBtnb').show();
+                $('#qasubmitBtnb').prop('disabled', false);
+                $('#ts_submit_hint').hide();
                 if ($('#random_number1b').length) {
                     var num_one = $('#random_number1b').val();
                     var num_two = $('#random_number2b').val();
@@ -64,16 +78,25 @@
                 }, 300000);
             },
             onFail: function() {
-                $('#qasubmitBtnb').hide();
+                $('#qasubmitBtnb').prop('disabled', true);
+                $('#ts_submit_hint').show();
             },
             onRefresh: function() {
-                $('#qasubmitBtnb').hide();
+                $('#qasubmitBtnb').prop('disabled', true);
+                $('#ts_submit_hint').show();
             }
         });
         var resetCaptchaB = function() {
-            captchab.reset();
-            $('#qasubmitBtnb').hide();
+            window.captchab.reset();
+            $('#qasubmitBtnb').prop('disabled', true);
+            $('#ts_submit_hint').show();
         };
+    };
+    if ($('#captchab').length) {
+        if ($('#captchab').is(':visible') && $('#captchab').width() > 0) {
+            window.jmorInitTalkShowCaptcha();
+        }
     }
 </script>
+
 @endpush

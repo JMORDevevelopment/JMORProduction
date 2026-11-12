@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ContactRequest;
 use App\Http\Requests\TalkShowInterviewRequest;
+use App\Mail\TalkShowApplicationReceived;
 use App\Models\ContactUs;
 use App\Models\Setting;
 use App\Models\TalkShow;
+use App\Models\TalkShowAudit;
+use App\Models\TalkShowSetting;
+use App\Services\TalkShowPdfService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class ContactController extends Controller
 {
@@ -24,6 +29,10 @@ class ContactController extends Controller
         // fields are ignored during validation (M12).
         session(['captcha_numbers' => [$randomNumber1, $randomNumber2]]);
 
+        $errors = session('errors')
+            ? collect(session('errors')->getBag('default')->getMessages())->map(fn ($msgs) => $msgs[0])->toArray()
+            : [];
+
         return view('frontend.contact_us', [
             'title' => 'Contact Us',
             'description' => '',
@@ -37,19 +46,49 @@ class ContactController extends Controller
             'phone' => old('phone', ''),
             'reason' => old('reason', ''),
             'message' => old('message', ''),
+            'assessment_scope' => old('assessment_scope', ''),
+            'business_name' => old('business_name', ''),
+            'business_type' => old('business_type', ''),
+            'agreementUrl' => filled($agreementPath = TalkShowSetting::query()->first()?->agreement_path)
+                ? Storage::disk('public')->url($agreementPath)
+                : null,
             'address' => Setting::get('address', ''),
             'phone_number' => Setting::get('phone', ''),
             'success' => session('contact_success'),
-            'error' => session('errors') ? collect(session('errors')->getBag('default')->getMessages())->map(fn ($msgs) => $msgs[0])->toArray() : [],
+            'error' => $errors,
             // Re-open the talk show interview form when it was the form that
             // failed validation (the original relied on query-string alerts).
-            'open_interview' => old('last_name') !== null || old('bio') !== null || old('interview') !== null,
+            'open_interview' => $this->shouldOpenInterview(),
         ]);
+    }
+
+    /**
+     * The talk-show wizard posts to a different endpoint than the contact
+     * form. Open it whenever that form's input is present in the old input
+     * (keys survive empty-string → null conversion).
+     */
+    private function shouldOpenInterview(): bool
+    {
+        $old = old();
+
+        return array_key_exists('last_name', $old)
+            || array_key_exists('bio', $old)
+            || array_key_exists('interview', $old)
+            || array_key_exists('signature', $old)
+            || array_key_exists('agreement_accepted', $old)
+            || array_key_exists('counter', $old);
     }
 
     public function submit(ContactRequest $request)
     {
         $post = $request->validated();
+
+        $resumePath = null;
+        if ($request->hasFile('resume')) {
+            // Stored on the private local disk so resumes are never
+            // publicly URL-addressable (issue 055).
+            $resumePath = $request->file('resume')->store('resumes', 'local');
+        }
 
         ContactUs::create([
             'name' => htmlspecialchars($post['name']),
@@ -57,6 +96,10 @@ class ContactController extends Controller
             'phone' => htmlspecialchars($post['phone']),
             'reason' => $post['reason'],
             'message' => $post['message'],
+            'assessment_scope' => $post['assessment_scope'] ?? null,
+            'business_name' => isset($post['business_name']) ? htmlspecialchars($post['business_name']) : null,
+            'business_type' => isset($post['business_type']) ? htmlspecialchars($post['business_type']) : null,
+            'resume_path' => $resumePath,
             'ip' => $request->ip(),
             'date_time' => date('m/d/y h:i:s a'),
         ]);
@@ -70,24 +113,68 @@ class ContactController extends Controller
     {
         $post = $request->validated();
 
-        TalkShow::create([
+        $application = TalkShow::create([
             'name' => htmlspecialchars($post['name'], ENT_QUOTES, 'UTF-8'),
             'last_name' => htmlspecialchars($post['last_name'], ENT_QUOTES, 'UTF-8'),
             'company_name' => htmlspecialchars($post['company_name'] ?? '', ENT_QUOTES, 'UTF-8'),
             'phone' => htmlspecialchars($post['phone'], ENT_QUOTES, 'UTF-8'),
             'email' => htmlspecialchars($post['email'], ENT_QUOTES, 'UTF-8'),
             'bio' => htmlspecialchars($post['bio'], ENT_QUOTES, 'UTF-8'),
-            'work_name' => implode(',', $post['work_name']),
-            'work_detail' => implode(',', $post['work_detail']),
-            'weblink' => implode(',', $post['weblink']),
+            'work_name' => implode(',', array_map(fn ($v) => (string) $v, $post['work_name'])),
+            'work_detail' => implode(',', array_map(fn ($v) => (string) $v, $post['work_detail'])),
+            'weblink' => implode(',', array_map(fn ($v) => (string) $v, $post['weblink'])),
             'interview' => htmlspecialchars($post['interview'], ENT_QUOTES, 'UTF-8'),
+            'signature' => htmlspecialchars($post['signature'], ENT_QUOTES, 'UTF-8'),
             'ip' => $request->ip(),
             'date_time' => date('m/d/y h:i:s a'),
+            'status' => TalkShow::STATUS_SUBMITTED,
+        ]);
+
+        // Signed PDF lives on the private local disk (issue 054).
+        try {
+            $application->signed_pdf_path = app(TalkShowPdfService::class)->store($application);
+            $application->save();
+        } catch (\Exception $e) {
+            Log::error('Failed to generate signed talk show PDF: '.$e->getMessage());
+        }
+
+        TalkShowAudit::create([
+            'talk_show_id' => $application->id,
+            'action' => 'submitted',
+            'old_status' => null,
+            'new_status' => TalkShow::STATUS_SUBMITTED,
+            'ip' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'details' => 'Application submitted with electronic signature and agreement acceptance.',
+            'created_at' => now(),
         ]);
 
         $this->sendInterviewNotification($post);
 
-        return redirect()->route('contact')->with('contact_success', 'Message is sent we will contact you soon.');
+        try {
+            Mail::to($post['email'])->send(new TalkShowApplicationReceived($application));
+        } catch (\Exception $e) {
+            Log::error('Failed to send talk show confirmation email: '.$e->getMessage());
+        }
+
+        return redirect()->route('contact')->with('contact_success', 'Your application has been received. We will contact you soon.');
+    }
+
+    /**
+     * Admin-only download of the signed application PDF (issue 054).
+     */
+    public function downloadSignedPdf(TalkShow $talkShow)
+    {
+        $application = $talkShow;
+
+        if (blank($application->signed_pdf_path) || ! Storage::disk('local')->exists($application->signed_pdf_path)) {
+            abort(404);
+        }
+
+        return Storage::disk('local')->download(
+            $application->signed_pdf_path,
+            'talk-show-application-'.$application->id.'-signed.pdf'
+        );
     }
 
     public function loadWork(Request $request)
@@ -134,7 +221,10 @@ class ContactController extends Controller
                 'email' => $post['email'],
                 'phone' => $post['phone'],
                 'reason' => $post['reason'],
-                'message' => $post['message'],
+                // Laravel's Mailer overwrites the "message" key with its own
+                // Illuminate\Mail\Message instance before rendering, so the
+                // body must use a different key (the view expects inquiryBody).
+                'inquiryBody' => $post['message'],
             ], function ($mail) use ($to, $post) {
                 $mail->to($to)
                     ->subject('Contact Us')
