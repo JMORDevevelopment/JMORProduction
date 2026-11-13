@@ -6,7 +6,7 @@
         <div class="container">
             <div class="row align-items-center" style="row-gap:44px">
                 <div class="col-lg-6">
-                    <div class="jm-hero__badge">Since 1997 &middot; New Jersey</div>
+                    <div class="jm-hero__badge">{{ now()->year - 1993 }}+ years &middot; New Jersey</div>
                     <h1>Engineering technology to grow your business.</h1>
                     <p class="jm-hero__copy">The JMOR Connection keeps your systems up, secure and current — computer, network and IT support delivered right the first time.</p>
 
@@ -25,7 +25,7 @@
                     @endif
 
                     <div class="jm-hero__stats">
-                        <div><strong>1997</strong><span>Serving New Jersey since</span></div>
+                        <div><strong>{{ now()->year - 1993 }}+</strong><span>Years in business</span></div>
                         <div><strong>24/7</strong><span>Remote support</span></div>
                         <div><strong>On-site</strong><span>NJ technicians, quarterly</span></div>
                     </div>
@@ -312,7 +312,7 @@
                     <h2>Mission Statement</h2>
                     <p class="jm-about__mission">The JMOR Connection, Inc. is dedicated to providing solutions and services that keep your business up and running smoothly. We will provide your business with the latest and most efficient technology available. We will fix your problem right the first time.</p>
                     <div class="jm-about__blockquote-wrapper">
-                        <p class="jm-about__blockquote">With nearly three decades of experience, we care more about helping our clients solve their issues than about whether we are making money. We believe in security, trust, integrity, and professionalism. We understand the challenges of running a day-to-day service business, and we are not afraid to be different or to think outside the box.</p>
+                        <p class="jm-about__blockquote">Having over {{ now()->year - 1993 }} years of experience, we care more about helping our clients solve their issues over whether or not we are making money. We believe in security, trust, integrity, and professionalism. We understand the challenges of running a day-to-day service business, and we are not afraid to be different or to think outside the box.</p>
                         <p class="jm-about__blockquote">Our clients and our community come first and we want to let them know that we are here today, tomorrow and for your growing needs of the future. We ask all of our clients the same question: are you willing to sacrifice quality and service for price?</p>
                     </div>
                     <div class="jm-about__actions">
@@ -357,7 +357,7 @@
                     <ul class="jm-lead__points">
                         <li><i class="fa fa-check" aria-hidden="true"></i> Response from a real technician, not a call centre</li>
                         <li><i class="fa fa-check" aria-hidden="true"></i> No obligation, no long-term contract</li>
-                        <li><i class="fa fa-check" aria-hidden="true"></i> Serving New Jersey homes and businesses since 1997</li>
+                        <li><i class="fa fa-check" aria-hidden="true"></i> Serving New Jersey homes and businesses since 1993</li>
                     </ul>
                     @if (!empty($phone))
                         <a href="tel:{{ preg_replace('/[^0-9+]/', '', $phone) }}" class="jm-btn jm-btn--outline-blue"

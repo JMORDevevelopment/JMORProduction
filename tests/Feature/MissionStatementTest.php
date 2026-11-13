@@ -35,38 +35,46 @@ function runMissionMigration(): void
     $migration->up();
 }
 
-test('the mission page uses current tenure language and edited copy', function () {
+test('the mission page uses the approved 1993 founding and current tenure', function () {
+    $years = now()->year - 1993;
+
     setMissionCopy(LEGACY_MISSION_COPY);
     runMissionMigration();
 
     $this->get('/our-mission')
         ->assertSuccessful()
-        ->assertSee('nearly three decades of experience')
-        ->assertSee('since 1997')
+        ->assertSee("Having over {$years} years of experience")
+        ->assertSee('since 1993')
         ->assertSee('than about whether we are making money')
         ->assertSee('stop the insanity of doing the same thing')
         ->assertDontSee('over 28 years')
-        ->assertDontSee('28+ years');
+        ->assertDontSee('since 1997');
 });
 
 test('the homepage no longer shows dated tenure references', function () {
+    $years = now()->year - 1993;
+
     $this->get(route('home'))
         ->assertSuccessful()
-        ->assertSee('Since 1997')
-        ->assertSee('Serving New Jersey homes and businesses since 1997')
+        ->assertSee("{$years}+ years")
+        ->assertSee('Serving New Jersey homes and businesses since 1993')
+        ->assertDontSee('Since 1997')
         ->assertDontSee('28+ years')
         ->assertDontSee('over 28 years')
         ->assertDontSee('30+ years');
 });
 
 test('the mission migration also refreshes the earlier "33 years" rewrite', function () {
+    $years = now()->year - 1993;
+
     setMissionCopy('<p>Having over 33 years of experience, we care more about helping our clients solve their issues over whether or not we are making money.</p>');
 
     runMissionMigration();
 
     expect(Page::where('link', 'our-mission')->value('description'))
-        ->toContain('nearly three decades of experience')
-        ->not->toContain('33 years');
+        ->toContain("Having over {$years} years of experience")
+        ->toContain('since 1993')
+        ->not->toContain('over 28 years');
 });
 
 test('the mission migration preserves copy an editor has already rewritten', function () {
@@ -86,7 +94,8 @@ test('the mission migration restores a missing mission page', function () {
     $page = Page::where('link', 'our-mission')->first();
 
     expect($page)->not->toBeNull()
-        ->and($page->description)->toContain('nearly three decades of experience');
+        ->and($page->description)->toContain('Having over '.(now()->year - 1993).' years of experience')
+        ->and($page->description)->toContain('since 1993');
 });
 
 test('the mission migration is idempotent', function () {
@@ -97,5 +106,5 @@ test('the mission migration is idempotent', function () {
 
     expect(Page::where('link', 'our-mission')->count())->toBe(1)
         ->and(Page::where('link', 'our-mission')->value('description'))
-        ->toContain('nearly three decades of experience');
+        ->toContain('Having over '.(now()->year - 1993).' years of experience');
 });
