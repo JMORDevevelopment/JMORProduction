@@ -59,6 +59,16 @@ test('the homepage no longer shows dated tenure references', function () {
         ->assertDontSee('30+ years');
 });
 
+test('the mission migration also refreshes the earlier "33 years" rewrite', function () {
+    setMissionCopy('<p>Having over 33 years of experience, we care more about helping our clients solve their issues over whether or not we are making money.</p>');
+
+    runMissionMigration();
+
+    expect(Page::where('link', 'our-mission')->value('description'))
+        ->toContain('nearly three decades of experience')
+        ->not->toContain('33 years');
+});
+
 test('the mission migration preserves copy an editor has already rewritten', function () {
     setMissionCopy('<p>Our own refreshed mission copy.</p>');
 

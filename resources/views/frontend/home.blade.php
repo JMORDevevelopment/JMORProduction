@@ -328,9 +328,13 @@
                                 <div class="jm-about__side-card-title">Case studies</div>
                                 <div class="jm-about__side-card-desc">Real NJ businesses, real fixes</div>
                             </a>
+                            <a href="{{ route('our-mission') }}" class="jm-about__side-card">
+                                <div class="jm-about__side-card-title">Our Mission</div>
+                                <div class="jm-about__side-card-desc">How we work, and why</div>
+                            </a>
                             <a href="{{ route('our-dei-diversiety-equity-inclusion-non-discrimination-policy') }}"
                                 class="jm-about__side-card">
-                                <div class="jm-about__side-card-title">Our DEI policy</div>
+                                <div class="jm-about__side-card-title">DEI Policy</div>
                                 <div class="jm-about__side-card-desc">Diversity, equity &amp; inclusion</div>
                             </a>
                         </div>

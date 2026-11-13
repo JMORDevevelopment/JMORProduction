@@ -14,7 +14,12 @@ return new class extends Migration
 {
     private const LINK = 'our-mission';
 
-    private const LEGACY_MARKER = 'over 28 years';
+    /**
+     * The earlier branding batch rewrote the same sentence to "over 33
+     * years"; whichever migration runs second must still refresh the copy
+     * rather than silently skipping it.
+     */
+    private const LEGACY_MARKERS = ['over 28 years', 'over 33 years'];
 
     public function up(): void
     {
@@ -39,7 +44,12 @@ return new class extends Migration
             return;
         }
 
-        if (! str_contains((string) $page->description, self::LEGACY_MARKER)) {
+        $description = (string) $page->description;
+
+        $isLegacyCopy = collect(self::LEGACY_MARKERS)
+            ->contains(fn (string $marker): bool => str_contains($description, $marker));
+
+        if (! $isLegacyCopy) {
             return;
         }
 
