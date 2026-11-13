@@ -50,8 +50,15 @@
                     <div class="contact-path contact-path--primary contact-path--static">
                         <span class="contact-path__icon"><i class="fa fa-location-arrow"></i></span>
                         <h3 class="h5">Address</h3>
+                        @php
+                            $addressLine = trim(preg_replace(
+                                '/\s+/',
+                                ' ',
+                                strip_tags(str_replace(['<br>', '<br/>', '<br />'], ', ', $address))
+                            ));
+                        @endphp
                         <p class="contact-path__text">{!! nl2br(e(str_replace(['<br>', '<br/>', '<br />'], "\n", $address))) !!}</p>
-                        <a class="contact-path__cta" href="https://maps.google.com/?q={{ urlencode(strip_tags($address)) }}"
+                        <a class="contact-path__cta" href="https://maps.google.com/?q={{ urlencode($addressLine) }}"
                             target="_blank" rel="noopener" data-conversion="directions">
                             Get directions &rarr;
                         </a>
@@ -86,7 +93,10 @@
                 <div class="row justify-content-center align-items-stretch contact-layout">
                     <div id="map_box" class="col-lg-5">
                         <div class="contact-map">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3010.113136935536!2d-74.20879448429831!3d41.022780679299395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2e287fb5beb13%3A0x5056f097f8d06e27!2s799%20Franklin%20Ave%20%233%2C%20Franklin%20Lakes%2C%20NJ%2007417%2C%20USA!5e0!3m2!1sen!2s!4v1588958264865!5m2!1sen!2s" title="Office location map" loading="lazy" allowfullscreen=""></iframe>
+                            <iframe
+                                src="https://www.google.com/maps?q={{ urlencode('799 Franklin Avenue, Suite 3, Franklin Lakes, NJ 07417') }}&output=embed"
+                                title="Map of 799 Franklin Avenue, Suite 3, Franklin Lakes, NJ 07417"
+                                loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen=""></iframe>
                         </div>
                     </div>
                     <div class="col-lg-7">

@@ -128,13 +128,53 @@ test('contact page shows the address and phone instead of hiding them behind tog
 
 test('contact page renders the address line break instead of raw markup', function () {
     DB::table('settings')->insert([
-        ['option' => 'address', 'value' => '799 Franklin Ave Unit 3<br>Franklin Lakes NJ 07417'],
+        ['option' => 'address', 'value' => '799 Franklin Avenue, Suite 3<br>Franklin Lakes, NJ 07417'],
     ]);
 
     $this->get(route('contact'))
         ->assertSuccessful()
-        ->assertSee('799 Franklin Ave Unit 3<br />', false)
+        ->assertSee('799 Franklin Avenue, Suite 3<br />', false)
+        ->assertSee('Franklin Lakes, NJ 07417', false)
         ->assertDontSee('&lt;br&gt;', false);
+});
+
+test('contact page publishes the verified address in the map and directions link', function () {
+    DB::table('settings')->insert([
+        ['option' => 'address', 'value' => '799 Franklin Avenue, Suite 3<br>Franklin Lakes, NJ 07417'],
+    ]);
+
+    $encoded = urlencode('799 Franklin Avenue, Suite 3, Franklin Lakes, NJ 07417');
+
+    $this->get(route('contact'))
+        ->assertSuccessful()
+        ->assertSee('https://www.google.com/maps?q='.$encoded.'&output=embed', false)
+        ->assertSee('https://maps.google.com/?q='.$encoded, false)
+        ->assertSee('title="Map of 799 Franklin Avenue, Suite 3, Franklin Lakes, NJ 07417"', false)
+        ->assertDontSee('Franklin%20Ave%20%233', false)
+        ->assertSee('loading="lazy"', false);
+});
+
+test('the address migration replaces the unverified formatting and keeps editor corrections', function () {
+    DB::table('settings')->insert([
+        ['option' => 'address', 'value' => '799 Franklin Ave  Unit 3<br> Franklin Lakes NJ 07417'],
+        ['option' => 'phone', 'value' => '(877) 767-5667a'],
+        ['option' => 'meta_title', 'value' => 'JMOR'],
+    ]);
+
+    DB::table('settings')->insert([
+        ['option' => 'address', 'value' => '799 Franklin Avenue, Suite 300<br>Franklin Lakes, NJ 07417'],
+    ]);
+
+    $migration = include database_path('migrations/2026_11_13_173000_publish_verified_office_address.php');
+    $migration->up();
+
+    $addresses = DB::table('settings')->where('option', 'address')->orderBy('id')->pluck('value')->all();
+
+    expect($addresses)->toBe([
+        '799 Franklin Avenue, Suite 3<br>Franklin Lakes, NJ 07417',
+        '799 Franklin Avenue, Suite 300<br>Franklin Lakes, NJ 07417',
+    ])->and(DB::table('settings')->where('option', 'phone')->value('value'))
+        ->toBe('(877) 767-5667');
 });
 
 test('contact page renders the talk show interview form', function () {
