@@ -181,20 +181,20 @@ Route::get('/blog/{link}', [BlogController::class, 'detail'])->name('blog.detail
 // ==============================
 // CONTENT PAGE STUBS (placeholder until real pages are built)
 // ==============================
-Route::get('/it-service-providers-in-new-jersey-for-homes-and-businesses', fn () => view('frontend.coming-soon'))->name('it-service-providers-in-new-jersey-for-homes-and-businesses');
+Route::get('/it-service-providers-in-new-jersey-for-homes-and-businesses', [PageController::class, 'show'])->name('it-service-providers-in-new-jersey-for-homes-and-businesses');
 Route::get('/network-cyber-security-internet-safety', [PageController::class, 'show'])->name('network-cyber-security-internet-safety');
 Route::get('/hardware-firewalls-and-utm-devices', [PageController::class, 'show'])->name('hardware-firewalls-and-utm-devices');
 Route::get('/antivirus-malware-ransomware-vunerability-endpoint-management-solutions', fn () => view('frontend.coming-soon'))->name('antivirus-malware-ransomware-vunerability-endpoint-management-solutions');
-Route::get('/ai-solutions-for-businesses-consumers-safe-secure-ai-integrations-in-nj-and-beyond', fn () => view('frontend.coming-soon'))->name('ai-solutions-for-businesses-consumers-safe-secure-ai-integrations-in-nj-and-beyond');
+Route::get('/ai-solutions-for-businesses-consumers-safe-secure-ai-integrations-in-nj-and-beyond', [PageController::class, 'show'])->name('ai-solutions-for-businesses-consumers-safe-secure-ai-integrations-in-nj-and-beyond');
 Route::get('/technical-relocation-services', [PageController::class, 'show'])->name('technical-relocation-services');
 
 Route::get('/about-us', [PageController::class, 'show'])->name('about-us');
 Route::get('/about', fn () => view('frontend.coming-soon'))->name('about');
 Route::get('/our-mission', [PageController::class, 'show'])->name('our-mission');
-Route::get('/our-dei-diversiety-equity-inclusion-non-discrimination-policy', fn () => view('frontend.coming-soon'))->name('our-dei-diversiety-equity-inclusion-non-discrimination-policy');
+Route::get('/our-dei-diversiety-equity-inclusion-non-discrimination-policy', [PageController::class, 'show'])->name('our-dei-diversiety-equity-inclusion-non-discrimination-policy');
 Route::get('/why-choose-jmor', [PageController::class, 'show'])->name('why-choose-jmor');
 Route::get('/testimonials', [TestimonialController::class, 'index'])->name('testimonials');
-Route::get('/technology-guides-it-resources-the-jmor-connection-inc', fn () => view('frontend.coming-soon'))->name('technology-guides-it-resources-the-jmor-connection-inc');
+Route::get('/technology-guides-it-resources-the-jmor-connection-inc', [PageController::class, 'show'])->name('technology-guides-it-resources-the-jmor-connection-inc');
 Route::get('/events', [EventController::class, 'posts'])->name('events');
 Route::get('/events/{link}', [EventController::class, 'detail'])->name('events.detail');
 
@@ -257,12 +257,15 @@ Route::post('/request-information', [RequestInformationController::class, 'valid
     ->name('request-information.validate')
     ->middleware('throttle:5,1');
 Route::get('/custom-built-technology-solutions-in-nj', [PageController::class, 'show'])->name('custom-built-technology-solutions-in-nj');
-Route::get('/it-support-solutions-for-new-jersey-businesses-and-homes-the-jmor-connection', fn () => view('frontend.coming-soon'))->name('it-support-solutions-for-new-jersey-businesses-and-homes-the-jmor-connection');
-Route::get('/print-management-solution', fn () => view('frontend.coming-soon'))->name('print-management-solution');
-Route::get('/remote-employee-engagement-solutions', fn () => view('frontend.coming-soon'))->name('remote-employee-engagement-solutions');
+Route::get('/it-support-solutions-for-new-jersey-businesses-and-homes-the-jmor-connection', [PageController::class, 'show'])->name('it-support-solutions-for-new-jersey-businesses-and-homes-the-jmor-connection');
+// Print management never had published content; the live site serves it from the
+// home page, so this legacy URL keeps working as a permanent redirect (014).
+Route::redirect('/print-management-solution', '/', 301)->name('print-management-solution');
+Route::get('/remote-employee-engagement-solutions', [PageController::class, 'show'])->name('remote-employee-engagement-solutions');
 Route::get('/covid19-remote-friendly-support-service', [PageController::class, 'show'])->name('covid19-remote-friendly-support-service');
-Route::get('/linktree', fn () => view('frontend.coming-soon'))->name('linktree');
-Route::get('/jmor-tech-byte-sized-blunders-laugh-and-learn', fn () => view('frontend.coming-soon'))->name('jmor-tech-byte-sized-blunders-laugh-and-learn');
+// The original linktree page only pointed at the JMOR Linktree profile (017).
+Route::redirect('/linktree', 'https://linktr.ee/johncmorleyserialentrepreneur', 301)->name('linktree');
+Route::get('/jmor-tech-byte-sized-blunders-laugh-and-learn', [PageController::class, 'show'])->name('jmor-tech-byte-sized-blunders-laugh-and-learn');
 Route::get('/blog', [BlogController::class, 'posts'])->name('blog');
 Route::get('/blog/blog/{link}', fn (string $link) => redirect()->route('blog.detail', $link, 301))->name('blog.legacy_redirect');
 

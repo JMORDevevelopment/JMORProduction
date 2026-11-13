@@ -41,18 +41,15 @@
     </section>
 
     <section class="jm-partners">
-        <div class="container">
-            <div class="jm-partners__inner">
-                <div class="jm-partners__label">Certified &amp; partnered with</div>
-                <div class="jm-partners__grid">
-                    <div class="jm-partners__item">Partner badge</div>
-                    <div class="jm-partners__item">Partner badge</div>
-                    <div class="jm-partners__item">Certification</div>
-                    <div class="jm-partners__item">Certification</div>
-                    <div class="jm-partners__item">Client logo</div>
-                    <div class="jm-partners__item">Client logo</div>
+        <div class="container">                <div class="jm-partners__inner">
+                    <div class="jm-partners__label">Certifications &amp; partnerships</div>
+                    <p class="jm-partners__copy">
+                        Ask which certifications and partner programs cover your systems and industry.
+                    </p>
+                    <a href="{{ route('contact') }}" class="jm-link-arrow jm-partners__cta">
+                        Ask about our credentials &rarr;
+                    </a>
                 </div>
-            </div>
         </div>
     </section>
 
@@ -325,9 +322,10 @@
                                 <div class="jm-about__side-card-title">Case studies</div>
                                 <div class="jm-about__side-card-desc">Real NJ businesses, real fixes</div>
                             </a>
-                            <a href="{{ route('our-mission') }}" class="jm-about__side-card">
-                                <div class="jm-about__side-card-title">Our mission &amp; DEI</div>
-                                <div class="jm-about__side-card-desc">How we work, and why</div>
+                            <a href="{{ route('our-dei-diversiety-equity-inclusion-non-discrimination-policy') }}"
+                                class="jm-about__side-card">
+                                <div class="jm-about__side-card-title">Our DEI policy</div>
+                                <div class="jm-about__side-card-desc">Diversity, equity &amp; inclusion</div>
                             </a>
                         </div>
                     </div>
@@ -480,13 +478,11 @@
                             <img src="{{ asset('assets/images/insta.png') }}" alt="" class="jm-news__insta-avatar">
                             <span>@gosocialjmor</span>
                         </div>
-                        <div class="jm-news__insta-grid">
-                            @for ($i = 0; $i < 9; $i++)
-                                <div class="jm-news__insta-tile">Post</div>
-                            @endfor
-                        </div>
-                        <a href="https://www.instagram.com/gosocialjmor/" target="_blank"
-                            class="jm-btn jm-btn--navy jm-news__insta-cta">Go to Instagram</a>
+                        <p class="jm-news__insta-copy">
+                            See the latest posts, tech tips and behind-the-scenes updates on our Instagram profile.
+                        </p>
+                        <a href="https://www.instagram.com/gosocialjmor/" target="_blank" rel="noopener"
+                            class="jm-btn jm-btn--navy jm-news__insta-cta">View Instagram profile</a>
                     </div>
                 </div>
             </div>

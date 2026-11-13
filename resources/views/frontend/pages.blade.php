@@ -23,9 +23,10 @@
                 <div class="row justify-content-between">
                     <div class="col-lg-8">
                         @if(!empty($page_datas['image']))
-                            <a href="#">
-                                <img class="rounded mb-lg-4 mb-3 img-fluid" src="{{ asset($page_datas['image']) }}" alt="card image">
-                            </a>
+                            <div class="page-feature-image">
+                                <img class="rounded mb-lg-4 mb-3 img-fluid" src="{{ asset($page_datas['image']) }}"
+                                    alt="{{ $page_datas['name'] }}">
+                            </div>
                         @endif
                         <div class="blog-post">
                             {!! \App\Support\RichText::sanitize($page_datas['description']) !!}

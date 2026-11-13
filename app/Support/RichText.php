@@ -32,7 +32,14 @@ class RichText
     private static function sanitizer(): HtmlSanitizer
     {
         return self::$sanitizer ??= new HtmlSanitizer(
-            (new HtmlSanitizerConfig)->allowSafeElements()
+            (new HtmlSanitizerConfig)
+                ->allowSafeElements()
+                // Legacy content links to other pages with root-relative paths;
+                // the default config would drop the href entirely.
+                ->allowRelativeLinks()
+                // Legacy page copy regularly exceeds the 20 kB default, which
+                // would silently truncate the page mid-sentence.
+                ->withMaxInputLength(-1)
         );
     }
 }

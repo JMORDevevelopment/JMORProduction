@@ -39,6 +39,22 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="consent_to_publish" value="1"
+                                            @checked(old('consent_to_publish', $testimonial->consent_to_publish ?? false))>
+                                        I consent to JMOR publishing this testimonial with my first name and last initial.
+                                    </label>
+                                </div>
+                                <p class="help-block">
+                                    Your full name, email address and contact details are never shown. JMOR reviews
+                                    every testimonial before it appears on the website.
+                                </p>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="box-footer">
                         <a href="{{ $cancel }}" class="btn btn-default">Cancel</a>

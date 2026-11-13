@@ -20,22 +20,37 @@
     <main role="main">
         <div class="wt-section bg-light">
             <div class="container">
+                <div class="row justify-content-center mb-4">
+                    <div class="col-lg-8 text-center">
+                        <p class="mb-0">
+                            Every testimonial below was verified against a completed JMOR engagement and is
+                            published with customer consent. Full names and contact details are never shown.
+                        </p>
+                    </div>
+                </div>
+
                 <div class="row justify-content-center">
                     @forelse($testimonials as $testimonial)
-                        <div class="col-md-4">
-                            <div class="card text-center mb-md-0 mb-3">
-                                <div class="card-body py-5">
-                                    <div class="pricing-header mb-5">
-                                        <h1 style="font-size:18px; text-align:left;">
-                                            {{ $testimonial->customer->firstname ?? '' }} {{ $testimonial->customer->lastname ?? '' }}
-                                        </h1>
-                                        <p class="text-black" style="text-align: justify;text-justify: inter-word;">{{ $testimonial->message }}</p>
-                                    </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 text-center">
+                                <div class="card-body py-4">
+                                    <span class="badge badge-success mb-3">Verified customer</span>
+                                    <p class="text-black" style="text-align: justify;text-justify: inter-word;">
+                                        &ldquo;{{ $testimonial->message }}&rdquo;
+                                    </p>
+                                    <p class="mb-0">
+                                        <strong>{{ $testimonial->display_name ?: 'Verified customer' }}</strong>
+                                        @if($testimonial->service_used)
+                                            <br><span class="text-muted">{{ $testimonial->service_used }}</span>
+                                        @endif
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     @empty
-                        <p>Testimonial(s) not found...</p>
+                        <div class="col-lg-8 text-center">
+                            <p>Verified customer testimonials are being reviewed. Please check back soon.</p>
+                        </div>
                     @endforelse
                 </div>
             </div>

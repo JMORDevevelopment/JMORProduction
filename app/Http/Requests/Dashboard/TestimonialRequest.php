@@ -30,6 +30,7 @@ class TestimonialRequest extends FormRequest
         return [
             'service_used' => ['required', 'string', 'max:255'],
             'message' => ['required', 'string', 'max:5000'],
+            'consent_to_publish' => ['sometimes', 'boolean'],
         ];
     }
 
@@ -42,6 +43,7 @@ class TestimonialRequest extends FormRequest
             'message.required' => 'Message is required.',
             'message.string' => 'Message must be text.',
             'message.max' => 'Message cannot exceed 5000 characters.',
+            'consent_to_publish.boolean' => 'The publication consent choice is invalid.',
         ];
     }
 }

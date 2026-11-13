@@ -15,8 +15,10 @@ class TestimonialController extends Controller
             $this->contentPages->listingViewData('Testimonials'),
             [
                 'testimonials' => Testimonial::where('status', 1)
-                    ->with('customer')
-                    ->orderBy('id', 'desc')
+                    ->where('consent_to_publish', true)
+                    ->whereNotNull('verified_at')
+                    ->orderByDesc('published')
+                    ->orderByDesc('id')
                     ->get(),
             ]
         ));
