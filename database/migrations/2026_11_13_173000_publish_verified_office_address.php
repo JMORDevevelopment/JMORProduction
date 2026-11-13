@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\DB;
  * "#3". The verified address is 799 Franklin Avenue, Suite 3, Franklin Lakes,
  * NJ 07417. An address an editor has already corrected is left alone.
  *
- * The published phone number had a stray "a" appended everywhere it was
- * rendered, so the verified number is restored at the same time.
+ * The published phone number is intentionally not touched here; batch 1
+ * already owns that correction.
  */
 return new class extends Migration
 {
@@ -24,11 +24,6 @@ return new class extends Migration
             ->where('option', 'address')
             ->where('value', 'like', '%Unit 3%')
             ->update(['value' => self::ADDRESS]);
-
-        DB::table('settings')
-            ->where('option', 'phone')
-            ->where('value', '(877) 767-5667a')
-            ->update(['value' => '(877) 767-5667']);
     }
 
     public function down(): void

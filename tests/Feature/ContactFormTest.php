@@ -157,7 +157,6 @@ test('contact page publishes the verified address in the map and directions link
 test('the address migration replaces the unverified formatting and keeps editor corrections', function () {
     DB::table('settings')->insert([
         ['option' => 'address', 'value' => '799 Franklin Ave  Unit 3<br> Franklin Lakes NJ 07417'],
-        ['option' => 'phone', 'value' => '(877) 767-5667a'],
         ['option' => 'meta_title', 'value' => 'JMOR'],
     ]);
 
@@ -173,8 +172,7 @@ test('the address migration replaces the unverified formatting and keeps editor 
     expect($addresses)->toBe([
         '799 Franklin Avenue, Suite 3<br>Franklin Lakes, NJ 07417',
         '799 Franklin Avenue, Suite 300<br>Franklin Lakes, NJ 07417',
-    ])->and(DB::table('settings')->where('option', 'phone')->value('value'))
-        ->toBe('(877) 767-5667');
+    ]);
 });
 
 test('contact page renders the talk show interview form', function () {
