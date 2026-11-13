@@ -17,7 +17,10 @@ class HomeController extends Controller
         $keywords = Setting::get('meta_keyword', '');
 
         $mainServices = Service::all()->toArray();
-        $homeTabs = HomeTab::orderBy('tab_id', 'asc')->get()->toArray();
+        $homeTabs = HomeTab::orderBy('tab_id', 'asc')->get()
+            ->filter(fn (HomeTab $homeTab): bool => $this->isPublishablePlan($homeTab))
+            ->values()
+            ->toArray();
         $mainSliders = Slider::orderBy('priority', 'asc')->get()->toArray();
 
         // The homepage feed only shows the newest main blog articles (no other
@@ -48,5 +51,29 @@ class HomeController extends Controller
             'randomNumber2',
             'phone'
         ));
+    }
+
+    /**
+     * A service plan may only be published with an approved title, a price and
+     * at least one inclusion. Draft or test rows in the CMS (for example an
+     * "asd" tab priced "12") would otherwise be advertised on the homepage.
+     */
+    private function isPublishablePlan(HomeTab $homeTab): bool
+    {
+        $costs = array_filter(
+            (array) $homeTab->cost,
+            fn ($cost): bool => trim(strip_tags((string) $cost)) !== ''
+        );
+
+        $inclusions = array_filter(
+            (array) $homeTab->tab_list,
+            fn ($inclusion): bool => trim((string) $inclusion) !== ''
+        );
+
+        $hasPrice = collect($costs)->contains(
+            fn ($cost): bool => preg_match('/\$\s?\d/', (string) $cost) === 1
+        );
+
+        return filled($homeTab->tab_title) && $hasPrice && $inclusions !== [];
     }
 }

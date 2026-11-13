@@ -279,18 +279,24 @@
                             <td><span class="check">&check;</span></td>
                         </tr>
                         <tr>
-                            <td>Cost per system</td>
-                            <td><span style="color:#0053a0;font-weight:700">$99/mo</span></td>
-                            <td><span style="color:#0053a0;font-weight:700">$99/mo</span></td>
-                            <td><span style="color:#0053a0;font-weight:700">$99/mo</span></td>
-                            <td><span style="color:#0053a0;font-weight:700">$99/mo</span></td>
-                        </tr>
-                        <tr>
-                            <td>Cost per server</td>
-                            <td><span class="dash">&mdash;</span></td>
-                            <td><span class="dash">&mdash;</span></td>
-                            <td><span style="color:#0053a0;font-weight:700">$150/mo</span></td>
-                            <td><span style="color:#0053a0;font-weight:700">$250/mo</span></td>
+                            <td>Published pricing</td>
+                            @foreach ($homeTabs as $homeTab)
+                                @php
+                                    $costLines = array_filter(
+                                        is_array($homeTab['cost']) ? $homeTab['cost'] : json_decode($homeTab['cost'] ?? '[]', true),
+                                        fn ($cost) => trim(strip_tags((string) $cost)) !== ''
+                                    );
+                                @endphp
+                                <td>
+                                    @forelse ($costLines as $cost)
+                                        <div style="color:#0053a0;font-weight:700">
+                                            {!! \App\Support\RichText::sanitize($cost) !!}
+                                        </div>
+                                    @empty
+                                        <span class="dash">&mdash;</span>
+                                    @endforelse
+                                </td>
+                            @endforeach
                         </tr>
                     </tbody>
                 </table>
