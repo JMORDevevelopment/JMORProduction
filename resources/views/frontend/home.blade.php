@@ -11,9 +11,18 @@
                     <p class="jm-hero__copy">The JMOR Connection keeps your systems up, secure and current — computer, network and IT support delivered right the first time.</p>
 
                     <div class="jm-hero__actions">
-                        <a href="{{ route('contact') }}" class="jm-btn jm-btn--orange jm-btn--lg">Reach Out Today</a>
-                        <a href="{{ route('packages') }}" class="jm-btn jm-btn--outline jm-btn--lg">See service plans</a>
+                        <a href="{{ route('contact') }}" class="jm-btn jm-btn--orange jm-btn--lg"
+                            data-conversion="hero_contact">Reach Out Today</a>
+                        <a href="{{ route('packages') }}" class="jm-btn jm-btn--outline jm-btn--lg"
+                            data-conversion="hero_plans">See service plans</a>
                     </div>
+
+                    @if (!empty($phone))
+                        <a href="tel:{{ preg_replace('/[^0-9+]/', '', $phone) }}" class="jm-hero__call"
+                            data-conversion="hero_call">
+                            <i class="fa fa-phone" aria-hidden="true"></i> Call {{ $phone }}
+                        </a>
+                    @endif
 
                     <div class="jm-hero__stats">
                         <div><strong>28+</strong><span>Years in business</span></div>
@@ -60,17 +69,23 @@
             <div class="row g-4">
                 @forelse ($mainServices as $mainService)
                     <div class="col-md-4 col-lg-3 col-sm-6">
-                        <a href="{{ route('service.detail', ($mainService['link'] ?? '#')) }}" class="jm-card jm-service-card">
+                        {{-- The card is not a link: informational headings must not
+                             be clickable, so only the CTA and icon link out. --}}
+                        <div class="jm-card jm-service-card">
                             <div class="jm-service-card__icon">
                                 @if (!empty($mainService['image']))
-                                    <img src="{{ $mainService['image'] }}" alt="">
+                                    <img src="{{ asset($mainService['image']) }}" alt="" loading="lazy">
                                 @else
-                                    <i class="fa fa-cogs"></i>
+                                    <i class="fa fa-cogs" aria-hidden="true"></i>
                                 @endif
                             </div>
                             <h3>{{ $mainService['title'] ?? 'Service' }}</h3>
-                            <span class="jm-link-arrow">Learn more &rarr;</span>
-                        </a>
+                            @if (!empty($mainService['link']))
+                                <a href="{{ route('service.detail', $mainService['link']) }}" class="jm-link-arrow">
+                                    Learn more &rarr;
+                                </a>
+                            @endif
+                        </div>
                     </div>
                 @empty
                     <div class="col-12 text-center">
@@ -321,6 +336,116 @@
         </div>
     </section>
 
+    <section class="jm-lead" id="request-information">
+        <div class="container">
+            <div class="row align-items-center" style="row-gap:36px">
+                <div class="col-lg-5">
+                    <div class="jm-eyebrow">Talk to us</div>
+                    <h2>Tell us what is slowing you down.</h2>
+                    <p class="jm-lead__copy">
+                        Send a few details and a JMOR technician will get back to you with next steps.
+                        Prefer to talk it through? Call us and we will pick up.
+                    </p>
+                    <ul class="jm-lead__points">
+                        <li><i class="fa fa-check" aria-hidden="true"></i> Response from a real technician, not a call centre</li>
+                        <li><i class="fa fa-check" aria-hidden="true"></i> No obligation, no long-term contract</li>
+                        <li><i class="fa fa-check" aria-hidden="true"></i> Serving New Jersey homes and businesses for 30+ years</li>
+                    </ul>
+                    @if (!empty($phone))
+                        <a href="tel:{{ preg_replace('/[^0-9+]/', '', $phone) }}" class="jm-btn jm-btn--outline-blue"
+                            data-conversion="lead_call">
+                            <i class="fa fa-phone" aria-hidden="true"></i>&nbsp; {{ $phone }}
+                        </a>
+                    @endif
+                </div>
+
+                <div class="col-lg-7">
+                    @if (session('contact_success'))
+                        <div class="alert alert-success" role="alert">
+                            <strong>Thank you &mdash; your message was sent.</strong><br>
+                            {{ session('contact_success') }}
+                        </div>
+                    @endif
+
+                    <form action="{{ route('contact.submit') }}" method="post" class="jm-lead__form"
+                        data-conversion-form="home_lead">
+                        @csrf
+                        <input type="hidden" name="reason" value="General Inquiry">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="lead-name">Full name</label>
+                                <input id="lead-name" type="text" name="name" value="{{ old('name') }}" required maxlength="80">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lead-email">Email</label>
+                                <input id="lead-email" type="email" name="email" value="{{ old('email') }}" required maxlength="50">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lead-phone">Phone</label>
+                                <input id="lead-phone" type="tel" name="phone" value="{{ old('phone') }}" required maxlength="20">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lead-protection">
+                                    Spam check: {{ $randomNumber1 }} + {{ $randomNumber2 }}
+                                </label>
+                                <input id="lead-protection" type="number" name="protection_question" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="lead-message">How can we help?</label>
+                                <textarea id="lead-message" name="message" rows="4" required maxlength="5000">{{ old('message') }}</textarea>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="jm-btn jm-btn--orange jm-btn--lg">Send request</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="jm-blog-feed">
+        <div class="container">
+            <div class="jm-section-head">
+                <div>
+                    <div class="jm-eyebrow">JMOR blog</div>
+                    <h2>Latest from the blog</h2>
+                    <p>Practical advice on keeping your technology secure, current and working.</p>
+                </div>
+                <a href="{{ route('blog') }}" class="jm-btn jm-btn--outline-blue">Explore More &rarr;</a>
+            </div>
+
+            <div class="row g-4">
+                @forelse ($latestBlogPosts as $post)
+                    @php
+                        $postUrl = route('blog.detail', \Illuminate\Support\Str::after($post->link, 'blog/'));
+                    @endphp
+                    <div class="col-md-4">
+                        <article class="jm-card jm-blog-card">
+                            <a href="{{ $postUrl }}" class="jm-blog-card__img" tabindex="-1" aria-hidden="true">
+                                @if (!empty($post->image))
+                                    <img src="{{ asset($post->image) }}" alt="" loading="lazy">
+                                @endif
+                            </a>
+                            <div class="jm-blog-card__body">
+                                <div class="jm-blog-card__meta">
+                                    {{ \Illuminate\Support\Carbon::parse($post->published)->format('M j, Y') }}
+                                </div>
+                                <h3>{{ $post->name }}</h3>
+                                <p>{{ \Illuminate\Support\Str::limit(strip_tags($post->description), 110) }}</p>
+                                <a href="{{ $postUrl }}" class="jm-link-arrow">Read article &rarr;</a>
+                            </div>
+                        </article>
+                    </div>
+                @empty
+                    <div class="col-12 text-center">
+                        <p>New articles are on the way — visit the blog for the full archive.</p>
+                    </div>
+                @endforelse
+            </div>
+        </div>
+    </section>
+
     <section class="jm-news">
         <div class="container">
             <div class="jm-section-head">
@@ -376,10 +501,14 @@
                     <p class="jm-cta-banner__sub">Talk to a JMOR technician about your systems today.</p>
                 </div>
                 <div class="jm-cta-banner__actions">
-                    <a href="tel:8777675667" class="jm-cta-banner__phone">
-                        (877) 767-5667
-                    </a>
-                    <a href="{{ route('contact') }}" class="jm-btn jm-btn--orange">Request information</a>
+                    @if (!empty($phone))
+                        <a href="tel:{{ preg_replace('/[^0-9+]/', '', $phone) }}" class="jm-cta-banner__phone"
+                            data-conversion="banner_call">
+                            {{ $phone }}
+                        </a>
+                    @endif
+                    <a href="{{ route('contact') }}" class="jm-btn jm-btn--orange"
+                        data-conversion="banner_contact">Request information</a>
                 </div>
             </div>
         </div>
@@ -452,6 +581,31 @@
                 resizeTimer = setTimeout(updateTrack, 200);
             });
         }
+
+        // Conversion tracking. It only writes to a dataLayer/gtag that already
+        // exists, so no analytics dependency is introduced (036).
+        function trackConversion(eventName, params) {
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push(Object.assign({event: eventName}, params || {}));
+
+            if (typeof window.gtag === 'function') {
+                window.gtag('event', eventName, params || {});
+            }
+        }
+
+        document.querySelectorAll('[data-conversion]').forEach(function (el) {
+            el.addEventListener('click', function () {
+                trackConversion('home_cta_click', {cta: el.dataset.conversion});
+            });
+        });
+
+        const leadForm = document.querySelector('[data-conversion-form="home_lead"]');
+        if (leadForm) {
+            leadForm.addEventListener('submit', function () {
+                trackConversion('home_lead_submitted', {form: 'home_lead'});
+            });
+        }
+
     });
 </script>
 @endpush

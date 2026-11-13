@@ -1,0 +1,3776 @@
+.
+├── CLAUDE.md
+├── README.md
+├── app
+│   ├── Auth
+│   │   └── MD5EloquentUserProvider.php
+│   ├── Filament
+│   │   └── Admin
+│   │       ├── Pages
+│   │       ├── Resources
+│   │       └── Widgets
+│   ├── Http
+│   │   ├── Controllers
+│   │   │   ├── AdminInvoiceController.php
+│   │   │   ├── Auth
+│   │   │   ├── BlogController.php
+│   │   │   ├── BrandGuidelineController.php
+│   │   │   ├── CaseStudyController.php
+│   │   │   ├── CategoryController.php
+│   │   │   ├── Checkout
+│   │   │   ├── CheckoutController.php
+│   │   │   ├── ContactController.php
+│   │   │   ├── Controller.php
+│   │   │   ├── DashboardController.php
+│   │   │   ├── EventController.php
+│   │   │   ├── GiftCardController.php
+│   │   │   ├── HomeController.php
+│   │   │   ├── LangController.php
+│   │   │   ├── MediaInquiryController.php
+│   │   │   ├── MediaResourceController.php
+│   │   │   ├── MediaVideoController.php
+│   │   │   ├── NewsController.php
+│   │   │   ├── PackageController.php
+│   │   │   ├── PageController.php
+│   │   │   ├── PaymentController.php
+│   │   │   ├── PressReleaseController.php
+│   │   │   ├── RadioShowController.php
+│   │   │   ├── RandomActsOfKindnessController.php
+│   │   │   ├── RecommendedController.php
+│   │   │   ├── RequestInformationController.php
+│   │   │   ├── SearchController.php
+│   │   │   ├── ServicePageController.php
+│   │   │   ├── SitemapController.php
+│   │   │   ├── TalkShowGuestController.php
+│   │   │   └── TestimonialController.php
+│   │   ├── Middleware
+│   │   │   ├── CheckUserLogin.php
+│   │   │   ├── SecurityHeaders.php
+│   │   │   └── SetLocale.php
+│   │   └── Requests
+│   │       ├── Auth
+│   │       ├── Checkout
+│   │       ├── ContactRequest.php
+│   │       ├── Dashboard
+│   │       ├── MediaInquiryRequest.php
+│   │       ├── RequestInformationRequest.php
+│   │       ├── TalkShowGuestRequest.php
+│   │       └── TalkShowInterviewRequest.php
+│   ├── Mail
+│   │   └── AdminPasswordReset.php
+│   ├── Models
+│   │   ├── Admin.php
+│   │   ├── Blog.php
+│   │   ├── BrandGuideline.php
+│   │   ├── CaseStudy.php
+│   │   ├── Category.php
+│   │   ├── CategoryRadioShow.php
+│   │   ├── CheckoutForm.php
+│   │   ├── CheckoutMeta.php
+│   │   ├── ContactUs.php
+│   │   ├── CouponCheckout.php
+│   │   ├── Event.php
+│   │   ├── GiftCard.php
+│   │   ├── HomeTab.php
+│   │   ├── Language.php
+│   │   ├── LogHistory.php
+│   │   ├── MarketingService.php
+│   │   ├── MediaInquiry.php
+│   │   ├── MediaResource.php
+│   │   ├── MediaVideo.php
+│   │   ├── Menu.php
+│   │   ├── MenuGroup.php
+│   │   ├── News.php
+│   │   ├── Order.php
+│   │   ├── OrderDetail.php
+│   │   ├── Package.php
+│   │   ├── PackagePrice.php
+│   │   ├── Page.php
+│   │   ├── PressRelease.php
+│   │   ├── RadioShow.php
+│   │   ├── RandomActsOfKindness.php
+│   │   ├── Recommended.php
+│   │   ├── Region.php
+│   │   ├── RequestInformation.php
+│   │   ├── Service.php
+│   │   ├── Setting.php
+│   │   ├── Slider.php
+│   │   ├── SystemInformation.php
+│   │   ├── SystemPrice.php
+│   │   ├── TalkShow.php
+│   │   ├── TalkShowSetting.php
+│   │   ├── Testimonial.php
+│   │   ├── Transaction.php
+│   │   ├── User.php
+│   │   └── UserGroup.php
+│   ├── Notifications
+│   │   └── ResetPassword.php
+│   ├── Providers
+│   │   ├── AppServiceProvider.php
+│   │   └── Filament
+│   │       └── AdminPanelProvider.php
+│   ├── Services
+│   │   ├── CartService.php
+│   │   ├── CheckoutService.php
+│   │   ├── ContentPageService.php
+│   │   ├── InvoiceService.php
+│   │   ├── NewsService.php
+│   │   ├── PackageService.php
+│   │   ├── PaymentService.php
+│   │   ├── RadioShowService.php
+│   │   ├── SearchService.php
+│   │   └── UserService.php
+│   ├── Support
+│   │   └── RichText.php
+│   └── View
+│       └── Components
+│           ├── Footer.php
+│           └── Header.php
+├── artisan
+├── boost.json
+├── bootstrap
+│   ├── app.php
+│   ├── cache
+│   │   ├── filament
+│   │   │   └── panels
+│   │   ├── packages.php
+│   │   └── services.php
+│   └── providers.php
+├── composer.json
+├── composer.lock
+├── config
+│   ├── app.php
+│   ├── auth.php
+│   ├── cache.php
+│   ├── database.php
+│   ├── filament.php
+│   ├── filesystems.php
+│   ├── logging.php
+│   ├── mail.php
+│   ├── queue.php
+│   ├── services.php
+│   └── session.php
+├── database
+│   ├── database.sqlite
+│   ├── factories
+│   │   └── UserFactory.php
+│   ├── migrations
+│   │   ├── 0001_01_01_000000_create_users_table.php
+│   │   ├── 0001_01_01_000001_create_cache_table.php
+│   │   ├── 0001_01_01_000002_create_jobs_table.php
+│   │   ├── 2026_07_22_125529_create_checkout_form_table.php
+│   │   ├── 2026_07_22_125529_create_checkout_meta_table.php
+│   │   ├── 2026_07_22_125529_create_coupon_checkout_table.php
+│   │   ├── 2026_07_22_125529_create_gift_card_table.php
+│   │   ├── 2026_07_22_125529_create_log_history_table.php
+│   │   ├── 2026_07_22_125529_create_order_details_table.php
+│   │   ├── 2026_07_22_125529_create_orders_table.php
+│   │   ├── 2026_07_22_125529_create_package_price_table.php
+│   │   ├── 2026_07_22_125529_create_packages_table.php
+│   │   ├── 2026_07_22_125529_create_region_table.php
+│   │   ├── 2026_07_22_125529_create_settings_table.php
+│   │   ├── 2026_07_22_125529_create_system_information_table.php
+│   │   ├── 2026_07_22_125529_create_system_price_table.php
+│   │   ├── 2026_07_22_125529_create_testimony_form_table.php
+│   │   ├── 2026_07_22_125529_create_transaction_table.php
+│   │   ├── 2026_07_22_125529_create_user_table.php
+│   │   ├── 2026_07_22_125530_create_service_table.php
+│   │   ├── 2026_07_22_125531_create_home_tab_table.php
+│   │   ├── 2026_07_22_125532_create_slider_table.php
+│   │   ├── 2026_07_22_125533_create_menu_table.php
+│   │   ├── 2026_07_22_125534_create_blog_table.php
+│   │   ├── 2026_07_22_125535_create_news_table.php
+│   │   ├── 2026_07_22_125536_create_events_table.php
+│   │   ├── 2026_07_22_125537_create_case_studies_table.php
+│   │   ├── 2026_07_22_125538_create_media_resouces_table.php
+│   │   ├── 2026_07_22_125539_create_media_video_table.php
+│   │   ├── 2026_07_22_125540_create_media_inquiries_table.php
+│   │   ├── 2026_07_22_125540_create_press_releases_table.php
+│   │   ├── 2026_07_22_125541_create_brand_guidelines_table.php
+│   │   ├── 2026_08_19_214213_create_pages_table.php
+│   │   ├── 2026_08_20_000001_create_contact_us_table.php
+│   │   ├── 2026_08_20_000002_create_request_information_table.php
+│   │   ├── 2026_08_22_220211_alter_password_column_in_user_table.php
+│   │   ├── 2026_08_22_221030_create_admin_table.php
+│   │   ├── 2026_08_23_000001_create_recommended_table.php
+│   │   ├── 2026_08_23_000002_create_random_acts_of_kindness_table.php
+│   │   ├── 2026_08_24_144258_add_two_factor_authentication_columns.php
+│   │   ├── 2026_08_24_144258_create_passkeys_table.php
+│   │   ├── 2026_08_24_150920_add_auth_mode_to_admin_table.php
+│   │   ├── 2026_08_29_143428_create_category_radio_show_table.php
+│   │   ├── 2026_08_29_143429_create_radio_show_table.php
+│   │   ├── 2026_09_10_123502_create_category_table.php
+│   │   ├── 2026_09_27_000001_create_user_group_table.php
+│   │   ├── 2026_09_27_000002_create_menu_group_table.php
+│   │   ├── 2026_09_30_000001_create_services_table.php
+│   │   ├── 2026_09_30_000002_create_talk_show_settings_table.php
+│   │   ├── 2026_09_30_000003_create_language_table.php
+│   │   ├── 2026_09_30_135547_create_talk_show_table.php
+│   │   └── 2026_11_02_162704_alter_password_column_in_admin_table.php
+│   └── seeders
+│       └── DatabaseSeeder.php
+├── node_modules
+│   ├── @emnapi
+│   │   ├── core
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── dist
+│   │   │   ├── index.js
+│   │   │   └── package.json
+│   │   ├── runtime
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── dist
+│   │   │   ├── index.js
+│   │   │   └── package.json
+│   │   └── wasi-threads
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── dist
+│   │       ├── index.js
+│   │       └── package.json
+│   ├── @fortawesome
+│   │   └── fontawesome-free
+│   │       ├── LICENSE.txt
+│   │       ├── README.md
+│   │       ├── css
+│   │       ├── js
+│   │       ├── metadata
+│   │       ├── package.json
+│   │       ├── scss
+│   │       ├── sprites
+│   │       ├── sprites-full
+│   │       ├── svgs
+│   │       ├── svgs-full
+│   │       └── webfonts
+│   ├── @jridgewell
+│   │   ├── gen-mapping
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── dist
+│   │   │   ├── package.json
+│   │   │   ├── src
+│   │   │   └── types
+│   │   ├── remapping
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── dist
+│   │   │   ├── package.json
+│   │   │   ├── src
+│   │   │   └── types
+│   │   ├── resolve-uri
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── dist
+│   │   │   └── package.json
+│   │   ├── sourcemap-codec
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── dist
+│   │   │   ├── package.json
+│   │   │   ├── src
+│   │   │   └── types
+│   │   └── trace-mapping
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── dist
+│   │       ├── package.json
+│   │       ├── src
+│   │       └── types
+│   ├── @napi-rs
+│   │   └── wasm-runtime
+│   │       ├── dist
+│   │       ├── fs-proxy.js
+│   │       ├── package.json
+│   │       ├── runtime.cjs
+│   │       └── runtime.js
+│   ├── @oxc-project
+│   │   └── types
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── package.json
+│   │       └── types.d.ts
+│   ├── @popperjs
+│   │   └── core
+│   │       ├── LICENSE.md
+│   │       ├── README.md
+│   │       ├── dist
+│   │       ├── index.d.ts
+│   │       ├── lib
+│   │       └── package.json
+│   ├── @rolldown
+│   │   ├── binding-linux-x64-gnu
+│   │   │   ├── README.md
+│   │   │   ├── package.json
+│   │   │   └── rolldown-binding.linux-x64-gnu.node
+│   │   ├── binding-linux-x64-musl
+│   │   │   ├── README.md
+│   │   │   ├── package.json
+│   │   │   └── rolldown-binding.linux-x64-musl.node
+│   │   └── pluginutils
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── dist
+│   │       └── package.json
+│   ├── @tailwindcss
+│   │   ├── node
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── dist
+│   │   │   └── package.json
+│   │   ├── oxide
+│   │   │   ├── LICENSE
+│   │   │   ├── index.d.ts
+│   │   │   ├── index.js
+│   │   │   └── package.json
+│   │   ├── oxide-linux-x64-gnu
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── package.json
+│   │   │   └── tailwindcss-oxide.linux-x64-gnu.node
+│   │   └── vite
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── dist
+│   │       └── package.json
+│   ├── @tybys
+│   │   └── wasm-util
+│   │       ├── README.md
+│   │       ├── dist
+│   │       ├── lib
+│   │       └── package.json
+│   ├── ansi-regex
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── license
+│   │   ├── package.json
+│   │   └── readme.md
+│   ├── ansi-styles
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── license
+│   │   ├── package.json
+│   │   └── readme.md
+│   ├── bootstrap
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── dist
+│   │   │   ├── css
+│   │   │   └── js
+│   │   ├── js
+│   │   │   ├── dist
+│   │   │   ├── index.esm.js
+│   │   │   ├── index.umd.js
+│   │   │   └── src
+│   │   ├── package.json
+│   │   └── scss
+│   │       ├── _accordion.scss
+│   │       ├── _alert.scss
+│   │       ├── _badge.scss
+│   │       ├── _breadcrumb.scss
+│   │       ├── _button-group.scss
+│   │       ├── _buttons.scss
+│   │       ├── _card.scss
+│   │       ├── _carousel.scss
+│   │       ├── _close.scss
+│   │       ├── _containers.scss
+│   │       ├── _dropdown.scss
+│   │       ├── _forms.scss
+│   │       ├── _functions.scss
+│   │       ├── _grid.scss
+│   │       ├── _helpers.scss
+│   │       ├── _images.scss
+│   │       ├── _list-group.scss
+│   │       ├── _maps.scss
+│   │       ├── _mixins.scss
+│   │       ├── _modal.scss
+│   │       ├── _nav.scss
+│   │       ├── _navbar.scss
+│   │       ├── _offcanvas.scss
+│   │       ├── _pagination.scss
+│   │       ├── _placeholders.scss
+│   │       ├── _popover.scss
+│   │       ├── _progress.scss
+│   │       ├── _reboot.scss
+│   │       ├── _root.scss
+│   │       ├── _spinners.scss
+│   │       ├── _tables.scss
+│   │       ├── _toasts.scss
+│   │       ├── _tooltip.scss
+│   │       ├── _transitions.scss
+│   │       ├── _type.scss
+│   │       ├── _utilities.scss
+│   │       ├── _variables-dark.scss
+│   │       ├── _variables.scss
+│   │       ├── bootstrap-grid.scss
+│   │       ├── bootstrap-reboot.scss
+│   │       ├── bootstrap-utilities.scss
+│   │       ├── bootstrap.scss
+│   │       ├── forms
+│   │       ├── helpers
+│   │       ├── mixins
+│   │       ├── utilities
+│   │       └── vendor
+│   ├── chalk
+│   │   ├── index.d.ts
+│   │   ├── license
+│   │   ├── node_modules
+│   │   │   └── supports-color
+│   │   ├── package.json
+│   │   ├── readme.md
+│   │   └── source
+│   │       ├── index.js
+│   │       ├── templates.js
+│   │       └── util.js
+│   ├── cliui
+│   │   ├── CHANGELOG.md
+│   │   ├── LICENSE.txt
+│   │   ├── README.md
+│   │   ├── build
+│   │   │   ├── index.cjs
+│   │   │   ├── index.d.cts
+│   │   │   └── lib
+│   │   ├── index.mjs
+│   │   └── package.json
+│   ├── color-convert
+│   │   ├── CHANGELOG.md
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── conversions.js
+│   │   ├── index.js
+│   │   ├── package.json
+│   │   └── route.js
+│   ├── color-name
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── index.js
+│   │   └── package.json
+│   ├── concurrently
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── dist
+│   │   │   ├── bin
+│   │   │   ├── src
+│   │   │   └── tsconfig.tsbuildinfo
+│   │   ├── docs
+│   │   │   ├── README.md
+│   │   │   ├── cli
+│   │   │   └── demo.gif
+│   │   ├── index.d.mts
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── index.mjs
+│   │   └── package.json
+│   ├── detect-libc
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── index.d.ts
+│   │   ├── lib
+│   │   │   ├── detect-libc.js
+│   │   │   ├── elf.js
+│   │   │   ├── filesystem.js
+│   │   │   └── process.js
+│   │   └── package.json
+│   ├── emoji-regex
+│   │   ├── LICENSE-MIT.txt
+│   │   ├── README.md
+│   │   ├── es2015
+│   │   │   ├── index.js
+│   │   │   └── text.js
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── package.json
+│   │   └── text.js
+│   ├── enhanced-resolve
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── lib
+│   │   │   ├── AliasFieldPlugin.js
+│   │   │   ├── AliasPlugin.js
+│   │   │   ├── AliasUtils.js
+│   │   │   ├── AppendPlugin.js
+│   │   │   ├── CachedInputFileSystem.js
+│   │   │   ├── CloneBasenamePlugin.js
+│   │   │   ├── ConditionalPlugin.js
+│   │   │   ├── DescriptionFilePlugin.js
+│   │   │   ├── DescriptionFileUtils.js
+│   │   │   ├── DirectoryExistsPlugin.js
+│   │   │   ├── ExportsFieldPlugin.js
+│   │   │   ├── ExtensionAliasPlugin.js
+│   │   │   ├── FileExistsPlugin.js
+│   │   │   ├── ImportsFieldPlugin.js
+│   │   │   ├── JoinRequestPartPlugin.js
+│   │   │   ├── JoinRequestPlugin.js
+│   │   │   ├── LogInfoPlugin.js
+│   │   │   ├── MainFieldPlugin.js
+│   │   │   ├── ModulesInHierachicDirectoriesPlugin.js
+│   │   │   ├── ModulesInHierarchicalDirectoriesPlugin.js
+│   │   │   ├── ModulesInRootPlugin.js
+│   │   │   ├── ModulesUtils.js
+│   │   │   ├── NextPlugin.js
+│   │   │   ├── ParsePlugin.js
+│   │   │   ├── PnpPlugin.js
+│   │   │   ├── Resolver.js
+│   │   │   ├── ResolverFactory.js
+│   │   │   ├── RestrictionsPlugin.js
+│   │   │   ├── ResultPlugin.js
+│   │   │   ├── RootsPlugin.js
+│   │   │   ├── SelfReferencePlugin.js
+│   │   │   ├── SymlinkPlugin.js
+│   │   │   ├── SyncAsyncFileSystemDecorator.js
+│   │   │   ├── TryNextPlugin.js
+│   │   │   ├── TsconfigPathsPlugin.js
+│   │   │   ├── UnsafeCachePlugin.js
+│   │   │   ├── UseFilePlugin.js
+│   │   │   ├── createInnerContext.js
+│   │   │   ├── forEachBail.js
+│   │   │   ├── getInnerRequest.js
+│   │   │   ├── getPaths.js
+│   │   │   ├── index.js
+│   │   │   └── util
+│   │   ├── package.json
+│   │   └── types.d.ts
+│   ├── escalade
+│   │   ├── dist
+│   │   │   ├── index.js
+│   │   │   └── index.mjs
+│   │   ├── index.d.mts
+│   │   ├── index.d.ts
+│   │   ├── license
+│   │   ├── package.json
+│   │   ├── readme.md
+│   │   └── sync
+│   │       ├── index.d.mts
+│   │       ├── index.d.ts
+│   │       ├── index.js
+│   │       └── index.mjs
+│   ├── fdir
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── dist
+│   │   │   ├── index.cjs
+│   │   │   ├── index.d.cts
+│   │   │   ├── index.d.mts
+│   │   │   └── index.mjs
+│   │   └── package.json
+│   ├── get-caller-file
+│   │   ├── LICENSE.md
+│   │   ├── README.md
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── index.js.map
+│   │   └── package.json
+│   ├── graceful-fs
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── clone.js
+│   │   ├── graceful-fs.js
+│   │   ├── legacy-streams.js
+│   │   ├── package.json
+│   │   └── polyfills.js
+│   ├── has-flag
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── license
+│   │   ├── package.json
+│   │   └── readme.md
+│   ├── is-fullwidth-code-point
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── license
+│   │   ├── package.json
+│   │   └── readme.md
+│   ├── jiti
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── dist
+│   │   │   ├── babel.cjs
+│   │   │   └── jiti.cjs
+│   │   ├── lib
+│   │   │   ├── jiti-cli.mjs
+│   │   │   ├── jiti-hooks.mjs
+│   │   │   ├── jiti-native.mjs
+│   │   │   ├── jiti-register.d.mts
+│   │   │   ├── jiti-register.mjs
+│   │   │   ├── jiti-static.mjs
+│   │   │   ├── jiti.cjs
+│   │   │   ├── jiti.d.cts
+│   │   │   ├── jiti.d.mts
+│   │   │   ├── jiti.mjs
+│   │   │   └── types.d.ts
+│   │   └── package.json
+│   ├── jquery
+│   │   ├── AUTHORS.txt
+│   │   ├── LICENSE.txt
+│   │   ├── README.md
+│   │   ├── bower.json
+│   │   ├── changelog.md
+│   │   ├── dist
+│   │   │   ├── jquery.factory.js
+│   │   │   ├── jquery.factory.slim.js
+│   │   │   ├── jquery.js
+│   │   │   ├── jquery.min.js
+│   │   │   ├── jquery.min.map
+│   │   │   ├── jquery.slim.js
+│   │   │   ├── jquery.slim.min.js
+│   │   │   ├── jquery.slim.min.map
+│   │   │   ├── package.json
+│   │   │   └── wrappers
+│   │   ├── dist-module
+│   │   │   ├── jquery.factory.module.js
+│   │   │   ├── jquery.factory.slim.module.js
+│   │   │   ├── jquery.module.js
+│   │   │   ├── jquery.module.min.js
+│   │   │   ├── jquery.module.min.map
+│   │   │   ├── jquery.slim.module.js
+│   │   │   ├── jquery.slim.module.min.js
+│   │   │   ├── jquery.slim.module.min.map
+│   │   │   ├── package.json
+│   │   │   └── wrappers
+│   │   ├── package.json
+│   │   └── src
+│   │       ├── ajax
+│   │       ├── ajax.js
+│   │       ├── attributes
+│   │       ├── attributes.js
+│   │       ├── callbacks.js
+│   │       ├── core
+│   │       ├── core.js
+│   │       ├── css
+│   │       ├── css.js
+│   │       ├── data
+│   │       ├── data.js
+│   │       ├── deferred
+│   │       ├── deferred.js
+│   │       ├── deprecated
+│   │       ├── deprecated.js
+│   │       ├── dimensions.js
+│   │       ├── effects
+│   │       ├── effects.js
+│   │       ├── event
+│   │       ├── event.js
+│   │       ├── exports
+│   │       ├── jquery.js
+│   │       ├── manipulation
+│   │       ├── manipulation.js
+│   │       ├── offset.js
+│   │       ├── queue
+│   │       ├── queue.js
+│   │       ├── selector
+│   │       ├── selector-native.js
+│   │       ├── selector.js
+│   │       ├── serialize.js
+│   │       ├── traversing
+│   │       ├── traversing.js
+│   │       ├── var
+│   │       ├── wrap.js
+│   │       ├── wrapper-esm.js
+│   │       ├── wrapper-factory-esm.js
+│   │       └── wrapper-factory.js
+│   ├── laravel-vite-plugin
+│   │   ├── LICENSE.md
+│   │   ├── README.md
+│   │   ├── bin
+│   │   │   └── clean.js
+│   │   ├── dist
+│   │   │   ├── dev-server-index.html
+│   │   │   ├── fonts
+│   │   │   ├── index.d.ts
+│   │   │   └── index.js
+│   │   ├── inertia-helpers
+│   │   │   ├── index.d.ts
+│   │   │   └── index.js
+│   │   └── package.json
+│   ├── lightningcss
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── node
+│   │   │   ├── ast.d.ts
+│   │   │   ├── ast.js.flow
+│   │   │   ├── browserslistToTargets.js
+│   │   │   ├── composeVisitors.js
+│   │   │   ├── flags.js
+│   │   │   ├── index.d.ts
+│   │   │   ├── index.js
+│   │   │   ├── index.js.flow
+│   │   │   ├── index.mjs
+│   │   │   ├── targets.d.ts
+│   │   │   └── targets.js.flow
+│   │   └── package.json
+│   ├── lightningcss-linux-x64-gnu
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── lightningcss.linux-x64-gnu.node
+│   │   └── package.json
+│   ├── lightningcss-linux-x64-musl
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── lightningcss.linux-x64-musl.node
+│   │   └── package.json
+│   ├── magic-string
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── dist
+│   │   │   ├── magic-string.cjs.d.ts
+│   │   │   ├── magic-string.cjs.js
+│   │   │   ├── magic-string.cjs.js.map
+│   │   │   ├── magic-string.es.d.mts
+│   │   │   ├── magic-string.es.mjs
+│   │   │   ├── magic-string.es.mjs.map
+│   │   │   ├── magic-string.umd.js
+│   │   │   └── magic-string.umd.js.map
+│   │   └── package.json
+│   ├── nanoid
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── async
+│   │   │   ├── index.browser.cjs
+│   │   │   ├── index.browser.js
+│   │   │   ├── index.cjs
+│   │   │   ├── index.d.ts
+│   │   │   ├── index.js
+│   │   │   ├── index.native.js
+│   │   │   └── package.json
+│   │   ├── bin
+│   │   │   └── nanoid.cjs
+│   │   ├── index.browser.cjs
+│   │   ├── index.browser.js
+│   │   ├── index.cjs
+│   │   ├── index.d.cts
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── nanoid.js
+│   │   ├── non-secure
+│   │   │   ├── index.cjs
+│   │   │   ├── index.d.ts
+│   │   │   ├── index.js
+│   │   │   └── package.json
+│   │   ├── package.json
+│   │   └── url-alphabet
+│   │       ├── index.cjs
+│   │       ├── index.js
+│   │       └── package.json
+│   ├── picocolors
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── package.json
+│   │   ├── picocolors.browser.js
+│   │   ├── picocolors.d.ts
+│   │   ├── picocolors.js
+│   │   └── types.d.ts
+│   ├── picomatch
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── index.js
+│   │   ├── lib
+│   │   │   ├── constants.js
+│   │   │   ├── parse.js
+│   │   │   ├── picomatch.js
+│   │   │   ├── scan.js
+│   │   │   └── utils.js
+│   │   ├── package.json
+│   │   └── posix.js
+│   ├── postcss
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── lib
+│   │   │   ├── at-rule.d.ts
+│   │   │   ├── at-rule.js
+│   │   │   ├── comment.d.ts
+│   │   │   ├── comment.js
+│   │   │   ├── container.d.ts
+│   │   │   ├── container.js
+│   │   │   ├── css-syntax-error.d.ts
+│   │   │   ├── css-syntax-error.js
+│   │   │   ├── declaration.d.ts
+│   │   │   ├── declaration.js
+│   │   │   ├── document.d.ts
+│   │   │   ├── document.js
+│   │   │   ├── fromJSON.d.ts
+│   │   │   ├── fromJSON.js
+│   │   │   ├── input.d.ts
+│   │   │   ├── input.js
+│   │   │   ├── lazy-result.d.ts
+│   │   │   ├── lazy-result.js
+│   │   │   ├── list.d.ts
+│   │   │   ├── list.js
+│   │   │   ├── map-generator.js
+│   │   │   ├── no-work-result.d.ts
+│   │   │   ├── no-work-result.js
+│   │   │   ├── node.d.ts
+│   │   │   ├── node.js
+│   │   │   ├── parse.d.ts
+│   │   │   ├── parse.js
+│   │   │   ├── parser.js
+│   │   │   ├── postcss.d.mts
+│   │   │   ├── postcss.d.ts
+│   │   │   ├── postcss.js
+│   │   │   ├── postcss.mjs
+│   │   │   ├── previous-map.d.ts
+│   │   │   ├── previous-map.js
+│   │   │   ├── processor.d.ts
+│   │   │   ├── processor.js
+│   │   │   ├── result.d.ts
+│   │   │   ├── result.js
+│   │   │   ├── root.d.ts
+│   │   │   ├── root.js
+│   │   │   ├── rule.d.ts
+│   │   │   ├── rule.js
+│   │   │   ├── stringifier.d.ts
+│   │   │   ├── stringifier.js
+│   │   │   ├── stringify.d.ts
+│   │   │   ├── stringify.js
+│   │   │   ├── symbols.js
+│   │   │   ├── terminal-highlight.js
+│   │   │   ├── tokenize.js
+│   │   │   ├── warn-once.js
+│   │   │   ├── warning.d.ts
+│   │   │   └── warning.js
+│   │   └── package.json
+│   ├── require-directory
+│   │   ├── LICENSE
+│   │   ├── README.markdown
+│   │   ├── index.js
+│   │   └── package.json
+│   ├── rolldown
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── bin
+│   │   │   └── cli.mjs
+│   │   ├── dist
+│   │   │   ├── cli.d.mts
+│   │   │   ├── cli.mjs
+│   │   │   ├── config.d.mts
+│   │   │   ├── config.mjs
+│   │   │   ├── experimental-index.d.mts
+│   │   │   ├── experimental-index.mjs
+│   │   │   ├── experimental-runtime-types.d.ts
+│   │   │   ├── filter-index.d.mts
+│   │   │   ├── filter-index.mjs
+│   │   │   ├── get-log-filter.d.mts
+│   │   │   ├── get-log-filter.mjs
+│   │   │   ├── index.d.mts
+│   │   │   ├── index.mjs
+│   │   │   ├── parallel-plugin-worker.d.mts
+│   │   │   ├── parallel-plugin-worker.mjs
+│   │   │   ├── parallel-plugin.d.mts
+│   │   │   ├── parallel-plugin.mjs
+│   │   │   ├── parse-ast-index.d.mts
+│   │   │   ├── parse-ast-index.mjs
+│   │   │   ├── plugins-index.d.mts
+│   │   │   ├── plugins-index.mjs
+│   │   │   ├── shared
+│   │   │   ├── utils-index.d.mts
+│   │   │   └── utils-index.mjs
+│   │   └── package.json
+│   ├── rxjs
+│   │   ├── CHANGELOG.md
+│   │   ├── CODE_OF_CONDUCT.md
+│   │   ├── LICENSE.txt
+│   │   ├── README.md
+│   │   ├── ajax
+│   │   │   └── package.json
+│   │   ├── dist
+│   │   │   ├── bundles
+│   │   │   ├── cjs
+│   │   │   ├── esm
+│   │   │   ├── esm5
+│   │   │   └── types
+│   │   ├── fetch
+│   │   │   └── package.json
+│   │   ├── operators
+│   │   │   └── package.json
+│   │   ├── package.json
+│   │   ├── src
+│   │   │   ├── Rx.global.js
+│   │   │   ├── ajax
+│   │   │   ├── fetch
+│   │   │   ├── index.ts
+│   │   │   ├── internal
+│   │   │   ├── operators
+│   │   │   ├── testing
+│   │   │   ├── tsconfig.base.json
+│   │   │   ├── tsconfig.cjs.json
+│   │   │   ├── tsconfig.cjs.spec.json
+│   │   │   ├── tsconfig.esm.json
+│   │   │   ├── tsconfig.esm5.json
+│   │   │   ├── tsconfig.esm5.rollup.json
+│   │   │   ├── tsconfig.types.json
+│   │   │   ├── tsconfig.types.spec.json
+│   │   │   └── webSocket
+│   │   ├── testing
+│   │   │   └── package.json
+│   │   ├── tsconfig.json
+│   │   └── webSocket
+│   │       └── package.json
+│   ├── shell-quote
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── eslint.config.mjs
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── package.json
+│   │   ├── parse.d.ts
+│   │   ├── parse.js
+│   │   ├── quote.d.ts
+│   │   ├── quote.js
+│   │   ├── security.md
+│   │   ├── test
+│   │   │   ├── comment.js
+│   │   │   ├── env.js
+│   │   │   ├── env_fn.js
+│   │   │   ├── op.js
+│   │   │   ├── parse.js
+│   │   │   ├── quote.js
+│   │   │   └── set.js
+│   │   └── tsconfig.json
+│   ├── slick-carousel
+│   │   ├── CONTRIBUTING.markdown
+│   │   ├── ISSUE_TEMPLATE.md
+│   │   ├── LICENSE
+│   │   ├── Makefile
+│   │   ├── README.markdown
+│   │   ├── bower.json
+│   │   ├── component.json
+│   │   ├── index.html
+│   │   ├── package.json
+│   │   ├── slick
+│   │   │   ├── ajax-loader.gif
+│   │   │   ├── config.rb
+│   │   │   ├── fonts
+│   │   │   ├── slick-theme.css
+│   │   │   ├── slick-theme.less
+│   │   │   ├── slick-theme.scss
+│   │   │   ├── slick.css
+│   │   │   ├── slick.js
+│   │   │   ├── slick.less
+│   │   │   ├── slick.min.js
+│   │   │   └── slick.scss
+│   │   └── slick.jquery.json
+│   ├── source-map-js
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── lib
+│   │   │   ├── array-set.js
+│   │   │   ├── base64-vlq.js
+│   │   │   ├── base64.js
+│   │   │   ├── binary-search.js
+│   │   │   ├── mapping-list.js
+│   │   │   ├── quick-sort.js
+│   │   │   ├── source-map-consumer.d.ts
+│   │   │   ├── source-map-consumer.js
+│   │   │   ├── source-map-generator.d.ts
+│   │   │   ├── source-map-generator.js
+│   │   │   ├── source-node.d.ts
+│   │   │   ├── source-node.js
+│   │   │   └── util.js
+│   │   ├── package.json
+│   │   ├── source-map.d.ts
+│   │   └── source-map.js
+│   ├── string-width
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── license
+│   │   ├── package.json
+│   │   └── readme.md
+│   ├── strip-ansi
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── license
+│   │   ├── package.json
+│   │   └── readme.md
+│   ├── supports-color
+│   │   ├── browser.js
+│   │   ├── index.js
+│   │   ├── license
+│   │   ├── package.json
+│   │   └── readme.md
+│   ├── tailwindcss
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── dist
+│   │   │   ├── chunk-5JIJA4QV.mjs
+│   │   │   ├── chunk-C2OYBFIH.mjs
+│   │   │   ├── chunk-DCG7AFIE.mjs
+│   │   │   ├── colors-C__qRT83.d.ts
+│   │   │   ├── colors.d.mts
+│   │   │   ├── colors.d.ts
+│   │   │   ├── colors.js
+│   │   │   ├── colors.mjs
+│   │   │   ├── default-theme.d.mts
+│   │   │   ├── default-theme.d.ts
+│   │   │   ├── default-theme.js
+│   │   │   ├── default-theme.mjs
+│   │   │   ├── flatten-color-palette.d.mts
+│   │   │   ├── flatten-color-palette.d.ts
+│   │   │   ├── flatten-color-palette.js
+│   │   │   ├── flatten-color-palette.mjs
+│   │   │   ├── lib.d.mts
+│   │   │   ├── lib.d.ts
+│   │   │   ├── lib.js
+│   │   │   ├── lib.mjs
+│   │   │   ├── plugin.d.mts
+│   │   │   ├── plugin.d.ts
+│   │   │   ├── plugin.js
+│   │   │   ├── plugin.mjs
+│   │   │   ├── resolve-config-B4yBzhca.d.ts
+│   │   │   ├── resolve-config-QUZ9b-Gn.d.mts
+│   │   │   └── types-DWdTiksJ.d.mts
+│   │   ├── index.css
+│   │   ├── package.json
+│   │   ├── preflight.css
+│   │   ├── theme.css
+│   │   └── utilities.css
+│   ├── tapable
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── lib
+│   │   │   ├── AsyncParallelBailHook.js
+│   │   │   ├── AsyncParallelHook.js
+│   │   │   ├── AsyncSeriesBailHook.js
+│   │   │   ├── AsyncSeriesHook.js
+│   │   │   ├── AsyncSeriesLoopHook.js
+│   │   │   ├── AsyncSeriesWaterfallHook.js
+│   │   │   ├── Hook.js
+│   │   │   ├── HookCodeFactory.js
+│   │   │   ├── HookMap.js
+│   │   │   ├── MultiHook.js
+│   │   │   ├── SyncBailHook.js
+│   │   │   ├── SyncHook.js
+│   │   │   ├── SyncLoopHook.js
+│   │   │   ├── SyncWaterfallHook.js
+│   │   │   ├── index.js
+│   │   │   └── util-browser.js
+│   │   ├── package.json
+│   │   └── tapable.d.ts
+│   ├── tinyglobby
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── dist
+│   │   │   ├── index.cjs
+│   │   │   ├── index.d.cts
+│   │   │   ├── index.d.mts
+│   │   │   └── index.mjs
+│   │   └── package.json
+│   ├── tree-kill
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── cli.js
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   └── package.json
+│   ├── tslib
+│   │   ├── CopyrightNotice.txt
+│   │   ├── LICENSE.txt
+│   │   ├── README.md
+│   │   ├── SECURITY.md
+│   │   ├── modules
+│   │   │   ├── index.d.ts
+│   │   │   ├── index.js
+│   │   │   └── package.json
+│   │   ├── package.json
+│   │   ├── tslib.d.ts
+│   │   ├── tslib.es6.html
+│   │   ├── tslib.es6.js
+│   │   ├── tslib.es6.mjs
+│   │   ├── tslib.html
+│   │   └── tslib.js
+│   ├── vite
+│   │   ├── LICENSE.md
+│   │   ├── README.md
+│   │   ├── bin
+│   │   │   ├── openChrome.js
+│   │   │   └── vite.js
+│   │   ├── client.d.ts
+│   │   ├── dist
+│   │   │   ├── client
+│   │   │   └── node
+│   │   ├── misc
+│   │   │   ├── false.js
+│   │   │   └── true.js
+│   │   ├── package.json
+│   │   └── types
+│   │       ├── customEvent.d.ts
+│   │       ├── hmrPayload.d.ts
+│   │       ├── hot.d.ts
+│   │       ├── import-meta.d.ts
+│   │       ├── importGlob.d.ts
+│   │       ├── importMeta.d.ts
+│   │       ├── internal
+│   │       └── metadata.d.ts
+│   ├── vite-plugin-full-reload
+│   │   ├── LICENSE.txt
+│   │   ├── README.md
+│   │   ├── dist
+│   │   │   ├── index.cjs
+│   │   │   ├── index.d.cts
+│   │   │   ├── index.d.ts
+│   │   │   └── index.js
+│   │   ├── node_modules
+│   │   │   └── picomatch
+│   │   └── package.json
+│   ├── wrap-ansi
+│   │   ├── index.js
+│   │   ├── license
+│   │   ├── package.json
+│   │   └── readme.md
+│   ├── y18n
+│   │   ├── CHANGELOG.md
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── build
+│   │   │   ├── index.cjs
+│   │   │   └── lib
+│   │   ├── index.mjs
+│   │   └── package.json
+│   ├── yargs
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── browser.d.ts
+│   │   ├── browser.mjs
+│   │   ├── build
+│   │   │   ├── index.cjs
+│   │   │   └── lib
+│   │   ├── helpers
+│   │   │   ├── helpers.mjs
+│   │   │   ├── index.js
+│   │   │   └── package.json
+│   │   ├── index.cjs
+│   │   ├── index.mjs
+│   │   ├── lib
+│   │   │   └── platform-shims
+│   │   ├── locales
+│   │   │   ├── be.json
+│   │   │   ├── cs.json
+│   │   │   ├── de.json
+│   │   │   ├── en.json
+│   │   │   ├── es.json
+│   │   │   ├── fi.json
+│   │   │   ├── fr.json
+│   │   │   ├── hi.json
+│   │   │   ├── hu.json
+│   │   │   ├── id.json
+│   │   │   ├── it.json
+│   │   │   ├── ja.json
+│   │   │   ├── ko.json
+│   │   │   ├── nb.json
+│   │   │   ├── nl.json
+│   │   │   ├── nn.json
+│   │   │   ├── pirate.json
+│   │   │   ├── pl.json
+│   │   │   ├── pt.json
+│   │   │   ├── pt_BR.json
+│   │   │   ├── ru.json
+│   │   │   ├── th.json
+│   │   │   ├── tr.json
+│   │   │   ├── uk_UA.json
+│   │   │   ├── uz.json
+│   │   │   ├── zh_CN.json
+│   │   │   └── zh_TW.json
+│   │   ├── package.json
+│   │   ├── yargs
+│   │   └── yargs.mjs
+│   └── yargs-parser
+│       ├── CHANGELOG.md
+│       ├── LICENSE.txt
+│       ├── README.md
+│       ├── browser.js
+│       ├── build
+│       │   ├── index.cjs
+│       │   └── lib
+│       └── package.json
+├── package-lock.json
+├── package.json
+├── phpunit.xml
+├── project-structure.txt
+├── public
+│   ├── assets
+│   │   ├── 8
+│   │   │   ├── ninja-slider.css
+│   │   │   └── ninja-slider.js
+│   │   ├── bootstrap
+│   │   │   ├── css
+│   │   │   ├── fonts
+│   │   │   └── js
+│   │   ├── bower_components
+│   │   │   ├── Flot
+│   │   │   ├── Ionicons
+│   │   │   ├── PACE
+│   │   │   ├── bootstrap
+│   │   │   ├── bootstrap-colorpicker
+│   │   │   ├── bootstrap-datepicker
+│   │   │   ├── bootstrap-daterangepicker
+│   │   │   ├── chart.js
+│   │   │   ├── ckeditor
+│   │   │   ├── datatables.net
+│   │   │   ├── datatables.net-bs
+│   │   │   ├── fastclick
+│   │   │   ├── font-awesome
+│   │   │   ├── fullcalendar
+│   │   │   ├── jquery
+│   │   │   ├── jquery-knob
+│   │   │   ├── jquery-slimscroll
+│   │   │   ├── jquery-sparkline
+│   │   │   ├── jquery-ui
+│   │   │   ├── jvectormap
+│   │   │   ├── moment
+│   │   │   ├── morris.js
+│   │   │   ├── raphael
+│   │   │   └── select2
+│   │   ├── css
+│   │   │   ├── app.css
+│   │   │   ├── header-user-dropdown.css
+│   │   │   └── style.css
+│   │   ├── dist
+│   │   │   ├── css
+│   │   │   ├── img
+│   │   │   └── js
+│   │   ├── images
+│   │   │   ├── Cloud_storage.svg
+│   │   │   ├── Custom_IT_Solutions.svg
+│   │   │   ├── IT_Tech Support.svg
+│   │   │   ├── Tech_Relocation.svg
+│   │   │   ├── amex.jpg
+│   │   │   ├── banner.png
+│   │   │   ├── check.jpg
+│   │   │   ├── facebook.png
+│   │   │   ├── foo_logo.png
+│   │   │   ├── home.jfif
+│   │   │   ├── insta.png
+│   │   │   ├── left.png
+│   │   │   ├── linkedin.png
+│   │   │   ├── logo.png
+│   │   │   ├── mastercard.jpg
+│   │   │   ├── motherboard.jpeg
+│   │   │   ├── righ.png
+│   │   │   ├── slide.jpg
+│   │   │   ├── slide2.jpeg
+│   │   │   ├── slide3.jpg
+│   │   │   ├── social.png
+│   │   │   ├── twitter.png
+│   │   │   ├── visa.jpg
+│   │   │   └── youtube.png
+│   │   ├── js
+│   │   │   └── app.js
+│   │   ├── phone
+│   │   │   ├── css
+│   │   │   ├── img
+│   │   │   ├── jquery.sortable.js
+│   │   │   └── js
+│   │   ├── plugins
+│   │   │   ├── bootstrap
+│   │   │   ├── bootstrap-slider
+│   │   │   ├── datepicker
+│   │   │   ├── daterangepicker
+│   │   │   ├── flot
+│   │   │   ├── font-awesome
+│   │   │   ├── fullcalendar
+│   │   │   ├── iCheck
+│   │   │   ├── image-puzzle-slider-captcha
+│   │   │   ├── input-mask
+│   │   │   ├── ionslider
+│   │   │   ├── jQueryUI
+│   │   │   ├── jquery
+│   │   │   ├── jquery-3.4.1.js
+│   │   │   ├── pace
+│   │   │   ├── select2
+│   │   │   ├── slick
+│   │   │   └── timepicker
+│   │   └── sass
+│   │       ├── _screen.scss
+│   │       ├── _variables.scss
+│   │       └── app.scss
+│   ├── assets_2
+│   │   ├── css
+│   │   │   ├── hovereffects.css
+│   │   │   ├── styles.css
+│   │   │   └── theme.css
+│   │   ├── fonts
+│   │   │   ├── fonts
+│   │   │   ├── index.html
+│   │   │   ├── lte-ie7.js
+│   │   │   └── style.css
+│   │   ├── img
+│   │   │   ├── about
+│   │   │   ├── ava
+│   │   │   ├── bg-pattern.png
+│   │   │   ├── blog
+│   │   │   ├── clients
+│   │   │   ├── intro
+│   │   │   ├── portfolio
+│   │   │   ├── services
+│   │   │   └── team
+│   │   ├── js
+│   │   │   ├── global.js
+│   │   │   └── portfolio.js
+│   │   └── vendors
+│   │       ├── ace-responsive-menu
+│   │       ├── aos
+│   │       ├── bootstrap
+│   │       ├── carousel.js
+│   │       ├── counters
+│   │       ├── counters.js
+│   │       ├── font-awesome
+│   │       ├── jquery.back-to-top.min.js
+│   │       ├── jquery.migrate.min.js
+│   │       ├── jquery.min.js
+│   │       ├── jquery.smooth-scroll.min.js
+│   │       ├── magnific-popup
+│   │       ├── magnific-popup.js
+│   │       ├── popper.min.js
+│   │       └── slick-carousel
+│   ├── build
+│   │   ├── assets
+│   │   │   ├── ajax-loader-BcnMEykj.gif
+│   │   │   ├── app-BD3Ta_zR.js
+│   │   │   ├── app-BWkdzsur.css
+│   │   │   ├── app-Dm0a3Wn4.css
+│   │   │   ├── fa-brands-400-Bs6tcqqs.woff2
+│   │   │   ├── fa-regular-400-DRN8N0d1.woff2
+│   │   │   ├── fa-solid-900-IAB4Droh.woff2
+│   │   │   ├── fa-v4compatibility-CErXDOsT.woff2
+│   │   │   ├── fonts-C9MNnjVw.css
+│   │   │   ├── instrument-sans-400-normal-D1W7dsQl.woff
+│   │   │   ├── instrument-sans-400-normal-DRC__1Mx.woff2
+│   │   │   ├── instrument-sans-500-normal-Dk9ku72i.woff2
+│   │   │   ├── instrument-sans-500-normal-Z6ESRlEs.woff
+│   │   │   ├── instrument-sans-600-normal-B7fBEWYG.woff2
+│   │   │   ├── instrument-sans-600-normal-B9e8oLYv.woff
+│   │   │   ├── slick-Bi9J8BMx.eot
+│   │   │   ├── slick-BlUtDIuC.woff
+│   │   │   ├── slick-BlzDm7g2.svg
+│   │   │   └── slick-DWzRxEMf.ttf
+│   │   ├── fonts-manifest.json
+│   │   └── manifest.json
+│   ├── css
+│   │   └── filament
+│   │       └── filament
+│   ├── favicon.ico
+│   ├── fonts
+│   │   ├── MOMCAKE-Bold.otf
+│   │   ├── atlassol.ttf
+│   │   └── filament
+│   │       └── filament
+│   ├── fonts-manifest.dev.json
+│   ├── hot
+│   ├── images
+│   │   └── captcha
+│   │       ├── Pic0.jpg
+│   │       ├── Pic1.jpg
+│   │       ├── Pic2.jpg
+│   │       ├── Pic3.jpg
+│   │       └── Pic4.jpg
+│   ├── index.php
+│   ├── js
+│   │   └── filament
+│   │       ├── actions
+│   │       ├── filament
+│   │       ├── forms
+│   │       ├── notifications
+│   │       ├── schemas
+│   │       ├── support
+│   │       ├── tables
+│   │       └── widgets
+│   ├── robots.txt
+│   ├── storage -> /home/umeralamlhr/JMOR_laravel/storage/app/public
+│   └── uploads
+│       ├── Cloud_storage.svg
+│       ├── Custom_IT_Solutions.svg
+│       ├── Cyber Security.jpg
+│       ├── Firewall.jpg
+│       ├── IT_Tech Support.svg
+│       ├── Man in Warehouse with Mask.jpg
+│       ├── Tech_Relocation.svg
+│       ├── blog
+│       │   ├── 01M11PNKDK4DN67ZQ2H30KER2H.jpeg
+│       │   ├── 01M11PSJJ7545MHKRR6J6J62HQ.jpeg
+│       │   ├── 01M25ZPGJ5PRWR42Q2EBSXMJ3A.jpg
+│       │   ├── 1001755478JMOR Your Trusted Technology Partner.jpg
+│       │   ├── 1008211963PC Support.jpg
+│       │   ├── 1011602786PC Support 3.png
+│       │   ├── 1023110411ING_33594_271367.jpg
+│       │   ├── 1024587763Password programs with a cost security.jpg
+│       │   ├── 1039792489What happens if you don't Backup your Data.jpg
+│       │   ├── 1058932426sE-480x290.jpg
+│       │   ├── 1059003223PC Support 2.png
+│       │   ├── 1060266692Technology Being Used to Stalk.png
+│       │   ├── 110630354PC Support 6.jpg
+│       │   ├── 1115101249antivirus.jpg
+│       │   ├── 112207609Why Business WiFi Still Struggles.jpg
+│       │   ├── 1132354717PC Support 7.jpg
+│       │   ├── 1137486646Why do People Still Want to Work from Home.jpg
+│       │   ├── 1144043729PC Support.jpg
+│       │   ├── 1162465642PC Support 5.jpg
+│       │   ├── 1172877834Blog Image 3 Low Res.jpg
+│       │   ├── 1176483152Blog Image Low Res 7.jpg
+│       │   ├── 1180246098PC Support.jpg
+│       │   ├── 1195343475Evolution of the Dishwasher.png
+│       │   ├── 1199759231PC Support 3.png
+│       │   ├── 1207002400PC Support 6.jpg
+│       │   ├── 1207672036Blog Image 2 Lower Res.jpg
+│       │   ├── 1230569648JMOR DEI.jpg
+│       │   ├── 1236727996Unlocking Technology to Make Your Thanksgiving Outstanding.jpg
+│       │   ├── 1244401866JMOR PC Technician Support.jpg
+│       │   ├── 1244616672PC Support.jpg
+│       │   ├── 1245240963HIPAA Technology Compliance.jpg
+│       │   ├── 1251706863JMOR FL Trusted Partner.jpg
+│       │   ├── 1259199160Blog Image 3.png
+│       │   ├── 1259892317Why do People Still Want to Work from Home.jpg
+│       │   ├── 1262132221PC Support 5.jpg
+│       │   ├── 1298709787Blog Image 2.png
+│       │   ├── 1301673258Blog Image 2.png
+│       │   ├── 1313624148PC Support 1.jpg
+│       │   ├── 1318311074PC Support 7.jpg
+│       │   ├── 1324051444I7 & AMD.jpg
+│       │   ├── 1327626270Mr.-George-Rochette.jpg
+│       │   ├── 1351559902What is CHATGPT.jpg
+│       │   ├── 135988070PC Support 5.jpg
+│       │   ├── 1363521252Recurring IT Problems in the Office.jpg
+│       │   ├── 1363732455Technology downtime impacts North Jersey businesses.jpg
+│       │   ├── 1372004468Von Neumann vs Harvard Arcitecture.jpg
+│       │   ├── 1379248356iPhone 15 Series (Which will you Choose).jpg
+│       │   ├── 140981377PC Support 3.png
+│       │   ├── 1415194870JMOR Keep Your Business Connected.jpg
+│       │   ├── 14181795PC Support 6.jpg
+│       │   ├── 1424672552PC Support 5.jpg
+│       │   ├── 1429568185Using Robotic Process Automation to Increase Profits.jpg
+│       │   ├── 143380384PC Support 7.jpg
+│       │   ├── 1435549923What is a USB.jpg
+│       │   ├── 1436590600Bad Actors After your Data.png
+│       │   ├── 1444115968PC Support.jpg
+│       │   ├── 1463063694PC Support 7.jpg
+│       │   ├── 1478322961Blog Image Low Res 6.jpg
+│       │   ├── 1479229190Still Using Break Fix with your Technology.jpg
+│       │   ├── 1483638810A new spin on Speech Recognition using AI.jpg
+│       │   ├── 1489996497Your paragraph text.jpg
+│       │   ├── 1493717465Protect Your Data Protect Your Future.jpg
+│       │   ├── 1510713202PC Support 4.jpg
+│       │   ├── 1511325794Blog Image Low Res 5.jpg
+│       │   ├── 1525708065website.jpg
+│       │   ├── 152609401PC Support 1.jpg
+│       │   ├── 1555965024Introduction to Understanding Robotic Arms.jpg
+│       │   ├── 1567544887JMOR Jan 21 Keynote Picture 2.jpg
+│       │   ├── 1612536340AI-Powered Innovations Revving Up the Automotive Industry.jpg
+│       │   ├── 1618196069jmore-no-image.jpg
+│       │   ├── 1635023681Cloud Computing & Network Security.jpg
+│       │   ├── 1635517475Slow Network Homes and Businesess North Jersey.jpg
+│       │   ├── 1638798328PC Support 2.png
+│       │   ├── 1641156784Blog Image 1 Lower Res.jpg
+│       │   ├── 165288946PC Support 4.jpg
+│       │   ├── 1653046162Network issues in North Jersey.jpg
+│       │   ├── 1659480971JMOR AI Keynote Photo 1.jpg
+│       │   ├── 1661901805PC Support 5.jpg
+│       │   ├── 1666113789JMOR Serving Bergen Morris Essex and Beyond.jpg
+│       │   ├── 1677299944The AI Plot thickens as Actors Fight for Control over their Digital Replicas.png
+│       │   ├── 1689645949PC Support.jpg
+│       │   ├── 1693760013PC Support 2.png
+│       │   ├── 1696239031Blog Image 1.png
+│       │   ├── 1696465632A New Spin on Speech Recognition using AI.jpg
+│       │   ├── 1706367936PC Support 6.jpg
+│       │   ├── 1715708744Exploring the Technology of AI And Metaverses.jpg
+│       │   ├── 1718526315PC Support 3.png
+│       │   ├── 1721738216Where did Air Conditioning Come from.png
+│       │   ├── 1731176407Why do People Still Want to Work from Home.jpg
+│       │   ├── 173794418PC Support 6.jpg
+│       │   ├── 1743649111JMOR Cyber Security Services.jpg
+│       │   ├── 1751824489Can you Find me a Parking Space.png
+│       │   ├── 1756461690VAPING.jpg
+│       │   ├── 175966755Blog Image 1.png
+│       │   ├── 1768122244PC Support 5.jpg
+│       │   ├── 1768321589Blog Image 5.png
+│       │   ├── 1769376675AI Tech for Halloween.jpg
+│       │   ├── 1780725984jmore-no-image.jpg
+│       │   ├── 1809568202Business Augmented Reality.jpg
+│       │   ├── 1827059008How to Program A Robot Arm.jpg
+│       │   ├── 1836473165PC Support 5.jpg
+│       │   ├── 184616001PC Support.jpg
+│       │   ├── 1852836429PC Support 2.png
+│       │   ├── 1861484303PC Support 5.jpg
+│       │   ├── 1866669180PC Support 4.jpg
+│       │   ├── 1872053678Blog Image Low Res 4.jpg
+│       │   ├── 1872790182PC Support 2.png
+│       │   ├── 1873250844PC Support in Franklin Lakes, NJ.jpg
+│       │   ├── 1873984468GoogleYouTube.png
+│       │   ├── 1874371191PC Support 2.png
+│       │   ├── 1887424482Evolution of Elevators.png
+│       │   ├── 1894668741PC Support 1.jpg
+│       │   ├── 1904053996PC Support 7.jpg
+│       │   ├── 1928507863Blog Image 6.png
+│       │   ├── 1938629918PC Support 5.jpg
+│       │   ├── 1981093497Modern workspace with Wi-Fi connectivity.jpg
+│       │   ├── 1987221329Blog Image Low Res 4.jpg
+│       │   ├── 1992314858JMOR AI Keynote Photo 1 Jan 22.jpg
+│       │   ├── 2016013722Smart beehive in tech-filled meadow.jpg
+│       │   ├── 2016993384PC Support 2.png
+│       │   ├── 2032483147Blog Image 5.png
+│       │   ├── 2042941055Evolution of the Pipe Organ.png
+│       │   ├── 2055181119Evolution of the Ice Rink.jpg
+│       │   ├── 2058439513How Technology has Technology has Changed my Life.jpg
+│       │   ├── 2060771353PC Support 7.jpg
+│       │   ├── 20647941PC Support 5.jpg
+│       │   ├── 207810583Blog Image 6.png
+│       │   ├── 2081705818PC Support 5.jpg
+│       │   ├── 2081852162The ATM Story (2700 × 1000 px).png
+│       │   ├── 2082963943PC Support 1.jpg
+│       │   ├── 2084977476PC Support 5.jpg
+│       │   ├── 2092149316backup.jpg
+│       │   ├── 2092461461Blog Image 3.png
+│       │   ├── 2098561933Cyber Security.jpg
+│       │   ├── 2102986587Script Kiddie are after your DATA.jpg
+│       │   ├── 2128353233PC Support.jpg
+│       │   ├── 2129738504Bee Life and How AI will Protect Them.jpg
+│       │   ├── 2132354554Hiden Cost of Cheap IT Support.jpg
+│       │   ├── 226013127JMOR AI Keynote Photo #1 Jan 22.jpg
+│       │   ├── 233474724PC Upgrade installing SSD Drive.jpg
+│       │   ├── 233930775television-is-dead.jpg
+│       │   ├── 244244378PC Support 3.png
+│       │   ├── 252353490PC Support 7.jpg
+│       │   ├── 253558841Unpacking tech in a new home office.jpg
+│       │   ├── 253952735Blog Image 6.png
+│       │   ├── 271181486PC Support 5.jpg
+│       │   ├── 277741387EU is going to re-write Internet Rules.jpg
+│       │   ├── 286576909PC Support 3.png
+│       │   ├── 302460572PC Support 5.jpg
+│       │   ├── 309645107PC Support 6.jpg
+│       │   ├── 315194149PC Support 4.jpg
+│       │   ├── 319082144PC Support 3.png
+│       │   ├── 320531082RTX 4090.jpg
+│       │   ├── 346744297Save on Printing Costs.jpg
+│       │   ├── 350864592PC Support 5.jpg
+│       │   ├── 353804125Trust Nothing & Validate Everything.jpg
+│       │   ├── 366861595PC Support 3.png
+│       │   ├── 368517903JMOR AI Keynote Photo 1 Jan 22.jpg
+│       │   ├── 37217498Introduction to Understanding Robotic Arms.jpg
+│       │   ├── 444654877Fix your slow internet today!.jpg
+│       │   ├── 447922538Farmers Turning to AI to Milk their Cows.jpg
+│       │   ├── 448502106Blog Image Low Res 4.jpg
+│       │   ├── 46223654Blog Image Low Res 5.jpg
+│       │   ├── 470840919PC Support 7.jpg
+│       │   ├── 486328343PC Support 6.jpg
+│       │   ├── 510102733PC Support 4.jpg
+│       │   ├── 521825577placeholder-image.png
+│       │   ├── 525522770Understanding Color Laser Printers.png
+│       │   ├── 534568181SURFING THE INTERNET.png
+│       │   ├── 538459557Johns Review of iPhone 15 Family.jpg
+│       │   ├── 54249905Blog Image Low Res 6.jpg
+│       │   ├── 54305576PC Support 5.jpg
+│       │   ├── 544647929Cable Company Have your Over Hot Coals.png
+│       │   ├── 552239795PC Support 2.png
+│       │   ├── 56435658Blog Image Low Res 7.jpg
+│       │   ├── 564574716Home and Business Technology Nightmares.jpg
+│       │   ├── 578661212Blog Image 2.png
+│       │   ├── 580111923Can artificial intelligence technology threaten your childs safety.jpg
+│       │   ├── 590862378Building community through technology.png
+│       │   ├── 594673817PC Support 5.jpg
+│       │   ├── 599996497PC Support 7.jpg
+│       │   ├── 608532626PC Support.jpg
+│       │   ├── 611311463Blog Image 1.png
+│       │   ├── 612633254PC Support.jpg
+│       │   ├── 631843406Blog Image 1 Lower Res.jpg
+│       │   ├── 658627683How Hot Water Heaters Have Evolved.png
+│       │   ├── 6689IT-Tech-support.jpg
+│       │   ├── 69756452PC Support 3.png
+│       │   ├── 699275682PC Support 6.jpg
+│       │   ├── 700335981images.jpeg
+│       │   ├── 702839484PC Support 4.jpg
+│       │   ├── 705863889Evolution of Elevators.png
+│       │   ├── 71190541PC Support 6.jpg
+│       │   ├── 717214893PC Support 5.jpg
+│       │   ├── 717486613PC Support 6.jpg
+│       │   ├── 73014927PC Support.jpg
+│       │   ├── 738157582Wifi-5-or-Wifi-6.jpg
+│       │   ├── 749360549PC Support 3.png
+│       │   ├── 758838505Where did Ice Makers Come From.png
+│       │   ├── 766279112PC Support 2.png
+│       │   ├── 778828861Blog Image 6.png
+│       │   ├── 795345357Blog Image 7.png
+│       │   ├── 800104328PC Support.jpg
+│       │   ├── 807794902DNS Hostnames Graphic.jpg
+│       │   ├── 812461016Using Robotic Process Automation to Increase Profits.jpg
+│       │   ├── 825116910A new spin on Speech Recognition using AI.jpg
+│       │   ├── 827405979DJs & New AI Hosts.png
+│       │   ├── 832116669PC Support 5.jpg
+│       │   ├── 843077238Evolution of the Financial Industry from Grain Banks to AI Banks.jpg
+│       │   ├── 846967694The Evolution of Calculators.png
+│       │   ├── 847877796PC Support 2.png
+│       │   ├── 851768828What is a Motor.png
+│       │   ├── 854732635iPhone 15 Series.jpg
+│       │   ├── 863271494Business IT Support NJ.png
+│       │   ├── 863279154PC Support 4.jpg
+│       │   ├── 866362876PC Support 7.jpg
+│       │   ├── 866797339Evolution of NC, CNC & DNC.jpg
+│       │   ├── 872057217Four Basic Functionalities of AI.jpg
+│       │   ├── 873462521Evolution of AI & Biometrics.jpg
+│       │   ├── 892579992Frustrated with wires and your iPhone.jpg
+│       │   ├── 919083986PC Support 4.jpg
+│       │   ├── 921835754IT support for modern businesses.jpg
+│       │   ├── 941719609PC Support 2.png
+│       │   ├── 944211508Streetlight may be replaced.jpg
+│       │   ├── 947440174PC Support 7.jpg
+│       │   ├── 948859823Why do People Still Want to Work from Home.jpg
+│       │   ├── 950737651PC Support 7.jpg
+│       │   ├── 96237531WhenPowerGoesOutPCwithPapers.png
+│       │   ├── 970204744Blog Image 2 Lower Res.jpg
+│       │   ├── 985180202Blog Image 2.png
+│       │   ├── 987436680Hacktivists are After your Data.jpg
+│       │   ├── 991304586Blog Image 2.png
+│       │   └── 994845113Blog Image 6.png
+│       ├── brand_guidelines
+│       │   ├── 1728414540jmorbrochure-frontcover.jpg
+│       │   └── 18525Hot-Neons-Gradients-Brand-Guidelines-Presentation.jpg
+│       ├── case_studies
+│       │   ├── 13390server-security-consultant.jpg
+│       │   ├── 14703server-security-consultant.jpg
+│       │   └── 25417server-security-consultant.jpg
+│       ├── category_radio_show
+│       │   └── 01M171ET75WBPA79DQRC22NN13.jpg
+│       ├── events
+│       │   ├── 01M11PT9328NJRRSMJ82WDCAXA.png
+│       │   ├── 127229931531.png
+│       │   ├── 1629260735John-Tues-1oam-WTBQ-WGHT.jpg
+│       │   ├── 1712817813OrbitalMedia Chili Cook Off.PNG
+│       │   ├── 1986465318JMOR White Logo.png
+│       │   ├── 2068526458JCM Academy.PNG
+│       │   ├── 4660Upcoming-eventsiStock-978975308-e1564610924151-1024x627.jpg
+│       │   └── 810075701JMOR White Logo.png
+│       ├── gift_card
+│       │   ├── 01M2ZBBWCXSXJFZX8K5B40NXK3.jpg
+│       │   └── 01M2ZBNCKSG1ZH9XR8B4WC0Y5P.jfif
+│       ├── media_resouces
+│       │   └── 14766tv-camera.jpg
+│       ├── news
+│       │   ├── 01M11RHB6ZH9Z3SA208577ZEX2.jpeg
+│       │   ├── 1268922.jpg
+│       │   ├── 18612DowntownDusk_chamber-website.jpg
+│       │   ├── 20091Franklin Lakes Throws Party for Troop #97947 for Winning Our Tree Idea Contest.jpg
+│       │   ├── 20460download.jpg
+│       │   ├── 20804img_419835.png
+│       │   ├── 30537download.jpg
+│       │   ├── 557download.jpg
+│       │   └── 8791Franklin.jpg
+│       ├── nj-custom-built-solutions.jpg
+│       ├── nj-it-tech-support-services.jpg
+│       ├── pages
+│       │   ├── 01M0R8QG5A67A22MQ1VKWXAB9F.jpg
+│       │   ├── 01M1H3G6W6TY70YEFVMA78VXSP.jpg
+│       │   ├── 103824392JMOR White Logo.png
+│       │   ├── 1065250716technical-relocation-service.jpg
+│       │   ├── 1101928134Tiktok Elon.png
+│       │   ├── 1146644028NJGL .png
+│       │   ├── 1235246975Corporate IT Services Banner.jpg
+│       │   ├── 1308235831JMOR Tech Byte-Size Blunders.jpg
+│       │   ├── 1362602870The JMOR Connection, Inc. Technology Guides & Resources.jpg
+│       │   ├── 1391942158JMOR AI.jpg
+│       │   ├── 1401821031Man in Warehouse with Mask.jpg
+│       │   ├── 1411005178JMOR Store LogoV2.png
+│       │   ├── 1441422.jpg
+│       │   ├── 1581759437JMOR Store Logo.png
+│       │   ├── 1607795767White Background JMOR Logo.png
+│       │   ├── 1635847142Firewall.jpg
+│       │   ├── 1636646251NJGL  (1).png
+│       │   ├── 1653698952JMOR NGLCC Ad OutinJersey Print Ad.png
+│       │   ├── 1662998074JMOR White Logo.png
+│       │   ├── 1715462809nj-custom-built-solutions.jpg
+│       │   ├── 1741446559nj-it-tech-support-services.jpg
+│       │   ├── 1760314426JMOR Store LogoV2.png
+│       │   ├── 179244014LGBT Technology Services  (1920 x 1080 px).png
+│       │   ├── 1809746584John.png
+│       │   ├── 181387441JMOR_Logo_FINAL_rgb-01.jpg
+│       │   ├── 1824853974JMOR White Logo.png
+│       │   ├── 1860828277Firewall.jpg
+│       │   ├── 1906377705JMOR Store LogoV2.png
+│       │   ├── 2019466739covid work from home.jpg
+│       │   ├── 205428145Testing3.jpg
+│       │   ├── 207854479JMOR DEI.jpg
+│       │   ├── 2115365245White Background JMOR Logo.png
+│       │   ├── 2138722375Testing.jpg
+│       │   ├── 2413422.jpg
+│       │   ├── 272770422JMOR Store Logo.png
+│       │   ├── 312881292Zoolander.png
+│       │   ├── 343528869s.jpg
+│       │   ├── 384098893s.jpg
+│       │   ├── 463277438JMOR Store Logo.png
+│       │   ├── 53724440JMOR White Logo.png
+│       │   ├── 601301789image.png
+│       │   ├── 610890514Elon.png
+│       │   ├── 666568440White Background JMOR Store Logo.png
+│       │   ├── 74891152White Background JMOR Logo.png
+│       │   ├── 819382798networksecurity.jpg
+│       │   ├── 883061370White Background JMOR Logo.png
+│       │   ├── 980966767JMOR Tech Talk Show Icon.jpg
+│       │   ├── 993442799JMOR Store Logo.png
+│       │   └── 994197202JMOR Mission.jpg
+│       ├── press-releases
+│       │   └── 01M11PTY922WE15G1KNRS6MB3C.webp
+│       ├── press_releases
+│       │   ├── 1336274168placeholder-image.png
+│       │   ├── 1384108123placeholder-image.png
+│       │   ├── 17231write-a-300-to-500-search-engine-optimized-press-release.jpg
+│       │   ├── 2108662782JMOR Tech Talk Unboxing Dyson V7 Motor Head Thumbnail_1.1.1.jpg
+│       │   ├── 878652785JCM Photo 02012022.jpg
+│       │   └── 891483514placeholder-image.png
+│       ├── radio_show
+│       │   ├── 01M171BKMRT5WC1G7XMTG7K9TK.jpg
+│       │   ├── 1011622467Radio Studio Image.jpg
+│       │   ├── 1013569724Radio Studio Image.jpg
+│       │   ├── 101378147vxf129YTjU.png
+│       │   ├── 1018083060JMOR Tech talk November 11th Screenshot.PNG
+│       │   ├── 1061805100AC Review Thumbnail .jpg
+│       │   ├── 1063854315JMOR Tech talk October 21st Screenshot.PNG
+│       │   ├── 1114565484Kevin Craig JMOR Tech Talk Show.JPG
+│       │   ├── 1131617818The JMOR Tech Talk Show.jpg
+│       │   ├── 1134502995Unboxing the Arctic AIRTower.png
+│       │   ├── 1146214690iPhone 13 Review Thumbnail.jpg
+│       │   ├── 1147566049JMOR Tech talk February 17th Screenshot.PNG
+│       │   ├── 1149090437lists_stroke.png
+│       │   ├── 1162173713JMOR Tech talk October 28th Screenshot.PNG
+│       │   ├── 116284404imagetools0.jpg
+│       │   ├── 1172661696search_stroke.png
+│       │   ├── 1183202138JMOR Tech Talk September 30th ScreenShot.PNG
+│       │   ├── 1187883395search_stroke.png
+│       │   ├── 1202437638JMOR Tech talk October 14th Screenshot.PNG
+│       │   ├── 1208327524JMOR Tech Talk Show.jpg
+│       │   ├── 1221400098JMOR Tech Talk  Show.jpg
+│       │   ├── 1223632393IPhone13 Pro Max Thumbnail.jpg
+│       │   ├── 1277952299JMOR Tech talk February 10th Screenshot.PNG
+│       │   ├── 1303511513JMOR Tech talk March 3rd Screenshot.PNG
+│       │   ├── 1310838481The JMOR Tech Talk Show.jpg
+│       │   ├── 1314781101JMOR Tech Talk August 5th Screenshot.png
+│       │   ├── 1348117435JMOR Tech Talk August 19th Screenshot.PNG
+│       │   ├── 1361037719JMOR Tech talk October 7th Screenshot.PNG
+│       │   ├── 1372025766pets-g4664f534b_1920.jpg
+│       │   ├── 1409903206Radio Studio Image.jpg
+│       │   ├── 1427886113FBAd1.jpg
+│       │   ├── 1433335469Ott Light Review Thumbnail.jpg
+│       │   ├── 1451165116JMOR Tech talk November 25th Screenshot.PNG
+│       │   ├── 1451603227JMOR Tech talk January 27th Screenshot.PNG
+│       │   ├── 1466682123Radio Studio Image.jpg
+│       │   ├── 1468000435NoPcs.png
+│       │   ├── 1483199131pets-g4664f534b_1920.jpg
+│       │   ├── 1502797247Radio Studio Image.jpg
+│       │   ├── 1504917810flat2.jpg
+│       │   ├── 1507544760JMOR Tech talk December 30th Screenshot.PNG
+│       │   ├── 1520846365search_stroke.png
+│       │   ├── 1522483206JMOR Tech Talk.jpg
+│       │   ├── 1541958606The JMOR Tech Talk Show.jpg
+│       │   ├── 1549483557Lenovo Thinkcentre M070Q Unboxing.jpg
+│       │   ├── 1550989838photo-1556196148-1fb724238998.jpg
+│       │   ├── 1551694221The JMOR Tech Talk Show.jpg
+│       │   ├── 1565798626search_stroke.png
+│       │   ├── 1594297122JMOR Tech talk March 10th Screenshot.PNG
+│       │   ├── 161720481JMOR Tech Talk  Show.jpg
+│       │   ├── 1624951738World of Ability Logo.jpg
+│       │   ├── 1656237277Radio Studio Image.jpg
+│       │   ├── 1683162147Radio Studio Image.jpg
+│       │   ├── 1691743675The JMOR Tech Talk Show.jpg
+│       │   ├── 1709828995NoPcs.png
+│       │   ├── 1739974008Tzumi LED Light Thumbnail.jpg
+│       │   ├── 1747591035JMOR Tech talk November 18th Screenshot.PNG
+│       │   ├── 175772932arctic air review thumbnail.png
+│       │   ├── 1760126661Sunny in Philly.png
+│       │   ├── 1764404408Radio Studio Image.jpg
+│       │   ├── 1768336508JMOR Tech Talk  Show.jpg
+│       │   ├── 1830253956JMOR Tech Talk  Show.jpg
+│       │   ├── 1832804334John C Morley Shock Your Potential.jpg
+│       │   ├── 1846674963browser.png
+│       │   ├── 1854126592The JMOR Tech Talk Show.jpg
+│       │   ├── 1879731700about-img-2.png
+│       │   ├── 1902955548nose.png
+│       │   ├── 1923511682browser.png
+│       │   ├── 1925561778The JMOR Tech Talk Show.jpg
+│       │   ├── 1942989786Holy stone thumbnail 10.32.57 AM.png
+│       │   ├── 195256372The JMOR Tech Talk Show.jpg
+│       │   ├── 1952812514JMOR Tech Talk September 23rd Capture.PNG
+│       │   ├── 1954423262NetGear PLW1000 Review.jpg
+│       │   ├── 1959027793JMOR Tech Talk Unboxing Dyson V7 Motor Head Thumbnail_1.1.1.jpg
+│       │   ├── 197354352JMOR Tech Talk Show 2020 E6.jpg
+│       │   ├── 1976384546JMOR Tech talk January 20th Screenshot.PNG
+│       │   ├── 1979168671Zoolander.png
+│       │   ├── 1984458008FBAd1.jpg
+│       │   ├── 1987917596about-img-2.png
+│       │   ├── 2010686250BOSCH Dishwasher Review Thumbnail_.jpg
+│       │   ├── 2016246145FBAd1.jpg
+│       │   ├── 2029722652Radio Studio Image.jpg
+│       │   ├── 2039407765arctic air review thumbnail.png
+│       │   ├── 204124316about-img-2.png
+│       │   ├── 2053628703JMOR Tech Talk Show April 22 Dr. Michael Nuccitelli.JPG
+│       │   ├── 2069935245Netgear PL1000 Thumbnail.jpg
+│       │   ├── 2071972828Radio Studio Image.jpg
+│       │   ├── 2095206037Green Screen Thumbnail.jpg
+│       │   ├── 209696825The JMOR Tech Talk Show.jpg
+│       │   ├── 211479177GVM Light Unboxing.jpg
+│       │   ├── 2123914011JMOR Tech talk February 3rd Screenshot.PNG
+│       │   ├── 2130272552Radio Studio Image.jpg
+│       │   ├── 2139492360JMOR Tech talk December 23rd Screenshot.PNG
+│       │   ├── 22788132The JMOR Tech Talk Show.jpg
+│       │   ├── 243369924GVM Light Unboxing.jpg
+│       │   ├── 249806404JMOR Tech talk December 2nd Screenshot.PNG
+│       │   ├── 258908273JMOR Tech talk December 16th Screenshot.PNG
+│       │   ├── 27379Podcast-microphone-large-e1556273220213.jpg
+│       │   ├── 288943087The JMOR Tech Talk Show.jpg
+│       │   ├── 308831693120-1206296_jigsaw-puzzle-a4-5-x-transparent-background-png.png
+│       │   ├── 3151041831551694221The JMOR Tech Talk Show.jpg
+│       │   ├── 315698693photo-1556196148-1fb724238998.jpg
+│       │   ├── 335330747Dyson V7 Review Thumbnail_1.1.1.jpg
+│       │   ├── 34400814Radio Studio Image.jpg
+│       │   ├── 344404226Testing.jpg
+│       │   ├── 382732912JMOR Tech talk January 6th Screenshot.PNG
+│       │   ├── 384399765JMOR Tech Talk Show April 29 Dr. Michael Nuccitelli.JPG
+│       │   ├── 400164203JMOR Tech Talk  Show.jpg
+│       │   ├── 429483211Radio Studio Image.jpg
+│       │   ├── 434526797imagetools1.jpg
+│       │   ├── 450654367The JMOR Tech Talk Show.jpg
+│       │   ├── 477259347209696825The JMOR Tech Talk Show.jpg
+│       │   ├── 482525710Radio Studio Image.jpg
+│       │   ├── 484714875JMOR Tech talk November 4th Screenshot.PNG
+│       │   ├── 501666231JMOR Tech talk February 24th Screenshot.PNG
+│       │   ├── 535275537BOSCH Dish Washer Thumbnail.jpg
+│       │   ├── 542025248The JMOR Tech Talk Show.jpg
+│       │   ├── 547218609Holy stone thumbnail 10.32.57 AM.png
+│       │   ├── 600565411Swingline Electric Stapler  Thumbnail.jpg
+│       │   ├── 628735029Radio Studio Image.jpg
+│       │   ├── 631960331photo-1556196148-1fb724238998.jpg
+│       │   ├── 63978349thumbnail.png
+│       │   ├── 656886573Testing2.jpg
+│       │   ├── 672880237Radio Studio Image.jpg
+│       │   ├── 683010998pets-g4664f534b_1920.jpg
+│       │   ├── 688101804MIUFLY Body Cam Unboxing Thumbnail.jpg
+│       │   ├── 688915398Lenovo P330 Unboxing.jpg
+│       │   ├── 699506210Bonsaii 3S30.JPG
+│       │   ├── 70648892Netgear PL1000 Thumbnail.jpg
+│       │   ├── 738127711NoPcs.png
+│       │   ├── 756198618Radio Studio Image.jpg
+│       │   ├── 758354148What's Your Story.JPG
+│       │   ├── 767702007Sunny in Philly.png
+│       │   ├── 77777223Optima 20 Hole Puncher.jpg
+│       │   ├── 7889659531551694221The JMOR Tech Talk Show.jpg
+│       │   ├── 789751645KAJ Master Class.JPG
+│       │   ├── 792589254MisFitNation Podcast Thumbnail.PNG
+│       │   ├── 799631691Green Screen Thumbnail.jpg
+│       │   ├── 810137849JMOR Tech Talk 1 Show Thumbnail_1.1.1.jpg
+│       │   ├── 812189970Tzumi Color Galaxy Projection Light Thumbnail.jpg
+│       │   ├── 814053838JMOR Tech talk December 9th Screenshot.PNG
+│       │   ├── 81609826Radio Studio Image.jpg
+│       │   ├── 819521465JMOR Tech Talk August 5th Screenshot.png
+│       │   ├── 830374313thumbnail at 1.43.52 AM.png
+│       │   ├── 845393411search_stroke.png
+│       │   ├── 900714674The JMOR Tech Talk Show.jpg
+│       │   ├── 954877388Bonsaii 3S30 Bonsaii Shredder Review.jpg
+│       │   ├── 957517278FBAd1.jpg
+│       │   ├── 959791568JMOR Tech talk January 13th Screenshot.PNG
+│       │   ├── 977966707Radio Studio Image.jpg
+│       │   └── 978079628thumbnail coast light review.png
+│       ├── random_acts_of_kindness
+│       │   ├── 8745Balloon-bouquet-1.jpg
+│       │   ├── Pic0.jpg
+│       │   ├── Pic1.jpg
+│       │   ├── Pic2.jpg
+│       │   ├── Pic3.jpg
+│       │   └── Pic4.jpg
+│       ├── recommended
+│       │   ├── 19270images.jpg
+│       │   ├── 2010114272placeholder-image.png
+│       │   ├── 894767871placeholder-image.png
+│       │   └── 962803450Dyson V7 Motor Head.jpg
+│       ├── service
+│       │   └── 01M170Z8DD41M5WC1NQY8J332N.jpg
+│       ├── slider
+│       │   └── 01M170VSDE20N8CGC7NPHZ99Z2.jpg
+│       └── technical-relocation-service.jpg
+├── resources
+│   ├── css
+│   │   ├── app.css
+│   │   └── custom.css
+│   ├── js
+│   │   └── app.js
+│   ├── lang
+│   │   ├── en
+│   │   │   ├── blog.php
+│   │   │   ├── category.php
+│   │   │   ├── global.php
+│   │   │   ├── header.php
+│   │   │   ├── home.php
+│   │   │   ├── latest.php
+│   │   │   ├── register.php
+│   │   │   └── register_error.php
+│   │   ├── mk
+│   │   │   ├── category.php
+│   │   │   ├── header.php
+│   │   │   ├── home.php
+│   │   │   ├── latest.php
+│   │   │   ├── listing.php
+│   │   │   ├── register.php
+│   │   │   └── register_error.php
+│   │   └── vendor
+│   │       └── filament-two-factor-authentication
+│   └── views
+│       ├── admin
+│       │   ├── auth
+│       │   ├── giftcard_invoice_print.blade.php
+│       │   ├── invoice_print.blade.php
+│       │   └── mail
+│       ├── app.blade.php
+│       ├── components
+│       │   ├── footer.blade.php
+│       │   └── header.blade.php
+│       ├── dashboard
+│       │   ├── giftcard.blade.php
+│       │   ├── giftcard_invoice.blade.php
+│       │   ├── index.blade.php
+│       │   ├── invoice.blade.php
+│       │   ├── orders.blade.php
+│       │   ├── partials
+│       │   ├── settings.blade.php
+│       │   ├── settings_add.blade.php
+│       │   ├── testimonial.blade.php
+│       │   └── testimonial_add.blade.php
+│       ├── filament
+│       │   ├── infolists
+│       │   └── pages
+│       ├── frontend
+│       │   ├── ajaxv.blade.php
+│       │   ├── blog.blade.php
+│       │   ├── blog_detail.blade.php
+│       │   ├── brand_guidelines.blade.php
+│       │   ├── brand_guidelines_detail.blade.php
+│       │   ├── cart.blade.php
+│       │   ├── case_studies.blade.php
+│       │   ├── case_studies_detail.blade.php
+│       │   ├── category.blade.php
+│       │   ├── category_radio_show.blade.php
+│       │   ├── checkout-sucess.blade.php
+│       │   ├── checkout.blade.php
+│       │   ├── checkout_confirm.blade.php
+│       │   ├── coming-soon.blade.php
+│       │   ├── contact_us.blade.php
+│       │   ├── events.blade.php
+│       │   ├── events_detail.blade.php
+│       │   ├── forgot_password.blade.php
+│       │   ├── gift_card.blade.php
+│       │   ├── guest_checkout.blade.php
+│       │   ├── home.blade.php
+│       │   ├── jmor_radio.blade.php
+│       │   ├── jmor_radio_detail.blade.php
+│       │   ├── login.blade.php
+│       │   ├── media_inquiries.blade.php
+│       │   ├── media_resources.blade.php
+│       │   ├── media_resources_detail.blade.php
+│       │   ├── media_video.blade.php
+│       │   ├── media_video_detail.blade.php
+│       │   ├── news.blade.php
+│       │   ├── news_detail.blade.php
+│       │   ├── packages.blade.php
+│       │   ├── packages_detail.blade.php
+│       │   ├── pages.blade.php
+│       │   ├── press_releases.blade.php
+│       │   ├── press_releases_detail.blade.php
+│       │   ├── random_acts_of_kindness.blade.php
+│       │   ├── random_acts_of_kindness_detail.blade.php
+│       │   ├── recommended.blade.php
+│       │   ├── recommended_detail.blade.php
+│       │   ├── request_information.blade.php
+│       │   ├── reset_password.blade.php
+│       │   ├── search.blade.php
+│       │   ├── search_radio.blade.php
+│       │   ├── service.blade.php
+│       │   ├── service_detail.blade.php
+│       │   ├── sign_up.blade.php
+│       │   ├── single_package.blade.php
+│       │   ├── sitemap.blade.php
+│       │   └── testimonials.blade.php
+│       ├── layouts
+│       │   ├── app.blade.php
+│       │   └── dashboard.blade.php
+│       ├── mails
+│       │   ├── contact-us.blade.php
+│       │   ├── forgot-password.blade.php
+│       │   ├── media-inquiry.blade.php
+│       │   ├── order-invoice.blade.php
+│       │   ├── request-information.blade.php
+│       │   └── talk-show.blade.php
+│       ├── partials
+│       │   ├── before_footer.blade.php
+│       │   ├── billing_toggle.blade.php
+│       │   ├── navigation.blade.php
+│       │   ├── script_file.blade.php
+│       │   ├── slider_section.blade.php
+│       │   └── style_file.blade.php
+│       ├── vendor
+│       │   └── filament-two-factor-authentication
+│       └── welcome.blade.php
+├── routes
+│   ├── console.php
+│   └── web.php
+├── sitemap.xml
+├── sitemap_images.xml
+├── sitemap_mobile.xml
+├── sitemap_video.xml
+├── storage
+│   ├── app
+│   │   ├── backups
+│   │   │   ├── Database_Of_JMOR_08-23-2026_10-08-12pm.sql
+│   │   │   ├── Database_Of_JMOR_09-08-2026_11-49-04am.sql
+│   │   │   ├── Database_Of_JMOR_09-20-2026_10-09-05am.sql
+│   │   │   └── Database_Of_JMOR_09-30-2026_11-17-07am.sql
+│   │   ├── newsletter_subscribers.json
+│   │   ├── private
+│   │   │   ├── livewire-tmp
+│   │   │   ├── resumes
+│   │   │   ├── talk-show
+│   │   │   └── uploads
+│   │   └── public
+│   ├── framework
+│   │   ├── cache
+│   │   │   └── data
+│   │   ├── sessions
+│   │   ├── testing
+│   │   │   ├── _pest.php
+│   │   │   └── disks
+│   │   └── views
+│   │       ├── 0c7bbd91ef99f44d4c5a64b35b50de40.php
+│   │       ├── 0e73c4e6c431b8cfeb0ed2dd78714f95.php
+│   │       ├── 105ea5766951a50a41457e2f8930fcef.php
+│   │       ├── 2aebe3046273fe20b4164a78c74c2b34.php
+│   │       ├── 2cdb4f793dc25a4f0c95072af4c25f6f.php
+│   │       ├── 2d9ab394c0a6b4a77c6f8d684e57e8b5.php
+│   │       ├── 2e49ebc741781ccefe79fb7471f8dd7e.php
+│   │       ├── 464d9d7d350c58202e20a98e6f8da96e.php
+│   │       ├── 4ce74462c6eb2d690b94383df677ee97.php
+│   │       ├── 4da8cc18154fc69d412534439bd52b95.php
+│   │       ├── 61ea61302e369699a94d89e60d7c26d9.php
+│   │       ├── 68b6c7ab43890d180d34e76e6c449060.php
+│   │       ├── 6ffd119f35d987ae8dbb2d93b9d6c7c6.php
+│   │       ├── 7610a2e3c947da1d81c451519faa25fd.php
+│   │       ├── 8a417d3acee866e56dfa718730b9f5e4.php
+│   │       ├── 9469ba06461860e6bf287f0d9ca487c5.php
+│   │       ├── a5df9b1b6c938fcf30b4307112a6c6c2.php
+│   │       ├── adb4e15813a83469198b2ad8d0fd14fe.php
+│   │       ├── aebd8065224d92a92083d1069b548461.php
+│   │       ├── bba5c74a7789cb62626e5607a7db9e4e.php
+│   │       ├── c36e70404502586930f593c9ee37d0f8.php
+│   │       ├── c6a9360454d7c55b7a84464ee5174352.php
+│   │       ├── c8a44478e28c447ade87923733d8a334.php
+│   │       ├── cbb4cc216e2bb97b7283611f3d2ffbe5.php
+│   │       ├── cbbbda98000a06dafb7b7784c8215b71.php
+│   │       ├── d7115990aefdea1b5b7babb8da13622d.php
+│   │       ├── db048da8a210a10cce120a4b0702debf.php
+│   │       └── e639b1b745f9022bc8abff9391ece2b9.php
+│   └── logs
+│       ├── browser.log
+│       └── laravel.log
+├── tests
+│   ├── Feature
+│   │   ├── AdminAccountsTest.php
+│   │   ├── AdminAuthorizationTest.php
+│   │   ├── AdminContentResourcesTest.php
+│   │   ├── AdminGiftCardTest.php
+│   │   ├── AdminInquiriesTest.php
+│   │   ├── AdminInvoiceTest.php
+│   │   ├── AdminMediaServicesTest.php
+│   │   ├── AdminOrdersManagementTest.php
+│   │   ├── AdminPackageCategoryTest.php
+│   │   ├── AdminPasswordResetTest.php
+│   │   ├── BlogTest.php
+│   │   ├── CategoryPageTest.php
+│   │   ├── CheckoutFormAdminTest.php
+│   │   ├── ContactFormTest.php
+│   │   ├── DashboardTestimonialTest.php
+│   │   ├── EventsCaseStudiesTest.php
+│   │   ├── ExampleTest.php
+│   │   ├── FrontendAuthTest.php
+│   │   ├── LanguageAdminTest.php
+│   │   ├── LanguageSwitcherTest.php
+│   │   ├── MediaInquiriesTest.php
+│   │   ├── MediaTest.php
+│   │   ├── MenuGroupAdminTest.php
+│   │   ├── NavigationMenuTest.php
+│   │   ├── NewsTest.php
+│   │   ├── RadioCategoriesListTest.php
+│   │   ├── SecurityHardeningTest.php
+│   │   ├── SitemapXmlTest.php
+│   │   ├── TalkShowGuestApplicationTest.php
+│   │   └── TestingReportBatch5Test.php
+│   ├── Pest.php
+│   ├── TestCase.php
+│   └── Unit
+│       └── ExampleTest.php
+├── vendor
+│   ├── _laravel_ide
+│   │   ├── _auth.php
+│   │   ├── _facade.php
+│   │   ├── _model_helpers.php
+│   │   └── _request.php
+│   ├── anourvalar
+│   │   └── eloquent-serialize
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       ├── phpunit9.xml
+│   │       └── src
+│   ├── authorizenet
+│   │   └── authorizenet
+│   │       ├── AnetApiSchema.xsd
+│   │       ├── CONTRIBUTING.md
+│   │       ├── LICENSE.txt
+│   │       ├── MIGRATING.md
+│   │       ├── README.md
+│   │       ├── autoload.php
+│   │       ├── classmap.php
+│   │       ├── composer.json
+│   │       ├── doc
+│   │       ├── lib
+│   │       ├── phpunit.xml.dist
+│   │       ├── resources
+│   │       ├── sample-code-php
+│   │       ├── scripts
+│   │       ├── test-sample-codes.sh
+│   │       └── tests
+│   ├── autoload.php
+│   ├── bacon
+│   │   └── bacon-qr-code
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       └── src
+│   ├── bin
+│   │   ├── blade-icons-generate
+│   │   ├── blade-icons-generate.bat
+│   │   ├── carbon
+│   │   ├── carbon.bat
+│   │   ├── paratest
+│   │   ├── paratest.bat
+│   │   ├── paratest_for_phpstorm
+│   │   ├── paratest_for_phpstorm.bat
+│   │   ├── patch-type-declarations
+│   │   ├── patch-type-declarations.bat
+│   │   ├── pest
+│   │   ├── pest.bat
+│   │   ├── php-parse
+│   │   ├── php-parse.bat
+│   │   ├── phpunit
+│   │   ├── phpunit.bat
+│   │   ├── pint
+│   │   ├── pint.bat
+│   │   ├── psysh
+│   │   ├── psysh.bat
+│   │   ├── var-dump-server
+│   │   ├── var-dump-server.bat
+│   │   ├── yaml-lint
+│   │   └── yaml-lint.bat
+│   ├── blade-ui-kit
+│   │   ├── blade-heroicons
+│   │   │   ├── LICENSE.md
+│   │   │   ├── SECURITY.md
+│   │   │   ├── composer.json
+│   │   │   ├── config
+│   │   │   ├── package.json
+│   │   │   ├── resources
+│   │   │   └── src
+│   │   └── blade-icons
+│   │       ├── LICENSE.md
+│   │       ├── SECURITY.md
+│   │       ├── bin
+│   │       ├── composer.json
+│   │       ├── config
+│   │       ├── pint.json
+│   │       └── src
+│   ├── brianium
+│   │   └── paratest
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── bin
+│   │       ├── composer.json
+│   │       └── src
+│   ├── brick
+│   │   └── math
+│   │       ├── CHANGELOG.md
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── codecov.yml
+│   │       ├── composer.json
+│   │       └── src
+│   ├── carbonphp
+│   │   └── carbon-doctrine-types
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       └── src
+│   ├── chillerlan
+│   │   ├── php-qrcode
+│   │   │   ├── LICENSE-ASL-2.0
+│   │   │   ├── LICENSE-MIT
+│   │   │   ├── NOTICE
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   └── php-settings-container
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       ├── rules-magic-access.neon
+│   │       └── src
+│   ├── composer
+│   │   ├── ClassLoader.php
+│   │   ├── InstalledVersions.php
+│   │   ├── LICENSE
+│   │   ├── autoload_classmap.php
+│   │   ├── autoload_files.php
+│   │   ├── autoload_namespaces.php
+│   │   ├── autoload_psr4.php
+│   │   ├── autoload_real.php
+│   │   ├── autoload_static.php
+│   │   ├── installed.json
+│   │   ├── installed.php
+│   │   ├── pcre
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   ├── extension.neon
+│   │   │   └── src
+│   │   ├── platform_check.php
+│   │   └── xdebug-handler
+│   │       ├── CHANGELOG.md
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       └── src
+│   ├── danharrin
+│   │   ├── date-format-converter
+│   │   │   ├── CODE_OF_CONDUCT.md
+│   │   │   ├── LICENSE.md
+│   │   │   ├── README.md
+│   │   │   ├── SECURITY.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   └── livewire-rate-limiting
+│   │       ├── CODE_OF_CONDUCT.md
+│   │       ├── LICENSE.md
+│   │       ├── README.md
+│   │       ├── SECURITY.md
+│   │       ├── composer.json
+│   │       └── src
+│   ├── dasprid
+│   │   └── enum
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       └── src
+│   ├── dflydev
+│   │   └── dot-access-data
+│   │       ├── CHANGELOG.md
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       └── src
+│   ├── doctrine
+│   │   ├── dbal
+│   │   │   ├── LICENSE
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── deprecations
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── inflector
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   ├── docs
+│   │   │   └── src
+│   │   └── lexer
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── UPGRADE.md
+│   │       ├── composer.json
+│   │       └── src
+│   ├── dompdf
+│   │   ├── dompdf
+│   │   │   ├── AUTHORS.md
+│   │   │   ├── LICENSE.LGPL
+│   │   │   ├── README.md
+│   │   │   ├── VERSION
+│   │   │   ├── composer.json
+│   │   │   ├── lib
+│   │   │   ├── phpunit.xml
+│   │   │   └── src
+│   │   ├── php-font-lib
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   ├── maps
+│   │   │   └── src
+│   │   └── php-svg-lib
+│   │       ├── AUTHORS.md
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       └── src
+│   ├── dragonmantank
+│   │   └── cron-expression
+│   │       ├── CHANGELOG.md
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       └── src
+│   ├── egulias
+│   │   └── email-validator
+│   │       ├── CONTRIBUTING.md
+│   │       ├── LICENSE
+│   │       ├── composer.json
+│   │       └── src
+│   ├── fakerphp
+│   │   └── faker
+│   │       ├── CHANGELOG.md
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       ├── rector-migrate.php
+│   │       └── src
+│   ├── fidry
+│   │   └── cpu-core-counter
+│   │       ├── LICENSE.md
+│   │       ├── README.md
+│   │       ├── bin
+│   │       ├── composer.json
+│   │       └── src
+│   ├── filament
+│   │   ├── actions
+│   │   │   ├── composer.json
+│   │   │   ├── database
+│   │   │   ├── dist
+│   │   │   ├── docs
+│   │   │   ├── resources
+│   │   │   ├── routes
+│   │   │   └── src
+│   │   ├── filament
+│   │   │   ├── composer.json
+│   │   │   ├── dist
+│   │   │   ├── resources
+│   │   │   ├── routes
+│   │   │   ├── src
+│   │   │   └── stubs
+│   │   ├── forms
+│   │   │   ├── composer.json
+│   │   │   ├── dist
+│   │   │   ├── docs
+│   │   │   ├── resources
+│   │   │   ├── src
+│   │   │   └── stubs
+│   │   ├── infolists
+│   │   │   ├── composer.json
+│   │   │   ├── docs
+│   │   │   ├── resources
+│   │   │   ├── src
+│   │   │   └── stubs
+│   │   ├── notifications
+│   │   │   ├── composer.json
+│   │   │   ├── dist
+│   │   │   ├── docs
+│   │   │   ├── resources
+│   │   │   └── src
+│   │   ├── query-builder
+│   │   │   ├── composer.json
+│   │   │   ├── resources
+│   │   │   └── src
+│   │   ├── schemas
+│   │   │   ├── composer.json
+│   │   │   ├── dist
+│   │   │   ├── docs
+│   │   │   ├── resources
+│   │   │   ├── src
+│   │   │   └── stubs
+│   │   ├── support
+│   │   │   ├── composer.json
+│   │   │   ├── config
+│   │   │   ├── dist
+│   │   │   ├── resources
+│   │   │   ├── src
+│   │   │   └── stubs
+│   │   ├── tables
+│   │   │   ├── composer.json
+│   │   │   ├── dist
+│   │   │   ├── docs
+│   │   │   ├── resources
+│   │   │   ├── src
+│   │   │   └── stubs
+│   │   └── widgets
+│   │       ├── composer.json
+│   │       ├── dist
+│   │       ├── docs
+│   │       ├── resources
+│   │       ├── src
+│   │       └── stubs
+│   ├── filp
+│   │   └── whoops
+│   │       ├── CHANGELOG.md
+│   │       ├── LICENSE.md
+│   │       ├── SECURITY.md
+│   │       ├── composer.json
+│   │       └── src
+│   ├── fruitcake
+│   │   └── php-cors
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       └── src
+│   ├── graham-campbell
+│   │   └── result-type
+│   │       ├── LICENSE
+│   │       ├── composer.json
+│   │       └── src
+│   ├── guzzlehttp
+│   │   ├── guzzle
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── UPGRADING.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── promises
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── UPGRADING.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── psr7
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── UPGRADING.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   └── uri-template
+│   │       ├── CHANGELOG.md
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       └── src
+│   ├── hamcrest
+│   │   └── hamcrest-php
+│   │       ├── CHANGES.txt
+│   │       ├── CONTRIBUTING.md
+│   │       ├── LICENSE.txt
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       ├── generator
+│   │       └── hamcrest
+│   ├── jean85
+│   │   └── pretty-package-versions
+│   │       ├── LICENSE
+│   │       ├── composer.json
+│   │       ├── rector.php
+│   │       └── src
+│   ├── kirschbaum-development
+│   │   └── eloquent-power-joins
+│   │       ├── AGENTS.md
+│   │       ├── CHANGELOG.md
+│   │       ├── CONTRIBUTING.md
+│   │       ├── LICENSE.md
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       ├── config
+│   │       └── src
+│   ├── kitloong
+│   │   └── laravel-migrations-generator
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       ├── config
+│   │       ├── src
+│   │       └── stubs
+│   ├── laravel
+│   │   ├── agent-detector
+│   │   │   ├── LICENSE.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── boost
+│   │   │   ├── LICENSE.md
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   ├── config
+│   │   │   ├── pint.json
+│   │   │   ├── rector.php
+│   │   │   ├── resources
+│   │   │   ├── src
+│   │   │   └── workbench
+│   │   ├── framework
+│   │   │   ├── LICENSE.md
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   ├── config
+│   │   │   ├── config-stubs
+│   │   │   └── src
+│   │   ├── mcp
+│   │   │   ├── LICENSE.md
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   ├── config
+│   │   │   ├── pint.json
+│   │   │   ├── rector.php
+│   │   │   ├── resources
+│   │   │   ├── routes
+│   │   │   ├── src
+│   │   │   ├── stubs
+│   │   │   ├── testbench.yaml
+│   │   │   └── workbench
+│   │   ├── pail
+│   │   │   ├── LICENSE.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── pao
+│   │   │   ├── LICENSE.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── pint
+│   │   │   ├── LICENSE.md
+│   │   │   ├── builds
+│   │   │   ├── composer.json
+│   │   │   └── overrides
+│   │   ├── prompts
+│   │   │   ├── LICENSE.md
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── roster
+│   │   │   ├── LICENSE.md
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── serializable-closure
+│   │   │   ├── LICENSE.md
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   └── tinker
+│   │       ├── LICENSE.md
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       ├── config
+│   │       └── src
+│   ├── league
+│   │   ├── commonmark
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── config
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── LICENSE.md
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── csv
+│   │   │   ├── LICENSE
+│   │   │   ├── autoload.php
+│   │   │   ├── composer.json
+│   │   │   ├── phpstan-build.neon
+│   │   │   └── src
+│   │   ├── flysystem
+│   │   │   ├── INFO.md
+│   │   │   ├── LICENSE
+│   │   │   ├── SECURITY.md
+│   │   │   ├── composer.json
+│   │   │   ├── readme.md
+│   │   │   └── src
+│   │   ├── flysystem-local
+│   │   │   ├── FallbackMimeTypeDetector.php
+│   │   │   ├── LICENSE
+│   │   │   ├── LocalFilesystemAdapter.php
+│   │   │   └── composer.json
+│   │   ├── mime-type-detection
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── LICENSE
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── uri
+│   │   │   ├── BaseUri.php
+│   │   │   ├── Builder.php
+│   │   │   ├── Http.php
+│   │   │   ├── HttpFactory.php
+│   │   │   ├── LICENSE
+│   │   │   ├── SchemeType.php
+│   │   │   ├── Uri.php
+│   │   │   ├── UriInfo.php
+│   │   │   ├── UriResolver.php
+│   │   │   ├── UriScheme.php
+│   │   │   ├── UriTemplate
+│   │   │   ├── UriTemplate.php
+│   │   │   ├── Urn.php
+│   │   │   └── composer.json
+│   │   ├── uri-components
+│   │   │   ├── Components
+│   │   │   ├── IPv4Normalizer.php
+│   │   │   ├── LICENSE
+│   │   │   ├── Modifier.php
+│   │   │   ├── UriModifier.php
+│   │   │   └── composer.json
+│   │   └── uri-interfaces
+│   │       ├── Contracts
+│   │       ├── Encoder.php
+│   │       ├── Exceptions
+│   │       ├── FeatureDetection.php
+│   │       ├── HostFormat.php
+│   │       ├── HostRecord.php
+│   │       ├── HostType.php
+│   │       ├── IPv4
+│   │       ├── IPv6
+│   │       ├── Idna
+│   │       ├── KeyValuePair
+│   │       ├── LICENSE
+│   │       ├── QueryComposeMode.php
+│   │       ├── QueryExtractMode.php
+│   │       ├── QueryString.php
+│   │       ├── StringCoercionMode.php
+│   │       ├── UriComparisonMode.php
+│   │       ├── UriString.php
+│   │       ├── UrnComparisonMode.php
+│   │       └── composer.json
+│   ├── livewire
+│   │   └── livewire
+│   │       ├── CLAUDE.md
+│   │       ├── LICENSE.md
+│   │       ├── PRD-wire-model-modifiers.md
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       ├── config
+│   │       ├── dist
+│   │       ├── src
+│   │       ├── test_unified_scripts.php
+│   │       └── vitest.config.js
+│   ├── masterminds
+│   │   └── html5
+│   │       ├── CREDITS
+│   │       ├── LICENSE.txt
+│   │       ├── README.md
+│   │       ├── RELEASE.md
+│   │       ├── SECURITY.md
+│   │       ├── UPGRADING.md
+│   │       ├── bin
+│   │       ├── composer.json
+│   │       └── src
+│   ├── mockery
+│   │   └── mockery
+│   │       ├── CHANGELOG.md
+│   │       ├── CONTRIBUTING.md
+│   │       ├── COPYRIGHT.md
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── SECURITY.md
+│   │       ├── composer.json
+│   │       ├── composer.lock
+│   │       ├── docs
+│   │       └── library
+│   ├── monolog
+│   │   └── monolog
+│   │       ├── CHANGELOG.md
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       └── src
+│   ├── myclabs
+│   │   └── deep-copy
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       └── src
+│   ├── nesbot
+│   │   └── carbon
+│   │       ├── LICENSE
+│   │       ├── SECURITY.md
+│   │       ├── bin
+│   │       ├── composer.json
+│   │       ├── extension.neon
+│   │       ├── lazy
+│   │       ├── readme.md
+│   │       └── src
+│   ├── nette
+│   │   ├── php-generator
+│   │   │   ├── composer.json
+│   │   │   ├── license.md
+│   │   │   ├── readme.md
+│   │   │   └── src
+│   │   ├── schema
+│   │   │   ├── composer.json
+│   │   │   ├── license.md
+│   │   │   ├── readme.md
+│   │   │   └── src
+│   │   └── utils
+│   │       ├── composer.json
+│   │       ├── license.md
+│   │       ├── readme.md
+│   │       └── src
+│   ├── nikic
+│   │   └── php-parser
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── bin
+│   │       ├── composer.json
+│   │       └── lib
+│   ├── nunomaduro
+│   │   ├── collision
+│   │   │   ├── LICENSE.md
+│   │   │   ├── README.md
+│   │   │   ├── SECURITY.md
+│   │   │   ├── composer.json
+│   │   │   ├── phpstan-baseline.neon
+│   │   │   ├── scripts
+│   │   │   └── src
+│   │   └── termwind
+│   │       ├── LICENSE.md
+│   │       ├── composer.json
+│   │       ├── playground.php
+│   │       └── src
+│   ├── openspout
+│   │   └── openspout
+│   │       ├── LICENSE
+│   │       ├── LICENSE-for-cc42c1d
+│   │       ├── README.md
+│   │       ├── UPGRADE.md
+│   │       ├── composer.json
+│   │       ├── renovate.json
+│   │       └── src
+│   ├── paragonie
+│   │   └── constant_time_encoding
+│   │       ├── LICENSE.txt
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       └── src
+│   ├── pest-plugins.json
+│   ├── pestphp
+│   │   ├── pest
+│   │   │   ├── LICENSE.md
+│   │   │   ├── bin
+│   │   │   ├── composer.json
+│   │   │   ├── extension.neon
+│   │   │   ├── overrides
+│   │   │   ├── phpstan-baseline.neon
+│   │   │   ├── phpstan-pest-extension.neon
+│   │   │   ├── resources
+│   │   │   ├── src
+│   │   │   ├── stubs
+│   │   │   └── tests-external
+│   │   ├── pest-plugin
+│   │   │   ├── LICENSE.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── pest-plugin-arch
+│   │   │   ├── LICENSE.md
+│   │   │   ├── composer.json
+│   │   │   ├── pint.json
+│   │   │   └── src
+│   │   ├── pest-plugin-laravel
+│   │   │   ├── LICENSE.md
+│   │   │   ├── composer.json
+│   │   │   ├── resources
+│   │   │   ├── src
+│   │   │   └── stubs
+│   │   ├── pest-plugin-mutate
+│   │   │   ├── LICENSE.md
+│   │   │   ├── composer.json
+│   │   │   ├── pint.json
+│   │   │   ├── rector.php
+│   │   │   └── src
+│   │   └── pest-plugin-profanity
+│   │       ├── LICENSE.md
+│   │       ├── UPGRADE.md
+│   │       ├── composer.json
+│   │       └── src
+│   ├── phar-io
+│   │   ├── manifest
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   ├── composer.lock
+│   │   │   ├── manifest.xsd
+│   │   │   ├── src
+│   │   │   └── tools
+│   │   └── version
+│   │       ├── CHANGELOG.md
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       └── src
+│   ├── phpdocumentor
+│   │   ├── reflection-common
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── reflection-docblock
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   └── type-resolver
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       ├── docs
+│   │       ├── phpdoc.dist.xml
+│   │       └── src
+│   ├── phpoption
+│   │   └── phpoption
+│   │       ├── LICENSE
+│   │       ├── composer.json
+│   │       └── src
+│   ├── phpstan
+│   │   └── phpdoc-parser
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── UPGRADING.md
+│   │       ├── composer.json
+│   │       └── src
+│   ├── phpunit
+│   │   ├── php-code-coverage
+│   │   │   ├── ChangeLog-12.5.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── SECURITY.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── php-file-iterator
+│   │   │   ├── ChangeLog.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── SECURITY.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── php-invoker
+│   │   │   ├── ChangeLog.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── SECURITY.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── php-text-template
+│   │   │   ├── ChangeLog.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── SECURITY.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── php-timer
+│   │   │   ├── ChangeLog.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── SECURITY.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   └── phpunit
+│   │       ├── ChangeLog-12.5.md
+│   │       ├── DEPRECATIONS.md
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── SECURITY.md
+│   │       ├── composer.json
+│   │       ├── composer.lock
+│   │       ├── phpunit
+│   │       ├── phpunit.xsd
+│   │       ├── schema
+│   │       └── src
+│   ├── pragmarx
+│   │   ├── google2fa
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── LICENSE.md
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   └── google2fa-qrcode
+│   │       ├── LICENSE.md
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       ├── phpstan.neon.dist
+│   │       └── src
+│   ├── psr
+│   │   ├── cache
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── LICENSE.txt
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── clock
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── container
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── event-dispatcher
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── http-client
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── http-factory
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── http-message
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   ├── docs
+│   │   │   └── src
+│   │   ├── log
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   └── simple-cache
+│   │       ├── LICENSE.md
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       └── src
+│   ├── psy
+│   │   └── psysh
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── bin
+│   │       ├── composer.json
+│   │       └── src
+│   ├── ralouphie
+│   │   └── getallheaders
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       └── src
+│   ├── ramsey
+│   │   ├── collection
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── SECURITY.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   └── uuid
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       └── src
+│   ├── ryangjchandler
+│   │   └── blade-capture-directive
+│   │       ├── CHANGELOG.md
+│   │       ├── LICENSE.md
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       └── src
+│   ├── sabberworm
+│   │   └── php-css-parser
+│   │       ├── CHANGELOG.md
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       └── src
+│   ├── scrivo
+│   │   └── highlight.php
+│   │       ├── AUTHORS.txt
+│   │       ├── CONTRIBUTING.md
+│   │       ├── Highlight
+│   │       ├── HighlightUtilities
+│   │       ├── LICENSE.md
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       └── styles
+│   ├── sebastian
+│   │   ├── cli-parser
+│   │   │   ├── ChangeLog.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── SECURITY.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── comparator
+│   │   │   ├── ChangeLog.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── SECURITY.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── complexity
+│   │   │   ├── ChangeLog.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── SECURITY.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── diff
+│   │   │   ├── ChangeLog.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── SECURITY.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── environment
+│   │   │   ├── ChangeLog.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── SECURITY.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── exporter
+│   │   │   ├── ChangeLog.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── SECURITY.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── global-state
+│   │   │   ├── ChangeLog.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── SECURITY.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── lines-of-code
+│   │   │   ├── ChangeLog.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── SECURITY.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── object-enumerator
+│   │   │   ├── ChangeLog.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── SECURITY.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── object-reflector
+│   │   │   ├── ChangeLog.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── SECURITY.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── recursion-context
+│   │   │   ├── ChangeLog.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── SECURITY.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── type
+│   │   │   ├── ChangeLog.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── SECURITY.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   └── version
+│   │       ├── ChangeLog.md
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── SECURITY.md
+│   │       ├── composer.json
+│   │       └── src
+│   ├── spatie
+│   │   ├── invade
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── LICENSE.md
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   ├── phpstan-baseline.neon
+│   │   │   ├── phpstan.neon.dist
+│   │   │   └── src
+│   │   ├── laravel-package-tools
+│   │   │   ├── LICENSE.md
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   ├── laravel-passkeys
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── LICENSE.md
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   ├── config
+│   │   │   ├── database
+│   │   │   ├── resources
+│   │   │   └── src
+│   │   └── shiki-php
+│   │       ├── CHANGELOG.md
+│   │       ├── LICENSE.md
+│   │       ├── README.md
+│   │       ├── bin
+│   │       ├── composer.json
+│   │       ├── languages
+│   │       ├── package-lock.json
+│   │       ├── package.json
+│   │       └── src
+│   ├── spomky-labs
+│   │   ├── cbor-php
+│   │   │   ├── CODE_OF_CONDUCT.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── RELEASES.md
+│   │   │   ├── SECURITY.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   └── pki-framework
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── SECURITY.md
+│   │       ├── composer.json
+│   │       └── src
+│   ├── staabm
+│   │   └── side-effects-detector
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       └── lib
+│   ├── stephenjude
+│   │   └── filament-two-factor-authentication
+│   │       ├── CHANGELOG.md
+│   │       ├── LICENSE.md
+│   │       ├── README.md
+│   │       ├── bin
+│   │       ├── composer.json
+│   │       ├── database
+│   │       ├── package-lock.json
+│   │       ├── postcss.config.cjs
+│   │       ├── resources
+│   │       └── src
+│   ├── symfony
+│   │   ├── clock
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── Clock.php
+│   │   │   ├── ClockAwareTrait.php
+│   │   │   ├── ClockInterface.php
+│   │   │   ├── DatePoint.php
+│   │   │   ├── LICENSE
+│   │   │   ├── MockClock.php
+│   │   │   ├── MonotonicClock.php
+│   │   │   ├── NativeClock.php
+│   │   │   ├── README.md
+│   │   │   ├── Resources
+│   │   │   ├── Test
+│   │   │   └── composer.json
+│   │   ├── console
+│   │   │   ├── Application.php
+│   │   │   ├── ArgumentResolver
+│   │   │   ├── Attribute
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── CI
+│   │   │   ├── Color.php
+│   │   │   ├── Command
+│   │   │   ├── CommandLoader
+│   │   │   ├── Completion
+│   │   │   ├── ConsoleBundle.php
+│   │   │   ├── ConsoleEvents.php
+│   │   │   ├── Cursor.php
+│   │   │   ├── DataCollector
+│   │   │   ├── Debug
+│   │   │   ├── DependencyInjection
+│   │   │   ├── Descriptor
+│   │   │   ├── Event
+│   │   │   ├── EventListener
+│   │   │   ├── Exception
+│   │   │   ├── Formatter
+│   │   │   ├── Helper
+│   │   │   ├── Input
+│   │   │   ├── Interaction
+│   │   │   ├── LICENSE
+│   │   │   ├── Logger
+│   │   │   ├── Messenger
+│   │   │   ├── Output
+│   │   │   ├── Question
+│   │   │   ├── README.md
+│   │   │   ├── Resources
+│   │   │   ├── SignalRegistry
+│   │   │   ├── SingleCommandApplication.php
+│   │   │   ├── Style
+│   │   │   ├── Terminal
+│   │   │   ├── Terminal.php
+│   │   │   ├── Tester
+│   │   │   └── composer.json
+│   │   ├── css-selector
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── CssSelectorConverter.php
+│   │   │   ├── Exception
+│   │   │   ├── LICENSE
+│   │   │   ├── Node
+│   │   │   ├── Parser
+│   │   │   ├── README.md
+│   │   │   ├── XPath
+│   │   │   └── composer.json
+│   │   ├── deprecation-contracts
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── composer.json
+│   │   │   └── function.php
+│   │   ├── error-handler
+│   │   │   ├── BufferingLogger.php
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── Command
+│   │   │   ├── Debug.php
+│   │   │   ├── DebugClassLoader.php
+│   │   │   ├── Error
+│   │   │   ├── ErrorEnhancer
+│   │   │   ├── ErrorHandler.php
+│   │   │   ├── ErrorRenderer
+│   │   │   ├── Exception
+│   │   │   ├── Internal
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── Resources
+│   │   │   ├── ThrowableUtils.php
+│   │   │   └── composer.json
+│   │   ├── event-dispatcher
+│   │   │   ├── Attribute
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── Debug
+│   │   │   ├── DependencyInjection
+│   │   │   ├── EventDispatcher.php
+│   │   │   ├── EventDispatcherInterface.php
+│   │   │   ├── EventSubscriberInterface.php
+│   │   │   ├── GenericEvent.php
+│   │   │   ├── ImmutableEventDispatcher.php
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   └── composer.json
+│   │   ├── event-dispatcher-contracts
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── Event.php
+│   │   │   ├── EventDispatcherInterface.php
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   └── composer.json
+│   │   ├── finder
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── Comparator
+│   │   │   ├── Exception
+│   │   │   ├── Finder.php
+│   │   │   ├── Gitignore.php
+│   │   │   ├── Glob.php
+│   │   │   ├── Iterator
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── SplFileInfo.php
+│   │   │   └── composer.json
+│   │   ├── html-sanitizer
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── HtmlSanitizer.php
+│   │   │   ├── HtmlSanitizerAction.php
+│   │   │   ├── HtmlSanitizerConfig.php
+│   │   │   ├── HtmlSanitizerInterface.php
+│   │   │   ├── LICENSE
+│   │   │   ├── Parser
+│   │   │   ├── README.md
+│   │   │   ├── Reference
+│   │   │   ├── TextSanitizer
+│   │   │   ├── Visitor
+│   │   │   └── composer.json
+│   │   ├── http-foundation
+│   │   │   ├── AcceptHeader.php
+│   │   │   ├── AcceptHeaderItem.php
+│   │   │   ├── BinaryFileResponse.php
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── ChainRequestMatcher.php
+│   │   │   ├── Cookie.php
+│   │   │   ├── EventStreamResponse.php
+│   │   │   ├── Exception
+│   │   │   ├── File
+│   │   │   ├── FileBag.php
+│   │   │   ├── HeaderBag.php
+│   │   │   ├── HeaderUtils.php
+│   │   │   ├── InputBag.php
+│   │   │   ├── IpUtils.php
+│   │   │   ├── JsonResponse.php
+│   │   │   ├── LICENSE
+│   │   │   ├── ParameterBag.php
+│   │   │   ├── README.md
+│   │   │   ├── RateLimiter
+│   │   │   ├── RedirectResponse.php
+│   │   │   ├── Request.php
+│   │   │   ├── RequestMatcher
+│   │   │   ├── RequestMatcherInterface.php
+│   │   │   ├── RequestStack.php
+│   │   │   ├── Response.php
+│   │   │   ├── ResponseHeaderBag.php
+│   │   │   ├── ServerBag.php
+│   │   │   ├── ServerEvent.php
+│   │   │   ├── Session
+│   │   │   ├── StreamedJsonResponse.php
+│   │   │   ├── StreamedResponse.php
+│   │   │   ├── Test
+│   │   │   ├── UriSigner.php
+│   │   │   ├── UrlHelper.php
+│   │   │   └── composer.json
+│   │   ├── http-kernel
+│   │   │   ├── Attribute
+│   │   │   ├── Bundle
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── CacheClearer
+│   │   │   ├── CacheWarmer
+│   │   │   ├── Config
+│   │   │   ├── Controller
+│   │   │   ├── ControllerMetadata
+│   │   │   ├── DataCollector
+│   │   │   ├── Debug
+│   │   │   ├── DependencyInjection
+│   │   │   ├── Event
+│   │   │   ├── EventListener
+│   │   │   ├── Exception
+│   │   │   ├── Fragment
+│   │   │   ├── HttpCache
+│   │   │   ├── HttpClientKernel.php
+│   │   │   ├── HttpKernel.php
+│   │   │   ├── HttpKernelBrowser.php
+│   │   │   ├── HttpKernelInterface.php
+│   │   │   ├── Kernel.php
+│   │   │   ├── KernelEvents.php
+│   │   │   ├── KernelInterface.php
+│   │   │   ├── LICENSE
+│   │   │   ├── Log
+│   │   │   ├── Profiler
+│   │   │   ├── README.md
+│   │   │   ├── RebootableInterface.php
+│   │   │   ├── Resources
+│   │   │   ├── TerminableInterface.php
+│   │   │   └── composer.json
+│   │   ├── mailer
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── Command
+│   │   │   ├── DataCollector
+│   │   │   ├── DelayedEnvelope.php
+│   │   │   ├── Envelope.php
+│   │   │   ├── Event
+│   │   │   ├── EventListener
+│   │   │   ├── Exception
+│   │   │   ├── Header
+│   │   │   ├── LICENSE
+│   │   │   ├── Mailer.php
+│   │   │   ├── MailerInterface.php
+│   │   │   ├── Messenger
+│   │   │   ├── README.md
+│   │   │   ├── SentMessage.php
+│   │   │   ├── Test
+│   │   │   ├── Transport
+│   │   │   ├── Transport.php
+│   │   │   └── composer.json
+│   │   ├── mime
+│   │   │   ├── Address.php
+│   │   │   ├── BodyRendererInterface.php
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── CharacterStream.php
+│   │   │   ├── Crypto
+│   │   │   ├── DependencyInjection
+│   │   │   ├── DraftEmail.php
+│   │   │   ├── Email.php
+│   │   │   ├── Encoder
+│   │   │   ├── Exception
+│   │   │   ├── FileBinaryMimeTypeGuesser.php
+│   │   │   ├── FileinfoMimeTypeGuesser.php
+│   │   │   ├── Header
+│   │   │   ├── HtmlToTextConverter
+│   │   │   ├── LICENSE
+│   │   │   ├── Message.php
+│   │   │   ├── MessageConverter.php
+│   │   │   ├── MimeTypeGuesserInterface.php
+│   │   │   ├── MimeTypes.php
+│   │   │   ├── MimeTypesInterface.php
+│   │   │   ├── Part
+│   │   │   ├── README.md
+│   │   │   ├── RawMessage.php
+│   │   │   ├── Resources
+│   │   │   ├── Test
+│   │   │   └── composer.json
+│   │   ├── polyfill-ctype
+│   │   │   ├── Ctype.php
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── bootstrap.php
+│   │   │   ├── bootstrap80.php
+│   │   │   └── composer.json
+│   │   ├── polyfill-intl-grapheme
+│   │   │   ├── Grapheme.php
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── bootstrap.php
+│   │   │   ├── bootstrap80.php
+│   │   │   ├── bootstrap85.php
+│   │   │   └── composer.json
+│   │   ├── polyfill-intl-idn
+│   │   │   ├── Idn.php
+│   │   │   ├── Info.php
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── Resources
+│   │   │   ├── bootstrap.php
+│   │   │   ├── bootstrap80.php
+│   │   │   └── composer.json
+│   │   ├── polyfill-intl-normalizer
+│   │   │   ├── LICENSE
+│   │   │   ├── Normalizer.php
+│   │   │   ├── README.md
+│   │   │   ├── Resources
+│   │   │   ├── bootstrap.php
+│   │   │   ├── bootstrap80.php
+│   │   │   └── composer.json
+│   │   ├── polyfill-mbstring
+│   │   │   ├── LICENSE
+│   │   │   ├── Mbstring.php
+│   │   │   ├── README.md
+│   │   │   ├── Resources
+│   │   │   ├── bootstrap.php
+│   │   │   ├── bootstrap72.php
+│   │   │   ├── bootstrap80.php
+│   │   │   └── composer.json
+│   │   ├── polyfill-php80
+│   │   │   ├── LICENSE
+│   │   │   ├── Php80.php
+│   │   │   ├── PhpToken.php
+│   │   │   ├── README.md
+│   │   │   ├── Resources
+│   │   │   ├── bootstrap.php
+│   │   │   └── composer.json
+│   │   ├── polyfill-php84
+│   │   │   ├── LICENSE
+│   │   │   ├── Php84.php
+│   │   │   ├── README.md
+│   │   │   ├── Resources
+│   │   │   ├── bootstrap.php
+│   │   │   ├── bootstrap72.php
+│   │   │   ├── bootstrap82.php
+│   │   │   └── composer.json
+│   │   ├── polyfill-php85
+│   │   │   ├── LICENSE
+│   │   │   ├── Php85.php
+│   │   │   ├── README.md
+│   │   │   ├── Resources
+│   │   │   ├── bootstrap.php
+│   │   │   ├── bootstrap80.php
+│   │   │   └── composer.json
+│   │   ├── polyfill-php86
+│   │   │   ├── LICENSE
+│   │   │   ├── Php86.php
+│   │   │   ├── README.md
+│   │   │   ├── Resources
+│   │   │   ├── bootstrap.php
+│   │   │   ├── bootstrap80.php
+│   │   │   └── composer.json
+│   │   ├── polyfill-uuid
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── Uuid.php
+│   │   │   ├── bootstrap.php
+│   │   │   ├── bootstrap80.php
+│   │   │   └── composer.json
+│   │   ├── process
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── Exception
+│   │   │   ├── ExecutableFinder.php
+│   │   │   ├── InputStream.php
+│   │   │   ├── LICENSE
+│   │   │   ├── Messenger
+│   │   │   ├── PhpExecutableFinder.php
+│   │   │   ├── PhpProcess.php
+│   │   │   ├── PhpSubprocess.php
+│   │   │   ├── Pipes
+│   │   │   ├── Process.php
+│   │   │   ├── ProcessUtils.php
+│   │   │   ├── README.md
+│   │   │   └── composer.json
+│   │   ├── property-access
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── Exception
+│   │   │   ├── LICENSE
+│   │   │   ├── PropertyAccess.php
+│   │   │   ├── PropertyAccessor.php
+│   │   │   ├── PropertyAccessorBuilder.php
+│   │   │   ├── PropertyAccessorInterface.php
+│   │   │   ├── PropertyPath.php
+│   │   │   ├── PropertyPathBuilder.php
+│   │   │   ├── PropertyPathInterface.php
+│   │   │   ├── PropertyPathIterator.php
+│   │   │   ├── PropertyPathIteratorInterface.php
+│   │   │   ├── README.md
+│   │   │   └── composer.json
+│   │   ├── property-info
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── DependencyInjection
+│   │   │   ├── Extractor
+│   │   │   ├── LICENSE
+│   │   │   ├── PropertyAccessExtractorInterface.php
+│   │   │   ├── PropertyDescriptionExtractorInterface.php
+│   │   │   ├── PropertyDocBlockExtractorInterface.php
+│   │   │   ├── PropertyInfoCacheExtractor.php
+│   │   │   ├── PropertyInfoExtractor.php
+│   │   │   ├── PropertyInfoExtractorInterface.php
+│   │   │   ├── PropertyInitializableExtractorInterface.php
+│   │   │   ├── PropertyListExtractorInterface.php
+│   │   │   ├── PropertyReadInfo.php
+│   │   │   ├── PropertyReadInfoExtractorInterface.php
+│   │   │   ├── PropertyTypeExtractorInterface.php
+│   │   │   ├── PropertyWriteInfo.php
+│   │   │   ├── PropertyWriteInfoExtractorInterface.php
+│   │   │   ├── README.md
+│   │   │   ├── Util
+│   │   │   └── composer.json
+│   │   ├── routing
+│   │   │   ├── Alias.php
+│   │   │   ├── Attribute
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── CompiledRoute.php
+│   │   │   ├── DependencyInjection
+│   │   │   ├── Exception
+│   │   │   ├── Generator
+│   │   │   ├── LICENSE
+│   │   │   ├── Loader
+│   │   │   ├── Matcher
+│   │   │   ├── README.md
+│   │   │   ├── RequestContext.php
+│   │   │   ├── RequestContextAwareInterface.php
+│   │   │   ├── Requirement
+│   │   │   ├── Route.php
+│   │   │   ├── RouteCollection.php
+│   │   │   ├── RouteCompiler.php
+│   │   │   ├── RouteCompilerInterface.php
+│   │   │   ├── Router.php
+│   │   │   ├── RouterInterface.php
+│   │   │   └── composer.json
+│   │   ├── serializer
+│   │   │   ├── Attribute
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── Command
+│   │   │   ├── Context
+│   │   │   ├── DataCollector
+│   │   │   ├── Debug
+│   │   │   ├── DependencyInjection
+│   │   │   ├── Encoder
+│   │   │   ├── Exception
+│   │   │   ├── Extractor
+│   │   │   ├── LICENSE
+│   │   │   ├── Mapping
+│   │   │   ├── NameConverter
+│   │   │   ├── Normalizer
+│   │   │   ├── README.md
+│   │   │   ├── Serializer.php
+│   │   │   ├── SerializerAwareInterface.php
+│   │   │   ├── SerializerAwareTrait.php
+│   │   │   ├── SerializerInterface.php
+│   │   │   └── composer.json
+│   │   ├── service-contracts
+│   │   │   ├── Attribute
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── ContainerAwareInterface.php
+│   │   │   ├── ContainerProviderInterface.php
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── ResetInterface.php
+│   │   │   ├── ServiceCollectionInterface.php
+│   │   │   ├── ServiceLocatorTrait.php
+│   │   │   ├── ServiceMethodsSubscriberTrait.php
+│   │   │   ├── ServiceProviderInterface.php
+│   │   │   ├── ServiceSubscriberInterface.php
+│   │   │   ├── ServiceSubscriberTrait.php
+│   │   │   ├── Test
+│   │   │   └── composer.json
+│   │   ├── string
+│   │   │   ├── AbstractString.php
+│   │   │   ├── AbstractUnicodeString.php
+│   │   │   ├── ByteString.php
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── CodePointString.php
+│   │   │   ├── Exception
+│   │   │   ├── Inflector
+│   │   │   ├── LICENSE
+│   │   │   ├── LazyString.php
+│   │   │   ├── README.md
+│   │   │   ├── Resources
+│   │   │   ├── Slugger
+│   │   │   ├── TruncateMode.php
+│   │   │   ├── UnicodeString.php
+│   │   │   └── composer.json
+│   │   ├── translation
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── Catalogue
+│   │   │   ├── CatalogueMetadataAwareInterface.php
+│   │   │   ├── Command
+│   │   │   ├── DataCollector
+│   │   │   ├── DataCollectorTranslator.php
+│   │   │   ├── DependencyInjection
+│   │   │   ├── Dumper
+│   │   │   ├── Exception
+│   │   │   ├── Extractor
+│   │   │   ├── Formatter
+│   │   │   ├── IdentityTranslator.php
+│   │   │   ├── LICENSE
+│   │   │   ├── Loader
+│   │   │   ├── LocaleFallbackProvider.php
+│   │   │   ├── LocaleSwitcher.php
+│   │   │   ├── LoggingTranslator.php
+│   │   │   ├── MessageCatalogue.php
+│   │   │   ├── MessageCatalogueInterface.php
+│   │   │   ├── MetadataAwareInterface.php
+│   │   │   ├── Provider
+│   │   │   ├── PseudoLocalizationTranslator.php
+│   │   │   ├── README.md
+│   │   │   ├── Reader
+│   │   │   ├── Resources
+│   │   │   ├── StaticMessage.php
+│   │   │   ├── Test
+│   │   │   ├── TranslatableMessage.php
+│   │   │   ├── Translator.php
+│   │   │   ├── TranslatorBag.php
+│   │   │   ├── TranslatorBagInterface.php
+│   │   │   ├── Util
+│   │   │   ├── Writer
+│   │   │   └── composer.json
+│   │   ├── translation-contracts
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── LICENSE
+│   │   │   ├── LocaleAwareInterface.php
+│   │   │   ├── README.md
+│   │   │   ├── Test
+│   │   │   ├── TranslatableInterface.php
+│   │   │   ├── TranslatorInterface.php
+│   │   │   ├── TranslatorTrait.php
+│   │   │   └── composer.json
+│   │   ├── type-info
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── Exception
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── Type
+│   │   │   ├── Type.php
+│   │   │   ├── TypeContext
+│   │   │   ├── TypeFactoryTrait.php
+│   │   │   ├── TypeIdentifier.php
+│   │   │   ├── TypeResolver
+│   │   │   └── composer.json
+│   │   ├── uid
+│   │   │   ├── AbstractUid.php
+│   │   │   ├── BinaryUtil.php
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── Command
+│   │   │   ├── Exception
+│   │   │   ├── Factory
+│   │   │   ├── HashableInterface.php
+│   │   │   ├── LICENSE
+│   │   │   ├── MaxUlid.php
+│   │   │   ├── MaxUuid.php
+│   │   │   ├── NilUlid.php
+│   │   │   ├── NilUuid.php
+│   │   │   ├── README.md
+│   │   │   ├── TimeBasedUidInterface.php
+│   │   │   ├── Ulid.php
+│   │   │   ├── Uuid.php
+│   │   │   ├── Uuid47Transformer.php
+│   │   │   ├── UuidV1.php
+│   │   │   ├── UuidV3.php
+│   │   │   ├── UuidV4.php
+│   │   │   ├── UuidV5.php
+│   │   │   ├── UuidV6.php
+│   │   │   ├── UuidV7.php
+│   │   │   ├── UuidV8.php
+│   │   │   └── composer.json
+│   │   ├── var-dumper
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── Caster
+│   │   │   ├── Cloner
+│   │   │   ├── Command
+│   │   │   ├── Dumper
+│   │   │   ├── Exception
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── Resources
+│   │   │   ├── Server
+│   │   │   ├── Test
+│   │   │   ├── VarDumper.php
+│   │   │   └── composer.json
+│   │   └── yaml
+│   │       ├── CHANGELOG.md
+│   │       ├── Command
+│   │       ├── Dumper.php
+│   │       ├── Escaper.php
+│   │       ├── Exception
+│   │       ├── Inline.php
+│   │       ├── LICENSE
+│   │       ├── Parser.php
+│   │       ├── ParserState.php
+│   │       ├── README.md
+│   │       ├── Resources
+│   │       ├── Tag
+│   │       ├── Unescaper.php
+│   │       ├── Yaml.php
+│   │       └── composer.json
+│   ├── ta-tikoma
+│   │   └── phpunit-architecture-test
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       ├── docker
+│   │       └── src
+│   ├── theseer
+│   │   └── tokenizer
+│   │       ├── CHANGELOG.md
+│   │       ├── LICENSE
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       ├── composer.lock
+│   │       ├── src
+│   │       └── tools
+│   ├── tijsverkoyen
+│   │   └── css-to-inline-styles
+│   │       ├── LICENSE.md
+│   │       ├── composer.json
+│   │       └── src
+│   ├── ueberdosis
+│   │   └── tiptap-php
+│   │       ├── LICENSE.md
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       ├── package-lock.json
+│   │       ├── package.json
+│   │       ├── psalm.xml.dist
+│   │       └── src
+│   ├── vlucas
+│   │   └── phpdotenv
+│   │       ├── LICENSE
+│   │       ├── composer.json
+│   │       └── src
+│   ├── voku
+│   │   └── portable-ascii
+│   │       ├── CHANGELOG.md
+│   │       ├── LICENSE.txt
+│   │       ├── README.md
+│   │       ├── composer.json
+│   │       └── src
+│   ├── web-auth
+│   │   ├── cose-lib
+│   │   │   ├── CODE_OF_CONDUCT.md
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   ├── RELEASES.md
+│   │   │   ├── SECURITY.md
+│   │   │   ├── composer.json
+│   │   │   └── src
+│   │   └── webauthn-lib
+│   │       ├── LICENSE
+│   │       ├── composer.json
+│   │       └── src
+│   └── webmozart
+│       └── assert
+│           ├── CHANGELOG.md
+│           ├── LICENSE
+│           ├── README.md
+│           ├── composer.json
+│           └── src
+└── vite.config.js
+
+1096 directories, 2677 files
