@@ -14,6 +14,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -61,6 +62,27 @@ class ContactUsResource extends Resource
                     ->label('Reason')
                     ->maxLength(100),
 
+                Select::make('assessment_scope')
+                    ->label('Assessment Scope')
+                    ->options([
+                        'residential' => 'Residential',
+                        'business' => 'Business',
+                    ])
+                    ->visible(fn (Get $get): bool => $get('reason') === 'Technology Assessment')
+                    ->nullable(),
+
+                TextInput::make('business_name')
+                    ->label('Business Name')
+                    ->maxLength(100)
+                    ->visible(fn (Get $get): bool => $get('assessment_scope') === 'business')
+                    ->nullable(),
+
+                TextInput::make('business_type')
+                    ->label('Business Type')
+                    ->maxLength(100)
+                    ->visible(fn (Get $get): bool => $get('assessment_scope') === 'business')
+                    ->nullable(),
+
                 Textarea::make('message')
                     ->label('Message')
                     ->rows(5),
@@ -107,6 +129,21 @@ class ContactUsResource extends Resource
                 TextColumn::make('reason')
                     ->label('Reason')
                     ->searchable(),
+
+                TextColumn::make('assessment_scope')
+                    ->label('Scope')
+                    ->badge()
+                    ->formatStateUsing(fn (?string $state): string => $state === 'business' ? 'Business' : ($state === 'residential' ? 'Residential' : '—'))
+                    ->color(fn (?string $state): string => match ($state) {
+                        'business' => 'warning',
+                        'residential' => 'info',
+                        default => 'gray',
+                    }),
+
+                TextColumn::make('resume_path')
+                    ->label('Resume')
+                    ->state(fn (ContactUs $record): string => filled($record->resume_path) ? 'PDF' : '—')
+                    ->color(fn (ContactUs $record): string => filled($record->resume_path) ? 'success' : 'gray'),
 
                 TextColumn::make('status')
                     ->label('Status')

@@ -41,4 +41,8 @@ return [
         'environment' => env('AUTHORIZE_NET_ENVIRONMENT', 'sandbox'),
     ],
 
+    'webchat' => [
+        'chat_url' => env('WEBCHAT_CHAT_URL', 'https://jmor.com/WebChat/chat'),
+    ],
+
 ];

@@ -66,6 +66,10 @@ class AppServiceProvider extends ServiceProvider
      * Upload hardening (H6): cap file size at 5 MB and block SVG uploads
      * (which can carry embedded scripts) via an additional server-side
      * MIME whitelist that survives component-level ->image() settings.
+     *
+     * The whitelist is skipped when a component explicitly accepts non-image
+     * types (e.g. application/pdf), so those uploads validate against their
+     * own acceptedFileTypes list instead.
      */
     private function configureFileUploads(): void
     {
@@ -84,7 +88,24 @@ class AppServiceProvider extends ServiceProvider
         FileUpload::configureUsing(function (FileUpload $upload) use ($allowedImageMimes): void {
             $upload
                 ->maxSize(5120)
-                ->rule("mimetypes:{$allowedImageMimes}");
+                ->rule(
+                    "mimetypes:{$allowedImageMimes}",
+                    function (FileUpload $component): bool {
+                        $types = $component->getAcceptedFileTypes() ?? [];
+
+                        if ($types === []) {
+                            return true;
+                        }
+
+                        foreach ($types as $type) {
+                            if (! str_starts_with((string) $type, 'image/')) {
+                                return false;
+                            }
+                        }
+
+                        return true;
+                    },
+                );
         });
     }
 }

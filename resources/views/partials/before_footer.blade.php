@@ -15,17 +15,56 @@
                         #mc_embed_signup{background:transparent; clear:left; font:14px Helvetica,Arial,sans-serif; }
                     </style>
                 @endpush
+                @if(session('newsletter_success'))
+                    <div class="alert alert-success" role="status" style="text-align: left;">{{ session('newsletter_success') }}</div>
+                @endif
+                @php
+                    $newsletterErrors = [];
+                    $nBag = ($errors ?? null);
+                    if ($nBag !== null) {
+                        foreach (['FNAME', 'LNAME', 'EMAIL', 'NEWSLETTER_CONSENT'] as $nField) {
+                            if ($nBag->has($nField)) {
+                                $newsletterErrors[$nField] = $nBag->first($nField);
+                            }
+                        }
+                    }
+                @endphp
+                @if(count($newsletterErrors))
+                    <div class="alert alert-danger" role="alert" style="text-align: left;">
+                        <ul class="mb-0" style="padding-left: 1.1rem; list-style: disc;">
+                            @foreach(['FNAME' => 'First Name', 'LNAME' => 'Last Name', 'EMAIL' => 'Email Address', 'NEWSLETTER_CONSENT' => 'Consent'] as $field => $label)
+                                @if(isset($newsletterErrors[$field]))
+                                    <li>{{ $label }}: {{ $newsletterErrors[$field] }}</li>
+                                @endif
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <div id="mc_embed_signup">
-                    <form action="https://jmor.us20.list-manage.com/subscribe/post?u=162c559900d0da871b5ac38b9&amp;id=8ad51d0bdf" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                    @php($newsletterAction = config('newsletter.action') ?: route('newsletter.subscribe'))
+                    <form action="{{ $newsletterAction }}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate"{{ config('newsletter.action') ? ' target="_blank"' : '' }}>
+                        @csrf
                         <div id="mc_embed_signup_scroll">
                             <div class="indicates-required"><span class="asterisk">*</span> indicates required</div>
                             <div class="mc-field-group">
-                                <label for="mce-NAME">Full Name  <span class="asterisk">*</span></label>
-                                <input type="text" value="" name="NAME" class="required" id="mce-NAME">
+                                <label for="mce-FNAME">First Name  <span class="asterisk">*</span></label>
+                                <input type="text" value="" name="FNAME" class="required" id="mce-FNAME" autocomplete="given-name" required>
+                            </div>
+                            <div class="mc-field-group">
+                                <label for="mce-LNAME">Last Name  <span class="asterisk">*</span></label>
+                                <input type="text" value="" name="LNAME" class="required" id="mce-LNAME" autocomplete="family-name" required>
                             </div>
                             <div class="mc-field-group">
                                 <label for="mce-EMAIL">Email Address  <span class="asterisk">*</span></label>
-                                <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                                <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" autocomplete="email" required>
+                            </div>
+                            <div class="mc-field-group">
+                                <label class="mc-consent" for="mc-embedded-subscribe-consent" style="display: block; text-align: left; margin: 8px 0;">
+                                    <input type="checkbox" name="NEWSLETTER_CONSENT" value="I agree" id="mc-embedded-subscribe-consent" class="required" style="width: auto; margin-right: 6px;" required>
+                                    I agree to receive the JMOR newsletter and accept the
+                                    <a href="{{ route('privacy-policy') }}" target="_blank" rel="noopener">Privacy Policy</a>.
+                                    <span class="asterisk">*</span>
+                                </label>
                             </div>
                             <div id="mce-responses" class="clear">
                                 <div class="response" id="mce-error-response" style="display:none"></div>
@@ -36,10 +75,6 @@
                         </div>
                     </form>
                 </div>
-                @push('scripts')
-                    <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
-                    <script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[1]='NAME';ftypes[1]='text';fnames[0]='EMAIL';ftypes[0]='email';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
-                @endpush
                 <!--End mc_embed_signup-->
             </div>
         </div> 
