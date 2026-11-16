@@ -31,6 +31,12 @@
                             ? '+'.$phoneDigits
                             : '+1'.$phoneDigits);
                 @endphp
+                <div class="text-center mb-4">
+                    <a href="{{ route('request-information') }}" class="btn btn-primary btn-pill px-4"
+                        data-conversion="technology_assessment">
+                        <i class="fa fa-clipboard-check" aria-hidden="true"></i> Start with a Technology Assessment
+                    </a>
+                </div>
                 <div class="row contact-tiles" style="justify-content: center;">
                     <div class="col-lg-3 mb-5 mb-lg-0 text-center">
                         <button type="button" class="contact-action border-0 bg-transparent w-100"
@@ -109,13 +115,13 @@
                     </div>
                     <div class="col-lg-7">
                         @if($success)
-                            <div id="contact-thanks" class="contact-thanks text-center" role="status" aria-live="polite"
+                            <div id="contact-thanks" class="contact-thanks text-center" role="alert" aria-live="polite"
                                 data-redirect-url="{{ route('contact') }}" data-redirect-delay="5000">
                                 <div class="contact-thanks-card bg-white rounded shadow-sm p-5 mx-auto">
                                     <i class="fa fa-check-circle text-success fa-3x mb-3" aria-hidden="true"></i>
                                     <h2 class="h4">Thank you!</h2>
                                     <p class="mb-4">{{ $success }}</p>
-                                    <p class="mb-2"><strong>A confirmation email is on its way.</strong> Keep it for your records.</p>
+                                    <p class="mb-2">This confirms your message was sent. A confirmation email is on its way.</p>
                                     <div class="d-flex justify-content-center flex-wrap mb-3 contact-thanks-actions">
                                         @if($phoneTel)
                                             <a class="btn btn-primary btn-pill px-4 mr-2 mb-2" href="tel:{{ $phoneTel }}">
@@ -136,7 +142,7 @@
                         @endif
 
                         <form id="form_one" class="inquiry" action="{{ route('contact.submit') }}" method="post"
-                              enctype="multipart/form-data">
+                              enctype="multipart/form-data" data-conversion="web_inquiry">
                             @csrf
 
                             <div class="control-group">

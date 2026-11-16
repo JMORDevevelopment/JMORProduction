@@ -249,7 +249,15 @@ section.wt-section.hero-large h1 {
 } 
 .contactIcons .fa {
     font-size: 34px;
-    padding: 32px;
+    /* Fixed square + flex centring keeps the glyph optically centred in the
+       circle on every viewport; padding on an inline element did not (049). */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 98px;
+    height: 98px;
+    padding: 0;
+    line-height: 1;
     background: #ebebeb;
     border-radius: 50%;
 	margin-bottom:15px;

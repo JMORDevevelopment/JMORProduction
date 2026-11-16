@@ -25,12 +25,15 @@
                         <div class="col-lg-3 mb-4 mb-lg-0">
                             <div class="display-3 text-primary mb-2">
                                 <div class="mb-3" style="height:150px;">
-                                    <img src="{{ asset($service->image) }}" alt=""/>
+                                    <a href="{{ route('service.detail', $service->link) }}" tabindex="-1" aria-hidden="true">
+                                        <img src="{{ asset($service->image) }}" alt=""/>
+                                    </a>
                                 </div>
                             </div>
-                            <a href="{{ route('service.detail', $service->link) }}" style="color:#0053a0; text-align:center;">
-                                <h4 class="h5">{{ $service->title }}</h4>
-                            </a>
+                            <h4 class="h5" style="color:#0053a0; text-align:center;">{{ $service->title }}</h4>
+                            <p class="text-center mb-0">
+                                <a href="{{ route('service.detail', $service->link) }}" style="color:#0053a0;">Learn more &rarr;</a>
+                            </p>
                         </div>
                     @endforeach
                 </div>
