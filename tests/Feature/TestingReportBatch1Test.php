@@ -36,7 +36,10 @@ test('the pre footer call to action reads correctly', function () {
 });
 
 test('the coming soon page shows the full corporate name in the browser title', function () {
-    $this->get(route('it-service-providers-in-new-jersey-for-homes-and-businesses'))
+    // Use a route that still renders the Coming Soon view: the IT service
+    // providers slug was restored to real content by the content migration,
+    // and the shared test database is not reset between tests.
+    $this->get(route('solutions'))
         ->assertOk()
         ->assertSee('<title>Coming Soon - The JMOR Connection, Inc.</title>', false);
 });

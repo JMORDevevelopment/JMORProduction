@@ -39,6 +39,7 @@
                 <ul class="jm-footer__links">
                     <li><a href="{{ route('about-us') }}">About us</a></li>
                     <li><a href="{{ route('our-mission') }}">Our Mission</a></li>
+                    <li><a href="{{ route('our-dei-diversiety-equity-inclusion-non-discrimination-policy') }}">Our DEI Policy</a></li>
                     <li><a href="{{ route('why-choose-jmor') }}">Why choose JMOR?</a></li>
                     <li><a href="{{ route('testimonials') }}">Testimonials</a></li>
                     <li><a href="{{ route('media-resources') }}">Media Relations</a></li>

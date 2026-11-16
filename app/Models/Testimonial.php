@@ -12,14 +12,20 @@ class Testimonial extends Model
 
     protected $fillable = [
         'customer_id',
+        'display_name',
         'service_used',
         'message',
         'status',
+        'consent_to_publish',
+        'verified_at',
+        'source_url',
         'published',
     ];
 
     protected $casts = [
         'status' => 'integer',
+        'consent_to_publish' => 'boolean',
+        'verified_at' => 'datetime',
         'published' => 'datetime',
     ];
 

@@ -41,18 +41,15 @@
     </section>
 
     <section class="jm-partners">
-        <div class="container">
-            <div class="jm-partners__inner">
-                <div class="jm-partners__label">Certified &amp; partnered with</div>
-                <div class="jm-partners__grid">
-                    <div class="jm-partners__item">Partner badge</div>
-                    <div class="jm-partners__item">Partner badge</div>
-                    <div class="jm-partners__item">Certification</div>
-                    <div class="jm-partners__item">Certification</div>
-                    <div class="jm-partners__item">Client logo</div>
-                    <div class="jm-partners__item">Client logo</div>
+        <div class="container">                <div class="jm-partners__inner">
+                    <div class="jm-partners__label">Certifications &amp; partnerships</div>
+                    <p class="jm-partners__copy">
+                        Ask which certifications and partner programs cover your systems and industry.
+                    </p>
+                    <a href="{{ route('contact') }}" class="jm-link-arrow jm-partners__cta">
+                        Ask about our credentials &rarr;
+                    </a>
                 </div>
-            </div>
         </div>
     </section>
 
@@ -133,8 +130,8 @@
             <div class="jm-section-head" style="text-align:center;justify-content:center;">
                 <div>
                     <div class="jm-eyebrow">Who we serve</div>
-                    <h2>Built around your industry</h2>
-                    <p>We understand the challenges of a day-to-day service business — and the tech that keeps it moving.</p>
+                    <h2>Built Around Your Home &amp; Business</h2>
+                    <p>From family homes to growing offices, we keep the technology you rely on secure, connected and running — with one local New Jersey team for both.</p>
                 </div>
             </div>
 
@@ -282,18 +279,24 @@
                             <td><span class="check">&check;</span></td>
                         </tr>
                         <tr>
-                            <td>Cost per system</td>
-                            <td><span style="color:#0053a0;font-weight:700">$99/mo</span></td>
-                            <td><span style="color:#0053a0;font-weight:700">$99/mo</span></td>
-                            <td><span style="color:#0053a0;font-weight:700">$99/mo</span></td>
-                            <td><span style="color:#0053a0;font-weight:700">$99/mo</span></td>
-                        </tr>
-                        <tr>
-                            <td>Cost per server</td>
-                            <td><span class="dash">&mdash;</span></td>
-                            <td><span class="dash">&mdash;</span></td>
-                            <td><span style="color:#0053a0;font-weight:700">$150/mo</span></td>
-                            <td><span style="color:#0053a0;font-weight:700">$250/mo</span></td>
+                            <td>Published pricing</td>
+                            @foreach ($homeTabs as $homeTab)
+                                @php
+                                    $costLines = array_filter(
+                                        is_array($homeTab['cost']) ? $homeTab['cost'] : json_decode($homeTab['cost'] ?? '[]', true),
+                                        fn ($cost) => trim(strip_tags((string) $cost)) !== ''
+                                    );
+                                @endphp
+                                <td>
+                                    @forelse ($costLines as $cost)
+                                        <div style="color:#0053a0;font-weight:700">
+                                            {!! \App\Support\RichText::sanitize($cost) !!}
+                                        </div>
+                                    @empty
+                                        <span class="dash">&mdash;</span>
+                                    @endforelse
+                                </td>
+                            @endforeach
                         </tr>
                     </tbody>
                 </table>
@@ -309,7 +312,7 @@
                     <h2>Mission Statement</h2>
                     <p class="jm-about__mission">The JMOR Connection, Inc. is dedicated to providing solutions and services that keep your business up and running smoothly. We will provide your business with the latest and most efficient technology available. We will fix your problem right the first time.</p>
                     <div class="jm-about__blockquote-wrapper">
-                        <p class="jm-about__blockquote">Having over {{ now()->year - 1993 }} years of experience, we care more about helping our clients solve their issues over whether or not we are making money. We believe in security, trust, integrity, and professionalism. We understand the challenges of a day-to-day service business. We are not afraid to be different nor to think outside the box.</p>
+                        <p class="jm-about__blockquote">Having over {{ now()->year - 1993 }} years of experience, we care more about helping our clients solve their issues over whether or not we are making money. We believe in security, trust, integrity, and professionalism. We understand the challenges of running a day-to-day service business, and we are not afraid to be different or to think outside the box.</p>
                         <p class="jm-about__blockquote">Our clients and our community come first and we want to let them know that we are here today, tomorrow and for your growing needs of the future. We ask all of our clients the same question: are you willing to sacrifice quality and service for price?</p>
                     </div>
                     <div class="jm-about__actions">
@@ -329,7 +332,8 @@
                                 <div class="jm-about__side-card-title">Our Mission</div>
                                 <div class="jm-about__side-card-desc">How we work, and why</div>
                             </a>
-                            <a href="{{ route('our-dei-diversiety-equity-inclusion-non-discrimination-policy') }}" class="jm-about__side-card">
+                            <a href="{{ route('our-dei-diversiety-equity-inclusion-non-discrimination-policy') }}"
+                                class="jm-about__side-card">
                                 <div class="jm-about__side-card-title">DEI Policy</div>
                                 <div class="jm-about__side-card-desc">Diversity, equity &amp; inclusion</div>
                             </a>
@@ -353,7 +357,7 @@
                     <ul class="jm-lead__points">
                         <li><i class="fa fa-check" aria-hidden="true"></i> Response from a real technician, not a call centre</li>
                         <li><i class="fa fa-check" aria-hidden="true"></i> No obligation, no long-term contract</li>
-                        <li><i class="fa fa-check" aria-hidden="true"></i> Serving New Jersey homes and businesses for 30+ years</li>
+                        <li><i class="fa fa-check" aria-hidden="true"></i> Serving New Jersey homes and businesses since 1993</li>
                     </ul>
                     @if (!empty($phoneTel))
                         <a href="tel:{{ $phoneTel }}" class="jm-btn jm-btn--outline-blue"
@@ -486,15 +490,27 @@
                     <div class="jm-card jm-news__insta">
                         <div class="jm-news__insta-head">
                             <img src="{{ asset('assets/images/insta.png') }}" alt="" class="jm-news__insta-avatar">
-                            <span>@gosocialjmor</span>
+                            <span>@{{ config('services.instagram.handle') }}</span>
                         </div>
-                        <div class="jm-news__insta-grid">
-                            @for ($i = 0; $i < 9; $i++)
-                                <div class="jm-news__insta-tile">Post</div>
-                            @endfor
-                        </div>
-                        <a href="https://www.instagram.com/gosocialjmor/" target="_blank"
-                            class="jm-btn jm-btn--navy jm-news__insta-cta">Go to Instagram</a>
+
+                        @if (! empty($instagramPosts))
+                            <div class="jm-news__insta-grid">
+                                @foreach ($instagramPosts as $post)
+                                    <a href="{{ $post['permalink'] }}" target="_blank" rel="noopener"
+                                        class="jm-news__insta-tile"
+                                        aria-label="Open this JMOR Instagram post in a new tab">
+                                        <img src="{{ $post['image'] }}" alt="{{ $post['alt'] }}" loading="lazy">
+                                    </a>
+                                @endforeach
+                            </div>
+                        @else
+                            <p class="jm-news__insta-copy">
+                                See the latest posts, tech tips and behind-the-scenes updates on our Instagram profile.
+                            </p>
+                        @endif
+
+                        <a href="{{ config('services.instagram.profile_url') }}" target="_blank" rel="noopener"
+                            class="jm-btn jm-btn--navy jm-news__insta-cta">View Instagram profile</a>
                     </div>
                 </div>
             </div>
