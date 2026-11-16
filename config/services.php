@@ -41,8 +41,39 @@ return [
         'environment' => env('AUTHORIZE_NET_ENVIRONMENT', 'sandbox'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Web chat
+    |--------------------------------------------------------------------------
+    |
+    | The existing PHP Live! chat engine is served by the production site. Keep
+    | it configurable so the beta/staging site can point at its own install.
+    |
+    */
+
     'webchat' => [
+        'widget_url' => env('WEBCHAT_WIDGET_URL', 'https://jmor.com/WebChat/widget.js'),
         'chat_url' => env('WEBCHAT_CHAT_URL', 'https://jmor.com/WebChat/chat'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Instagram feed
+    |--------------------------------------------------------------------------
+    |
+    | A professional (Business/Creator) account is required. Set either the
+    | Facebook Login host (graph.facebook.com) with a Facebook user token, or
+    | the Instagram Login host (graph.instagram.com) with an Instagram token.
+    | Leave the id/token empty to render the profile fallback.
+    |
+    */
+
+    'instagram' => [
+        'graph_url' => env('INSTAGRAM_GRAPH_URL', 'https://graph.facebook.com/v27.0'),
+        'user_id' => env('INSTAGRAM_USER_ID'),
+        'access_token' => env('INSTAGRAM_ACCESS_TOKEN'),
+        'handle' => env('INSTAGRAM_HANDLE', 'gosocialjmor'),
+        'profile_url' => env('INSTAGRAM_PROFILE_URL', 'https://www.instagram.com/gosocialjmor/'),
+        'cache_ttl' => (int) env('INSTAGRAM_CACHE_TTL', 1800),
+    ],
 ];

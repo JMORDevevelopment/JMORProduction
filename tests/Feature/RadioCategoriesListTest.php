@@ -52,6 +52,10 @@ test('the year filter returns categories published on or before that year', func
 });
 
 test('the year filter reports when no category matches', function () {
+    // Migrations may seed categories (e.g. guest appearances); start from empty
+    // so this test only exercises the empty-state branch.
+    CategoryRadioShow::query()->delete();
+
     seedRadioCategory([
         'title' => 'Future Show',
         'link' => 'future-show',

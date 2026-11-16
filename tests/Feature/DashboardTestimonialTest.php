@@ -80,3 +80,69 @@ test('testimonial validation rejects empty service and message', function () {
         'message' => '',
     ])->assertSessionHasErrors(['service_used', 'message']);
 });
+
+test('consent records only a privacy-safe public attribution', function () {
+    $this->post(route('dashboard.testimonial_validate'), [
+        'service_used' => 'Managed IT Services',
+        'message' => 'Happy to recommend JMOR.',
+        'consent_to_publish' => '1',
+    ])->assertRedirect(route('dashboard.testimonial'));
+
+    $this->assertDatabaseHas('testimony_form', [
+        'customer_id' => 9826,
+        'display_name' => 'Jane D.',
+        'consent_to_publish' => 1,
+        'status' => 0,
+    ]);
+});
+
+test('withdrawing consent clears public attribution and removes the testimonial from view', function () {
+    $testimonial = Testimonial::create([
+        'customer_id' => 9826,
+        'display_name' => 'Jane D.',
+        'service_used' => 'Managed IT Services',
+        'message' => 'Previously approved copy.',
+        'status' => 1,
+        'consent_to_publish' => true,
+        'verified_at' => now(),
+    ]);
+
+    $this->post(route('dashboard.testimonial_validate', $testimonial->id), [
+        'service_used' => 'Managed IT Services',
+        'message' => 'Previously approved copy.',
+    ])->assertRedirect(route('dashboard.testimonial'));
+
+    $this->assertDatabaseHas('testimony_form', [
+        'id' => $testimonial->id,
+        'display_name' => null,
+        'consent_to_publish' => 0,
+        'verified_at' => null,
+        'status' => 0,
+    ]);
+});
+
+test('editing approved testimonial copy requires verification again', function () {
+    $testimonial = Testimonial::create([
+        'customer_id' => 9826,
+        'display_name' => 'Jane D.',
+        'service_used' => 'Managed IT Services',
+        'message' => 'Original approved copy.',
+        'status' => 1,
+        'consent_to_publish' => true,
+        'verified_at' => now(),
+    ]);
+
+    $this->post(route('dashboard.testimonial_validate', $testimonial->id), [
+        'service_used' => 'Managed IT Services',
+        'message' => 'Edited customer copy.',
+        'consent_to_publish' => '1',
+    ])->assertRedirect(route('dashboard.testimonial'));
+
+    $this->assertDatabaseHas('testimony_form', [
+        'id' => $testimonial->id,
+        'message' => 'Edited customer copy.',
+        'consent_to_publish' => 1,
+        'verified_at' => null,
+        'status' => 0,
+    ]);
+});

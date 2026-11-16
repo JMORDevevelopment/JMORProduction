@@ -23,6 +23,7 @@
     @yield('content')
     <x-footer />
     @include('partials.cookie-consent')
+    @include('partials.webchat')
     @stack('scripts')
     @filamentScripts
 </body>

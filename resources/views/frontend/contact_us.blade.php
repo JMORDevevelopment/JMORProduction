@@ -61,15 +61,16 @@
                         </button>
                     </div>
                     <div class="col-lg-3 mb-5 mb-lg-0 text-center">
-                        <button type="button" class="contact-action border-0 bg-transparent w-100"
-                                onclick="chatNow()"
-                                aria-label="Chat with us: jump to the message box">
+                        <a class="contact-action d-block w-100 text-decoration-none"
+                           href="{{ config('services.webchat.chat_url') }}" target="_blank" rel="noopener"
+                           data-chat-launch
+                           aria-label="Chat with a JMOR representative (opens in a new tab)">
                             <span class="contact-tile__icon" aria-hidden="true">
                                 <i class="fa fa-comment-dots"></i>
                             </span>
                             <span class="h5 d-block contact-tile__title">Chat With Us</span>
                             <span class="mb-0 d-block contact-tile__sub">Message now</span>
-                        </button>
+                        </a>
                     </div>
                     <div class="col-lg-3 mb-5 mb-lg-0 text-center">
                         @if($phoneTel)
@@ -107,11 +108,21 @@
 
                 <div class="row text-center" style="justify-content: center;">
                     <div id="map_box" class="col-lg-5">
+                        @php
+                            $addressLine = trim(preg_replace(
+                                '/\s+/',
+                                ' ',
+                                strip_tags(str_replace(['<br>', '<br/>', '<br />'], ', ', (string) $address))
+                            ));
+                        @endphp
                         <iframe data-optional-embed
-                            data-embed-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3010.113136935536!2d-74.20879448429831!3d41.022780679299395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2e287fb5beb13%3A0x5056f097f8d06e27!2s799%20Franklin%20Ave%20%233%2C%20Franklin%20Lakes%2C%20NJ%2007417%2C%20USA!5e0!3m2!1sen!2s!4v1588958264865!5m2!1sen!2s"
-                            data-embed-title="JMOR office location map"
-                            title="JMOR office location map" width="100%" height="320" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                            data-embed-src="https://www.google.com/maps?q={{ urlencode('799 Franklin Avenue, Suite 3, Franklin Lakes, NJ 07417') }}&output=embed"
+                            data-embed-title="Map of 799 Franklin Avenue, Suite 3, Franklin Lakes, NJ 07417"
+                            title="Map of 799 Franklin Avenue, Suite 3, Franklin Lakes, NJ 07417"
+                            loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen=""></iframe>
                         <p class="mt-2 mb-0 small text-muted">{!! nl2br(e(str_replace(['<br>', '<br/>', '<br />'], "\n", $address))) !!}</p>
+                        <a class="small" href="https://maps.google.com/?q={{ urlencode($addressLine) }}"
+                            target="_blank" rel="noopener" data-conversion="directions">Get directions &rarr;</a>
                     </div>
                     <div class="col-lg-7">
                         @if($success)
@@ -129,7 +140,9 @@
                                             </a>
                                         @endif
                                         <a class="btn btn-outline-primary btn-pill px-4 mb-2" id="thanks-chat"
-                                            href="{{ config('services.webchat.chat_url') }}" target="_blank" rel="noopener">
+                                            href="{{ config('services.webchat.chat_url') }}" target="_blank" rel="noopener"
+                                            data-chat-launch
+                                            aria-label="Chat with a JMOR representative (opens in a new tab)">
                                             <i class="fa fa-commenting" aria-hidden="true"></i> Chat With Us
                                         </a>
                                         <button type="button" class="btn btn-success btn-pill px-4 mb-2" id="thanks-continue">

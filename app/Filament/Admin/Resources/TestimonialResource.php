@@ -15,6 +15,7 @@ use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
@@ -54,7 +55,12 @@ class TestimonialResource extends Resource
                         ])
                         ->all())
                     ->searchable()
-                    ->required(),
+                    ->placeholder('No linked customer account'),
+
+                TextInput::make('display_name')
+                    ->label('Public attribution')
+                    ->maxLength(100)
+                    ->helperText('Use only the name the customer approved for publication, such as “Jane D., Mahwah resident”.'),
 
                 TextInput::make('service_used')
                     ->label('Service Used')
@@ -66,6 +72,19 @@ class TestimonialResource extends Resource
                     ->rows(5)
                     ->required(),
 
+                Toggle::make('consent_to_publish')
+                    ->label('Customer consented to publication')
+                    ->helperText('Testimonials are hidden from the website until consent is recorded.'),
+
+                DateTimePicker::make('verified_at')
+                    ->label('Verified at')
+                    ->helperText('Record when the testimonial and customer details were checked.'),
+
+                TextInput::make('source_url')
+                    ->label('Verification source')
+                    ->maxLength(2048)
+                    ->helperText('Optional link to the approved source or signed consent record.'),
+
                 Select::make('status')
                     ->label('Status')
                     ->options([
@@ -73,6 +92,7 @@ class TestimonialResource extends Resource
                         1 => 'Approved',
                     ])
                     ->default(0)
+                    ->helperText('Public only when approved, verified, and publication consent is recorded.')
                     ->required(),
 
                 DateTimePicker::make('published')
@@ -89,8 +109,8 @@ class TestimonialResource extends Resource
                     ->label('ID')
                     ->sortable(),
 
-                TextColumn::make('customer.firstname')
-                    ->label('Customer')
+                TextColumn::make('display_name')
+                    ->label('Public name')
                     ->searchable()
                     ->placeholder('—'),
 
@@ -99,11 +119,23 @@ class TestimonialResource extends Resource
                     ->searchable()
                     ->limit(40),
 
+                TextColumn::make('consent_to_publish')
+                    ->label('Consent')
+                    ->badge()
+                    ->formatStateUsing(fn ($state): string => $state ? 'Recorded' : 'Missing')
+                    ->color(fn ($state): string => $state ? 'success' : 'danger'),
+
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
                     ->formatStateUsing(fn ($state): string => (string) $state === '0' ? 'Pending' : 'Approved')
                     ->color(fn ($state): string => (string) $state === '0' ? 'danger' : 'success'),
+
+                TextColumn::make('verified_at')
+                    ->label('Verified')
+                    ->dateTime()
+                    ->placeholder('Not verified')
+                    ->sortable(),
 
                 TextColumn::make('published')
                     ->label('Published')

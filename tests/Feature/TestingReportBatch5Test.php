@@ -93,14 +93,17 @@ test('the homepage links a telephone call to action for mobile visitors', functi
 });
 
 test('guest appearances render as their own feed and stay out of the blog', function () {
-    $category = CategoryRadioShow::create([
-        'title' => 'Shows I Appeared as a Guest On',
-        'sub_title' => 'Guest appearances',
-        'description' => 'Shows JMOR appeared on as a guest.',
-        'link' => 'shows-i-appeared-as-a-guest-on',
-        'published' => '2020-01-01 00:00:00',
-        'parent_id' => 0,
-    ]);
+    // The guest-appearance migration may already own this category; reuse it so
+    // the show lands on the category the feed actually renders.
+    $category = CategoryRadioShow::where('link', 'shows-i-appeared-as-a-guest-on')->first()
+        ?? CategoryRadioShow::create([
+            'title' => 'Shows I Appeared as a Guest On',
+            'sub_title' => 'Guest appearances',
+            'description' => 'Shows JMOR appeared on as a guest.',
+            'link' => 'shows-i-appeared-as-a-guest-on',
+            'published' => '2020-01-01 00:00:00',
+            'parent_id' => 0,
+        ]);
 
     RadioShow::create([
         'name' => 'Guest Spot On Another Podcast',

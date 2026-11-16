@@ -320,6 +320,13 @@ class DashboardController extends Controller
     {
         $post = $request->validated();
         $post['customer_id'] = Auth::id();
+        $post['consent_to_publish'] = $request->boolean('consent_to_publish');
+
+        if (! $post['consent_to_publish']) {
+            $post['display_name'] = null;
+            $post['status'] = 0;
+            $post['verified_at'] = null;
+        }
 
         if ($id) {
             $testimonial = Testimonial::find($id);
@@ -328,11 +335,41 @@ class DashboardController extends Controller
                 abort(404);
             }
 
+            if ($testimonial->service_used !== $post['service_used'] || $testimonial->message !== $post['message']) {
+                // Edited copy must be reviewed again before it can be public.
+                $post['status'] = 0;
+                $post['verified_at'] = null;
+            }
+
+            if ($post['consent_to_publish'] && trim((string) $testimonial->display_name) === '') {
+                $post['display_name'] = $this->publicTestimonialName();
+            }
+
             $testimonial->update($post);
         } else {
+            $post['display_name'] = $post['consent_to_publish']
+                ? $this->publicTestimonialName()
+                : null;
+
             Testimonial::create($post);
         }
 
         return redirect()->route('dashboard.testimonial');
+    }
+
+    /**
+     * Build the privacy-safe public attribution used for customer submissions.
+     */
+    private function publicTestimonialName(): string
+    {
+        $user = Auth::user();
+        $firstname = trim((string) $user?->firstname);
+        $lastname = trim((string) $user?->lastname);
+
+        if ($firstname === '') {
+            return 'Verified customer';
+        }
+
+        return $firstname.($lastname !== '' ? ' '.mb_substr($lastname, 0, 1).'.' : '');
     }
 }
