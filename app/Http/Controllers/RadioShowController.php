@@ -46,6 +46,18 @@ class RadioShowController extends Controller
         ));
     }
 
+    /**
+     * Dedicated Guest Appearances feed. It reads the dedicated category so the
+     * appearances never mix into the main blog or the full JMOR Shows listing.
+     */
+    public function guestAppearances(?string $year = null)
+    {
+        return view('frontend.category_radio_show', array_merge(
+            $this->radioShows->categoryViewData('shows-i-appeared-as-a-guest-on', $year),
+            ['categories' => CategoryRadioShow::orderBy('id', 'asc')->get()]
+        ));
+    }
+
     public function categoriesList(Request $request)
     {
         $year = $request->post('year', date('Y'));

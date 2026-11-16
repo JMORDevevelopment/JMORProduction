@@ -48,6 +48,12 @@ class ContactController extends Controller
         $inquiryFailed = ! $openInterview
             && (old('reason') !== null || old('message') !== null || old('protection_question') !== null);
 
+        $phoneNumber = Setting::get('phone', '');
+        $phoneDigits = preg_replace('/\D/', '', $phoneNumber);
+        $phoneTel = $phoneDigits === ''
+            ? ''
+            : (strlen($phoneDigits) === 10 ? '+1'.$phoneDigits : '+'.$phoneDigits);
+
         return view('frontend.contact_us', [
             'title' => 'Contact Us',
             'description' => '',
@@ -69,7 +75,8 @@ class ContactController extends Controller
                 ? Storage::disk('public')->url($agreementPath)
                 : null,
             'address' => Setting::get('address', ''),
-            'phone_number' => Setting::get('phone', ''),
+            'phone_number' => $phoneNumber,
+            'phoneTel' => $phoneTel,
             'success' => session('contact_success'),
             'error' => $errors,
             // Re-open the talk show interview form when it was the form that
